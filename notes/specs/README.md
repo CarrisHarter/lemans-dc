@@ -18,7 +18,7 @@ Rust port runs `registry::<fn>`, and every observable result must match exactly.
 | --- | --- |
 | `entry` | function entry; defaults to the mapping base |
 | `regs` | `r0`..`r15` seeds; hex strings or numbers |
-| `fr` | `f0`..`f15` seeds, single precision |
+| `fr` | `f0`..`f15` seeds, single precision; a hex string seeds the raw bits (the only way to give a function a NaN payload) |
 | `memory` | byte patches applied before running (`hex` is raw bytes) |
 | `steps` | instruction budget; exceeding it is a failure, not a pass |
 | `sr`, `mach`, `macl`, `gbr`, `vbr`, `ssr`, `spc`, `sgr`, `dbr`, `fpul`, `fpscr` | optional system-register seeds, hex strings |

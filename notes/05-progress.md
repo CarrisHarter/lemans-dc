@@ -9,8 +9,8 @@ Updated 2026-11-11.
 | oracle coverage (static, mnemonic) | 99.70% of 969,383 instructions |
 | functions auto-named | 310 (proposals, unreviewed) |
 | oracle tests | 54 passing |
-| ports verified | 207 |
-| verification files | 242 |
+| ports verified | 223 |
+| verification files | 274 |
 
 ## Instruction gaps remaining
 
