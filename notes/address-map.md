@@ -1227,6 +1227,12 @@
 | `0x8c23b9d0` | `unlink_node` | `notes/verifications/0x8c23b9d0.json` — 18 oracle steps |
 | `0x8c221dc8` | `fill_slot_record` | `notes/verifications/0x8c221dc8.json` — 18 oracle steps |
 | `0x8c2259d6` | `alloc_slot` | `notes/verifications/0x8c2259d6.json` — 15 oracle steps |
+| `0x8c227280` | `insert_bits_gated_a` | `notes/verifications/0x8c227280.json` — 6 oracle steps |
+| `0x8c2273e0` | `insert_bits_gated_b` | `notes/verifications/0x8c2273e0.json` — 25 oracle steps |
+| `0x8c227440` | `insert_bits_gated_c` | `notes/verifications/0x8c227440.json` — 6 oracle steps |
+| `0x8c2274a0` | `insert_bits_gated_d` | `notes/verifications/0x8c2274a0.json` — 6 oracle steps |
+| `0x8c227500` | `insert_bits_gated_e` | `notes/verifications/0x8c227500.json` — 25 oracle steps |
+| `0x8c2275c0` | `insert_bits_gated_f` | `notes/verifications/0x8c2275c0.json` — 6 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
