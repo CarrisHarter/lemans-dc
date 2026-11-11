@@ -279,6 +279,7 @@
 | `0x8c1cbda8` | `FUN_8c1cbda8` | `notes/verifications/0x8c1cbda8.json` — ok; r5==1→r0=*(r4+32), else *(r4+36) |
 | `0x8c215fac` | `FUN_8c215fac` | `notes/verifications/0x8c215fac.*.json` — both branches; bounded memcmp, cmp/pl r6 then delay r6-=1, r0=0/1 in rts delay |
 | `0x8c2205b0` | `FUN_8c2205b0` | `notes/verifications/0x8c2205b0.json` — ok; r4 = *r4*32 + **0x8c23d468, *(r4+28)=0, r0=0 in rts delay |
+| `0x8c2218a0` | `FUN_8c2218a0` | `notes/verifications/0x8c2218a0.json` — ok; copy (r6>>2) words r5→r4, dt loop, delay r4+=4 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -740,6 +741,16 @@
 | `0x8c10e3ac` | `load_field_plus_24` | `notes/verifications/0x8c10e3ac.json` — verified |
 | `0x8c10e3b4` | `load_field_plus_20` | `notes/verifications/0x8c10e3b4.json` — verified |
 | `0x8c10e3bc` | `load_field_plus_16` | `notes/verifications/0x8c10e3bc.json` — verified |
+| `0x8c0e3a00` | `FUN_8c0e3a00` | `notes/verifications/0x8c0e3a00.json` — 18 oracle steps; store r4..r7 to 0x8c29b720/28/30/38 + byte 1 at 0x8c29b740; r0=1, r1=0x8c29b740, r3=0x8c29b738 left set; r12/r13/r14 restored to INPUT values by the pops (delay-slot pop of r14 after rts) |
+| `0x8c0f134c` | `FUN_8c0f134c` | `notes/verifications/0x8c0f134c.json` — 36 oracle steps; copy [r4,r5) dwords to r6, return r6; r0=last dword copied (untouched on skipped stores); r4==r5 at end; r6 += 4 per iteration INCLUDING the final one (bf.s delay slot add #4,r6 runs whether or not taken); T=1 on every exit |
+| `0x8c0f9aa8` | `FUN_8c0f9aa8` | `notes/verifications/0x8c0f9aa8.json` — 28 oracle steps; strcmp-style byte loop (no pseudocode existed); r4 and r5 both advance 1 per compared byte (bt.s delay slot add #1,r5 always runs); r3=zero-ext a-byte, r1=zero-ext b-byte; r0 = a-b on mismatch (rts delay sub r1,r0), 0 on NUL; T=0 mismatch / T=1 NUL exit |
+| `0x8c0fd168` | `FUN_8c0fd168` | `notes/verifications/0x8c0fd168.json` — 19 oracle steps; node init: r4=0 (argument destroyed by mov #0,r4), r6=param, r3=param+8, r1=param+4, r0=param (return); stores node[0]=*0x8c202fa8, node[1]=0, byte at node+8=*r5, and TWO stores at node+12 (0 then param+4) |
+| `0x8c0fd3c0` | `FUN_8c0fd3c0` | `notes/verifications/0x8c0fd3c0.json` — 19 oracle steps; same as 0x8c0fd168; id cell via literal 0x8c0fd3e8 -> 0x8c202f90; r4=0, r6/r3/r1/r0 leftovers, double store at node+12 |
+| `0x8c0fd5c8` | `FUN_8c0fd5c8` | `notes/verifications/0x8c0fd5c8.json` — 19 oracle steps; same as 0x8c0fd168; id cell via literal 0x8c0fd5f0 -> 0x8c202f78; r4=0, r6/r3/r1/r0 leftovers, double store at node+12 |
+| `0x8c0fda54` | `FUN_8c0fda54` | `notes/verifications/0x8c0fda54.json` — 22 oracle steps; copy 4 floats src(r5)+0x30..0x3c to dst=@r15; r5 clobbered to src+0x3c (add #60,r5), r0=dst+8, r1=dst+4, r3=dst+12, fr0=src[0x3c]; stores in order dst+0,+4,+8,+12 with the last one in the rts DELAY SLOT |
+| `0x8c0ffac8` | `FUN_8c0ffac8` | `notes/verifications/0x8c0ffac8.json` — 32 oracle steps; find byte (char)r5 in base[r6..count), return offset or -1; r4=base+count, r7=base, r3=last byte scanned (sign-ext), r1=sign-ext needle computed once before loop; -1 returns come from rts/bt delay slots (mov #-1,r0), hit returns r0-base via delay sub r7,r0; T=1 on all exits |
+| `0x8c0ffd38` | `FUN_8c0ffd38` | `notes/verifications/0x8c0ffd38.json` — 19 oracle steps; same as 0x8c0fd168; id cell via literal 0x8c0ffd60 -> 0x8c2032f0; r4=0, r6/r3/r1/r0 leftovers, double store at node+12 |
+| `0x8c100198` | `FUN_8c100198` | `notes/verifications/0x8c100198.json` — 18 oracle steps; cursor bump: count++ at r4+4, offset(r4+8)+=4; r1=base[12]+4*base[0] on BOTH paths, r3=old offset+4, r0=r4 always (rts delay slot mov r4,r0 overwrites), T=cmp/eq result; wrap store offset=base[12] only when equal |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
