@@ -47,6 +47,8 @@ fn read_seed(spec: &Json, base: u32) -> Seed {
             if let Some(i) = k.strip_prefix('f').and_then(|s| s.parse::<usize>().ok()) {
                 if let Some(value) = v.as_f32() {
                     fr.push((i, value));
+                } else if let Some(bits) = v.as_u32() {
+                    fr.push((i, f32::from_bits(bits)));
                 }
             }
         }

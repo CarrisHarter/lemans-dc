@@ -207,8 +207,12 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
         for (key, value) in fr {
             if let Some(idx) = key.strip_prefix('f').and_then(|i| i.parse::<usize>().ok()) {
                 if idx < 16 {
+                    // A hex string seeds the raw bits, which is the only way to
+                    // give a spec a NaN or a signalling NaN payload.
                     if let Some(v) = value.as_f32() {
                         cpu.fr[idx] = v;
+                    } else if let Some(bits) = value.as_u32() {
+                        cpu.fr[idx] = f32::from_bits(bits);
                     }
                 }
             }
