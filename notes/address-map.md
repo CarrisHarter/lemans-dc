@@ -132,6 +132,16 @@
 | `0x8c050ea0` | `FUN_8c050ea0 (cursor step fwd)` | `notes/verifications/0x8c050ea0.json` — 102 oracle steps; first store is *(p+0x28)=old cur (clobbers +0x28 at 0x8c050ea6); wrap branch stores *(p+0x30) BEFORE *(p+0x24); cmp/gt is SIGNED (count > cur+1); r0=p; r1=*(p+0x34)+1; r3=copied +0x14; r5=*(p+8)+0x14; r6=p+0x14; r7=cur vs cur*4 per branch; exit T is the second cmp/eq, not the first cmp/gt |
 | `0x8c050fa8` | `FUN_8c050fa8 (walker reset)` | `notes/verifications/0x8c050fa8.json` — 98 oracle steps; real push/pop of r14 (net identity, stack window); fldi0 clobbers fr0 to +0.0 and fmov.s stores 4 bytes 0 at p+0x38 (decompiler's fr1/FPSCR_SZ double-store branch does not exist in machine code); r0=*(src+0x1c); r1=*(src+0x14); r3=*(p+8)+0x14; r5=p+0x14; r6=entries[1] (p+0x38 only transient); r7=sel*4; T untouched by any instruction |
 | `0x8c011304` | `FUN_8c011304 (strncmp)` | `notes/verifications/0x8c011304.json` — 33 oracle steps; r7=r5 via bf.s delay slot even on n==0 (returns 0, T set); n>0: r4 past last byte read, r7 decremented back, r2=mismatched src byte or address r4-1, r3=zero-extended src byte, r5=count; T clear only on mismatch exit; r0=(u8)s1[k-1]-(u8)s2[k-1] |
+| `0x8c055fec` | `FUN_8c055fec` | `notes/verifications/0x8c055fec.json` — 4 oracle steps; r0=[r4+0x38]+8; store [r0]=fr4 |
+| `0x8c055ff4` | `FUN_8c055ff4` | `notes/verifications/0x8c055ff4.json` — 8 oracle steps; r0=[r4+0x38]+4; fr0=second float; stores [r5],[r6] |
+| `0x8c056004` | `FUN_8c056004` | `notes/verifications/0x8c056004.json` — 4 oracle steps; r0=[r4+0x38]+12; fr0=[r0] |
+| `0x8c05600c` | `FUN_8c05600c` | `notes/verifications/0x8c05600c.json` — 4 oracle steps; r0=[r4+0x38]+12; store [r0]=fr4 |
+| `0x8c056014` | `FUN_8c056014` | `notes/verifications/0x8c056014.json` — 6 oracle steps; r0=[r4+0x38]+4; stores [base]=fr4,[base+4]=fr5 |
+| `0x8c056020` | `FUN_8c056020` | `notes/verifications/0x8c056020.json` — 3 oracle steps; r0=[ [r4+0x38]+16 ] |
+| `0x8c056028` | `FUN_8c056028` | `notes/verifications/0x8c056028.json` — 3 oracle steps; r0=[r4+0x38]; store [r0+16]=r5 |
+| `0x8c0560f8` | `FUN_8c0560f8` | `notes/verifications/0x8c0560f8.json` — 49 oracle steps; r0=r4+12; r1=r4+8; fr0=[r4] raw; fr1=clamp; T=last cmp; stores at r4+0,4,8,12 |
+| `0x8c056244` | `FUN_8c056244` | `notes/verifications/0x8c056244.json` — 59 oracle steps; r0=out+4; r3=out+8; r1=r4o+4; r4=r4o+12; fr0..fr8 leftovers; T=0>fr2 (or 1 on early exit); stores [out],[out+4],[out+8] |
+| `0x8c0562f4` | `FUN_8c0562f4` | `notes/verifications/0x8c0562f4.json` — 20 oracle steps; r0=0x8c056324; r1=r4o+8; r3=r4o+4; r4=r4o+12; fr1=c2; fr2=c*c2; fr3=b*c1; fr0=sum |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
