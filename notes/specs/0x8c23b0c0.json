@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c23b0c0",
+  "regs": {
+    "r4": "3"
+  },
+  "steps": 30,
+  "memory": [
+    {
+      "addr": "0x8c2c8a84",
+      "hex": "aabbccdd"
+    }
+  ]
+}
