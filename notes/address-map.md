@@ -517,6 +517,14 @@
 | `0x8c0c9104` | `store_arg_return_self_4` | `notes/verifications/0x8c0c9104.json` — verified |
 | `0x8c0c921c` | `load_double_indirect` | `notes/verifications/0x8c0c921c.json` — verified |
 | `0x8c0cc470` | `return_self_2` | `notes/verifications/0x8c0cc470.json` — verified |
+| `0x8c0cc8a8` | `load_pool_constant_3` | `notes/verifications/0x8c0cc8a8.json` — verified |
+| `0x8c0ccef0` | `load_pool_constant_4` | `notes/verifications/0x8c0ccef0.json` — verified |
+| `0x8c0cd03c` | `load_pool_constant_5` | `notes/verifications/0x8c0cd03c.json` — verified |
+| `0x8c0cf068` | `test_bits_to_bool` | `notes/verifications/0x8c0cf068.json` — verified |
+| `0x8c0cf6b4` | `load_store_to_stack_3` | `notes/verifications/0x8c0cf6b4.json` — verified |
+| `0x8c0cf6bc` | `follow_pointer_and_store_back_3` | `notes/verifications/0x8c0cf6bc.json` — verified |
+| `0x8c0cf6c8` | `load_double_indirect_store_to_stack_4` | `notes/verifications/0x8c0cf6c8.json` — verified |
+| `0x8c0cf8dc` | `load_store_to_stack_4` | `notes/verifications/0x8c0cf8dc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
