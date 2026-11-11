@@ -644,6 +644,16 @@
 | `0x8c0fdae8` | `copy_four_words_at_48` | `notes/verifications/0x8c0fdae8.json` — verified |
 | `0x8c0fdc58` | `empty_stub_8` | `notes/verifications/0x8c0fdc58.json` — verified |
 | `0x8c0fdc5c` | `empty_stub_9` | `notes/verifications/0x8c0fdc5c.json` — verified |
+| `0x8c0b5e94` | `FUN_8c0b5e94` | `notes/verifications/0x8c0b5e94.json` — 13 oracle steps; delay-slot store *G1=r4 fires on both paths of bt.s; r5 clamped to 1 when <=0; r0/r1/r3 end as loaded global ptrs/sum; T=(r5>0) original |
+| `0x8c0b64a8` | `FUN_8c0b64a8` | `notes/verifications/0x8c0b64a8.json` — 53 oracle steps; plain bt/bf have no delay slot; r4 ends = r5; r1 = sext last text byte; r0 = replacement byte on last match else sext *r6; T ends 1 |
+| `0x8c0b64fc` | `FUN_8c0b64fc` | `notes/verifications/0x8c0b64fc.json` — 58 oracle steps; r4 argument destroyed (ends as count then last exts pattern byte); r6 last text byte; r1=base r3=base+count; r12/r13/r14 restored from stack; T=0 on offset-return paths, 1 on -1-via-end and FAIL-via-cmp/hs |
+| `0x8c0b7be8` | `FUN_8c0b7be8` | `notes/verifications/0x8c0b7be8.json` — 15 oracle steps; four sequential stores to *r4 (write log keeps all, memory keeps last); byte store p+4=1; p+8 and p+12 = -1 (latter is rts delay slot); r1=-1; r0=r4 |
+| `0x8c0b8fb4` | `FUN_8c0b8fb4` | `notes/verifications/0x8c0b8fb4.json` — 8 oracle steps; r4/r3/r1/r0 clobbered on init path (r0 ends reloaded as slot ptr); flag byte set to 1; T=(flag==0) |
+| `0x8c0ba554` | `FUN_8c0ba554` | `notes/verifications/0x8c0ba554.json` — 83 oracle steps; r0..r7 end with loop residue (r0=r4 base, r1=4, r3=r4+72, r6=0, r13=16, r12=96) but r12/r13/r14 restored from stack; T ends 0 (cmp/gt 4>4); delay-slot store @(16,r3) runs every iteration |
+| `0x8c0bd700` | `FUN_8c0bd700` | `notes/verifications/0x8c0bd700.json` — 53 oracle steps; r0 ends = a pointer (mov r4,r0 mid-function); r1 = b[44]; r3 = final sum; T stays at cmp/gt for element 5 (b[5]>a[5]); store at offset 44 is the rts delay slot |
+| `0x8c0c0328` | `FUN_8c0c0328` | `notes/verifications/0x8c0c0328.json` — 50 oracle steps; r4..r7 each end +4 (add #4 in body); r1=*r15 r0=*(r15+4) then r0=0/1 result; fr0..fr11 all hold intermediates, fr4=0.0 fr3=1.0; T = last fcmp executed; early rts when det==0 (can be -0.0 == +0.0) |
+| `0x8c0c06e4` | `FUN_8c0c06e4` | `notes/verifications/0x8c0c06e4.json` — 22 oracle steps; r4 ends +4 only on r4-store paths (r3-store path leaves it); r0=*r15; r1=last key load; r6=0 at loop exit; T=1 on r3==0 paths else final cmp/gt; store target is rts delay slot |
+| `0x8c0c6904` | `FUN_8c0c6904` | `notes/verifications/0x8c0c6904.json` — 12 oracle steps; r0 = 0 (head match) / predecessor node / 0 (empty) / last node (r5==0 walk); r1 = seed / r5 / seed / 0; every exit path leaves T=1 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
