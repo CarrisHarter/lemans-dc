@@ -1282,6 +1282,7 @@
 | `0x8c21741e` | `FUN_8c21741e` | `notes/verifications/0x8c21741e.json` — 21 oracle steps; bt.s delay slot loads r7=[r4+16] on all paths; success stores [r4+20]=r6, r0=0; else r0=-10/-16/-17 |
 | `0x8c21a5e0` | `FUN_8c21a5e0` | `notes/verifications/0x8c21a5e0.json` — 11264 oracle steps; stores 192 bytes near r4+0xba (net r4 = entry-6); r5 advanced 1536; r1/r2/r3/r6/r7/r0 clobbered; final T=1 |
 | `0x8c2192e4` | `FUN_8c2192e4` | `notes/verifications/0x8c2192e4.json` — 608 oracle steps; 24 iterations copying 24-byte records (stride 44 src, 24 dst) with field permutation; r4/r5/r6/r7/r2/r3/r0 clobbered |
+| `0x8c010084` | `release_and_clear` | `notes/verifications/0x8c010084.json` — first call-crossing port |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
@@ -1372,6 +1373,9 @@ memory` before a diff can mean anything.
 | `0x8c21e0f4` | hardware register access: `0xffd80000` |
 | `0x8c21e11a` | hardware register access: `0xffd8****` |
 | `0x8c21e298` | hardware register access: `0xffd80000` |
+| `0x8c21e2a8` | hardware register access: `0xffd80004` |
+| `0x8c21f4d8` | hardware register access: `0xffd00000` |
+| `0x8c2201fa` | hardware register access: `0xf6000000` |
 
 ## Auto-proposed names (debug strings)
 

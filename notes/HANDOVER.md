@@ -196,6 +196,33 @@ It proves the three-way agreement between `src/ports/p_*.rs`, the ledger in
 passing evidence is not a claim; either finish it or remove it. Prefer
 surgical `git add <paths>` over `git add -A` while another worker is active.
 
+## Crossing calls
+
+A caller **can** be verified. The oracle runs the real bytes of the whole call
+tree; the port calls the ported callee. Both sides then have to agree on every
+register and store, which is exactly the check we want.
+
+```rust
+crate::registry::p_<callee>::run(cpu, mem);
+```
+
+The module path is `crate::registry::…`, not `crate::ports::…` — the ports are
+declared inside `registry.rs`.
+
+Find candidates with
+
+```bash
+python3 tools/caller-worklist.py --count 40
+```
+
+It resolves `jsr @Rn` through the most recent `mov.l <pool>,Rn` in the same
+function and lists callers whose every callee is already ported. The first one
+ported this way was `0x8c010084`, which calls `free` and then zeroes the
+pointer.
+
+A caller whose callee touches memory the spec does not seed fails loudly with
+an oracle error, not a silent mismatch, so this is safe to attempt.
+
 ## Known gaps / next work
 
 - Oracle coverage 99.70%. The gaps are `div1` (1,001 instructions) and the vector
