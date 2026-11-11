@@ -1256,6 +1256,8 @@
 | `0x8c227720` | `insert_bits_gated_h` | `notes/verifications/0x8c227720.json` — 6 oracle steps |
 | `0x8c237240` | `size_class` | `notes/verifications/0x8c237240.json` — 19 oracle steps |
 | `0x8c23bbc0` | `list_max` | `notes/verifications/0x8c23bbc0.json` — 14 oracle steps |
+| `0x8c21fa8a` | `mode_code` | `notes/verifications/0x8c21fa8a.json` — 16 oracle steps |
+| `0x8c236a44` | `hash_lookup` | `notes/verifications/0x8c236a44.json` — 17 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
