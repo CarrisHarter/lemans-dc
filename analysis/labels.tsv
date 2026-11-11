@@ -1,0 +1,311 @@
+address	proposed	evidence	string_address
+0x8c0178c0	exception	exception  bad cast	0x00000000
+0x8c017ac4	exception_2	exception  bad cast	0x00000000
+0x8c018c54	gokart	GOKART	0x00000000
+0x8c020c0c	reflection_mapping	ReflectionMapping	0x00000000
+0x8c0213d4	reflection_mapping_2	ReflectionMapping	0x00000000
+0x8c0219c0	reflection_mapping_3	ReflectionMapping	0x00000000
+0x8c021b88	reflection_mapping_4	ReflectionMapping	0x00000000
+0x8c021dbc	reflection_mapping_5	ReflectionMapping	0x00000000
+0x8c022288	reflection_mapping_6	ReflectionMapping	0x00000000
+0x8c0226d0	reflection_mapping_7	ReflectionMapping	0x00000000
+0x8c0230a4	reflection_mapping_8	ReflectionMapping	0x00000000
+0x8c0233c8	reflection_mapping_9	ReflectionMapping	0x00000000
+0x8c0237f8	reflection_mapping_10	ReflectionMapping	0x00000000
+0x8c023894	reflection_mapping_11	ReflectionMapping	0x00000000
+0x8c023b54	reflection_mapping_12	ReflectionMapping	0x00000000
+0x8c023d10	reflection_mapping_13	ReflectionMapping	0x00000000
+0x8c023f1c	reflection_mapping_14	ReflectionMapping	0x00000000
+0x8c02419c	camera_debug_screen	CameraDebugScreen	0x00000000
+0x8c02511c	camera_debug_screen_2	CameraDebugScreen	0x00000000
+0x8c026a88	camera_debug_screen_3	CameraDebugScreen	0x00000000
+0x8c027980	unnamed	UNNAMED	0x00000000
+0x8c027f58	physics_diagnostics_screen	PhysicsDiagnosticsScreen	0x00000000
+0x8c027f94	physics_diagnostics_screen_2	PhysicsDiagnosticsScreen	0x00000000
+0x8c028da8	physics_diagnostics_screen_3	PhysicsDiagnosticsScreen	0x00000000
+0x8c028e94	physics_diagnostics_screen_4	PhysicsDiagnosticsScreen	0x00000000
+0x8c038ad8	race_start_camera_behaviour	RaceStartCameraBehaviour	0x00000000
+0x8c039250	race_start_camera_behaviour_2	RaceStartCameraBehaviour	0x00000000
+0x8c03a65c	reflection_mapping_15	ReflectionMapping	0x00000000
+0x8c03a908	reflection_mapping_16	ReflectionMapping	0x00000000
+0x8c03aacc	reflection_mapping_17	ReflectionMapping	0x00000000
+0x8c03ae74	reflection_mapping_18	ReflectionMapping	0x00000000
+0x8c03bab0	reflection_mapping_19	ReflectionMapping	0x00000000
+0x8c03cb5c	reflection_mapping_20	ReflectionMapping	0x00000000
+0x8c03e954	console_text	ConsoleText	0x00000000
+0x8c05e90c	material	Material	0x00000000
+0x8c05ec94	material_2	Material	0x00000000
+0x8c05ed44	material_3	Material	0x00000000
+0x8c05ee94	material_4	Material	0x00000000
+0x8c05eedc	material_5	Material	0x00000000
+0x8c05ef94	surface_properties	SurfaceProperties	0x00000000
+0x8c0602c4	vertex_set	VertexSet	0x00000000
+0x8c060548	vertex_set_2	VertexSet	0x00000000
+0x8c0606a4	vertex_set_3	VertexSet	0x00000000
+0x8c060860	vertex_set_4	VertexSet	0x00000000
+0x8c060974	vertex_set_5	VertexSet	0x00000000
+0x8c060aac	vertex_set_6	VertexSet	0x00000000
+0x8c072e68	gen_tri_strip	GenTriStrip  Revision  36    Dat	0x00000000
+0x8c073b90	gen_tri_strip_2	GenTriStrip  Revision  36    Dat	0x00000000
+0x8c081c88	active	active	0x00000000
+0x8c083d1c	font_set	FontSet	0x00000000
+0x8c0845a0	font_set_2	FontSet	0x00000000
+0x8c084984	font_set_3	FontSet	0x00000000
+0x8c084a58	font_set_4	FontSet	0x00000000
+0x8c084c40	font_set_5	FontSet	0x00000000
+0x8c08fb58	bounding_volume	BoundingVolume  Revision  22	0x00000000
+0x8c092734	reflection_mapping_21	ReflectionMapping	0x00000000
+0x8c092934	reflection_mapping_22	ReflectionMapping	0x00000000
+0x8c092a88	reflection_mapping_23	ReflectionMapping	0x00000000
+0x8c092b40	reflection_mapping_24	ReflectionMapping	0x00000000
+0x8c093c90	reflection_mapping_25	ReflectionMapping	0x00000000
+0x8c095208	reflection_mapping_26	ReflectionMapping	0x00000000
+0x8c09cfec	reflection_mapping_27	ReflectionMapping	0x00000000
+0x8c0a0a38	reflection_mapping_28	ReflectionMapping	0x00000000
+0x8c0a0b10	reflection_mapping_29	ReflectionMapping	0x00000000
+0x8c0a3bbc	scene_node	SceneNode	0x00000000
+0x8c0a41e8	device_debug_windows	DeviceDebugWindows	0x00000000
+0x8c0a452c	device_debug_windows_2	DeviceDebugWindows	0x00000000
+0x8c0a47b4	device_debug_windows_3	DeviceDebugWindows	0x00000000
+0x8c0a4878	device_debug_windows_4	DeviceDebugWindows	0x00000000
+0x8c0a4a64	device_debug_windows_5	DeviceDebugWindows	0x00000000
+0x8c0a4dbc	device_debug_windows_6	DeviceDebugWindows	0x00000000
+0x8c0a5190	device_debug_windows_7	DeviceDebugWindows	0x00000000
+0x8c0a5450	device_debug_windows_8	DeviceDebugWindows	0x00000000
+0x8c0a5a40	device_debug_windows_9	DeviceDebugWindows	0x00000000
+0x8c0a9200	fixed_camera	FixedCamera	0x00000000
+0x8c0ab53c	fixed_camera_2	FixedCamera	0x00000000
+0x8c0abbf4	fixed_camera_3	FixedCamera	0x00000000
+0x8c0ac0ac	fixed_camera_4	FixedCamera	0x00000000
+0x8c0ad918	fixed_camera_5	FixedCamera	0x00000000
+0x8c0b2254	render_state_group	RenderStateGroup	0x00000000
+0x8c0b509c	revision	Revision  12	0x00000000
+0x8c0b8438	revision_2	Revision  30	0x00000000
+0x8c0b9474	revision_3	Revision  11	0x00000000
+0x8c0bdf98	checkpoint	Checkpoint	0x00000000
+0x8c0bf36c	checkpoint_2	Checkpoint	0x00000000
+0x8c0bfba0	checkpoint_3	Checkpoint	0x00000000
+0x8c0c0464	checkpoint_4	Checkpoint	0x00000000
+0x8c0c0800	checkpoint_5	Checkpoint	0x00000000
+0x8c0c9c3c	engine_sound_group	EngineSoundGroup	0x00000000
+0x8c0c9e40	engine_sound_group_2	EngineSoundGroup	0x00000000
+0x8c0ca00c	engine_sound_group_3	EngineSoundGroup	0x00000000
+0x8c0cc1f8	version	Version	0x00000000
+0x8c0cf48c	revision_4	Revision  25	0x00000000
+0x8c0d8f28	reflection_mapping_30	ReflectionMapping	0x00000000
+0x8c0d92c8	reflection_mapping_31	ReflectionMapping	0x00000000
+0x8c0dfc50	pl_collision_scene_edge_data	plCollisionSceneEdgeData	0x00000000
+0x8c0e07c0	slew_camera	SlewCamera	0x00000000
+0x8c0e2b20	console_text_2	ConsoleText	0x00000000
+0x8c0e2ce4	console_text_3	ConsoleText	0x00000000
+0x8c0e6628	console_text_4	ConsoleText	0x00000000
+0x8c10585c	lm_track_info	lmTrackInfo	0x00000000
+0x8c1061d4	lm_track_info_2	lmTrackInfo	0x00000000
+0x8c1068c8	lm_track_info_3	lmTrackInfo	0x00000000
+0x8c107198	fuel_load	FuelLoad	0x00000000
+0x8c10740c	fuel_load_2	FuelLoad	0x00000000
+0x8c111efc	a_brake_factors0	aBrakeFactors0	0x00000000
+0x8c112850	a_brake_factors0_2	aBrakeFactors0	0x00000000
+0x8c1133c8	a_brake_factors0_3	aBrakeFactors0	0x00000000
+0x8c1183dc	a_brake_factors0_4	aBrakeFactors0	0x00000000
+0x8c11b8c0	a_brake_factors0_5	aBrakeFactors0	0x00000000
+0x8c11c6d8	a_brake_factors0_6	aBrakeFactors0	0x00000000
+0x8c11d4bc	a_brake_factors0_7	aBrakeFactors0	0x00000000
+0x8c11eefc	a_brake_factors0_8	aBrakeFactors0	0x00000000
+0x8c121df0	track_name	TrackName	0x00000000
+0x8c1228c8	track_name_2	TrackName	0x00000000
+0x8c128af8	indicator	Indicator	0x00000000
+0x8c12aac4	indicator_2	Indicator	0x00000000
+0x8c12aea8	lm_championship_info	lmChampionshipInfo	0x00000000
+0x8c146580	requested	Requested   3fK for replay contr	0x00000000
+0x8c146744	requested_2	Requested   3fK for replay contr	0x00000000
+0x8c14960c	poly_line	PolyLine	0x00000000
+0x8c14aa94	lm_playback_physics_sync_data	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14b308	lm_playback_physics_sync_data_2	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14b418	lm_playback_physics_sync_data_3	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14b520	lm_playback_physics_sync_data_4	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14b6bc	lm_playback_physics_sync_data_5	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14cc60	lm_playback_physics_sync_data_6	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14ce60	lm_playback_physics_sync_data_7	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14d03c	lm_playback_physics_sync_data_8	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14d22c	lm_playback_physics_sync_data_9	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14d33c	lm_playback_physics_sync_data_10	lmPlaybackPhysicsSyncData	0x00000000
+0x8c14e77c	lmscroll_text	LMScrollText	0x00000000
+0x8c14ee0c	lmscroll_text_2	LMScrollText	0x00000000
+0x8c14f174	lmscroll_text_3	LMScrollText	0x00000000
+0x8c14f754	lmscroll_text_4	LMScrollText	0x00000000
+0x8c14f96c	lmscroll_text_5	LMScrollText	0x00000000
+0x8c14faf8	lmscroll_text_6	LMScrollText	0x00000000
+0x8c14fb84	lmscroll_text_7	LMScrollText	0x00000000
+0x8c15ae50	transmission	Transmission	0x00000000
+0x8c15afc4	transmission_2	Transmission	0x00000000
+0x8c15b0e0	transmission_3	Transmission	0x00000000
+0x8c15bb7c	transmission_4	Transmission	0x00000000
+0x8c15c574	transmission_5	Transmission	0x00000000
+0x8c15cff8	transmission_6	Transmission	0x00000000
+0x8c15d200	transmission_7	Transmission	0x00000000
+0x8c15e184	key_gearup	keyGEARUP	0x00000000
+0x8c15e3d8	key_gearup_2	keyGEARUP	0x00000000
+0x8c15ecc8	key_gearup_3	keyGEARUP	0x00000000
+0x8c15f2d8	key_gearup_4	keyGEARUP	0x00000000
+0x8c15f9ec	key_gearup_5	keyGEARUP	0x00000000
+0x8c15fb60	key_gearup_6	keyGEARUP	0x00000000
+0x8c15fda0	key_gearup_7	keyGEARUP	0x00000000
+0x8c163170	mainmenu	mainmenu	0x00000000
+0x8c16543c	texture	Texture	0x00000000
+0x8c170668	ac_digi_set_filter_envelope	acDigiSetFilterEnvelope   can t s	0x00000000
+0x8c1707c2	ac_digi_set_amplitude_envelope	acDigiSetAmplitudeEnvelope   can	0x00000000
+0x8c17083e	ac_digi_set_lfo_registers	acDigiSetLfoRegisters   can t se	0x00000000
+0x8c170bb8	ac_digi_play_with_parameters	acDigiPlayWithParameters   Warni	0x00000000
+0x8c170efa	ac_set_multi_play_mask	acSetMultiPlayMask   upperMask o	0x00000000
+0x8c171060	ac_digi_multi_stop	acDigiMultiStop   masks are 0	0x00000000
+0x8c1710f8	ac_digi_open	acDigiOpen   port is out of rang	0x00000000
+0x8c171262	ac_digi_set_sample_rate	acDigiSetSampleRate   sampleRate	0x00000000
+0x8c171358	ac_digi_set_qsound_angle	acDigiSetQSoundAngle   Warning  a	0x00000000
+0x8c1713c4	ac_dsp_load_programs	acDspLoadPrograms   address is N	0x00000000
+0x8c171474	ac_dsp_load_output_mixer	acDspLoadOutputMixer   address i	0x00000000
+0x8c1714fc	ac_dsp_set_mixer_channel	acDspSetMixerChannel   can t sen	0x00000000
+0x8c171580	ac_digi_close	acDigiClose   can t send driver c	0x00000000
+0x8c171720	ac_digi_set_volume	acDigiSetVolume   Warning  chann	0x00000000
+0x8c1717b4	ac_digi_set_pan	acDigiSetPan   Warning  aicaPan i	0x00000000
+0x8c171820	ac_digi_request_event	acDigiRequestEvent   failed to s	0x00000000
+0x8c171892	ac_digi_stop	acDigiStop   can t send driver c	0x00000000
+0x8c171ae8	ac_midi_close	acMidiClose   can t send driver c	0x00000000
+0x8c171c54	ac_midi_stop	acMidiStop   can t send driver c	0x00000000
+0x8c171ca6	ac_midi_request_event	acMidiRequestEvent   can t send d	0x00000000
+0x8c171d10	ac_midi_pause	acMidiPause   can t send driver c	0x00000000
+0x8c171e4c	ac_midi_reset	acMidiReset   can t send driver c	0x00000000
+0x8c172046	ac_cd_set_pan	acCdSetPan   can t send driver c	0x00000000
+0x8c1720a0	ac_cd_init	acCdInit   can t send driver com	0x00000000
+0x8c1720fc	ac_cmd_queue_init	acCmdQueueInit   buffer is NULL	0x00000000
+0x8c172780	ac_g2_fill	acG2Fill   target is NULL	0x00000000
+0x8c172868	ac_g2_read	acG2Read   target source is NULL	0x00000000
+0x8c172916	ac_g2_read_long	acG2ReadLong   address is NULL	0x00000000
+0x8c172986	ac_g2_write_long	acG2WriteLong   address is NULL	0x00000000
+0x8c172a18	ac_g2_write	acG2Write   target source is NUL	0x00000000
+0x8c172be0	ac_int_init	acIntInit   failed to add the AR	0x00000000
+0x8c172ea4	ac_system_get_int_array_start_offset	acSystemGetIntArrayStartOffset	0x00000000
+0x8c172ee2	ac_system_get_int_array_start_offset_2	acSystemGetIntArrayStartOffset	0x00000000
+0x8c172f5a	ac_system_get_int_array_start_offset_3	acSystemGetIntArrayStartOffset	0x00000000
+0x8c172f96	ac_system_get_int_array_start_offset_4	acSystemGetIntArrayStartOffset	0x00000000
+0x8c172fcc	ac_system_check_driver_revision	acSystemCheckDriverRevision   dr	0x00000000
+0x8c173084	ac_system_get_driver_revision	acSystemGetDriverRevision   driv	0x00000000
+0x8c17311c	ac_system_init	acSystemInit   driverType is inv	0x00000000
+0x8c1732b8	ac_system_get_first_free_sound_memory	acSystemGetFirstFreeSoundMemory	0x00000000
+0x8c17331c	ac_system_install_driver	acSystemInstallDriver   driverIm	0x00000000
+0x8c1734c8	ac_set_transfer_mode	acSetTransferMode   add handler f	0x00000000
+0x8c173592	ac_transfer	acTransfer   request is NULL	0x00000000
+0x8c173a8c	am_bank_asset_type_is	amBankAssetTypeIs   theBank is N	0x00000000
+0x8c173af0	am_bank_transfer	amBankTransfer   target or sourc	0x00000000
+0x8c173b88	am_bank_get_size	amBankGetSize   bankSize or file	0x00000000
+0x8c173bd2	am_bank_load	amBankLoad   sh4buffer or filena	0x00000000
+0x8c173f72	am_bank_fetch_wave_loop_flag	amBankFetchWaveLoopFlag   theBan	0x00000000
+0x8c17401e	am_bank_fetch_wave_random_pitch	amBankFetchWaveRandomPitch   the	0x00000000
+0x8c17409c	am_bank_fetch_wave_sample_rate	amBankFetchWaveSampleRate   theB	0x00000000
+0x8c17413e	am_bank_fetch_wave_bit_depth	amBankFetchWaveBitDepth   theBan	0x00000000
+0x8c174276	am_bank_fetch_asset	amBankFetchAsset   theBank  para	0x00000000
+0x8c174344	am_bank_get_asset_size	amBankGetAssetSize   theBank or a	0x00000000
+0x8c1743a6	am_bank_get_number_of_assets	amBankGetNumberOfAssets   number	0x00000000
+0x8c174488	am_dsp_fetch_program_bank	amDspFetchProgramBank   theBank i	0x00000000
+0x8c1744e4	am_dsp_fetch_output_bank	amDspFetchOutputBank   theBank i	0x00000000
+0x8c17460a	am_heap_get_info	amHeapGetInfo   freeSoundMemory i	0x00000000
+0x8c17466e	am_heap_get_free	amHeapGetFree   audio heap not i	0x00000000
+0x8c1746a4	am_heap_alloc	amHeapAlloc   audio heap not ini	0x00000000
+0x8c17493c	am_heap_free	amHeapFree   buffer is NULL	0x00000000
+0x8c174af6	am_heap_alloc_from_top	amHeapAllocFromTop   Heap is no	0x00000000
+0x8c174cd4	am_heap_alloc_from_bottom	amHeapAllocFromBottom   Heap is	0x00000000
+0x8c174e9e	am_heap_init	amHeapInit   memoryPool is NULL	0x00000000
+0x8c175450	am_init	amInit   amHeapGetInfo   failed	0x00000000
+0x8c17563c	am_sound_set_effects_buss	amSoundSetEffectsBuss   wetLevel	0x00000000
+0x8c175746	am_sound_release_voice_channel	amSoundReleaseVoiceChannel   the	0x00000000
+0x8c1757e8	am_sound_fetch_sample	amSoundFetchSample   theSound is	0x00000000
+0x8c175918	am_sound_is_looping	amSoundIsLooping   loopFlag is N	0x00000000
+0x8c175978	am_sound_allocate_voice_channel	amSoundAllocateVoiceChannel   th	0x00000000
+0x8c1759ae	am_sound_get_sample_rate	amSoundGetSampleRate   realWorld	0x00000000
+0x8c1759e2	am_sound_get_volume	amSoundGetVolume   aicaVolume is	0x00000000
+0x8c175a16	am_sound_get_pan	amSoundGetPan   pan is NULL	0x00000000
+0x8c175a4a	am_sound_get_voice_channel	amSoundGetVoiceChannel   voiceCh	0x00000000
+0x8c175a7e	am_sound_get_callback	amSoundGetCallback    theCallbac	0x00000000
+0x8c175ab4	am_sound_set_current_playback_rate	amSoundSetCurrentPlaybackRate   t	0x00000000
+0x8c175b3a	am_sound_set_volume	amSoundSetVolume   theSound is N	0x00000000
+0x8c175ba4	am_sound_set_pan	amSoundSetPan   theSound is NULL	0x00000000
+0x8c175c28	am_sound_set_callback	amSoundSetCallback   theSound is	0x00000000
+0x8c175c72	am_sound_is_playing	amSoundIsPlaying   theSound is N	0x00000000
+0x8c175c98	am_sound_stop	amSoundStop   theSound is NULL	0x00000000
+0x8c175e66	am_sound_close_voice_channel	amSoundCloseVoiceChannel   theS	0x00000000
+0x8c175ea0	am_sound_play	amSoundPlay   theSound is NULL	0x00000000
+0x8c175f92	am_sound_play_raw	amSoundPlayRaw   voice channel n	0x00000000
+0x8c176228	am_stream_allocate_voice_channels	amStreamAllocateVoiceChannels   t	0x00000000
+0x8c1764e0	am_stream_close	amStreamClose   theStream is NUL	0x00000000
+0x8c176512	am_stream_is_done	amStreamIsDone   theStream is NU	0x00000000
+0x8c176580	am_stream_is_idle	amStreamIsIdle   theStream is NU	0x00000000
+0x8c1765b0	am_stream_is_playing	amStreamIsPlaying   theStream is	0x00000000
+0x8c1765e0	am_stream_set_header_buffer	amStreamSetHeaderBuffer   theStr	0x00000000
+0x8c176618	am_stream_start	amStreamStart   theStream is NUL	0x00000000
+0x8c1766a2	am_stream_set_buffers	amStreamSetBuffers   theStream o	0x00000000
+0x8c17678e	am_stream_set_isr	amStreamSetIsr   theStream theIs	0x00000000
+0x8c1767b2	am_stream_init	amStreamInit   theStream or file	0x00000000
+0x8c176d7e	am_stream_set_stereo_voice_channels	amStreamSetStereoVoiceChannels	0x00000000
+0x8c176df2	am_stream_set_mono_voice_channel	amStreamSetMonoVoiceChannel   t	0x00000000
+0x8c1778ea	am_util_align_number	amUtilAlignNumber   theAlignment	0x00000000
+0x8c177926	am_util_get_length_in_frames	amUtilGetLengthInFrames   channe	0x00000000
+0x8c17797e	am_util_get_nibbles_per_frame	amUtilGetNibblesPerFrame   nibbl	0x00000000
+0x8c1779fe	am_util_get_sample_rate	amUtilGetSampleRate   sampleRate	0x00000000
+0x8c177c3c	am_util_get_aica_sample_type	amUtilGetAicaSampleType   aicaSa	0x00000000
+0x8c177e28	am_voice_free	amVoiceFree   voiceChannel is ou	0x00000000
+0x8c177fa0	am_voice_install_user_callback	amVoiceInstallUserCallback   voi	0x00000000
+0x8c177fe0	am_voice_allocate	amVoiceAllocate   voiceChannel i	0x00000000
+0x8c182048	flame2	flame2	0x00000000
+0x8c182650	reflection_mapping_32	ReflectionMapping	0x00000000
+0x8c1829c4	reflection_mapping_33	ReflectionMapping	0x00000000
+0x8c182d04	reflection_mapping_34	ReflectionMapping	0x00000000
+0x8c183808	reflection_mapping_35	ReflectionMapping	0x00000000
+0x8c1839f8	driver	driver	0x00000000
+0x8c183a7c	driver_2	driver	0x00000000
+0x8c183b90	driver_3	driver	0x00000000
+0x8c1851e0	transitioned_lighting_modification	TransitionedLightingModification	0x00000000
+0x8c1858fc	transitioned_lighting_modification_2	TransitionedLightingModification	0x00000000
+0x8c1864e0	transitioned_lighting_modification_3	TransitionedLightingModification	0x00000000
+0x8c187464	transitioned_lighting_modification_4	TransitionedLightingModification	0x00000000
+0x8c187670	transitioned_lighting_modification_5	TransitionedLightingModification	0x00000000
+0x8c1885f8	transitioned_lighting_modification_6	TransitionedLightingModification	0x00000000
+0x8c189944	track_name_3	TrackName	0x00000000
+0x8c189b34	track_name_4	TrackName	0x00000000
+0x8c189d54	track_name_5	TrackName	0x00000000
+0x8c189f78	track_name_6	TrackName	0x00000000
+0x8c18dd74	vmumessage_text	VMUMessageText	0x00000000
+0x8c18de14	vmumessage_text_2	VMUMessageText	0x00000000
+0x8c18df14	vmumessage_text_3	VMUMessageText	0x00000000
+0x8c18e0a8	vmumessage_text_4	VMUMessageText	0x00000000
+0x8c18e1f0	vmumessage_text_5	VMUMessageText	0x00000000
+0x8c18feac	const_player	constPLAYER	0x00000000
+0x8c1904dc	const_player_2	constPLAYER	0x00000000
+0x8c19ab08	version_2	Version	0x00000000
+0x8c19aca4	version_3	Version	0x00000000
+0x8c19aed0	version_4	Version	0x00000000
+0x8c19b044	reflection_mapping_36	ReflectionMapping	0x00000000
+0x8c19b2b4	reflection_mapping_37	ReflectionMapping	0x00000000
+0x8c19b7f4	version_5	Version	0x00000000
+0x8c19f194	infogrames	INFOGRAMES	0x00000000
+0x8c19f3d4	infogrames_2	INFOGRAMES	0x00000000
+0x8c1a4a84	tdg_fatal_error	tdgFatalError      WARNING  alre	0x00000000
+0x8c1ae098	reflection_mapping_38	ReflectionMapping	0x00000000
+0x8c1aebb8	reflection_mapping_39	ReflectionMapping	0x00000000
+0x8c1aec94	reflection_mapping_40	ReflectionMapping	0x00000000
+0x8c1aedd8	reflection_mapping_41	ReflectionMapping	0x00000000
+0x8c1af194	reflection_mapping_42	ReflectionMapping	0x00000000
+0x8c1af2d4	reflection_mapping_43	ReflectionMapping	0x00000000
+0x8c1af3e4	reflection_mapping_44	ReflectionMapping	0x00000000
+0x8c1af5ac	reflection_mapping_45	ReflectionMapping	0x00000000
+0x8c1b4b00	heures	Heures	0x00000000
+0x8c1b52b4	heures_2	Heures	0x00000000
+0x8c1b57f8	version_6	Version	0x00000000
+0x8c1b60d8	version_7	Version	0x00000000
+0x8c1b631c	version_8	Version	0x00000000
+0x8c1bf4c0	light_off	lightOFF	0x00000000
+0x8c1c0108	light_off_2	lightOFF	0x00000000
+0x8c1c030c	light_off_3	lightOFF	0x00000000
+0x8c1c1480	version_9	Version	0x00000000
+0x8c1c3718	center	center	0x00000000
+0x8c1c3e5c	center_2	center	0x00000000
+0x8c21f550	please	Please  cancel the interrupt fro	0x00000000
