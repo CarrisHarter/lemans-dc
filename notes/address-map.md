@@ -633,6 +633,15 @@
 | `0x8c0f816c` | `advance_56` | `notes/verifications/0x8c0f816c.json` — verified |
 | `0x8c0f8174` | `copy_three_words_at_56` | `notes/verifications/0x8c0f8174.json` — verified |
 | `0x8c0f8850` | `load_field_12_via_36` | `notes/verifications/0x8c0f8850.json` — verified |
+| `0x8c0f8858` | `advance_20` | `notes/verifications/0x8c0f8858.json` — verified |
+| `0x8c0f8860` | `copy_four_words_at_20` | `notes/verifications/0x8c0f8860.json` — verified |
+| `0x8c0f8874` | `advance_8` | `notes/verifications/0x8c0f8874.json` — verified |
+| `0x8c0f8a10` | `advance_12_5` | `notes/verifications/0x8c0f8a10.json` — verified |
+| `0x8c0fca08` | `pick_smaller_pointer` | `notes/verifications/0x8c0fca08.json` — verified |
+| `0x8c0fd3b8` | `load_field_12_via_0` | `notes/verifications/0x8c0fd3b8.json` — verified |
+| `0x8c0fdae8` | `copy_four_words_at_48` | `notes/verifications/0x8c0fdae8.json` — verified |
+| `0x8c0fdc58` | `empty_stub_8` | `notes/verifications/0x8c0fdc58.json` — verified |
+| `0x8c0fdc5c` | `empty_stub_9` | `notes/verifications/0x8c0fdc5c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
