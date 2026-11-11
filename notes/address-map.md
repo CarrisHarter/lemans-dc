@@ -184,6 +184,8 @@
 | `0x8c074b2c` | `FUN_8c074b2c` | `notes/verifications/0x8c074b2c*.json` — both branches; table dispatch v=*(r4+0xe8|0xf8+r5*4), v!=5 → r0=*(*(r4+16+v*4)+12), else r0=0 |
 | `0x8c070ac8` | `FUN_8c070ac8` | `notes/verifications/0x8c070ac8*.json` — 3 branches (mismatch, n<0, equal-to-bound); strncasecmp with r14=-32 saved/restored, dt r6 bound, r0=r0-r1 |
 | `0x8c082260` | `FUN_8c082260` | `notes/verifications/0x8c082260.json` — ok; FPU struct init: [16]=1.0f, [20]=0, [24]=0x41400000, [28]=[32]=0, [0..12] from 0x8c1d0f28, r0=r4 |
+| `0x8c0822a0` | `FUN_8c0822a0` | `notes/verifications/0x8c0822a0.json` — ok; 12-word copy r5→r4+56, r1=*(r5+40), r0=*(r5+44) |
+| `0x8c0822d4` | `FUN_8c0822d4` | `notes/verifications/0x8c0822d4.json` — ok; 9-word copy r5→r4+20, final r1=*(r5+24), r0=*(r5+32) (last load into r0) |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
