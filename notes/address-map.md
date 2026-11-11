@@ -600,6 +600,11 @@
 | `0x8c0eacf4` | `empty_stub_7` | `notes/verifications/0x8c0eacf4.json` — verified |
 | `0x8c0eaef8` | `advance_28_2` | `notes/verifications/0x8c0eaef8.json` — verified |
 | `0x8c0f02fc` | `store_word_at_64` | `notes/verifications/0x8c0f02fc.json` — verified |
+| `0x8c0e2894` | `copy_three_floats_2` | `notes/verifications/0x8c0e2894.json` — verified |
+| `0x8c0f1138` | `advance_to_limit` | `notes/verifications/0x8c0f1138.json` — verified |
+| `0x8c0f1508` | `indexed_load_offset_434` | `notes/verifications/0x8c0f1508.json` — verified |
+| `0x8c0f1a70` | `load_pool_constant_6` | `notes/verifications/0x8c0f1a70.json` — verified |
+| `0x8c0f1ad8` | `clear_byte_13` | `notes/verifications/0x8c0f1ad8.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
