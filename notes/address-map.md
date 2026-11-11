@@ -392,6 +392,7 @@
 | `0x8c21d97a` | `FUN_8c21d97a` | `notes/verifications/0x8c21d97a.json` — ok; r0=r4-48 in rts delay |
 | `0x8c21e124` | `FUN_8c21e124` | `notes/verifications/0x8c21e124.json` — ok; r0=r5-r4 in rts delay |
 | `0x8c21d8c2` | `FUN_8c21d8c2` | `notes/verifications/0x8c21d8c2.json` — ok; *0x8c23d450=0, r0=0 in rts delay |
+| `0x8c2268b4` | `FUN_8c2268b4` | `notes/verifications/0x8c2268b4.json` — ok; *0x8c2c65c8=r4, r0=r4 in rts delay |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -1090,6 +1091,15 @@
 | `0x8c216dc0` | `streq` | `notes/verifications/0x8c216dc0.json` — 27 oracle steps |
 | `0x8c2173d0` | `get_field_if_gated` | `notes/verifications/0x8c2173d0.json` — 11 oracle steps |
 | `0x8c217e18` | `load_word_from_bytes` | `notes/verifications/0x8c217e18.json` — 19 oracle steps |
+| `0x8c21a036` | `global_word` | `notes/verifications/0x8c21a036.json` — 3 oracle steps |
+| `0x8c21a04a` | `set_indexed_word_if_in_range` | `notes/verifications/0x8c21a04a.json` — 8 oracle steps |
+| `0x8c21aff2` | `index_times_8_plus_field` | `notes/verifications/0x8c21aff2.json` — 7 oracle steps |
+| `0x8c21b06e` | `store_shifted_field_10c0` | `notes/verifications/0x8c21b06e.json` — 6 oracle steps |
+| `0x8c21b07a` | `load_field_10c0_high_half` | `notes/verifications/0x8c21b07a.json` — 8 oracle steps |
+| `0x8c21b08a` | `store_bit_field_10c4` | `notes/verifications/0x8c21b08a.json` — 7 oracle steps |
+| `0x8c21b098` | `load_field_10c4` | `notes/verifications/0x8c21b098.json` — 5 oracle steps |
+| `0x8c21b0a2` | `store_field_10cc` | `notes/verifications/0x8c21b0a2.json` — 5 oracle steps |
+| `0x8c21b0ac` | `load_field_10cc` | `notes/verifications/0x8c21b0ac.json` — 5 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
