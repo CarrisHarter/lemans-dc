@@ -14,6 +14,8 @@ checked exhaustively over every instance in the binary:
                      bit 11 positive sends every backward branch forward.
   4. indexed FPU   — fmov @(R0,Rm),FRn puts the address register in m and the
                      FR in n; the store form swaps them.
+  5. fsts/flds/ftrc — the FR is the n field and the low byte is the opcode.
+                     Verified with sh-elf-as: `ftrc fr4,fpul` -> 0xF43D.
 
 Usage: tools/decode-check.py [disassembly.asm]
 Exit code 1 on any mismatch.
@@ -27,6 +29,7 @@ LINE = re.compile(r"^([0-9a-f]{8}):\t((?:[0-9a-f]{2} )+)\s*\t\s*(\S+)\s*(.*)$")
 DISP_OPS = re.compile(r"^(r\d+),@\((\d+),(r\d+)\)$|^@\((\d+),(r\d+)\),(r\d+)$")
 FPU_LOAD = re.compile(r"^@\(r0,r(\d+)\),fr(\d+)$")
 FPU_STORE = re.compile(r"^fr(\d+),@\(r0,r(\d+)\)$")
+FPU_REG = re.compile(r"^fr(\d+),fpul$|^fpul,fr(\d+)$")
 
 WIDTH = {
     0x0: "b", 0x4: "b", 0xC: "b",
@@ -41,6 +44,7 @@ def main(argv):
     disp_checked = disp_bad = 0
     branch_checked = branch_bad = 0
     fpu_checked = fpu_bad = 0
+    fpul_checked = fpul_bad = 0
 
     with path.open(errors="replace") as fh:
         for line in fh:
@@ -83,6 +87,17 @@ def main(argv):
                             if fpu_bad <= 5:
                                 print(f"fpu    {m.group(1)} 0x{op:04x} {mnemonic} {ops}")
 
+            if mnemonic in ("fsts", "flds", "ftrc"):
+                pm = FPU_REG.match(m.group(4).strip())
+                if pm:
+                    reg = int(pm.group(1) or pm.group(2))
+                    fpul_checked += 1
+                    if reg != ((op >> 8) & 0xF):
+                        fpul_bad += 1
+                        if fpul_bad <= 5:
+                            print(f"fpul   {m.group(1)} 0x{op:04x} {mnemonic} "
+                                  f"{m.group(4).strip()}")
+
             if mnemonic in ("bra", "bsr"):
                 pc = int(m.group(1), 16)
                 disp = ((op & 0x0FFF) << 4) & 0xFFFF
@@ -117,7 +132,8 @@ def main(argv):
     print(f"disp:   {disp_checked} checked, {disp_bad} mismatches")
     print(f"branch: {branch_checked} checked, {branch_bad} mismatches")
     print(f"fpu:    {fpu_checked} checked, {fpu_bad} mismatches")
-    return 1 if (width_bad or disp_bad or branch_bad or fpu_bad) else 0
+    print(f"fpul:   {fpul_checked} checked, {fpul_bad} mismatches")
+    return 1 if (width_bad or disp_bad or branch_bad or fpu_bad or fpul_bad) else 0
 
 
 if __name__ == "__main__":
