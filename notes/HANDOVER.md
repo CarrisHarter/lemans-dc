@@ -10,7 +10,7 @@ Reverse-engineering *Test Drive Le Mans* (Sega Dreamcast, 2001, **USA** release,
 product `T15123N`) and porting it to Rust **locally only**, function by function,
 each port proven equivalent to the original SH-4 machine code by an interpreter.
 
-Working directory: `~/Projects/lemans-dc` (git repo, 89 files tracked).
+Working directory: `~/Projects/lemans-dc` (git repo).
 
 ## Work autonomously
 
