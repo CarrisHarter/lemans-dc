@@ -291,6 +291,8 @@
 | `0x8c0b4fd4` | `FUN_8c0b4fd4` | `notes/verifications/0x8c0b4fd4.json` — ok; fr0=0 → r4+4, rts delay → r4 |
 | `0x8c09100c` | `FUN_8c09100c` | `notes/verifications/0x8c09100c.json` — ok; two fill loops (r4+0x178 zeros while r7<=36; 36/0 alternating at r4+80/r4+72 while r1<=10), r13/r14 net unchanged |
 | `0x8c0b4ef0` | `FUN_8c0b4ef0` | `notes/verifications/0x8c0b4ef0.json` — ok; 3 floats at r4 *= fr4 in place, r4+=8, r0=r4+4 residue |
+| `0x8c0b4f0c` | `FUN_8c0b4f0c` | `notes/verifications/0x8c0b4f0c.json` — ok; 3 floats r4 -= r5 in place, r4+=8, r5+=8, r0=r5o+4, r1=r4o+4, fr0/fr1 last values |
+| `0x8c0b4f34` | `FUN_8c0b4f34` | `notes/verifications/0x8c0b4f34.json` — ok; same with fadd |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -769,6 +771,8 @@
 | `0x8c0e9f6c` | `FUN_8c0e9f6c` | `notes/verifications/0x8c0e9f6c.json` — 101 oracle steps; stores: 4x f32 at [out+0/4/8/12]; regs: same shape as 0x8c0e9ef0 (r3=base+16, r4=base+20, r7=24n, r0=out+8, r1=out+4), literals at 0x8c0e9fe0/0x8c0e9fe4; T=0 all paths |
 | `0x8c0e8e08` | `FUN_8c0e8e08` | `notes/verifications/0x8c0e8e08.json` — 75 oracle steps; r5<-0x01000000 and r6<-masked word on update path (r6 stays 0x8c1d6e00, r5 stays param_2 when bt.s taken); r7<-*r3&0x0ff300c0; r0 ends 112 on tail path but the tested mode/[r4+0x70] byte on early exits; r1 ends 0 on tail path but the mode on early exits; T=last cmp/eq #imm or tst; bt.s delay add r6,r1 runs on both paths; mode2/mode3 bra delay slots perform the final mov.l r0,@(12,r3) store; mode1 clobbers fr0-fr3, r12-r14 scratch and fpul (last ftrc) |
 | `0x8c0e5988` | `FUN_8c0e5988` | `notes/verifications/0x8c0e5988.json` — 160 oracle steps; r0/r1 are clip flags set by delay slots (mov #1,r0 at 0x8c0e59b4/0x8c0e5a08, mov r1,r0 at 0x8c0e59c6/0x8c0e59e8/0x8c0e59fa, mov #1,r1 at 0x8c0e5a56); r0 ends as the queue pointer 0x8c27ad10 and r1 as r3+4 on the output path; r3/r4 are queue head/cursor; fr0-fr15 all churn (fr9/fr6 negated twice, fr13/fr14 restored from stack); T ends as last fcmp/gt or tst; every bf.s/bra delay slot (fmov fr14,fr1 / fmov fr13,fr2 / fmov fr0,fr1 / fadd fr3,fr0 / fneg fr9 / fmul fr2,fr10) runs per branch-taken rules; pref @r3/@r1 are no-ops; 12 queue stores incl. fr9 stored twice and one store at the un-incremented head |
+| `0x8c215fc4` | `word_copy_rounded` | `notes/verifications/0x8c215fc4.json` — verified |
+| `0x8c215fe4` | `byte_copy_do_while` | `notes/verifications/0x8c215fe4.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
