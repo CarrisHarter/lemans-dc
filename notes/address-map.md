@@ -1247,6 +1247,15 @@
 | `0x8c215ec8` | `pass` | `notes/verifications/0x8c215ec8.json` — 124 oracle steps; 124 |
 | `0x8c215f6c` | `pass` | `notes/verifications/0x8c215f6c.json` — 77 oracle steps; 77 |
 | `0x8c216008` | `pass` | `notes/verifications/0x8c216008.json` — 285 oracle steps; 285 |
+| `0x8c21b418` | `pass` | `notes/verifications/0x8c21b418.json` — 44 oracle steps; 44 |
+| `0x8c21b8de` | `pass` | `notes/verifications/0x8c21b8de.json` — 29 oracle steps; 29 |
+| `0x8c21bba6` | `pass` | `notes/verifications/0x8c21bba6.json` — 33 oracle steps; 33 |
+| `0x8c21c902` | `pass` | `notes/verifications/0x8c21c902.json` — 26 oracle steps; 26 |
+| `0x8c21dab4` | `pass` | `notes/verifications/0x8c21dab4.json` — 71 oracle steps; 71 |
+| `0x8c2276c0` | `insert_bits_gated_g` | `notes/verifications/0x8c2276c0.json` — 26 oracle steps |
+| `0x8c227720` | `insert_bits_gated_h` | `notes/verifications/0x8c227720.json` — 6 oracle steps |
+| `0x8c237240` | `size_class` | `notes/verifications/0x8c237240.json` — 19 oracle steps |
+| `0x8c23bbc0` | `list_max` | `notes/verifications/0x8c23bbc0.json` — 14 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
@@ -1333,6 +1342,10 @@ memory` before a diff can mean anything.
 | `0x8c165b80` | needs an unimplemented instruction: `ftrv` |
 | `0x8c1cadc8` | needs an unimplemented instruction: `frchg` |
 | `0x8c22f4c0` | needs an unimplemented instruction: `fschg` |
+| `0x8c21d89e` | hardware register access: `0xff800030` |
+| `0x8c21e0f4` | hardware register access: `0xffd80000` |
+| `0x8c21e11a` | hardware register access: `0xffd8****` |
+| `0x8c21e298` | hardware register access: `0xffd80000` |
 
 ## Auto-proposed names (debug strings)
 
