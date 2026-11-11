@@ -308,6 +308,9 @@
 | `0x8c07d374` | `advance_52` | `notes/verifications/0x8c07d374.json` — verified |
 | `0x8c07de64` | `advance_60` | `notes/verifications/0x8c07de64.json` — verified |
 | `0x8c079078` | `advance_68_load` | `notes/verifications/0x8c079078.json` — verified |
+| `0x8c07a2a8` | `dec_inc_wrap` | `notes/verifications/0x8c07a2a8.json` — verified |
+| `0x8c07ae50` | `copy_three_words` | `notes/verifications/0x8c07ae50.json` — verified |
+| `0x8c07ae60` | `store_three_args_2` | `notes/verifications/0x8c07ae60.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
