@@ -25,6 +25,15 @@
 | `0x8c01044c` | `FUN_8c01044c` | `notes/verifications/0x8c01044c.json` — 2 oracle steps; none |
 | `0x8c010d6c` | `FUN_8c010d6c` | `notes/verifications/0x8c010d6c.json` — 6 oracle steps; r1 = table base; r0 = byte&7 |
 | `0x8c010d7c` | `FUN_8c010d7c` | `notes/verifications/0x8c010d7c.json` — 6 oracle steps; r1 = table base; r0 = byte&0x40 |
+| `0x8c0192fc` | `FUN_8c0192fc` | `notes/verifications/0x8c0192fc.json` — 8 oracle steps; store [global]=r4, [r4..r4+8]=0; r1=0; r0=r4 |
+| `0x8c019670` | `FUN_8c019670` | `notes/verifications/0x8c019670.json` — 4 oracle steps; r4 += 0x70; r0 = zero-extended byte |
+| `0x8c01ace8` | `FUN_8c01ace8` | `notes/verifications/0x8c01ace8.json` — 6 oracle steps; r1=table base; r5 <<= 2; r0=final field load |
+| `0x8c01acf4` | `FUN_8c01acf4` | `notes/verifications/0x8c01acf4.json` — 6 oracle steps; r1=table base; r5 <<= 2; r0=final field load |
+| `0x8c01e484` | `FUN_8c01e484` | `notes/verifications/0x8c01e484.json` — 2 oracle steps; r0=r4 |
+| `0x8c01e704` | `FUN_8c01e704` | `notes/verifications/0x8c01e704.json` — 4 oracle steps; r1=[r5]; [r4]=r1; r0=r4 |
+| `0x8c01e70c` | `FUN_8c01e70c` | `notes/verifications/0x8c01e70c.json` — 2 oracle steps; none |
+| `0x8c01e828` | `FUN_8c01e828` | `notes/verifications/0x8c01e828.json` — 11 oracle steps; [r4+8] rewritten twice; T=last tst; r4=0 iff decremented value nonzero; r0=r4 (possibly zeroed) |
+| `0x8c010160` | `FUN_8c010160` | `notes/verifications/0x8c010160.json` — 4 oracle steps; store r5 at table_base + (r4<<2) |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
