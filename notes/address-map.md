@@ -265,6 +265,53 @@ memory` before a diff can mean anything.
 | `0x8c237fae` | hardware register access: `a05f6900,a05f6908,a05f6930,a05f6938` |
 | `0x8c23bc20` | hardware register access: `8c0080f0,8c0080fc` |
 | `0x8c23bc72` | hardware register access: `8c0080fd` |
+| `0x8c018244` | `bra` to itself: the routine never returns, so a halting oracle cannot compare it |
+| `0x8c010a34` | needs an unimplemented instruction: `div1` |
+| `0x8c015f54` | needs an unimplemented instruction: `div1` |
+| `0x8c016008` | needs an unimplemented instruction: `div1` |
+| `0x8c0160b0` | needs an unimplemented instruction: `div1` |
+| `0x8c016100` | needs an unimplemented instruction: `div1` |
+| `0x8c0161c8` | needs an unimplemented instruction: `div1` |
+| `0x8c017f90` | needs an unimplemented instruction: `div1` |
+| `0x8c018030` | needs an unimplemented instruction: `div1` |
+| `0x8c0180c8` | needs an unimplemented instruction: `div1` |
+| `0x8c01817c` | needs an unimplemented instruction: `div1` |
+| `0x8c01848c` | needs an unimplemented instruction: `.word` |
+| `0x8c061d40` | needs an unimplemented instruction: `fipr,fschg,ftrv` |
+| `0x8c061e00` | needs an unimplemented instruction: `fipr,ftrv` |
+| `0x8c061ee0` | needs an unimplemented instruction: `fipr,fschg,ftrv` |
+| `0x8c061fc0` | needs an unimplemented instruction: `fschg,ftrv` |
+| `0x8c062060` | needs an unimplemented instruction: `ftrv` |
+| `0x8c0620e0` | needs an unimplemented instruction: `ftrv` |
+| `0x8c062160` | needs an unimplemented instruction: `fipr,fschg,ftrv` |
+| `0x8c062220` | needs an unimplemented instruction: `fipr,fschg,ftrv` |
+| `0x8c0b27a0` | needs an unimplemented instruction: `fsrra` |
+| `0x8c0b27c0` | needs an unimplemented instruction: `fsca` |
+| `0x8c0b27d0` | needs an unimplemented instruction: `fsca` |
+| `0x8c0b27e0` | needs an unimplemented instruction: `fsca` |
+| `0x8c0b27ee` | needs an unimplemented instruction: `fsca` |
+| `0x8c0b2800` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2880` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2900` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2940` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2980` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b29c0` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2a00` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2a60` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2aa0` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2b40` | needs an unimplemented instruction: `frchg,ftrv` |
+| `0x8c0b2ba0` | needs an unimplemented instruction: `fipr` |
+| `0x8c0b2bc0` | needs an unimplemented instruction: `fipr` |
+| `0x8c0b2be0` | needs an unimplemented instruction: `fipr,fsrra` |
+| `0x8c0b2c20` | needs an unimplemented instruction: `fsrra` |
+| `0x8c0b2c40` | needs an unimplemented instruction: `fipr` |
+| `0x8c0b2c60` | needs an unimplemented instruction: `fipr` |
+| `0x8c0b2c80` | needs an unimplemented instruction: `fipr,fsrra` |
+| `0x8c0ce740` | needs an unimplemented instruction: `fschg,ftrv` |
+| `0x8c0ea8e0` | needs an unimplemented instruction: `frchg` |
+| `0x8c165b80` | needs an unimplemented instruction: `ftrv` |
+| `0x8c1cadc8` | needs an unimplemented instruction: `frchg` |
+| `0x8c22f4c0` | needs an unimplemented instruction: `fschg` |
 
 ## Auto-proposed names (debug strings)
 
