@@ -1141,6 +1141,14 @@
 | `0x8c18db34` | `pass` | `notes/verifications/0x8c18db34.json` — 40 oracle steps; 40 |
 | `0x8c190b08` | `pass` | `notes/verifications/0x8c190b08.json` — 22 oracle steps; 22 |
 | `0x8c193ac4` | `pass` | `notes/verifications/0x8c193ac4.json` — 66 oracle steps; 66 |
+| `0x8c21b138` | `load_field_10dc` | `notes/verifications/0x8c21b138.json` — 5 oracle steps |
+| `0x8c21b142` | `store_field_fac` | `notes/verifications/0x8c21b142.json` — 5 oracle steps |
+| `0x8c21b14c` | `load_field_fb0` | `notes/verifications/0x8c21b14c.json` — 5 oracle steps |
+| `0x8c21b17c` | `store_field_fbc` | `notes/verifications/0x8c21b17c.json` — 5 oracle steps |
+| `0x8c21b186` | `load_field_fbc` | `notes/verifications/0x8c21b186.json` — 5 oracle steps |
+| `0x8c21c40a` | `mask_28_bits` | `notes/verifications/0x8c21c40a.json` — 3 oracle steps |
+| `0x8c21ccec` | `indexed_word_from_table` | `notes/verifications/0x8c21ccec.json` — 5 oracle steps |
+| `0x8c21d8b0` | `set_global_or_minus_one` | `notes/verifications/0x8c21d8b0.json` — 7 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
