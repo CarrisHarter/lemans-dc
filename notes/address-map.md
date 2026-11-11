@@ -1324,6 +1324,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0153d0` | `double_frexp_decompose` | `notes/verifications/0x8c0153d0*.json` — 8 seeds (395/395/395/395/395/395/396/395 oracle steps); call-crossing port (callees 0x8c014da4, 0x8c010e84, 0x8c014c1c); five FPSCR-masked calls; `mov.b @r14,r0` sign-extends — zero-extending it was the only failure |
 | `0x8c010450` | `masked_list_sum_max` | `notes/verifications/0x8c010450*.json` — 3 seeds (67/47/52 oracle steps); raises IMASK to 15, walks circular list summing (count-1) and tracking max, both ×64; `bt.s` delay slot `add r0,r14` runs on both paths so the sum is unconditional |
 | `0x8c0612f8` | `set_imask` | `notes/verifications/0x8c0612f8*.json` — 2 seeds (11/11 oracle steps); SR IMASK = r4 & 15, other bits preserved |
+| `0x8c0e7218` | `set_imask_2` | `notes/verifications/0x8c0e7218.json` — 11 oracle steps; twin of 0x8c0612f8 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
