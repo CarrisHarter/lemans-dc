@@ -1333,6 +1333,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c221e18` | `slot_string_fill` | `notes/verifications/0x8c221e18*.json` — 2 seeds (401/209 oracle steps); zeros slot+44..57 and +60..73, copies ≤12 bytes from r5/r6 stopping before the first zero; dual cursors (peek @r4, consume @r0/@r14+) |
 | `0x8c225c14` | `validate_desc_map_count` | `notes/verifications/0x8c225c14*.json` — 9 seeds (38/53/57/60/7/14/17/59/47 oracle steps); descriptor range/shape validation mapping count 0xff/0x1ff/0x3ff/0x7ff to [r4+4]; fail returns -1 via rts delay slot |
 | `0x8c228f60` | `bitmask_update_unlink` | `notes/verifications/0x8c228f60*.json` — 7 seeds (57/7/27/26/25/75/39 oracle steps); gate on [r4+20]==[r4+24], three -1/limit-skippable 1<<idx OR/AND bitmask updates, node unlink via prev/next; bt.s delay slots (`mov #1,r5`, `shad`, next-pointer load) all load-bearing |
+| `0x8c231720` | `quant_table_build` | `notes/verifications/0x8c231720.json` — 2322 oracle steps; builds 128-entry ftrc(t*255) table at 0x8c2c8850 from the f32 table at r4 (read descending), sets bit 2 of [0x8c2c8a50]; r4 is a caller-provided table (callers at 0x8c092716/0x8c0a8fde) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
