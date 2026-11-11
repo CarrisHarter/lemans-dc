@@ -465,6 +465,12 @@
 | `0x8c0b649c` | `store_arg_to_global` | `notes/verifications/0x8c0b649c.json` — verified |
 | `0x8c0b7414` | `delta_12_minus_8` | `notes/verifications/0x8c0b7414.json` — verified |
 | `0x8c0b766c` | `init_three_vtables` | `notes/verifications/0x8c0b766c.json` — verified |
+| `0x8c0b8340` | `store_byte_at_4` | `notes/verifications/0x8c0b8340.json` — verified |
+| `0x8c0b8348` | `load_byte_at_4` | `notes/verifications/0x8c0b8348.json` — verified |
+| `0x8c0b834c` | `init_three_vtables_2` | `notes/verifications/0x8c0b834c.json` — verified |
+| `0x8c0b8380` | `store_byte_at_4_2` | `notes/verifications/0x8c0b8380.json` — verified |
+| `0x8c0b8388` | `load_byte_at_4_2` | `notes/verifications/0x8c0b8388.json` — verified |
+| `0x8c0b838c` | `init_three_vtables_3` | `notes/verifications/0x8c0b838c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
