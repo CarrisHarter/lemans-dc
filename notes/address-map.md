@@ -790,6 +790,13 @@
 | `0x8c12ee78` | `load_pool_constant_14` | `notes/verifications/0x8c12ee78.json` — verified |
 | `0x8c12f028` | `load_pool_constant_15` | `notes/verifications/0x8c12f028.json` — verified |
 | `0x8c13edcc` | `store_arg_return_self_8` | `notes/verifications/0x8c13edcc.json` — verified |
+| `0x8c13edd4` | `advance_12_10` | `notes/verifications/0x8c13edd4.json` — verified |
+| `0x8c1431f8` | `store_word_at_132` | `notes/verifications/0x8c1431f8.json` — verified |
+| `0x8c143e88` | `store_word_at_92` | `notes/verifications/0x8c143e88.json` — verified |
+| `0x8c145580` | `load_store_to_stack_9` | `notes/verifications/0x8c145580.json` — verified |
+| `0x8c145594` | `load_double_indirect_store_to_stack_9` | `notes/verifications/0x8c145594.json` — verified |
+| `0x8c14666c` | `load_word_at_2004` | `notes/verifications/0x8c14666c.json` — verified |
+| `0x8c146678` | `store_word_at_164` | `notes/verifications/0x8c146678.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
