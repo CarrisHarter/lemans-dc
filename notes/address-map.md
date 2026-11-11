@@ -1086,6 +1086,10 @@
 | `0x8c217948` | `word_field_80` | `notes/verifications/0x8c217948.json` — verified |
 | `0x8c217aa4` | `word_field_82` | `notes/verifications/0x8c217aa4.json` — verified |
 | `0x8c218156` | `copy_field_if_version` | `notes/verifications/0x8c218156.json` — verified |
+| `0x8c19f554` | `set_flag_byte` | `notes/verifications/0x8c19f554.json` — 11 oracle steps |
+| `0x8c216dc0` | `streq` | `notes/verifications/0x8c216dc0.json` — 27 oracle steps |
+| `0x8c2173d0` | `get_field_if_gated` | `notes/verifications/0x8c2173d0.json` — 11 oracle steps |
+| `0x8c217e18` | `load_word_from_bytes` | `notes/verifications/0x8c217e18.json` — 19 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
