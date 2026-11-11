@@ -1069,6 +1069,11 @@
 | `0x8c1cc338` | `conditional_global_byte` | `notes/verifications/0x8c1cc338.json` — verified |
 | `0x8c1cc35c` | `conditional_global_byte_2` | `notes/verifications/0x8c1cc35c.json` — verified |
 | `0x8c1cc380` | `clear_and_copy_flag` | `notes/verifications/0x8c1cc380.json` — verified |
+| `0x8c1cc3a0` | `set_two_flags` | `notes/verifications/0x8c1cc3a0.json` — verified |
+| `0x8c1cc608` | `store_to_global_return_self` | `notes/verifications/0x8c1cc608.json` — verified |
+| `0x8c1ccc18` | `init_record_a` | `notes/verifications/0x8c1ccc18.json` — verified |
+| `0x8c1ccc3c` | `init_record_b` | `notes/verifications/0x8c1ccc3c.json` — verified |
+| `0x8c1ccc68` | `init_record_c` | `notes/verifications/0x8c1ccc68.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
