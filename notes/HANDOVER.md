@@ -12,6 +12,37 @@ each port proven equivalent to the original SH-4 machine code by an interpreter.
 
 Working directory: `~/Projects/lemans-dc` (git repo, 89 files tracked).
 
+## Work autonomously
+
+Do not ask the user before each function. The loop is mechanical and already
+proven; run it unattended and report results, not questions.
+
+- **Default action:** open `analysis/export/pseudocode/functions/`, take the next
+  unported address in ascending order that has no outgoing calls, and run the
+  full loop (spec → port → verify → evidence → ledger → commit).
+- **Batch size:** 10 functions, then a one-paragraph report: ported, failed,
+  new instruction gaps, new side-effect patterns. Then continue with the next 10
+  without waiting for approval.
+- **On failure:** if a port fails verification twice for the same reason, mark
+  the function `blocked` in `notes/address-map.md` with the diff output, move to
+  the next function, and keep going. Never stall the batch on one function.
+- **On a missing oracle instruction:** add it, add a unit test, re-run
+  `cargo test`, update `tools/opcode-census.py`'s implemented set, then resume
+  the batch. This is expected work, not a question for the user.
+- **On an ambiguous name or struct:** record it as unknown in
+  `notes/address-map.md` and continue. Do not invent evidence and do not stop.
+- **Stop the run and report** only when one of these is true:
+  1. the oracle hits an instruction you cannot implement without guessing
+     semantics;
+  2. a function's behaviour cannot be pinned by any spec (e.g. it depends on
+     hardware registers or DMA);
+  3. an action would touch the legal constraints above;
+  4. ten consecutive functions fail.
+- **Always leave the repo green:** `cargo test` in `rust/sh4-oracle` passes,
+  `git status` is clean, every claimed port has a verification file.
+- **Never wait for a "go".** If the user is silent, keep porting. The project's
+  bottleneck is 5,211 functions, not permission.
+
 ## Legal constraints — do not violate these
 
 - Permission was granted by Business Affairs, Atari SA (2026-11-11) for personal,
