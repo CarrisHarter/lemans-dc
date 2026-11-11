@@ -1417,6 +1417,7 @@ memory` before a diff can mean anything.
 | `0x8c018244` | infinite spin loop (`bra` to self); exceeds any step budget — behaviour cannot be pinned by a spec |
 | `0x8c21d89e` | hardware register access: `ff800030` |
 | `0x8c21f90c` | hardware register access: `ffc00004` (leaf-worklist HW filter misses `ffc*`/`ffe*` prefixes) |
+| `0x8c21fac4` | hardware register access: `ffc00004` (both branches converge on the tail touch) |
 
 ## Auto-proposed names (debug strings)
 
