@@ -1159,6 +1159,16 @@
 | `0x8c225ae4` | `index_times_10_plus_low_nibble` | `notes/verifications/0x8c225ae4.json` — 12 oracle steps |
 | `0x8c238998` | `init_or_reset_global` | `notes/verifications/0x8c238998.json` — 6 oracle steps |
 | `0x8c21ae2c` | `set_enable_and_clear_flag` | `notes/verifications/0x8c21ae2c.json` — 11 oracle steps |
+| `0x8c152ee0` | `pass` | `notes/verifications/0x8c152ee0.json` — 114 oracle steps; 114 |
+| `0x8c159fc0` | `pass` | `notes/verifications/0x8c159fc0.json` — 57 oracle steps; 57 |
+| `0x8c15a068` | `pass` | `notes/verifications/0x8c15a068.json` — 39 oracle steps; 39 |
+| `0x8c15a0fc` | `pass` | `notes/verifications/0x8c15a0fc.json` — 154 oracle steps; 154 |
+| `0x8c15a1dc` | `pass` | `notes/verifications/0x8c15a1dc.json` — 152 oracle steps; 152 |
+| `0x8c164298` | `pass` | `notes/verifications/0x8c164298.json` — 11 oracle steps; 11 |
+| `0x8c1642dc` | `pass` | `notes/verifications/0x8c1642dc.json` — 32 oracle steps; 32 |
+| `0x8c166514` | `pass` | `notes/verifications/0x8c166514.json` — 79 oracle steps; 79 |
+| `0x8c16909c` | `pass` | `notes/verifications/0x8c16909c.json` — 385 oracle steps; 385 |
+| `0x8c16c620` | `pass` | `notes/verifications/0x8c16c620.json` — 109 oracle steps; 109 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
