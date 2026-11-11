@@ -67,6 +67,7 @@ proven; run it unattended and report results, not questions.
 | cross tool symlinks | `~/opt/sh-elf/toolbin` (needed with `-B`) |
 | rea (patched fork) | `~/Projects/rea-sh4` + MCP server `rea` |
 | SH-4 binutils | `sh4-elf-objdump` |
+| Rust stable (rustup, installed 2026-11-12) | `~/.cargo/bin`, symlinked into `~/.local/bin` |
 
 Facts learned the hard way:
 
