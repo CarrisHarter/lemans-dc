@@ -78,6 +78,13 @@
 | `0x8c027418` | `copy_48B_plus_ptr_table` | `notes/verifications/0x8c027418.json` — 138 oracle steps; r4 ends p1+0x144; r0=20 r1=6 r3=48 r7=24; T=0; the u32 store [r4+r0]=r13 is the bt.s delay slot |
 | `0x8c0274c8` | `empty_rts` | `notes/verifications/0x8c0274c8.json` — 2 oracle steps; none (rts ; nop) |
 | `0x8c0274cc` | `table_byte_lookup` | `notes/verifications/0x8c0274cc.json` — 4 oracle steps; r0 first becomes table base 0x170 (literal @0x8c0274d4) then the byte at 0x170+r4; extu.b rts delay slot zero-extends the sign-extending mov.b |
+| `0x8c014bd4` | `FUN_8c014bd4 (bignum rol-left, mask 0x80)` | `notes/verifications/0x8c014bd4.json` — 73 oracle steps; r5=r6=end-1; r1=last&0x80; r3=signext(byte)<<1; r7=last mask bit (return); r0=0/1; T=final tst r7; r14 restored via push/pop; entry bf.s delay slot forces r6=r5; loop delay slot decrements r6 in lockstep |
+| `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
+| `0x8c0152fc` | `FUN_8c0152fc (guarded slot store)` | `notes/verifications/0x8c0152fc.json` — 12 oracle steps; rts delay slot mov #1,r0 on store path; r2=slot ptr (loaded from cell 0x8c015320); r1=0x450; r3=0x200; r4=p-q; zero-byte path keeps r3=*p sign-extended and r4 untouched with T=1; short path T=0 |
+| `0x8c015eea` | `FUN_8c015eea (decimal string increment)` | `notes/verifications/0x8c015eea.json` — 49 oracle steps; r0 never written; r1=48; r7=57 via bf.s delay slot; r5/r6 decrement in lockstep (delay slot) so carry writes hit current byte and byte below; r3 ends as r5-1 pointer after last carry (or base[n-1]+1); r6 ends at r4, r5 at r4+1; T=final cmp/gt on base[1] |
+| `0x8c0174c0` | `FUN_8c0174c0 (set global, return old)` | `notes/verifications/0x8c0174c0.json` — 8 oracle steps; r1=slot pointer loaded from cell 0x8c0174d0; r0=old value; r14 saved/restored; T untouched |
+| `0x8c017844` | `FUN_8c017844 (push node on list)` | `notes/verifications/0x8c017844.json` — 12 oracle steps; r0=r4 (return); r1=old head; r3=head-pointer cell; store order node[0]=old, node[1]=r5, node[2]=r4, then *head=node; T untouched |
+| `0x8c018fec` | `FUN_8c018fec (store to global, return arg)` | `notes/verifications/0x8c018fec.json` — 4 oracle steps; rts delay slot mov r4,r0 so r0=stored value even though r0 first held the pointer; T untouched |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
