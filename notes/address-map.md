@@ -233,6 +233,7 @@
 | `0x8c052c88` | `FUN_8c052c88` | `notes/verifications/0x8c052c88.json` — 13 oracle steps; third byte store is in the rts delay slot; r0 ends 0x1f2 (last literal), r1=last byte via extu.b; offsets 0x1f0-0x1f2 from PC-relative literals; T untouched |
 | `0x8c053be0` | `FUN_8c053be0` | `notes/verifications/0x8c053be0.json` — 2 oracle steps; r0=r4 via rts delay slot (C shows plain return) |
 | `0x8c055fe4` | `FUN_8c055fe4` | `notes/verifications/0x8c055fe4.json` — 4 oracle steps; rts delay slot fmov @r0,fr0 loads from the INCREMENTED r0 (ptr+8); fr0+r0 change, T untouched; no FPSCR.SZ double path in machine code |
+| `0x8c017c0c` | `FUN_8c017c0c` | `notes/verifications/0x8c017c0c.json` — 38 oracle steps; r4 itself ends advanced (delay-slot mov r4,r0 mirrors it into r0); r6=decoded value; r3=b1<<16 and r1=b2<<8 (shll16/shll8 in place); T=bit2 of first byte (1 only on 4-byte path); follow-up bytes read at r4+1..3 (group-8 base=bits 7-4, disp=bits 3-0) |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

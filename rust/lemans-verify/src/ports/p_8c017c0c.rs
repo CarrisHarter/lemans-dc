@@ -1,9 +1,10 @@
 //! 0x8c017c0c — decode a 1..4 byte little-endian integer. The low 3 bits of
 //! the first byte select the length; the value is the first byte shifted
 //! right by the length, with the following bytes packed above it. The
-//! follow-up bytes are read with group-8 `mov.b @(disp,Rn),R0` ops whose
-//! displacement the oracle reads as the full low byte: 0x41/0x42/0x43 (the
-//! disassembler's `@(1..3,r4)` display masks it), i.e. r4+0x41..0x43.
+//! follow-up bytes are read with group-8 `mov.b @(disp,Rm),R0` ops; the
+//! oracle decodes the base register from bits 7-4 and the displacement from
+//! bits 3-0, so 0x8441/0x8442/0x8443 read r4+1, r4+2, r4+3 — the addresses the
+//! disassembler prints.
 //!
 //! ABI: r4 = src, r5 = u32* out. Returns r4 advanced past the consumed bytes.
 //!
@@ -36,8 +37,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         return;
     }
 
-    // mov.b @(0x41,r4),r0 ; extu.b r0,r3
-    let b1 = mem.read_u8(r4.wrapping_add(0x41)).unwrap() as u32;
+    // mov.b @(1,r4),r0 ; extu.b r0,r3
+    let b1 = mem.read_u8(r4.wrapping_add(1)).unwrap() as u32;
     if b0 & 2 == 0 {
         // 2-byte: shar shar shll8 ; or ; add #2,r4 ; store ; bra (delay mov r4,r0)
         let mut v = ((r6 as i32) >> 1) as u32;
@@ -54,8 +55,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         return;
     }
 
-    // mov.b @(0x42,r4),r0 ; extu.b r0,r1
-    let b2 = mem.read_u8(r4.wrapping_add(0x42)).unwrap() as u32;
+    // mov.b @(2,r4),r0 ; extu.b r0,r1
+    let b2 = mem.read_u8(r4.wrapping_add(2)).unwrap() as u32;
     if b0 & 4 == 0 {
         // 3-byte: shar x3, shll16, shll8 r3, or r1 ; add #3,r4 ; store
         let mut v = ((r6 as i32) >> 1) as u32;
@@ -76,7 +77,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     }
 
     // 4-byte: shar x3, shll16+shll8, shll16 r3, shll8 r1, or b3
-    let b3 = mem.read_u8(r4.wrapping_add(0x43)).unwrap() as u32;
+    let b3 = mem.read_u8(r4.wrapping_add(3)).unwrap() as u32;
     let mut v = ((r6 as i32) >> 1) as u32;
     v = ((v as i32) >> 1) as u32;
     v = ((v as i32) >> 1) as u32;
