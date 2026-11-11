@@ -908,6 +908,16 @@
 | `0x8c164374` | `store_r5_at_24` | `notes/verifications/0x8c164374.json` — verified |
 | `0x8c164404` | `store_r5_at_48` | `notes/verifications/0x8c164404.json` — verified |
 | `0x8c164408` | `store_indexed_at_32` | `notes/verifications/0x8c164408.json` — verified |
+| `0x8c16441c` | `store_r5_at_20` | `notes/verifications/0x8c16441c.json` — verified |
+| `0x8c164420` | `store_r5_at_16` | `notes/verifications/0x8c164420.json` — verified |
+| `0x8c164424` | `store_r5_at_12` | `notes/verifications/0x8c164424.json` — verified |
+| `0x8c164428` | `store_r5_at_8` | `notes/verifications/0x8c164428.json` — verified |
+| `0x8c16442c` | `store_r5_at_4` | `notes/verifications/0x8c16442c.json` — verified |
+| `0x8c16448c` | `empty_stub_16` | `notes/verifications/0x8c16448c.json` — verified |
+| `0x8c165918` | `store_r5_at_0` | `notes/verifications/0x8c165918.json` — verified |
+| `0x8c165ab0` | `add_through_pointer` | `notes/verifications/0x8c165ab0.json` — verified |
+| `0x8c165abc` | `zero_field` | `notes/verifications/0x8c165abc.json` — verified |
+| `0x8c165c84` | `store_r5_at_0_2` | `notes/verifications/0x8c165c84.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
