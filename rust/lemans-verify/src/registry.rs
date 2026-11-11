@@ -2385,6 +2385,8 @@ pub mod p_8c2259d6;
 pub mod p_8c225a0c;
 #[path = "ports/p_8c225ae4.rs"]
 pub mod p_8c225ae4;
+#[path = "ports/p_8c226868.rs"]
+pub mod p_8c226868;
 #[path = "ports/p_8c2268b4.rs"]
 pub mod p_8c2268b4;
 #[path = "ports/p_8c226de0.rs"]
@@ -3691,6 +3693,7 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C2259D6 => Some(p_8c2259d6::run),
         0x8C225A0C => Some(p_8c225a0c::run),
         0x8C225AE4 => Some(p_8c225ae4::run),
+        0x8C226868 => Some(p_8c226868::run),
         0x8C2268B4 => Some(p_8c2268b4::run),
         0x8C226DE0 => Some(p_8c226de0::run),
         0x8C227280 => Some(p_8c227280::run),
