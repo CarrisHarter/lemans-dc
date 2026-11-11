@@ -355,6 +355,14 @@
 | `0x8c082054` | `init_struct` | `notes/verifications/0x8c082054.json` — verified |
 | `0x8c082210` | `copy_four_words` | `notes/verifications/0x8c082210.json` — verified |
 | `0x8c082224` | `advance_24_store_float` | `notes/verifications/0x8c082224.json` — verified |
+| `0x8c08222c` | `advance_16_store_float` | `notes/verifications/0x8c08222c.json` — verified |
+| `0x8c082234` | `store_at_32` | `notes/verifications/0x8c082234.json` — verified |
+| `0x8c082238` | `store_at_28` | `notes/verifications/0x8c082238.json` — verified |
+| `0x8c082398` | `store_at_12` | `notes/verifications/0x8c082398.json` — verified |
+| `0x8c0824c0` | `set_handler_default` | `notes/verifications/0x8c0824c0.json` — verified |
+| `0x8c082de8` | `advance_12_2` | `notes/verifications/0x8c082de8.json` — verified |
+| `0x8c082fc0` | `store_arg_return_self_2` | `notes/verifications/0x8c082fc0.json` — verified |
+| `0x8c084280` | `advance_12_3` | `notes/verifications/0x8c084280.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
