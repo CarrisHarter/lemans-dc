@@ -824,6 +824,13 @@
 | `0x8c10e3dc` | `FUN_8c10e3dc` | `notes/verifications/0x8c10e3dc.json` — 4 oracle steps; r0 = *(u32*)(*r4 + 0x4c) |
 | `0x8c10ef38` | `FUN_8c10ef38` | `notes/verifications/0x8c10ef38.json` — 2 oracle steps; r0 = r4 |
 | `0x8c10efc4` | `FUN_8c10efc4` | `notes/verifications/0x8c10efc4.json` — 4 oracle steps; byte store 0 at r4; r0 = r4 |
+| `0x8c146728` | `indexed_load_shll2` | `notes/verifications/0x8c146728.json` — verified |
+| `0x8c14faf4` | `empty_stub_14` | `notes/verifications/0x8c14faf4.json` — verified |
+| `0x8c14fe10` | `load_via_field_plus_24` | `notes/verifications/0x8c14fe10.json` — verified |
+| `0x8c14fe34` | `load_via_field_plus_24_2` | `notes/verifications/0x8c14fe34.json` — verified |
+| `0x8c14dd90` | `copy_words_until_limit` | `notes/verifications/0x8c14dd90.json` — verified |
+| `0x8c14dda8` | `copy_words_until_limit_2` | `notes/verifications/0x8c14dda8.json` — verified |
+| `0x8c14e740` | `copy_words_until_limit_3` | `notes/verifications/0x8c14e740.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
