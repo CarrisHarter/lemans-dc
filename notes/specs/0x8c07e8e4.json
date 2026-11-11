@@ -1,0 +1,5 @@
+{
+  "entry": "0x8c07e8e4",
+  "regs": { "r4": "0x8c200000", "r5": "0xfeedface" },
+  "steps": 20
+}

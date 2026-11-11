@@ -329,6 +329,10 @@
 | `0x8c074bbc` | `get_val_0x2c_flag_0x40` | `notes/verifications/0x8c074bbc.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&0x40 (and #64 immediate), r1=[rec+8]+44 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&0x40)==0" |
 | `0x8c074c08` | `get_val_0x20_flag_0x08` | `notes/verifications/0x8c074c08.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&8 (and #8 immediate), r1=[rec+8]+32 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&8)==0" |
 | `0x8c074c54` | `get_val_0x1c_flag_0x04` | `notes/verifications/0x8c074c54.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&4 (and #4 immediate), r1=[rec+8]+28 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&4)==0" |
+| `0x8c07e03c` | `copy_six_words` | `notes/verifications/0x8c07e03c.json` — verified |
+| `0x8c07e8e4` | `store_arg_return_self` | `notes/verifications/0x8c07e8e4.json` — verified |
+| `0x8c07eb10` | `store_advanced_arg_to_stack_pointer` | `notes/verifications/0x8c07eb10.json` — verified |
+| `0x8c07fc24` | `store_two_args` | `notes/verifications/0x8c07fc24.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
