@@ -1,10 +1,10 @@
 {
   "address": "0x8c010000",
-  "spec": "~/Projects/lemans-dc/notes/specs/0x8c010000.json",
+  "spec": "notes/specs/0x8c010000.json",
   "binary": "fixtures/sh4_fixture.bin",
   "binary_sha256": "9cea2053e392a9e00e855ed97c0090c28be53008a073f79f82dfe2a4286d4927",
-  "commit": "7de676a",
-  "verified_at": "2026-11-11T09:22:54+00:00",
+  "commit": "8b3d722",
+  "verified_at": "2026-11-11T09:39:34+00:00",
   "result": "pass",
   "oracle": {
     "stop": "halt",
