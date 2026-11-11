@@ -1416,6 +1416,7 @@ memory` before a diff can mean anything.
 | `0x8c011470` | non-contiguous export (5 ranges spanning 0x8c011470-0x8c011869); the porting loop needs one linear body |
 | `0x8c018244` | infinite spin loop (`bra` to self); exceeds any step budget — behaviour cannot be pinned by a spec |
 | `0x8c21d89e` | hardware register access: `ff800030` |
+| `0x8c21f90c` | hardware register access: `ffc00004` (leaf-worklist HW filter misses `ffc*`/`ffe*` prefixes) |
 
 ## Auto-proposed names (debug strings)
 
