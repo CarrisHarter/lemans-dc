@@ -1002,6 +1002,16 @@
 | `0x8c198b20` | `byte_at_61` | `notes/verifications/0x8c198b20.json` — verified |
 | `0x8c198b28` | `reset_and_set_state_3` | `notes/verifications/0x8c198b28.json` — verified |
 | `0x8c198b3c` | `reset_and_set_state_2` | `notes/verifications/0x8c198b3c.json` — verified |
+| `0x8c106afc` | `FUN_8c106afc` | `notes/verifications/0x8c106afc.json` — 3 oracle steps; stores r4 at global 0x8c2ab3b0 in the rts delay slot; r0 ends as the pointer |
+| `0x8c106b08` | `FUN_8c106b08` | `notes/verifications/0x8c106b08.json` — 7 oracle steps; no stores; r0 = 0x8c2ab3c8 when *(0x8c2ab3b0)==0 else the loaded value; T ends as (value==0) |
+| `0x8c13cacc` | `FUN_8c13cacc` | `notes/verifications/0x8c13cacc.json` — 20 oracle steps; 36-byte node copy to *B or chain walk; stores node longs, head at r4+0x80, flag byte cleared; fr0/fr1 hold compare const and node float; 5 path specs all pass |
+| `0x8c13cc50` | `FUN_8c13cc50` | `notes/verifications/0x8c13cc50.json` — 20 oracle steps; 24-byte variant of 0x8c13cacc; same store pattern with 24-byte stride and const f32[0x8c13cd58] |
+| `0x8c13cd68` | `FUN_8c13cd68` | `notes/verifications/0x8c13cd68.json` — 23 oracle steps; 16-byte variant; pushes/pops r14, fldi0 (fr0=0.0) threshold compare at node+8; 5 path specs all pass |
+| `0x8c13cfbc` | `FUN_8c13cfbc` | `notes/verifications/0x8c13cfbc.json` — 35 oracle steps; on every i with [r4+8]+80i==r5 copies 8 bytes from [[r4+104]+8i] to r6/r6+4; r3=r4+104, r7=[r4+4] at exit |
+| `0x8c13d02c` | `FUN_8c13d02c` | `notes/verifications/0x8c13d02c.json` — 31 oracle steps; on first match r4 += 104, returns 0 if entry==-1 else 2, else 0; r1=[r4+8], r3=80i+[r4+8] at exit |
+| `0x8c13dbc0` | `FUN_8c13dbc0` | `notes/verifications/0x8c13dbc0.json` — 4 oracle steps; copies 8-byte elements r4..r5 to r6 unless r6==0; bf.s delay slot advances r6 every iteration incl. last; returns advanced r6 in r0 |
+| `0x8c143210` | `FUN_8c143210` | `notes/verifications/0x8c143210.json` — 40 oracle steps; stores 4 longs at r4+32 (f32[r5], f32[r5+4], f32[r5+8], 1.0 via stack frame) and 3 longs from r6 at r4+48; r4+=48, r5+=8, r7=r4+32, r2=r15-4, r3=r15-16 |
+| `0x8c144ba8` | `FUN_8c144ba8` | `notes/verifications/0x8c144ba8.json` — 10 oracle steps; walks list at [r4+4]; stores r4+4 (r4 incremented) or last <= node r3 through [r15]; r6 ends 0 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
