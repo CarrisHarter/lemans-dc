@@ -1322,6 +1322,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c014936` | `double_normalize_store` | `notes/verifications/0x8c014936*.json` — 9 seeds (94/94/94/68/418/1268/418/94/94 oracle steps); call-crossing port (callees 0x8c012260, 0x8c014da4, 0x8c014bd4); norm loop inverted from first reading — `bt` on bit-clear rotates via 0x8c014bd4, bit-set falls through to the jsr pair once; every jsr delay slot is `lds r3,fpscr` with the 0xffe7ffff mask |
 | `0x8c014ab4` | `double_round_truncate` | `notes/verifications/0x8c014ab4*.json` — 9 seeds (80/82/82/80/80/105/80/82/80 oracle steps); call-crossing port (callee 0x8c012260); exponent-nibble shift/mask path with shad -5 word rounding and the neg-path not/add bit fiddle; common tail sets double FPSCR mode and bit7 of [r15+7] on fcmp/gt |
 | `0x8c0153d0` | `double_frexp_decompose` | `notes/verifications/0x8c0153d0*.json` — 8 seeds (395/395/395/395/395/395/396/395 oracle steps); call-crossing port (callees 0x8c014da4, 0x8c010e84, 0x8c014c1c); five FPSCR-masked calls; `mov.b @r14,r0` sign-extends — zero-extending it was the only failure |
+| `0x8c010450` | `masked_list_sum_max` | `notes/verifications/0x8c010450*.json` — 3 seeds (67/47/52 oracle steps); raises IMASK to 15, walks circular list summing (count-1) and tracking max, both ×64; `bt.s` delay slot `add r0,r14` runs on both paths so the sum is unconditional |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
