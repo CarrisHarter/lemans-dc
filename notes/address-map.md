@@ -535,6 +535,18 @@
 | `0x8c0d1288` | `indexed_pool_load` | `notes/verifications/0x8c0d1288.json` — verified |
 | `0x8c0d1294` | `indexed_pool_load_2` | `notes/verifications/0x8c0d1294.json` — verified |
 | `0x8c0d1360` | `offset_table_entry` | `notes/verifications/0x8c0d1360.json` — verified |
+| `0x8c0b2f78` | `FUN_8c0b2f78` | `notes/verifications/0x8c0b2f78.json` — 81 oracle steps; fr0-fr11 clobbered with products; r0/r1/r3/r4/r5/r6/r7/r14-left-as-r4+16-but-restored |
+| `0x8c0b3828` | `FUN_8c0b3828` | `notes/verifications/0x8c0b3828.json` — 71 oracle steps; fr0=[src+32], fr1=[src+12], fr2=[src+24]; r0=[src+32], r1=[src+8], r2=r15-4, r3=r15-36, r5=src+32, r6=src+28, r7=src+4 |
+| `0x8c0b3950` | `FUN_8c0b3950` | `notes/verifications/0x8c0b3950.json` — 25 oracle steps; r7/r5/r3 = literal-pool globals; r6=r4+12, r4=r4+24, r0=[g3+8], r1=[g3] |
+| `0x8c0b3990` | `FUN_8c0b3990` | `notes/verifications/0x8c0b3990.json` — 87 oracle steps; fr0=1.0, fr1=[src+44]; r0=r4, r1=r4+60, r3=r4+56, r5=src+44, r6=r4+52, r7=src+36 |
+| `0x8c0b3d84` | `FUN_8c0b3d84` | `notes/verifications/0x8c0b3d84.json` — 92 oracle steps; dest r6 = [r15] at entry (offset 20 after 4 pushes+add #-4); fr0-fr11 clobbered; r0=dst+4, r1=r5+8, r3=r4+4, r4=r4+12, r5=r5+4, r6=dst+8 |
+| `0x8c0b4000` | `FUN_8c0b4000` | `notes/verifications/0x8c0b4000.json` — 89 oracle steps; dest r7 = [r15] at entry (offset 32 after pushes+add #-16); fr0-fr11 clobbered; r2=r15-20, r0=r7+8, r1=r7+4, r3=r5+12, r4=r4+8, r5=r5+4, r6=r5+8, r7=r7+12 |
+| `0x8c0b489c` | `FUN_8c0b489c` | `notes/verifications/0x8c0b489c.json` — 22 oracle steps; dest r3 = [r15]; fr0=[r4+16]; r0=r3+8, r1=r3+4, r3=r3+12, r4=r4+16 |
+| `0x8c0b4bb8` | `FUN_8c0b4bb8` | `notes/verifications/0x8c0b4bb8.json` — 43 oracle steps; fr0=[r6+8]; r0=r4 (rts delay slot mov r4,r0), r1=r4+28, r5=r5+12, r6=r6+8 |
+| `0x8c0b4c10` | `FUN_8c0b4c10` | `notes/verifications/0x8c0b4c10.json` — 78 oracle steps; fr0=0.0, fr1=1.0; r0=r4, r1=r4+76, r3=r4+72, r5=r4+68, r6=r4+64, r7=r4+60 |
+| `0x8c0b4d74` | `FUN_8c0b4d74` | `notes/verifications/0x8c0b4d74.json` — 32 oracle steps; dest r3 = [r15]; fr2=a2*b1 (clobbered by fmul), fr3=a1*b0, fr8=a0*b2; r0=r3+4, r1=r5+4, r3=r3+8, r4=r4+8, r5=r5+8 |
+| `0x8c0b4dd8` | `FUN_8c0b4dd8` | `notes/verifications/0x8c0b4dd8.json` — 25 oracle steps; dest r6 = [r15]; fr0-fr3 = scaled values; r0=r6+8, r1=r6+4, r3=r4+4, r5=r4+8, r6=r6+12 |
+| `0x8c0b4eb0` | `FUN_8c0b4eb0` | `notes/verifications/0x8c0b4eb0.json` — 15 oracle steps; dest r3 = [r15]; fr0=[r5+4], fr1/fr2 = differences; r0=r5+4, r1=r4+4, r3=r3+4 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

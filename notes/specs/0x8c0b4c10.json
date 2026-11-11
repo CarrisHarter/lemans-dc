@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c0b4c10",
+  "regs": {
+    "r2": "0xdead0002",
+    "r4": "0x8c250000",
+    "r8": "0xdead0008",
+    "r9": "0xdead0009",
+    "r10": "0xdead000a",
+    "r11": "0xdead000b",
+    "r12": "0xdead000c",
+    "r13": "0xdead000d",
+    "r14": "0xdead000e",
+    "r15": "0x8c30fff0"
+  },
+  "fr": {
+    "f0": "0xdead00f0",
+    "f1": "0xdead00f1",
+    "f12": "0x3f800001"
+  },
+  "steps": 1000
+}
