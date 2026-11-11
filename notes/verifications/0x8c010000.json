@@ -3,8 +3,8 @@
   "spec": "notes/specs/0x8c010000.json",
   "binary": "fixtures/sh4_fixture.bin",
   "binary_sha256": "9cea2053e392a9e00e855ed97c0090c28be53008a073f79f82dfe2a4286d4927",
-  "commit": "3d54d4d",
-  "verified_at": "2026-11-11T11:25:39+00:00",
+  "commit": "2a1b236",
+  "verified_at": "2026-11-11T11:31:35+00:00",
   "result": "pass",
   "oracle": {
     "stop": "halt",
