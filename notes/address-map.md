@@ -299,6 +299,15 @@
 | `0x8c06c2c0` | `FUN_8c06c2c0` | `notes/verifications/0x8c06c2c0.json` — 74 oracle steps; r14:=-4, r7:=-12 (bra delay 0x8c06c2d2); r3 dec on removal then re-inc (slot re-examined with count-1); r1 += 12 only on skip; fr0:=moved float only on removal; r0/r10/r11/r12/r13 hold node/pair pointers; exit T=0 |
 | `0x8c06ffec` | `FUN_8c06ffec` | `notes/verifications/0x8c06ffec.json` — 253 oracle steps; r4/r5 clobbered to src+0xbc/dst+0xd0; r2 left = body r15 (r15_in-68); r0/r1/r3/r6 = last loaded src words; r8..r14 restored by epilogue; fr0 = *(src+0x5c); sr/T untouched; fmov always 32-bit even with FPSCR.SZ=1 (spec .sz1) |
 | `0x8c072c84` | `FUN_8c072c84` | `notes/verifications/0x8c072c84.json` — 55 oracle steps; bt.s delay slot mov #0,r14 runs on both entry paths so r0=0 unless a match with r7!=0 sets r14=1; r7 clobbered to 0xfffffffe on path E; final T = MSB(r13-1) from last shll r3, not the last cmp/tst; r8..r14/r15 restored by epilogue; *r6 = r13 written before pops |
+| `0x8c079cac` | `store_three_args` | `notes/verifications/0x8c079cac.json` — verified |
+| `0x8c07c2f4` | `load_pool_constant` | `notes/verifications/0x8c07c2f4.json` — verified |
+| `0x8c07cb88` | `advance_28_load_float` | `notes/verifications/0x8c07cb88.json` — verified |
+| `0x8c07cb90` | `advance_28_store_float` | `notes/verifications/0x8c07cb90.json` — verified |
+| `0x8c07cdc8` | `load_pool_constant_2` | `notes/verifications/0x8c07cdc8.json` — verified |
+| `0x8c07d36c` | `advance_44` | `notes/verifications/0x8c07d36c.json` — verified |
+| `0x8c07d374` | `advance_52` | `notes/verifications/0x8c07d374.json` — verified |
+| `0x8c07de64` | `advance_60` | `notes/verifications/0x8c07de64.json` — verified |
+| `0x8c079078` | `advance_68_load` | `notes/verifications/0x8c079078.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
