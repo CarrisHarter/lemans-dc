@@ -285,6 +285,8 @@
 | `0x8c06d2a0` | `FUN_8c06d2a0` | `notes/verifications/0x8c06d2a0.json` — 8 oracle steps; r0=selected pointer; r1 keeps LAST mask loaded (0x02000000 on the 4th/default paths, not the matching mask); r4 clobbered to r4&0x04000000 on last two paths (`and r0,r4`); T=1 only on default path; fr0=f32 at selected pointer via rts delay slot |
 | `0x8c06d308` | `FUN_8c06d308` | `notes/verifications/0x8c06d308.json` — 8 oracle steps; same pattern as 0x8c06d2a0: r0=pointer, r1=0x02000000 leftover, r4&=0x04000000 clobber, T=1 only default, fr0 from rts delay-slot fmov |
 | `0x8c06b68c` | `FUN_8c06b68c` | `notes/verifications/0x8c06b68c.json` — 291 oracle steps; r0=r4; r1,r3=loaded words; r2=entry_r15-32; r5=entry_r15-44; r6=r4+64; r7=r4+80; r8-r14,r15 restored by pops; fr0-fr8 clobbered (fr9-fr15 untouched); T/sysregs unchanged; 144 non-stack stores to the r4 output struct |
+| `0x8c07093c` | `byte_copy` | `notes/verifications/0x8c07093c*.json` — empty and 4-byte paths (9 and 60 steps); r6 becomes the end pointer even when empty |
+| `0x8c0749f0` | `table_scale` | `notes/verifications/0x8c0749f0*.json` — sentinel and scale paths; r5 shifted in place, r4 advanced only on the scale path |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

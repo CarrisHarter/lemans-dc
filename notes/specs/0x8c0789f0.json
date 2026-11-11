@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c0789f0",
+  "regs": {
+    "r4": "0x8c200000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c200038",
+      "hex": "aabbccdd"
+    }
+  ],
+  "steps": 20
+}
