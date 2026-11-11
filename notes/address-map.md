@@ -685,6 +685,15 @@
 | `0x8c0d5210` | `FUN_8c0d5210` | `notes/verifications/0x8c0d5210.json` — 30 oracle steps; stores: 9 dwords r4+0..+32 then fr4 at +36, fr5 at +40; r0=r4+36, r1=*(r6+8), r3=*r6, r4=r4_entry+40, r7=r4_entry+24, r14 restored |
 | `0x8c0d524c` | `FUN_8c0d524c` | `notes/verifications/0x8c0d524c.json` — 32 oracle steps; stores: 9 dwords r4+0..+32 then fr4 at +36, fr5 at +40; r0=r4+36, r1=*(r7+8), r3=*r7, r4=r4_entry+40, r13/r14 restored |
 | `0x8c0d98a0` | `FUN_8c0d98a0` | `notes/verifications/0x8c0d98a0.json` — 7 oracle steps; stores: literal value 0x8c1e8b2c then 0x8c1ec3f0 at r4 (second wins, single indirection - not *0x8c1e8b2c), r5 at r4+4; r0=r4 (rts delay), T untouched |
+| `0x8c1045a0` | `empty_stub_12` | `notes/verifications/0x8c1045a0.json` — verified |
+| `0x8c104768` | `advance_32_load_byte` | `notes/verifications/0x8c104768.json` — verified |
+| `0x8c105f1c` | `store_arg_return_self_6` | `notes/verifications/0x8c105f1c.json` — verified |
+| `0x8c105f24` | `advance_12_7` | `notes/verifications/0x8c105f24.json` — verified |
+| `0x8c106044` | `load_float_via_field_72` | `notes/verifications/0x8c106044.json` — verified |
+| `0x8c10604c` | `load_float_via_field_68` | `notes/verifications/0x8c10604c.json` — verified |
+| `0x8c106054` | `load_float_via_field_64` | `notes/verifications/0x8c106054.json` — verified |
+| `0x8c10605c` | `load_float_via_field_60` | `notes/verifications/0x8c10605c.json` — verified |
+| `0x8c106064` | `load_float_via_field_56` | `notes/verifications/0x8c106064.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
