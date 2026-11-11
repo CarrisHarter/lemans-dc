@@ -797,6 +797,16 @@
 | `0x8c145594` | `load_double_indirect_store_to_stack_9` | `notes/verifications/0x8c145594.json` — verified |
 | `0x8c14666c` | `load_word_at_2004` | `notes/verifications/0x8c14666c.json` — verified |
 | `0x8c146678` | `store_word_at_164` | `notes/verifications/0x8c146678.json` — verified |
+| `0x8c12b4e0` | `FUN_8c12b4e0` | `notes/verifications/0x8c12b4e0.json` — 7 oracle steps; shll2 clobbers r5 (T untouched); r1 left holding base ptr mem[mem[r4]+0x28]; return load mov.l @(r0,r1),r0 sits in rts delay slot |
+| `0x8c12b504` | `FUN_8c12b504` | `notes/verifications/0x8c12b504.json` — 3 oracle steps; second dereference mov.l @r0,r0 runs in rts delay slot (runs regardless of branch) |
+| `0x8c12d484` | `FUN_8c12d484` | `notes/verifications/0x8c12d484.json` — 13 oracle steps; two mov.b stores of r3=1 at mem[mem[mem[r4]+4]]+0x20 and 0x83+mem[0x8c26c378]; r0/r1/r3/r4 clobbered; add #106,r0 in rts delay slot sets return 0x8c207b62 |
+| `0x8c12d4ac` | `FUN_8c12d4ac` | `notes/verifications/0x8c12d4ac.json` — 3 oracle steps; r0 loaded from ROM literal pool at 0x8c12d4b4 (=0x8c1da1a0); rts delay slot is nop |
+| `0x8c12d718` | `FUN_8c12d718` | `notes/verifications/0x8c12d718.json` — 3 oracle steps; r0 from literal pool 0x8c12d720 (=0x8c1da198); delay slot nop |
+| `0x8c12d940` | `FUN_8c12d940` | `notes/verifications/0x8c12d940.json` — 3 oracle steps; r0 from literal pool 0x8c12d948 (=0x8c1da190); delay slot nop |
+| `0x8c12da80` | `FUN_8c12da80` | `notes/verifications/0x8c12da80.json` — 3 oracle steps; r0 from literal pool 0x8c12da88 (=0x8c1da188); delay slot nop |
+| `0x8c12dd8c` | `FUN_8c12dd8c` | `notes/verifications/0x8c12dd8c.json` — 3 oracle steps; r0 from literal pool 0x8c12dd94 (=0x8c1da168); delay slot nop |
+| `0x8c12dfa0` | `FUN_8c12dfa0` | `notes/verifications/0x8c12dfa0.json` — 3 oracle steps; r0 from literal pool 0x8c12dfa8 (=0x8c1da160); delay slot nop |
+| `0x8c12e098` | `FUN_8c12e098` | `notes/verifications/0x8c12e098.json` — 3 oracle steps; r0 from literal pool 0x8c12e0a0 (=0x8c1da158); delay slot nop |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
