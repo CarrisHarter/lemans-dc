@@ -175,6 +175,26 @@
 | `0x8c02d5e4` | `FUN_8c02d5e4` | `notes/verifications/0x8c02d5e4.json` — 78 oracle steps; stores: s+0x3d4 once, s+0x3dc four times (only last survives), s+0x3d8 once; T from idx normalization (1 for idx -1 or 0, else 0); r0=0x8c02d6b4 (mova), r1=w+0x360, r4=s+0x3d8, r5=0xec, r6=w+0x33c+4*idx, r7=0x3d8; fr0/fr1=last load/product, fr2=stored value, fr3/fr4=table floats |
 | `0x8c03e534` | `FUN_8c03e534` | `notes/verifications/0x8c03e534.json` — 23 oracle steps; stores: 17 u32 into slot + [s+0x80]=new current (reset to base if == end) or byte s+0x44=0 on blind path; r5 advanced by 68 (or reloaded to base on wrap path), r3/r6/r7=scan ptrs, r1=current/reset, fr0=0.95 const, fr1=last slot float, T=last cmp/eq or cmp/hi |
 | `0x8c050718` | `FUN_8c050718` | `notes/verifications/0x8c050718.json` — 88 oracle steps; stores: [r4+0x24]=r5 (bf.s delay slot, both paths), [r4+0x28], [r4+8], [r4+0xc], [r4+0x10], 3 u32 to [r4+0x14..0x1c], [r4+0x34]=r5 (rts delay slot); T = (count-1==r5); r5=r4+0x14, r3=[r4+8]+0x14, r6=4*idx1, r7=r5 or 4*r5, r0=r5, r1=first copied u32 |
+| `0x8c058128` | `FUN_8c058128` | `notes/verifications/0x8c058128.json` — 2 oracle steps; delay-slot load: r0=*(r4+0x38); T untouched |
+| `0x8c059054` | `FUN_8c059054` | `notes/verifications/0x8c059054.json` — 6 oracle steps; r4+=0x44 (permanent); r1=*(r4+0x44) kept; r5<<=2 (T unchanged); r0=*(r1+(r5<<2)) via delay slot |
+| `0x8c05992c` | `FUN_8c05992c` | `notes/verifications/0x8c05992c.json` — 3 oracle steps; r0=*(r4+4) then delay-slot mov.b @(5,r0),r0 sign-extends over it |
+| `0x8c059934` | `FUN_8c059934` | `notes/verifications/0x8c059934.json` — 4 oracle steps; r1=*(r4+4) kept; r0=0; delay-slot store byte [r1+5]=0 |
+| `0x8c05993c` | `FUN_8c05993c` | `notes/verifications/0x8c05993c.json` — 4 oracle steps; r1=*(r4+4) kept; r0=1; delay-slot store byte [r1+5]=1 |
+| `0x8c0599f0` | `FUN_8c0599f0` | `notes/verifications/0x8c0599f0.json` — 3 oracle steps; r0=*(r4+4) then delay-slot mov.b @(4,r0),r0 sign-extends over it |
+| `0x8c059a88` | `FUN_8c059a88` | `notes/verifications/0x8c059a88.json` — 30 oracle steps; r4/r5 permanently advanced per byte compared (r5 in bt.s delay slot, runs even on mismatch); r3=last byte from r4; r1=byte diff (0 on NUL exit); r0=T of final tst r1,r1 (1=r4 string ended, 0=mismatch) |
+| `0x8c059adc` | `FUN_8c059adc` | `notes/verifications/0x8c059adc.json` — 3 oracle steps; r0=mem[0x8c059ae4]=0x8c23de00 then delay-slot r0=*(0x8c23de00) |
+| `0x8c059ae8` | `FUN_8c059ae8` | `notes/verifications/0x8c059ae8.json` — 3 oracle steps; r0=mem[0x8c059af0]=0x8c23de00 kept; delay-slot store *(0x8c23de00)=r4 |
+| `0x8c059b30` | `FUN_8c059b30` | `notes/verifications/0x8c059b30.json` — 6 oracle steps; r1=orig *r4 kept; mem[r4]=*(*r4); r0=*sp; delay-slot store mem[*sp]=r1 (outside stack window when *sp points to RAM) |
+| `0x8c059b3c` | `FUN_8c059b3c` | `notes/verifications/0x8c059b3c.json` — 4 oracle steps; r1=[r15], r0=[r4] left live; store to [r1] in rts delay slot |
+| `0x8c059b44` | `FUN_8c059b44` | `notes/verifications/0x8c059b44.json` — 5 oracle steps; r1=[r15], r0=[[r4]] left live; store to [r1] in rts delay slot |
+| `0x8c059ca4` | `FUN_8c059ca4` | `notes/verifications/0x8c059ca4.json` — 2 oracle steps; none |
+| `0x8c059ca8` | `FUN_8c059ca8` | `notes/verifications/0x8c059ca8.json` — 3 oracle steps; r0=[r4+0x38] then reloaded to [r0] in rts delay slot |
+| `0x8c059f84` | `FUN_8c059f84` | `notes/verifications/0x8c059f84.json` — 3 oracle steps; r0=0x8c23de08 (literal pool) left live; [0x8c23de08]=r4 in rts delay slot |
+| `0x8c05ab8c` | `FUN_8c05ab8c` | `notes/verifications/0x8c05ab8c.json` — 130 oracle steps; r0=4,r5=0,r6=4,r7=3,r1=base+0x2c,r3=base+0x38,fr0/fr1=last pre-swap dwords,T=0; 6 dword swaps at base+{4,8,12}x{16,32,48}; r11-r14 pushed/popped (net zero) |
+| `0x8c05abd8` | `FUN_8c05abd8` | `notes/verifications/0x8c05abd8.json` — 3 oracle steps; r0=[r4+4] then reloaded to [r0] in rts delay slot |
+| `0x8c05abe0` | `FUN_8c05abe0` | `notes/verifications/0x8c05abe0.json` — 3 oracle steps; r0=[r4+4] then reloaded to [r0+4] in rts delay slot |
+| `0x8c05ac20` | `FUN_8c05ac20` | `notes/verifications/0x8c05ac20.json` — 7 oracle steps; r0=base+0x10 left live; base reloaded from r4+4 for 2nd store; [base+0xc]=fr4, [base+0x10]=fr5 (2nd in rts delay slot) |
+| `0x8c05ac30` | `FUN_8c05ac30` | `notes/verifications/0x8c05ac30.json` — 3 oracle steps; r0=[r4+4] left live; [r0+0x14]=r5 in rts delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
