@@ -142,6 +142,7 @@
 | `0x8c0560f8` | `FUN_8c0560f8` | `notes/verifications/0x8c0560f8.json` — 49 oracle steps; r0=r4+12; r1=r4+8; fr0=[r4] raw; fr1=clamp; T=last cmp; stores at r4+0,4,8,12 |
 | `0x8c056244` | `FUN_8c056244` | `notes/verifications/0x8c056244.json` — 59 oracle steps; r0=out+4; r3=out+8; r1=r4o+4; r4=r4o+12; fr0..fr8 leftovers; T=0>fr2 (or 1 on early exit); stores [out],[out+4],[out+8] |
 | `0x8c0562f4` | `FUN_8c0562f4` | `notes/verifications/0x8c0562f4.json` — 20 oracle steps; r0=0x8c056324; r1=r4o+8; r3=r4o+4; r4=r4o+12; fr1=c2; fr2=c*c2; fr3=b*c1; fr0=sum |
+| `0x8c010cf8` | `FUN_8c010cf8` | `notes/verifications/0x8c010cf8.json` — 16 oracle steps; zero-input branch only (fr4==0: *r4=0, r6=fr4bits&0x7f800000, fr0=fr4, T=1); non-zero branches blocked on global 0x8c23d8b8 outside image |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
