@@ -1233,6 +1233,9 @@
 | `0x8c2274a0` | `insert_bits_gated_d` | `notes/verifications/0x8c2274a0.json` — 6 oracle steps |
 | `0x8c227500` | `insert_bits_gated_e` | `notes/verifications/0x8c227500.json` — 25 oracle steps |
 | `0x8c2275c0` | `insert_bits_gated_f` | `notes/verifications/0x8c2275c0.json` — 6 oracle steps |
+| `0x8c236880` | `release_slot` | `notes/verifications/0x8c236880.json` — 36 oracle steps |
+| `0x8c23a300` | `extract_five_fields` | `notes/verifications/0x8c23a300.json` — 28 oracle steps |
+| `0x8c23a8a0` | `insert_into_control_word` | `notes/verifications/0x8c23a8a0.json` — 26 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

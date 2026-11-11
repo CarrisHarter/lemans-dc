@@ -1,0 +1,1 @@
+{"entry": "0x8c23a8a0", "regs": {"r4": 1, "r5": 4660}, "memory": [{"addr": "0x8c23a8e0", "hex": "ffffa0ff"}, {"addr": "0x8c23a8e4", "hex": "98862c8c"}, {"addr": "0x8c23a8e8", "hex": "30872c8c"}, {"addr": "0x8c23a8ec", "hex": "34872c8c"}, {"addr": "0x8c2c8698", "hex": "ffffffff"}, {"addr": "0x8c2c8730", "hex": "00000000"}, {"addr": "0x8c2c8734", "hex": "00000000"}], "steps": 40}
