@@ -300,6 +300,7 @@
 | `0x8c10eae0` | `FUN_8c10eae0` | `notes/verifications/0x8c10eae0.json` — ok; byte-compare loop like 0x8c05e038 |
 | `0x8c10eb04` | `FUN_8c10eb04` | `notes/verifications/0x8c10eb04.json` — ok; struct init, pool 0x8c2049b8 single deref |
 | `0x8c10ec98` | `FUN_8c10ec98` | `notes/verifications/0x8c10ec98.json` — ok; struct init, pool 0x8c2049a0 single deref |
+| `0x8c10fe08` | `FUN_8c10fe08` | `notes/verifications/0x8c10fe08.json` — ok; byte[r5+0x32]=byte[r6+0x15c], r5+=32, 4 halfwords r6+0x94..→stack→r5+0..6, r1=r15-8 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -807,6 +808,16 @@
 | `0x8c12dd8c` | `FUN_8c12dd8c` | `notes/verifications/0x8c12dd8c.json` — 3 oracle steps; r0 from literal pool 0x8c12dd94 (=0x8c1da168); delay slot nop |
 | `0x8c12dfa0` | `FUN_8c12dfa0` | `notes/verifications/0x8c12dfa0.json` — 3 oracle steps; r0 from literal pool 0x8c12dfa8 (=0x8c1da160); delay slot nop |
 | `0x8c12e098` | `FUN_8c12e098` | `notes/verifications/0x8c12e098.json` — 3 oracle steps; r0 from literal pool 0x8c12e0a0 (=0x8c1da158); delay slot nop |
+| `0x8c1282ac` | `FUN_8c1282ac` | `notes/verifications/0x8c1282ac.json` — 3 oracle steps; r4 += 72 sticks (rts delay slot loads from shifted ptr); r0 = mem32[r4+72]; T untouched |
+| `0x8c1282b4` | `FUN_8c1282b4` | `notes/verifications/0x8c1282b4.json` — 3 oracle steps; r4 += 68 sticks; fr0 (not fr1) := raw bits at r4+68 in rts delay slot; T untouched |
+| `0x8c1282bc` | `FUN_8c1282bc` | `notes/verifications/0x8c1282bc.json` — 3 oracle steps; r4 += 64 sticks; fr0 := raw bits at r4+64 in rts delay slot; T untouched |
+| `0x8c1282c4` | `FUN_8c1282c4` | `notes/verifications/0x8c1282c4.json` — 3 oracle steps; r4 += 60 sticks; fr0 := raw bits at r4+60 in rts delay slot; T untouched |
+| `0x8c12b46c` | `FUN_8c12b46c` | `notes/verifications/0x8c12b46c.json` — 3 oracle steps; none beyond r0; +56 applied in rts delay slot; T untouched |
+| `0x8c12b498` | `FUN_8c12b498` | `notes/verifications/0x8c12b498.json` — 4 oracle steps; r0 = mem32[r4]+28 (bump before rts); fr0 := raw bits at that address in delay slot; T untouched |
+| `0x8c12b4a0` | `FUN_8c12b4a0` | `notes/verifications/0x8c12b4a0.json` — 3 oracle steps; none beyond r0; second deref @(12,r0) in rts delay slot; T untouched |
+| `0x8c12b4a8` | `FUN_8c12b4a8` | `notes/verifications/0x8c12b4a8.json` — 3 oracle steps; none beyond r0; second deref @(8,r0) in rts delay slot; T untouched |
+| `0x8c12b4b0` | `FUN_8c12b4b0` | `notes/verifications/0x8c12b4b0.json` — 3 oracle steps; none beyond r0; second deref @(4,r0) in rts delay slot; T untouched |
+| `0x8c12b4b8` | `FUN_8c12b4b8` | `notes/verifications/0x8c12b4b8.json` — 36 oracle steps; r5=*r4+32, r4/r3/r1 clobbered (end=base+4*count, r1=4*count), r0 incremented in bf.s delay slot every iteration incl. last, T=1 on both exits; shll2 leaves T alone; header words re-read each iteration |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
