@@ -153,6 +153,8 @@
 | `0x8c013226` | `FUN_8c013226` | `notes/verifications/0x8c013226.*.json` — both branches (9 and 13 oracle steps); clear: *(r4+4)-=1 in r2; set: r1=*(r4+4), *(r1+4)+=1, **r1-=1 in r3 |
 | `0x8c011cf8` | `FUN_8c011cf8` | `notes/verifications/0x8c011cf8.json` — 44 oracle steps; fr6=fr4^2, 5x fmac over table at 0x8c1cd028, r4=0, r5=0x8c1cd040, fr0=fr4, fr6=fr5 |
 | `0x8c011c50` | `FUN_8c011c50` | `notes/verifications/0x8c011c50*.json` — all branches (34, 15, 6 oracle steps); r6=count, r2=last byte, r4 advanced, r0=0/1, T=last cmp/pl or cmp/ge |
+| `0x8c0163e8` | `FUN_8c0163e8` | `notes/verifications/0x8c0163e8.json` — 39 oracle steps; record copy while cmp/str clear, 4-byte tail unrolled (4th byte sets no flag, T from 3rd); r3/r4/r5/r6 end as popped stack zeros, r15 net +8, r0=orig dst |
+| `0x8c015194` | `FUN_8c015194` | `notes/verifications/0x8c015194*.json` — both specs (74 and 12 oracle steps); r7=8-r6/carry, r12=mask, r3=-exts.w(r6), r2/r1 last byte ops, r0=(final carry != 0), T=(carry==0); r12/r13/r14 net unchanged |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -210,6 +212,16 @@
 | `0x8c05d60c` | `FUN_8c05d60c` | `notes/verifications/0x8c05d60c.json` — 4 oracle steps; r1 = [r15] dest ptr, r0 = [r4] value; store in rts delay slot |
 | `0x8c05dbfc` | `FUN_8c05dbfc` | `notes/verifications/0x8c05dbfc.json` — 4 oracle steps; r1 = [r5] src, r0 = original r4; store in rts delay slot |
 | `0x8c027580` | `FUN_8c027580` | `notes/verifications/0x8c027580.json` — 312 oracle steps; stores: 6x(4xu16 p2->p1 at +0xb4/0xe4/0x114+off, u32 p2->p1 at +0x144+dw) in bt.s-delay-slot order; r0=20 (pre-inc r9), r1=last u32, r3/r6/r7=advanced +0x114/+0xe4 ptrs, r4/r5=+0x144 ptrs, T=0; r8-r15 restored by epilogue |
+| `0x8c05f4f8` | `FUN_8c05f4f8` | `notes/verifications/0x8c05f4f8.json` — 3 oracle steps; r4 += 24 (arg register mutated); r0 = r4 set in rts delay slot |
+| `0x8c05f500` | `FUN_8c05f500` | `notes/verifications/0x8c05f500.json` — 4 oracle steps; r4 += 16; r0 = zero-extended byte loaded mid-body (not in delay slot) |
+| `0x8c05f508` | `FUN_8c05f508` | `notes/verifications/0x8c05f508.json` — 4 oracle steps; r0 = 16, r1 = 0 left behind; store is the rts delay slot mov.b r1,@(r0,r4) |
+| `0x8c05f510` | `FUN_8c05f510` | `notes/verifications/0x8c05f510.json` — 4 oracle steps; r0 = 16, r1 = 1 left behind; store is the rts delay slot mov.b r1,@(r0,r4) |
+| `0x8c05f51c` | `FUN_8c05f51c` | `notes/verifications/0x8c05f51c.json` — 3 oracle steps; r4 += 8 (arg register mutated); r0 = r4 set in rts delay slot |
+| `0x8c05fa50` | `FUN_8c05fa50` | `notes/verifications/0x8c05fa50.json` — 3 oracle steps; r0 = mem32[mem32[0x8c05fa58]]; real load is the rts delay slot mov.l @r0,r0 |
+| `0x8c05fcd0` | `FUN_8c05fcd0` | `notes/verifications/0x8c05fcd0.json` — 19 oracle steps; r4 = 0, r6 = param, r3 = param+8, r1 = param+4, r0 = param at exit; [r6+12] written twice (0 then param+4) |
+| `0x8c060d84` | `FUN_8c060d84` | `notes/verifications/0x8c060d84.json` — 21 oracle steps; dst from [r15], src from [r4]; r6=dst+12, r5=src+12, r4=dst+4, r3=src+4, r1=dst+8, r0=src+8, fr0 = raw bits of mem32[src+12] |
+| `0x8c060db0` | `FUN_8c060db0` | `notes/verifications/0x8c060db0.json` — 10 oracle steps; r3 = dst = [r4], r1 = mem32[r5+8], r0 = mem32[r5+12] at exit |
+| `0x8c060e40` | `FUN_8c060e40` | `notes/verifications/0x8c060e40.json` — 6 oracle steps; r4 ends at r4+4 (add between the two loads); fr0 = raw bits of mem32[r4+4] |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
