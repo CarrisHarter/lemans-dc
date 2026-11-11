@@ -1045,6 +1045,12 @@
 | `0x8c0dfb10` | `FUN_8c0dfb10` | `notes/verifications/0x8c0dfb10.json` — 47 oracle steps; stores: byte 0 at r4+0x194, key/value/count updates on insert paths |
 | `0x8c100354` | `FUN_8c100354` | `notes/verifications/0x8c100354.json` — 24 oracle steps; stores: 8 f32 zeros at 0x8c2ab318+0..28 (last is rts delay slot) |
 | `0x8c15a23c` | `find_block_by_size` | `notes/verifications/0x8c15a23c.json` — verified |
+| `0x8c0e2ed4` | `unknown` | `notes/verifications/0x8c0e2ed4.json` — 50 oracle steps |
+| `0x8c0e3a3c` | `unknown` | `notes/verifications/0x8c0e3a3c.json` — 45 oracle steps |
+| `0x8c0e3fc4` | `unknown` | `notes/verifications/0x8c0e3fc4.json` — 211 oracle steps |
+| `0x8c0e7ab4` | `unknown` | `notes/verifications/0x8c0e7ab4.json` — 36 oracle steps |
+| `0x8c0e8d70` | `unknown` | `notes/verifications/0x8c0e8d70.json` — 39 oracle steps |
+| `0x8c0fda80` | `unknown` | `notes/verifications/0x8c0fda80.json` — 50 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
