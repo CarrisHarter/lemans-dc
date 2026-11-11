@@ -193,6 +193,8 @@
 | `0x8c080b5c` | `FUN_8c080b5c` | `notes/verifications/0x8c080b5c.json` — ok; struct init, [0]=*0x8c1f8d90 (double deref), [4..24]=0, r0=r4, r4=pool value |
 | `0x8c0900a8` | `FUN_8c0900a8` | `notes/verifications/0x8c0900a8.json` — ok; zero 9 words at r4, r1=0, r0=r4 |
 | `0x8c090fcc` | `FUN_8c090fcc` | `notes/verifications/0x8c090fcc.json` — ok; fill loop r6=r4+0xc0, r1=46 per iter, tail stores r1/r5 alternating, r0=68 |
+| `0x8c09138c` | `FUN_8c09138c` | `notes/verifications/0x8c09138c*.json` — both branches; bounded byte scan at r4+72, nonzero byte → r0=0, 46 zeros → r0=1 (bt polarity: zero continues) |
+| `0x8c093048` | `FUN_8c093048` | `notes/verifications/0x8c093048*.json` — both branches; r1 = 0 only if bytes at r4+0x95 and r4+0x96 both zero |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
