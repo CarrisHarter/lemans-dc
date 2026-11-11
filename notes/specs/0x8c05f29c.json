@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c05f29c",
+  "regs": { "r2": "0xdeadbeef", "r4": "0x8c250000", "r5": "0x8c250100" },
+  "fr": { "fr2": 1.5, "fr7": -2.5 },
+  "sr": "0x00000001",
+  "fpscr": "0x00100000",
+  "memory": [
+    { "addr": "0x8c250000", "hex": "a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf00" },
+    { "addr": "0x8c250100", "hex": "0f1e2d3c4b5a69788796a5b4c3d2e1f0ffeeddccbbaa99887766554433221100123456789abcdef0fedcba9876543210deadbeefcafebabe0123456789abcdef" },
+    { "addr": "0x8c26cff0", "hex": "5634128c" }
+  ],
+  "steps": 1000
+}

@@ -234,6 +234,8 @@
 | `0x8c053be0` | `FUN_8c053be0` | `notes/verifications/0x8c053be0.json` — 2 oracle steps; r0=r4 via rts delay slot (C shows plain return) |
 | `0x8c055fe4` | `FUN_8c055fe4` | `notes/verifications/0x8c055fe4.json` — 4 oracle steps; rts delay slot fmov @r0,fr0 loads from the INCREMENTED r0 (ptr+8); fr0+r0 change, T untouched; no FPSCR.SZ double path in machine code |
 | `0x8c017c0c` | `FUN_8c017c0c` | `notes/verifications/0x8c017c0c.json` — 38 oracle steps; r4 itself ends advanced (delay-slot mov r4,r0 mirrors it into r0); r6=decoded value; r3=b1<<16 and r1=b2<<8 (shll16/shll8 in place); T=bit2 of first byte (1 only on 4-byte path); follow-up bytes read at r4+1..3 (group-8 base=bits 7-4, disp=bits 3-0) |
+| `0x8c05f29c` | `FUN_8c05f29c` | `notes/verifications/0x8c05f29c.json` — 162 oracle steps; r1=*0x8c26cff0 (eq path) or [r5+52] (copy path); r3=r4+56; r5+=12 on copy path; r6=0x8c1d0f24; r7=r4+52; fr0=+0.0 (fldi0); fr1=table[3]; T=(r4==r5); header masks at +4/+5 are dead stores (overwritten by mov.l at 0x8c05f37c / copy block); bt.s delay slot stores 0 at +0 on both paths; r8..r14 restored by epilogue pops |
+| `0x8c05f3f4` | `FUN_8c05f3f4` | `notes/verifications/0x8c05f3f4.json` — 120 oracle steps; r1=r4+4; r3=r4+56; r5=0x8c1d0f24; r6=0; r7=0x8c26cff0; fr0=+0.0 (fldi0); fr1=table[3]; T untouched (no flag ops); header masks at +4/+5 dead (overwritten at 0x8c05f4cc); r8..r14 restored by pops |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
