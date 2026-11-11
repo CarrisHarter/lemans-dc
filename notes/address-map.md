@@ -1317,6 +1317,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0113f4` | `bounded_substring_search` | `notes/verifications/0x8c0113f4.json` — 204 oracle steps |
 | `0x8c011878` | `cursor_token_scan` | `notes/verifications/0x8c011878.json` — 103 oracle steps; call-crossing port (callee 0x8c011374); `bra` at 0x896 skips the `add #1,r4`, delay slot resets r4 = r13 = 0 |
 | `0x8c013d1c` | `exp_kernel` | `notes/verifications/0x8c013d1c*.json` — 9 seeds (224/32/33/50/51/36/49/225/235 oracle steps); call-crossing port (callee 0x8c014810); bt.s delay slots always run (mov #8,r6, mov #1,r7, fmov write-backs); jsr delay slot fdiv fr6,fr4 feeds the callee |
+| `0x8c01412c` | `sin_kernel` | `notes/verifications/0x8c01412c*.json` — 14 seeds (203/198/207/205/215/216/214/209/203/207/219/39/39/207 oracle steps); call-crossing port (callees 0x8c01471c, 0x8c011d3c, 0x8c011d1c); bt.s delay store `mov.l r0,@r15` always runs; bra delay fmov fr0,fr5 feeds finish; fneg fixups per octant + r14 sign flag |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
