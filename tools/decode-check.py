@@ -12,6 +12,8 @@ checked exhaustively over every instance in the binary:
                      4-bit displacement in the low nibble.
   3. branch target — bra/bsr carry a signed 12-bit displacement; leaving
                      bit 11 positive sends every backward branch forward.
+  4. indexed FPU   — fmov @(R0,Rm),FRn puts the address register in m and the
+                     FR in n; the store form swaps them.
 
 Usage: tools/decode-check.py [disassembly.asm]
 Exit code 1 on any mismatch.
@@ -23,6 +25,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 LINE = re.compile(r"^([0-9a-f]{8}):\t((?:[0-9a-f]{2} )+)\s*\t\s*(\S+)\s*(.*)$")
 DISP_OPS = re.compile(r"^(r\d+),@\((\d+),(r\d+)\)$|^@\((\d+),(r\d+)\),(r\d+)$")
+FPU_LOAD = re.compile(r"^@\(r0,r(\d+)\),fr(\d+)$")
+FPU_STORE = re.compile(r"^fr(\d+),@\(r0,r(\d+)\)$")
 
 WIDTH = {
     0x0: "b", 0x4: "b", 0xC: "b",
@@ -36,6 +40,7 @@ def main(argv):
     width_checked = width_bad = 0
     disp_checked = disp_bad = 0
     branch_checked = branch_bad = 0
+    fpu_checked = fpu_bad = 0
 
     with path.open(errors="replace") as fh:
         for line in fh:
@@ -57,6 +62,26 @@ def main(argv):
                         if width_bad <= 5:
                             print(f"width  {m.group(1)} 0x{op:04x} {mnemonic} "
                                   f"{m.group(4).strip()} (nibble {low:x})")
+
+            if mnemonic.startswith("fmov") and (op >> 12) == 0xF and (op & 0xF) in (6, 7):
+                ops = m.group(4).strip()
+                n, mm = (op >> 8) & 0xF, (op >> 4) & 0xF
+                if (op & 0xF) == 6:
+                    pm = FPU_LOAD.match(ops)
+                    if pm:
+                        fpu_checked += 1
+                        if int(pm.group(1)) != mm or int(pm.group(2)) != n:
+                            fpu_bad += 1
+                            if fpu_bad <= 5:
+                                print(f"fpu    {m.group(1)} 0x{op:04x} {mnemonic} {ops}")
+                else:
+                    pm = FPU_STORE.match(ops)
+                    if pm:
+                        fpu_checked += 1
+                        if int(pm.group(1)) != mm or int(pm.group(2)) != n:
+                            fpu_bad += 1
+                            if fpu_bad <= 5:
+                                print(f"fpu    {m.group(1)} 0x{op:04x} {mnemonic} {ops}")
 
             if mnemonic in ("bra", "bsr"):
                 pc = int(m.group(1), 16)
@@ -91,7 +116,8 @@ def main(argv):
     print(f"width:  {width_checked} checked, {width_bad} mismatches")
     print(f"disp:   {disp_checked} checked, {disp_bad} mismatches")
     print(f"branch: {branch_checked} checked, {branch_bad} mismatches")
-    return 1 if (width_bad or disp_bad or branch_bad) else 0
+    print(f"fpu:    {fpu_checked} checked, {fpu_bad} mismatches")
+    return 1 if (width_bad or disp_bad or branch_bad or fpu_bad) else 0
 
 
 if __name__ == "__main__":
