@@ -114,6 +114,8 @@
 | `0x8c0112f4` | `FUN_8c0112f4 (strlen)` | `notes/verifications/0x8c0112f4.json` — 27 oracle steps; r4 ends one past the terminating dword; r3 = that dword (0); r5=count moved to r0 by rts delay slot; T set |
 | `0x8c011344` | `FUN_8c011344 (strncpy)` | `notes/verifications/0x8c011344.json` — 47 oracle steps; r1=0 is the pad byte and stays in r1; r5=counter (bra delay slot zeroes it); r7=dst+stores (bf.s delay slot advances r7 even on the last pad store); r3=last load (u32 in loop1, byte at the head); r0 destroyed to r4 by rts delay slot; T set |
 | `0x8c011374` | `FUN_8c011374 (scan haystack for needle byte)` | `notes/verifications/0x8c011374.json` — 103 oracle steps; r1=last needle dword read; r3=last load; r6=inner index at exit; r7=outer index; found: r0=r14 via bra delay slot, T clear; NULL: r0=0, T set; r12/r14 restored via stack; inner loop compares hay byte against u32 needle dwords (group-0 indexed loads are u32) |
+| `0x8c017f48` | `FUN_8c017f48` | `notes/verifications/0x8c017f48.json` — 22 oracle steps; r2=sign-extended last byte (0); r4/r5 advanced past NUL; T=1 at exit; byte stores dst.. |
+| `0x8c018f8c` | `FUN_8c018f8c` | `notes/verifications/0x8c018f8c.json` — 8 oracle steps; u32 r4 at 0x8c23da80 (now in the oracle RAM window); bytes 0 at [r4] and [r4+0x100]; r1=0; r0=r4 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

@@ -13,7 +13,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[1] = 0;
     let _ = mem.write_u8(r4, 0);
     let off = mem.read_u32(0x8c018fa0).unwrap_or(0);
-    // mov.b r1,@(r0,r4) is decoded by this oracle build as a 32-bit store
-    let _ = mem.write_u32(r4 + off, 0);
+    let _ = mem.write_u8(r4 + off, 0); // mov.b r1,@(r0,r4): single byte
     cpu.r[0] = r4; // delay slot of `rts`
 }
