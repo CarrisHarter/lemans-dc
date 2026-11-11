@@ -1,0 +1,11 @@
+{
+  "entry": "0x8c227fc0",
+  "regs": {},
+  "steps": 60,
+  "memory": [
+    {
+      "addr": "0x8c2c6fa0",
+      "hex": "01020304"
+    }
+  ]
+}
