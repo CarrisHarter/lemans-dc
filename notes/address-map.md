@@ -988,6 +988,12 @@
 | `0x8c18ca20` | `advance_36_return_self` | `notes/verifications/0x8c18ca20.json` — verified |
 | `0x8c18ddf0` | `pool_constant` | `notes/verifications/0x8c18ddf0.json` — verified |
 | `0x8c18e010` | `pool_constant_2` | `notes/verifications/0x8c18e010.json` — verified |
+| `0x8c18fbc8` | `zero_word_return_self` | `notes/verifications/0x8c18fbc8.json` — verified |
+| `0x8c18fd54` | `pool_constant` | `notes/verifications/0x8c18fd54.json` — verified |
+| `0x8c18fe2c` | `pool_constant_2` | `notes/verifications/0x8c18fe2c.json` — verified |
+| `0x8c1900f4` | `pool_constant_3` | `notes/verifications/0x8c1900f4.json` — verified |
+| `0x8c19033c` | `deref_pool_pointer` | `notes/verifications/0x8c19033c.json` — verified |
+| `0x8c190e1c` | `pool_constant_4` | `notes/verifications/0x8c190e1c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
