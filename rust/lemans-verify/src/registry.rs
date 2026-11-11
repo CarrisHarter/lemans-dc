@@ -1101,10 +1101,30 @@ pub mod p_8c0d91d0;
 pub mod p_8c0d91dc;
 #[path = "ports/p_8c0e1f3c.rs"]
 pub mod p_8c0e1f3c;
+#[path = "ports/p_8c0e1f5c.rs"]
+pub mod p_8c0e1f5c;
+#[path = "ports/p_8c0e1f64.rs"]
+pub mod p_8c0e1f64;
 #[path = "ports/p_8c0e2884.rs"]
 pub mod p_8c0e2884;
 #[path = "ports/p_8c0e28c0.rs"]
 pub mod p_8c0e28c0;
+#[path = "ports/p_8c0e2fc4.rs"]
+pub mod p_8c0e2fc4;
+#[path = "ports/p_8c0e6ea4.rs"]
+pub mod p_8c0e6ea4;
+#[path = "ports/p_8c0e7234.rs"]
+pub mod p_8c0e7234;
+#[path = "ports/p_8c0e8c60.rs"]
+pub mod p_8c0e8c60;
+#[path = "ports/p_8c0e8dfc.rs"]
+pub mod p_8c0e8dfc;
+#[path = "ports/p_8c0eacf4.rs"]
+pub mod p_8c0eacf4;
+#[path = "ports/p_8c0eaef8.rs"]
+pub mod p_8c0eaef8;
+#[path = "ports/p_8c0f02fc.rs"]
+pub mod p_8c0f02fc;
 #[path = "ports/p_8c0f0814.rs"]
 pub mod p_8c0f0814;
 #[path = "ports/p_8c0f0828.rs"]
@@ -1173,6 +1193,8 @@ pub mod p_8c149dd0;
 pub mod p_8c14b268;
 #[path = "ports/p_8c14b280.rs"]
 pub mod p_8c14b280;
+#[path = "ports/p_8c151bd0.rs"]
+pub mod p_8c151bd0;
 #[path = "ports/p_8c1552e4.rs"]
 pub mod p_8c1552e4;
 #[path = "ports/p_8c175c72.rs"]
@@ -1727,8 +1749,18 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C0D91D0 => Some(p_8c0d91d0::run),
         0x8C0D91DC => Some(p_8c0d91dc::run),
         0x8C0E1F3C => Some(p_8c0e1f3c::run),
+        0x8C0E1F5C => Some(p_8c0e1f5c::run),
+        0x8C0E1F64 => Some(p_8c0e1f64::run),
         0x8C0E2884 => Some(p_8c0e2884::run),
         0x8C0E28C0 => Some(p_8c0e28c0::run),
+        0x8C0E2FC4 => Some(p_8c0e2fc4::run),
+        0x8C0E6EA4 => Some(p_8c0e6ea4::run),
+        0x8C0E7234 => Some(p_8c0e7234::run),
+        0x8C0E8C60 => Some(p_8c0e8c60::run),
+        0x8C0E8DFC => Some(p_8c0e8dfc::run),
+        0x8C0EACF4 => Some(p_8c0eacf4::run),
+        0x8C0EAEF8 => Some(p_8c0eaef8::run),
+        0x8C0F02FC => Some(p_8c0f02fc::run),
         0x8C0F0814 => Some(p_8c0f0814::run),
         0x8C0F0828 => Some(p_8c0f0828::run),
         0x8C105F70 => Some(p_8c105f70::run),
@@ -1763,6 +1795,7 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C149DD0 => Some(p_8c149dd0::run),
         0x8C14B268 => Some(p_8c14b268::run),
         0x8C14B280 => Some(p_8c14b280::run),
+        0x8C151BD0 => Some(p_8c151bd0::run),
         0x8C1552E4 => Some(p_8c1552e4::run),
         0x8C175C72 => Some(p_8c175c72::run),
         0x8C18B9C8 => Some(p_8c18b9c8::run),
