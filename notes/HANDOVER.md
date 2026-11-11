@@ -223,6 +223,17 @@ pointer.
 A caller whose callee touches memory the spec does not seed fails loudly with
 an oracle error, not a silent mismatch, so this is safe to attempt.
 
+Three traps that cost ports:
+
+- **Put `r15` well inside the window** (e.g. `0x8c308000`). A callee that
+  spills below `0x8C300000` makes those writes count, and the port that tracks
+  them locally then disagrees.
+- **Seed everything the callee dereferences**, including the pointers it loads
+  from its own literal pool and the objects it writes through (`[r4+44]` etc.).
+  A null pointer there shows up as `data access 0x20`.
+- **A callee that jumps through a pointer** (`jmp @Rn` fed by a table) cannot be
+  pinned unless the table is seeded. `0x8c027260` is blocked for this.
+
 ## Known gaps / next work
 
 - Oracle coverage 99.70%. The gaps are `div1` (1,001 instructions) and the vector
