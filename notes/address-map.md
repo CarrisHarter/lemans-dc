@@ -1335,6 +1335,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c228f60` | `bitmask_update_unlink` | `notes/verifications/0x8c228f60*.json` — 7 seeds (57/7/27/26/25/75/39 oracle steps); gate on [r4+20]==[r4+24], three -1/limit-skippable 1<<idx OR/AND bitmask updates, node unlink via prev/next; bt.s delay slots (`mov #1,r5`, `shad`, next-pointer load) all load-bearing |
 | `0x8c231720` | `quant_table_build` | `notes/verifications/0x8c231720.json` — 2322 oracle steps; builds 128-entry ftrc(t*255) table at 0x8c2c8850 from the f32 table at r4 (read descending), sets bit 2 of [0x8c2c8a50]; r4 is a caller-provided table (callers at 0x8c092716/0x8c0a8fde) |
 | `0x8c232e40` | `masked_slot_init` | `notes/verifications/0x8c232e40.json` — 44 oracle steps; IMASK-masked slot init writing r5/r6/0/r4 at offsets 0/12/4/8 of slot r4 (stride 16) at 0x8c2c8b08+48 |
+| `0x8c236480` | `cond_imask_set` | `notes/verifications/0x8c236480*.json` — both branches (17/7 oracle steps); when [0x8c2c8b08+4] is zero sets IMASK from [0x8c2c8b08+8] and returns 0, else returns 0xeeee; both returns via rts delay slot `mov r5,r0` |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
