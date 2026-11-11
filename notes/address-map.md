@@ -370,6 +370,15 @@
 | `0x8c0851e0` | `zero_word_and_two_floats` | `notes/verifications/0x8c0851e0.json` — verified, write order differs from its twin |
 | `0x8c085224` | `zero_two_floats_then_word` | `notes/verifications/0x8c085224.json` — verified, write order differs from its twin |
 | `0x8c07b0f4` | `FUN_8c07b0f4` | `notes/verifications/0x8c07b0f4.json` — 215 oracle steps; r5=C-B set in bf.s delay slot on every else path; P[1]-= (C-B) all else paths, P[2]=t+(C-B) (wrap-sub cap) only on A1/A4 paths; *A=D, A[1]=B, A[2]=E tail store on all paths; per-path leftovers r0=E, r1=cap/h/f+0x60, r2=f+0x40/f+0x50/f+0x68, r7=0/*F0<<2/((h+t) or buf+((h+t)-cap))<<2; T=1 on eq/A2/A3, (P[2]>=u cap) on A1/A4; mov #N immediates are decimal (spill P goes to dead local f+0x54, arg slot f+0x84 never clobbered); cmp/hi/hs unsigned and shll2 leaves T alone in the oracle |
+| `0x8c095738` | `load_double_indirect_store_to_stack` | `notes/verifications/0x8c095738.json` — verified |
+| `0x8c095744` | `load_store_to_stack` | `notes/verifications/0x8c095744.json` — verified |
+| `0x8c09574c` | `follow_pointer_and_store_back` | `notes/verifications/0x8c09574c.json` — verified |
+| `0x8c09578c` | `load_double_indirect_store_to_stack_2` | `notes/verifications/0x8c09578c.json` — verified |
+| `0x8c0a3b70` | `empty_stub_2` | `notes/verifications/0x8c0a3b70.json` — verified |
+| `0x8c0a41b0` | `set_flag_byte_one` | `notes/verifications/0x8c0a41b0.json` — verified |
+| `0x8c0a41b8` | `empty_stub_3` | `notes/verifications/0x8c0a41b8.json` — verified |
+| `0x8c0a4db4` | `store_byte_at_20` | `notes/verifications/0x8c0a4db4.json` — verified |
+| `0x8c0ab080` | `indexed_load` | `notes/verifications/0x8c0ab080.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
