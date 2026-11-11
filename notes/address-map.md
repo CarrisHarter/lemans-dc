@@ -606,6 +606,13 @@
 | `0x8c0f1508` | `indexed_load_offset_434` | `notes/verifications/0x8c0f1508.json` — verified |
 | `0x8c0f1a70` | `load_pool_constant_6` | `notes/verifications/0x8c0f1a70.json` — verified |
 | `0x8c0f1ad8` | `clear_byte_13` | `notes/verifications/0x8c0f1ad8.json` — verified |
+| `0x8c0f1ca8` | `store_field_20` | `notes/verifications/0x8c0f1ca8.json` — verified |
+| `0x8c0f32c4` | `load_store_to_stack_5` | `notes/verifications/0x8c0f32c4.json` — verified |
+| `0x8c0f32cc` | `follow_pointer_and_store_back_4` | `notes/verifications/0x8c0f32cc.json` — verified |
+| `0x8c0f32d8` | `load_double_indirect_store_to_stack_5` | `notes/verifications/0x8c0f32d8.json` — verified |
+| `0x8c0f4094` | `follow_pointer_and_store_back_5` | `notes/verifications/0x8c0f4094.json` — verified |
+| `0x8c0f6cc4` | `advance_68_load` | `notes/verifications/0x8c0f6cc4.json` — verified |
+| `0x8c0f6ccc` | `advance_56_load_float` | `notes/verifications/0x8c0f6ccc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
