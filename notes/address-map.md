@@ -933,6 +933,25 @@
 | `0x8c16d338` | `store_field8_through_stack_pointer` | `notes/verifications/0x8c16d338.json` — verified |
 | `0x8c16e438` | `float_through_two_fields` | `notes/verifications/0x8c16e438.json` — verified |
 | `0x8c16eadc` | `store_indexed_through_two_fields` | `notes/verifications/0x8c16eadc.json` — verified |
+| `0x8c14644c` | `FUN_8c14644c` | `notes/verifications/0x8c14644c.json` — 83 oracle steps; mem[r4]=0; mem[r4+20/24/48/52]=1, mem[r4+28/56]=-1; 7 fmov/fmul products stored at r4+4..44; r11-r14 saved+restored; r0=r4; r1=0xa4 |
+| `0x8c146d78` | `FUN_8c146d78` | `notes/verifications/0x8c146d78.json` — 128 oracle steps; 6 stack bucket counters mem[r15+cat*4] incremented (stack window excluded from diff); r12=sum of bytes; r0=last counter+1; r8-r14 saved+restored; r1=r15-52, r13=r11, r3=101, r6=51, r8=151, r14=2 leak |
+| `0x8c148310` | `FUN_8c148310` | `notes/verifications/0x8c148310.json` — 18 oracle steps; r0=mem[r4+24/36/48/60+r5*4] in rts delay slot with r4+=off, r5<<=2 on cases 0-3; default r0=mem[r4+16]; T=1 on cases, T=0 on default |
+| `0x8c148368` | `FUN_8c148368` | `notes/verifications/0x8c148368.json` — 5 oracle steps; same shape, offsets 72/84/96/108, default r0=mem[r4+20] |
+| `0x8c14add8` | `FUN_8c14add8` | `notes/verifications/0x8c14add8.json` — 39 oracle steps; copies 8 dwords + 3 floats (44 bytes) r5 -> r4; r0=r4; r13/r14 saved+restored; r5+=40, r3=r5+36, r6=r4+36, r7=r5+32, r14=r4+32 leak |
+| `0x8c14b1f4` | `FUN_8c14b1f4` | `notes/verifications/0x8c14b1f4.json` — 56 oracle steps; zero-inits 116-byte struct at r4, mem[r4]=0x8c1ef28c, mem[r4+16/36/52]=-1, mem[r4+92]=1, bytes 96/98=1; also zeroes 3 dwords at 0x8c1ef2a4..2ac (ROM); r0=r4; r4+=40, r5=-1 leak; r15 balanced via rts delay slot |
+| `0x8c14b2ec` | `FUN_8c14b2ec` | `notes/verifications/0x8c14b2ec.json` — 19 oracle steps; mem[r4+4]=0 stored in rts delay slot; r0=0; r1 advanced to >= mem[r4+8]+4*old mem[r4+4]; r3=r1+4*k; T=0 on exit |
+| `0x8c14c680` | `FUN_8c14c680` | `notes/verifications/0x8c14c680.json` — 286 oracle steps; copies 172-byte struct r5 -> r4 (floats, bytes at 12/13/92/93/104/105, dwords at 16/20/68); r8-r14 saved+restored |
+| `0x8c14c8e8` | `FUN_8c14c8e8` | `notes/verifications/0x8c14c8e8.json` — 367 oracle steps; copies 216-byte struct r5 -> r4, all floats incl. r5/r4+0x80..0xd8; r8-r14 saved+restored |
+| `0x8c14cfac` | `FUN_8c14cfac` | `notes/verifications/0x8c14cfac.json` — 44 oracle steps; copies 48-byte record r5 -> r4 (8 dwords + 3 floats + dword at 44); r0=r4; r12-r14 saved+restored |
+| `0x8c14d210` | `pass` | `notes/verifications/0x8c14d210.json` — 19 oracle steps; 19 |
+| `0x8c14fdd8` | `pass` | `notes/verifications/0x8c14fdd8.json` — 10 oracle steps; 10 |
+| `0x8c14fdf4` | `pass` | `notes/verifications/0x8c14fdf4.json` — 11 oracle steps; 11 |
+| `0x8c14fe18` | `pass` | `notes/verifications/0x8c14fe18.json` — 11 oracle steps; 11 |
+| `0x8c15039c` | `pass` | `notes/verifications/0x8c15039c.json` — 36 oracle steps; 36 |
+| `0x8c1504cc` | `pass` | `notes/verifications/0x8c1504cc.json` — 225 oracle steps; 225 |
+| `0x8c1506a4` | `pass` | `notes/verifications/0x8c1506a4.json` — 41 oracle steps; 41 |
+| `0x8c1508b8` | `pass` | `notes/verifications/0x8c1508b8.json` — 8 oracle steps; 8 |
+| `0x8c15132c` | `pass` | `notes/verifications/0x8c15132c.json` — 3 oracle steps; 3 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
