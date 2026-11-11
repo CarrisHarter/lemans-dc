@@ -1288,6 +1288,9 @@
 | `0x8c010084` | `release_and_clear` | `notes/verifications/0x8c010084.json` — first call-crossing port |
 | `0x8c0100e4` | `release_and_maybe_owner` | `notes/verifications/0x8c0100e4.json` — 18 oracle steps |
 | `0x8c010394` | `call_two_helpers` | `notes/verifications/0x8c010394.json` — 33 oracle steps |
+| `0x8c0148d0` | `call_and_scale` | `notes/verifications/0x8c0148d0.json` — 43 oracle steps |
+| `0x8c0203d4` | `call_if_flag_clear` | `notes/verifications/0x8c0203d4.json` — 35 oracle steps |
+| `0x8c026e50` | `call_and_clear_flag` | `notes/verifications/0x8c026e50.json` — 15 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
@@ -1381,6 +1384,7 @@ memory` before a diff can mean anything.
 | `0x8c21e2a8` | hardware register access: `0xffd80004` |
 | `0x8c21f4d8` | hardware register access: `0xffd00000` |
 | `0x8c2201fa` | hardware register access: `0xf6000000` |
+| `0x8c027260` | callee `0x8c050fa8` jumps through an unseeded pointer (`pc 0x21d5357c`) |
 
 ## Auto-proposed names (debug strings)
 
