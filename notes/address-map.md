@@ -37,6 +37,37 @@
 | `0x8c010e50` | `FUN_8c010e50` | `notes/verifications/0x8c010e50.json` — 28 oracle steps; none; r0 = last-byte diff; r4/r7 advanced, r5 = match count, r2/r3 leftovers, T per exit |
 | `0x8c019678` | `FUN_8c019678` | `notes/verifications/0x8c019678.json` — 10 oracle steps; T=(field==3); r0=field or flag base 0xac; r1=1; byte store at 0xac+r4 |
 | `0x8c01c234` | `FUN_8c01c234` | `notes/verifications/0x8c01c234.json` — 10 oracle steps; T=(field==1); r0=field or flag base 0x85; r1=1; byte store at 0x85+r4 |
+| `0x8c01ec2c` | `FUN_8c01ec2c (field getter)` | `notes/verifications/0x8c01ec2c.json` — 2 oracle steps; r0 = [r4+0xc] |
+| `0x8c01f1cc` | `FUN_8c01f1cc (0x104-byte record copy)` | `notes/verifications/0x8c01f1cc.json` — 488 oracle steps; r4/r6 += 0x104 per record; r0=r6; r1=r6_iter+0x100; r3=0; r7=dst+0x100; fr0=copied float; T=1; 128B+4B stores per record when r6!=0 |
+| `0x8c020394` | `FUN_8c020394 (stub)` | `notes/verifications/0x8c020394.json` — 2 oracle steps; none |
+| `0x8c020398` | `FUN_8c020398 (stub)` | `notes/verifications/0x8c020398.json` — 2 oracle steps; none |
+| `0x8c0203f8` | `FUN_8c0203f8 (indexed global store)` | `notes/verifications/0x8c0203f8.json` — 3 oracle steps; r0 = [0x8c020400] (0x10c); [r0+r4] = r5 |
+| `0x8c02097c` | `FUN_8c02097c (16-byte record copy)` | `notes/verifications/0x8c02097c.json` — 46 oracle steps; r4/r6 += 0x10 per iteration; r0=r6 final; T=1; 4 stores per record when r6!=0 |
+| `0x8c024c3c` | `FUN_8c024c3c (fr4 store at +0x14)` | `notes/verifications/0x8c024c3c.json` — 3 oracle steps; r4 += 0x14 before the store; [r4] = fr4 bits |
+| `0x8c0252cc` | `FUN_8c0252cc (BST walk, result via [r15])` | `notes/verifications/0x8c0252cc.json` — 29 oracle steps; r3=0 (bt.s delay slot, even when root null); r4 += 4 only on the r4+4 store path; r6=0; r0=[r15]; r1/r0 hold last loop loads or final best[3]/key; T = key>best[3] or 0 when best null |
+| `0x8c026a50` | `FUN_8c026a50 (16-byte header init)` | `notes/verifications/0x8c026a50.json` — 19 oracle steps; r4=0; r6=base; r1=base+4; r3=base+8; r0=base; stores at base..base+0xf with +0xc written twice (0, then base+4) |
+| `0x8c026c90` | `FUN_8c026c90 (tagged list unlink)` | `notes/verifications/0x8c026c90.json` — 37 oracle steps; r6=next|old_flag; r3=0xfffffffe (unconditional literal load at 0x8c026cb2); r1=[r4+8]&~1; r0=[r4+8]&1; T=cmp/eq at 0x8c026cc6; node->next = next->prev (0x8c026c9a is @(4,r6), not @(4,r4)) |
+| `0x8c04704c` | `FUN_8c04704c` | `notes/verifications/0x8c04704c.json` — 2 oracle steps; none |
+| `0x8c04ace0` | `FUN_8c04ace0` | `notes/verifications/0x8c04ace0.json` — 9 oracle steps; r6 shifted in place (shll2); intermediate pointer left in r1; rts delay slot adds shifted r6 to r0 |
+| `0x8c04b358` | `FUN_8c04b358` | `notes/verifications/0x8c04b358.json` — 4 oracle steps; second deref in rts delay slot |
+| `0x8c04b420` | `FUN_8c04b420` | `notes/verifications/0x8c04b420.json` — 3 oracle steps; r0=0x98 literal-pool base left in r0; byte store in rts delay slot |
+| `0x8c04b9ac` | `FUN_8c04b9ac` | `notes/verifications/0x8c04b9ac.json` — 3 oracle steps; r0=0xcc literal-pool base left in r0; word store in rts delay slot |
+| `0x8c04ba4c` | `FUN_8c04ba4c` | `notes/verifications/0x8c04ba4c.json` — 5 oracle steps; r5 shifted in place (shll2); table base left in r1; element load in rts delay slot |
+| `0x8c04d264` | `FUN_8c04d264` | `notes/verifications/0x8c04d264.json` — 20 oracle steps; r6=count, r3=index, r1=last element, r0=byte offset all live at return; T=1 on match, T=0 on -1 exit |
+| `0x8c04d284` | `FUN_8c04d284` | `notes/verifications/0x8c04d284.json` — 6 oracle steps; r5 shifted in place; table base left in r1; element load in rts delay slot |
+| `0x8c050c54` | `FUN_8c050c54` | `notes/verifications/0x8c050c54.json` — 2 oracle steps; r0=[r4+0x20] in rts delay slot |
+| `0x8c050c58` | `FUN_8c050c58` | `notes/verifications/0x8c050c58.json` — 2 oracle steps; word store [r4+0x20]=r5 in rts delay slot |
+| `0x8c0176f0` | `pat_match (r4=pattern, r5=string, r6=int* out)` | `notes/verifications/0x8c0176f0.json` — 61 oracle steps; stores 0 at [r6] on entry, parsed decimal at [r6] on the !..!..! capture path; r5 clobbered to -48 (delay slot 0x8c017778) on the capture path and to sext8(*r4) in the tail loop (0x8c01782e); r1/r3/r4 left advanced past consumed input; r1++/r4++ delay slots fire on taken AND fall-through branches; T=1 on every return-1 and on the NUL-mismatch exit, T=0 on the two compare-mismatch exits |
+| `0x8c03c75c` | `FUN_8c03c75c` | `notes/verifications/0x8c03c75c.json` — 12 oracle steps; stores fr7/fr4/fr5/fr6 at [r4..r4+12]; leaves r3=r4+4, r1=r4+8; r0=r4 from rts delay slot |
+| `0x8c03c950` | `FUN_8c03c950` | `notes/verifications/0x8c03c950.json` — 4 oracle steps; stores 0 at [0xfc+r4]; leaves r0=0xfc (literal base), r1=0 |
+| `0x8c03c95c` | `FUN_8c03c95c` | `notes/verifications/0x8c03c95c.json` — 4 oracle steps; stores 0 at [0xf8+r4]; leaves r0=0xf8, r1=0 |
+| `0x8c03eb7c` | `FUN_8c03eb7c` | `notes/verifications/0x8c03eb7c.json` — 4 oracle steps; stores r4 at [literal 0x8c23dbf0]; r0=r4 |
+| `0x8c03ed84` | `FUN_8c03ed84` | `notes/verifications/0x8c03ed84.json` — 3 oracle steps; r0=0x3c4+r4 |
+| `0x8c03ee9c` | `FUN_8c03ee9c` | `notes/verifications/0x8c03ee9c.json` — 4 oracle steps; byte-stores 1 at [0x3bc+r4]; leaves r0=0x3bc, r1=1 |
+| `0x8c043474` | `FUN_8c043474` | `notes/verifications/0x8c043474.json` — 4 oracle steps; stores [r4] at [[r15]]; leaves r1=[r15], r0=[r4] |
+| `0x8c04347c` | `FUN_8c04347c` | `notes/verifications/0x8c04347c.json` — 5 oracle steps; stores [[r4]] at [[r15]]; leaves r1=[r15], r0=[[r4]] |
+| `0x8c043960` | `FUN_8c043960` | `notes/verifications/0x8c043960.json` — 3 oracle steps; stores r4 at [literal 0x8c23dbf8]; leaves r0=global addr |
+| `0x8c0443ec` | `FUN_8c0443ec` | `notes/verifications/0x8c0443ec.json` — 24 oracle steps; writes 11 u32s at [r4..r4+40] (1.0f,1,0,1,0,0,1,1,fr0,fr0,fr0); leaves r6=1, r5=r4+32, r3=r4+36, r1=r4+40, r0=r4, fr0=[0x8c04441c] |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
