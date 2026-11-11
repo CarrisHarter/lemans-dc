@@ -1224,6 +1224,8 @@
 | `0x8c23ae00` | `unknown` | `notes/verifications/0x8c23ae00.json` — 5 oracle steps |
 | `0x8c23aef8` | `link_object` | `notes/verifications/0x8c23aef8.json` — 22 oracle steps |
 | `0x8c23b9d0` | `unlink_node` | `notes/verifications/0x8c23b9d0.json` — 18 oracle steps |
+| `0x8c221dc8` | `fill_slot_record` | `notes/verifications/0x8c221dc8.json` — 18 oracle steps |
+| `0x8c2259d6` | `alloc_slot` | `notes/verifications/0x8c2259d6.json` — 15 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

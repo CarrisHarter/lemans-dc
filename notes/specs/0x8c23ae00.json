@@ -1,7 +1,1 @@
-{
-  "entry": "0x8c23ae00",
-  "regs": {
-    "r4": "0x8c2c9e88"
-  },
-  "steps": 20
-}
+{"entry": "0x8c23ae00", "regs": {"r4": "0x8c2c9e88"}, "steps": 20}
