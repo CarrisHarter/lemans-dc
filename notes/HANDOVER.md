@@ -181,6 +181,21 @@ ledger row has passing evidence — a row with a *failing* evidence file is a li
 **Do not run the full verification while collecting a batch** — it races the
 collector and reports phantom failures.
 
+## Concurrent writers
+
+More than one worker can commit to this repo at once. Symptoms seen: a port
+file deleted from the working tree while its ledger row survives, and ports
+appearing with no ledger row or evidence. Before any commit run
+
+```bash
+python3 scripts/check-integrity.py
+```
+
+It proves the three-way agreement between `src/ports/p_*.rs`, the ledger in
+`notes/address-map.md`, and `notes/verifications/*.json`. A port with no
+passing evidence is not a claim; either finish it or remove it. Prefer
+surgical `git add <paths>` over `git add -A` while another worker is active.
+
 ## Known gaps / next work
 
 - Oracle coverage 99.70%. The gaps are `div1` (1,001 instructions) and the vector
