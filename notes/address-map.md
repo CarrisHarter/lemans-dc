@@ -1312,6 +1312,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c010d8c` | `classify_float_result_2` | `notes/verifications/0x8c010d8c.json` — 168 oracle steps |
 | `0x8c013c14` | `guarded_float_transform` | `notes/verifications/0x8c013c14*.json` — 3 seeds (192/202/205 oracle steps) |
 | `0x8c01b748` | `classify_and_dispatch` | `notes/verifications/0x8c01b748.json` — 36 oracle steps |
+| `0x8c024d84` | `vector_blend_pipeline` | `notes/verifications/0x8c024d84.json` — 191 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
