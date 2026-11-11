@@ -1319,6 +1319,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c013d1c` | `exp_kernel` | `notes/verifications/0x8c013d1c*.json` — 9 seeds (224/32/33/50/51/36/49/225/235 oracle steps); call-crossing port (callee 0x8c014810); bt.s delay slots always run (mov #8,r6, mov #1,r7, fmov write-backs); jsr delay slot fdiv fr6,fr4 feeds the callee |
 | `0x8c01412c` | `sin_kernel` | `notes/verifications/0x8c01412c*.json` — 14 seeds (203/198/207/205/215/216/214/209/203/207/219/39/39/207 oracle steps); call-crossing port (callees 0x8c01471c, 0x8c011d3c, 0x8c011d1c); bt.s delay store `mov.l r0,@r15` always runs; bra delay fmov fr0,fr5 feeds finish; fneg fixups per octant + r14 sign flag |
 | `0x8c014480` | `atan_kernel` | `notes/verifications/0x8c014480*.json` — 15 seeds (286/57/224/282/247/73/288/251/253/291/78/293/66/70/51 oracle steps); call-crossing port (callees 0x8c01471c, 0x8c014810, 0x8c011cf8); missed `mov r15,r4` before reduce jsr was the first failure; exposed missing rts delay slot in 0x8c011cf8 spec/port |
+| `0x8c014936` | `double_normalize_store` | `notes/verifications/0x8c014936*.json` — 9 seeds (94/94/94/68/418/1268/418/94/94 oracle steps); call-crossing port (callees 0x8c012260, 0x8c014da4, 0x8c014bd4); norm loop inverted from first reading — `bt` on bit-clear rotates via 0x8c014bd4, bit-set falls through to the jsr pair once; every jsr delay slot is `lds r3,fpscr` with the 0xffe7ffff mask |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
