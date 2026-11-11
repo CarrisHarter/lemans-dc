@@ -69,6 +69,15 @@
 | `0x8c043960` | `FUN_8c043960` | `notes/verifications/0x8c043960.json` — 3 oracle steps; stores r4 at [literal 0x8c23dbf8]; leaves r0=global addr |
 | `0x8c0443ec` | `FUN_8c0443ec` | `notes/verifications/0x8c0443ec.json` — 24 oracle steps; writes 11 u32s at [r4..r4+40] (1.0f,1,0,1,0,0,1,1,fr0,fr0,fr0); leaves r6=1, r5=r4+32, r3=r4+36, r1=r4+40, r0=r4, fr0=[0x8c04441c] |
 | `0x8c02b3a0` | `FUN_8c02b3a0` | `notes/verifications/0x8c02b3a0.json` — 151 oracle steps; stores: [r4+0x3f8]=state(0/1/2) u32, byte [r4+0x405]=0 (paths 1/2 only), 17 scaled f32 at [r4+4]+off, [r4+0x4f8]=0.0, [r4+0x4f0]=[r4+0x4ec], [r4+0x4f4]=1.0 (p1/p3) or 0.99f (p2, delay slot of bra); r4+=0x4f4 on all paths; r11-r14/r15 restored by epilogue; T=1 on p1/p2, 0 on p3; leftover regs p1: r0=0x405 r1=0 r3=0x4f4 r5=r4+0x4ec r6=r4+0x4f0 r7=r4+0x4f8; p2: r0=0x8c02b694 r1=0x4f4 r3=r4+0x4ec r5=r4+0x4f0 r6=r4+0x4f8 r7=0; p3: r0=0x4f4 r1=r4+0x4f0 r3=r4+0x4f8 r5=2; fr leftovers p1 fr1=[r4+0x4ec] fr2=[P+0x380]*1.15 fr3=1.15, p2 fr1=[P+0x380]*1.07 fr2=1.07 fr3=1.1, p3 fr0=1.0 |
+| `0x8c026ce0` | `list_unlink` | `notes/verifications/0x8c026ce0.json` — 37 oracle steps; r6=node->next via bf.s delay slot (always); r3 ends 0xfffffffe (literal load @0x8c026d02); r1=node->f8&~1; r0=node->f8&1; r6=next|(node->f8&1); final T from cmp/eq r0,r4 not from trailing or |
+| `0x8c026de4` | `set_two_fields` | `notes/verifications/0x8c026de4.json` — 5 oracle steps; r0 ends as [r4+0x30] (was 0x4c mid-function); second store [r0+0x34]=r5 is the rts delay slot |
+| `0x8c026e34` | `move_pair_clear_src` | `notes/verifications/0x8c026e34.json` — 8 oracle steps; r0=0; r1 ends as second load [r5+0x30]; both zeroing stores incl. rts delay slot |
+| `0x8c02727c` | `copy_float_field` | `notes/verifications/0x8c02727c.json` — 6 oracle steps; r4 ends base+4; r0 ends base+0x34; fr0 holds loaded bits; store at [base+0x34] is rts delay slot |
+| `0x8c0273a0` | `copy_triple_to_0x68` | `notes/verifications/0x8c0273a0.json` — 8 oracle steps; r4 ends base+0x68 (arg register itself modified); r1=[r5]; r0=[r5+8]; third store is rts delay slot |
+| `0x8c0273b0` | `copy_two_48B_blocks` | `notes/verifications/0x8c0273b0.json` — 187 oracle steps; r4 ends p1+0xb4 (not saved/restored); r1=6 r3=48 r7=6; r0=last sign-extended mov.w; T=0 from final cmp/hi 6>6; r10-r14 pushed/popped keep entry values |
+| `0x8c027418` | `copy_48B_plus_ptr_table` | `notes/verifications/0x8c027418.json` — 138 oracle steps; r4 ends p1+0x144; r0=20 r1=6 r3=48 r7=24; T=0; the u32 store [r4+r0]=r13 is the bt.s delay slot |
+| `0x8c0274c8` | `empty_rts` | `notes/verifications/0x8c0274c8.json` — 2 oracle steps; none (rts ; nop) |
+| `0x8c0274cc` | `table_byte_lookup` | `notes/verifications/0x8c0274cc.json` — 4 oracle steps; r0 first becomes table base 0x170 (literal @0x8c0274d4) then the byte at 0x170+r4; extu.b rts delay slot zero-extends the sign-extending mov.b |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
