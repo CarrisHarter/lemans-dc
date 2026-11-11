@@ -404,6 +404,12 @@
 | `0x8c0850a4` | `FUN_8c0850a4 (time->float: [r4+4]=B[2]*fr4+B[1]-(h/1000+m+s*60+ms*3600), [r4]=1)` | `notes/verifications/0x8c0850a4.json` — 46 oracle steps; r0=1; r1=r4+4; r3=ms; r5=s; r6=m; fpul=m (last lds r6,fpul); fr1=B[2]*fr4+B[1]; fr2=3600.0 fr3=ms*3600 fr5=60.0 fr6=s*60 fr7=1000.0 fr8=sum; fr0=result; stores ordered f32@r4+4, f32@r4+4, u32@r4 (rts delay slot); T untouched; args are halfwords on the stack at r15, B via global pointer at 0x8c26c230 |
 | `0x8c085434` | `FUN_8c085434 (compare 4 halfwords, high first; a[i]>b[i])` | `notes/verifications/0x8c085434.json` — 10 oracle steps; r0=T as 0/1 via movt in rts delay slot (not the loaded halfword); r1=sign-extended a[i] of the deciding field; T=final cmp/gt r0,r1 |
 | `0x8c085480` | `FUN_8c085480 (compare 4 halfwords, high first; a[i]<b[i])` | `notes/verifications/0x8c085480.json` — 10 oracle steps; r0=T as 0/1 via movt; r1=sign-extended a[i]; T=cmp/gt r1,r0 (opposite operand order vs 0x8c085434); rts delay slot movt r0 on every return path |
+| `0x8c0b40b4` | `init_quaternion` | `notes/verifications/0x8c0b40b4.json` — verified |
+| `0x8c0b4828` | `scale_float_at_32` | `notes/verifications/0x8c0b4828.json` — verified |
+| `0x8c0b4854` | `store_float_at_32` | `notes/verifications/0x8c0b4854.json` — verified |
+| `0x8c0b4860` | `copy_four_words_at_4` | `notes/verifications/0x8c0b4860.json` — verified |
+| `0x8c0b487c` | `copy_three_words_at_20` | `notes/verifications/0x8c0b487c.json` — verified |
+| `0x8c0b4894` | `advance_32_load_float` | `notes/verifications/0x8c0b4894.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
