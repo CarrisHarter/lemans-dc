@@ -35,6 +35,8 @@
 | `0x8c01e828` | `FUN_8c01e828` | `notes/verifications/0x8c01e828.json` — 11 oracle steps; [r4+8] rewritten twice; T=last tst; r4=0 iff decremented value nonzero; r0=r4 (possibly zeroed) |
 | `0x8c010160` | `FUN_8c010160` | `notes/verifications/0x8c010160.json` — 4 oracle steps; store r5 at table_base + (r4<<2) |
 | `0x8c010e50` | `FUN_8c010e50` | `notes/verifications/0x8c010e50.json` — 28 oracle steps; none; r0 = last-byte diff; r4/r7 advanced, r5 = match count, r2/r3 leftovers, T per exit |
+| `0x8c019678` | `FUN_8c019678` | `notes/verifications/0x8c019678.json` — 10 oracle steps; T=(field==3); r0=field or flag base 0xac; r1=1; byte store at 0xac+r4 |
+| `0x8c01c234` | `FUN_8c01c234` | `notes/verifications/0x8c01c234.json` — 10 oracle steps; T=(field==1); r0=field or flag base 0x85; r1=1; byte store at 0x85+r4 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

@@ -15,7 +15,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let base = mem.read_u32(0x8c01c24c).unwrap_or(0);
         cpu.r[0] = base;
         cpu.r[1] = 1;
-        // the oracle logs this `mov.b` as a 4-byte store of the zero-extended word
-        let _ = mem.write_u32(base.wrapping_add(cpu.r[4]), 1);
+        // `mov.b r1,@(r0,r4)` writes one byte
+        let _ = mem.write_u8(base.wrapping_add(cpu.r[4]), 1);
     }
 }
