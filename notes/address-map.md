@@ -459,6 +459,11 @@
 | `0x8c0b4e98` | `add_two_pairs` | `notes/verifications/0x8c0b4e98.json` — verified |
 | `0x8c082660` | `FUN_8c082660` | `notes/verifications/0x8c082660.json` — 17 oracle steps; writes global float 0x8c264ed0 and string 0x8c264ed8 (leading+trailing space strip), *(r4+0x38), *r5 (mode 4, >1 words); leaves r6=r7=0x8c264ed0 (mode!=4), r3=r4+0x60 or r1-2, r0=r4+0x38 or 1, r4+=0x40 (modes 2/3 only), fpul=wordcount, fr0-fr4 clobbered, T=0 |
 | `0x8c084f0c` | `FUN_8c084f0c` | `notes/verifications/0x8c084f0c.json` — 131 oracle steps; writes 32-byte records into [r4,r5): byte@+0, dwords@+4..+24, word@+28; leaves r1=r6+4, r3=r6+20, r7=dst+20, r0=sext16(src+28), fr0=src dword@+24, T=1 |
+| `0x8c0b5e84` | `subtract_from_global` | `notes/verifications/0x8c0b5e84.json` — verified |
+| `0x8c0b5ec0` | `reset_three_globals` | `notes/verifications/0x8c0b5ec0.json` — verified |
+| `0x8c0b649c` | `store_arg_to_global` | `notes/verifications/0x8c0b649c.json` — verified |
+| `0x8c0b7414` | `delta_12_minus_8` | `notes/verifications/0x8c0b7414.json` — verified |
+| `0x8c0b766c` | `init_three_vtables` | `notes/verifications/0x8c0b766c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
