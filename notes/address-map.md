@@ -7,6 +7,16 @@
 | `0x8c175c72` | `am_sound_is_playing` | `notes/verifications/0x8c175c72.json` — 9 oracle steps |
 | `0x8c18b9c8` | `array_lookup` | `notes/verifications/0x8c18b9c8*.json` — both branches (12 and 7 oracle steps) |
 | `0x8c1552e4` | `store_through_two_levels` | `notes/verifications/0x8c1552e4.json` — 4 oracle steps, stores match |
+| `0x8c010080` | `FUN_8c010080` | `notes/verifications/0x8c010080.json` — 2 oracle steps; none |
+| `0x8c010124` | `FUN_8c010124` | `notes/verifications/0x8c010124.json` — 2 oracle steps; none |
+| `0x8c010128` | `FUN_8c010128` | `notes/verifications/0x8c010128.json` — 2 oracle steps; r0=0 |
+| `0x8c01012c` | `FUN_8c01012c` | `notes/verifications/0x8c01012c.json` — 2 oracle steps; r0=0 |
+| `0x8c010130` | `FUN_8c010130` | `notes/verifications/0x8c010130.json` — 2 oracle steps; r0=0 |
+| `0x8c010134` | `FUN_8c010134` | `notes/verifications/0x8c010134.json` — 2 oracle steps; r0=0 |
+| `0x8c010138` | `FUN_8c010138` | `notes/verifications/0x8c010138.json` — 2 oracle steps; r0=0 |
+| `0x8c01013c` | `FUN_8c01013c` | `notes/verifications/0x8c01013c.json` — 2 oracle steps; r0=0 |
+| `0x8c010140` | `FUN_8c010140` | `notes/verifications/0x8c010140.json` — 2 oracle steps; r0=0 |
+| `0x8c010144` | `FUN_8c010144` | `notes/verifications/0x8c010144.json` — 2 oracle steps; none |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

@@ -13,8 +13,28 @@ pub type Port = fn(&mut Cpu, &mut Memory);
 
 #[path = "ports/p_8c010000.rs"]
 pub mod p_8c010000;
+#[path = "ports/p_8c010080.rs"]
+pub mod p_8c010080;
 #[path = "ports/p_8c01011c.rs"]
 pub mod p_8c01011c;
+#[path = "ports/p_8c010124.rs"]
+pub mod p_8c010124;
+#[path = "ports/p_8c010128.rs"]
+pub mod p_8c010128;
+#[path = "ports/p_8c01012c.rs"]
+pub mod p_8c01012c;
+#[path = "ports/p_8c010130.rs"]
+pub mod p_8c010130;
+#[path = "ports/p_8c010134.rs"]
+pub mod p_8c010134;
+#[path = "ports/p_8c010138.rs"]
+pub mod p_8c010138;
+#[path = "ports/p_8c01013c.rs"]
+pub mod p_8c01013c;
+#[path = "ports/p_8c010140.rs"]
+pub mod p_8c010140;
+#[path = "ports/p_8c010144.rs"]
+pub mod p_8c010144;
 #[path = "ports/p_8c1552e4.rs"]
 pub mod p_8c1552e4;
 #[path = "ports/p_8c175c72.rs"]
@@ -25,7 +45,17 @@ pub mod p_8c18b9c8;
 pub fn lookup(address: u32) -> Option<Port> {
     match address {
         0x8C010000 => Some(p_8c010000::run),
+        0x8C010080 => Some(p_8c010080::run),
         0x8C01011C => Some(p_8c01011c::run),
+        0x8C010124 => Some(p_8c010124::run),
+        0x8C010128 => Some(p_8c010128::run),
+        0x8C01012C => Some(p_8c01012c::run),
+        0x8C010130 => Some(p_8c010130::run),
+        0x8C010134 => Some(p_8c010134::run),
+        0x8C010138 => Some(p_8c010138::run),
+        0x8C01013C => Some(p_8c01013c::run),
+        0x8C010140 => Some(p_8c010140::run),
+        0x8C010144 => Some(p_8c010144::run),
         0x8C1552E4 => Some(p_8c1552e4::run),
         0x8C175C72 => Some(p_8c175c72::run),
         0x8C18B9C8 => Some(p_8c18b9c8::run),
