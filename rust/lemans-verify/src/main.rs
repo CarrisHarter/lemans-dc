@@ -18,7 +18,6 @@ use sh4_oracle::{image, in_stack, install_default_stack, Cpu, Memory, LOAD_BASE}
 #[derive(Clone)]
 struct Seed {
     entry: u32,
-    steps: usize,
     regs: Vec<(usize, u32)>,
     fr: Vec<(usize, f32)>,
     memory: Vec<(u32, Vec<u8>)>,
@@ -26,7 +25,6 @@ struct Seed {
 
 fn read_seed(spec: &Json, base: u32) -> Seed {
     let entry = spec.get("entry").and_then(Json::as_u32).unwrap_or(base);
-    let steps = spec.get("steps").and_then(Json::as_u64).unwrap_or(1_000_000) as usize;
     let mut regs = Vec::new();
     if let Some(Json::Object(map)) = spec.get("regs") {
         for (k, v) in map {
@@ -61,7 +59,7 @@ fn read_seed(spec: &Json, base: u32) -> Seed {
             }
         }
     }
-    Seed { entry, steps, regs, fr, memory }
+    Seed { entry, regs, fr, memory }
 }
 
 fn seeded(seed: &Seed, bytes: &[u8], base: u32) -> (Cpu, Memory) {
@@ -152,6 +150,13 @@ fn main() -> ExitCode {
         Ok(v) => v,
         Err(e) => return fail(&format!("bad oracle JSON: {e}")),
     };
+    match oracle.get("stop").and_then(Json::as_str) {
+        Some("halt") => {}
+        other => {
+            let detail = oracle.get("error").and_then(Json::as_str).unwrap_or("");
+            return fail(&format!("oracle did not halt cleanly: {other:?} {detail}"));
+        }
+    }
     let Some(Json::Array(oracle_regs)) = oracle.get("regs") else {
         return fail("oracle output has no regs array");
     };

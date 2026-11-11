@@ -290,7 +290,8 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
 
     println!("{}", Json::Object(out));
     match stop {
-        Ok(_) => ExitCode::SUCCESS,
+        Ok(Stop::Halt) => ExitCode::SUCCESS,
+        Ok(Stop::Steps(_)) => ExitCode::from(3),
         Err(_) => ExitCode::from(1),
     }
 }

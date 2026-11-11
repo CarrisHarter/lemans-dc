@@ -13,6 +13,8 @@ pub type Port = fn(&mut Cpu, &mut Memory);
 
 #[path = "ports/p_8c010000.rs"]
 pub mod p_8c010000;
+#[path = "ports/p_8c01011c.rs"]
+pub mod p_8c01011c;
 #[path = "ports/p_8c1552e4.rs"]
 pub mod p_8c1552e4;
 #[path = "ports/p_8c175c72.rs"]
@@ -23,6 +25,7 @@ pub mod p_8c18b9c8;
 pub fn lookup(address: u32) -> Option<Port> {
     match address {
         0x8C010000 => Some(p_8c010000::run),
+        0x8C01011C => Some(p_8c01011c::run),
         0x8C1552E4 => Some(p_8c1552e4::run),
         0x8C175C72 => Some(p_8c175c72::run),
         0x8C18B9C8 => Some(p_8c18b9c8::run),

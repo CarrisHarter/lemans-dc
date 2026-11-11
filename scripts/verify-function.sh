@@ -10,7 +10,7 @@
 set -euo pipefail
 
 ADDR="${1:?usage: verify-function.sh <0xaddress> [binary] [spec]}"
-ROOT="$HOME/Projects/lemans-dc"
+ROOT="${LEMANS_ROOT:-$HOME/Projects/lemans-dc}"
 BIN="${2:-$ROOT/analysis/lemans24.bin}"
 SPEC="${3:-$ROOT/notes/specs/$ADDR.json}"
 VERIFY="$ROOT/rust/lemans-verify"
