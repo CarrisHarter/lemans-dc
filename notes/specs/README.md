@@ -21,12 +21,14 @@ Rust port runs `registry::<fn>`, and every observable result must match exactly.
 | `fr` | `f0`..`f15` seeds, single precision |
 | `memory` | byte patches applied before running (`hex` is raw bytes) |
 | `steps` | instruction budget; exceeding it is a failure, not a pass |
+| `sr`, `mach`, `macl`, `gbr`, `vbr`, `ssr`, `spc`, `sgr`, `dbr`, `fpul`, `fpscr` | optional system-register seeds, hex strings |
 
 ## What is compared
 
 - all 16 integer registers
 - all 16 FPU registers, bit-exact (no tolerance — a 1-ULP drift compounds)
-- the T bit in `sr`
+- the full `sr`, plus `mach`, `macl`, `gbr`, `vbr`, `ssr`, `spc`, `sgr`, `dbr`,
+  `fpul` and `fpscr`
 - every store outside the synthetic stack window
 
 The stack window (`0x8C300000`..`0x8C310000`) is excluded on purpose: a port may
@@ -35,6 +37,9 @@ match the original byte for byte.
 
 ## Not yet modelled
 
+- `div1` and the vector FPU instructions (`fipr`, `ftrv`, `fschg`, `frchg`,
+  `fsca`, `fsrra`, `fcnvsd`) — they fail loudly as `Unimplemented` rather than
+  running with unverified semantics
 - calls into other subsystems (a spec must stay inside one function's own work)
 - null/error branches that call the engine's reporter (documented per port)
 - DMA, store queues, interrupts, and any hardware register access

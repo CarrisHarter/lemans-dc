@@ -229,6 +229,24 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
         }
     }
 
+    for (key, slot) in [
+        ("sr", &mut cpu.sr),
+        ("mach", &mut cpu.mach),
+        ("macl", &mut cpu.macl),
+        ("gbr", &mut cpu.gbr),
+        ("vbr", &mut cpu.vbr),
+        ("ssr", &mut cpu.ssr),
+        ("spc", &mut cpu.spc),
+        ("sgr", &mut cpu.sgr),
+        ("dbr", &mut cpu.dbr),
+        ("fpul", &mut cpu.fpul),
+        ("fpscr", &mut cpu.fpscr),
+    ] {
+        if let Some(v) = spec.get(key).and_then(Json::as_u32) {
+            *slot = v;
+        }
+    }
+
     install_default_stack(cpu, mem);
     mem.writes.clear(); // seeding is not an effect of the function
     cpu.pc = entry;
@@ -273,6 +291,19 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
     );
     out.insert("fpul".to_string(), Json::String(format!("0x{:08x}", cpu.fpul)));
     out.insert("sr".to_string(), Json::String(format!("0x{:08x}", cpu.sr)));
+    for (key, value) in [
+        ("mach", cpu.mach),
+        ("macl", cpu.macl),
+        ("gbr", cpu.gbr),
+        ("vbr", cpu.vbr),
+        ("ssr", cpu.ssr),
+        ("spc", cpu.spc),
+        ("sgr", cpu.sgr),
+        ("dbr", cpu.dbr),
+        ("fpscr", cpu.fpscr),
+    ] {
+        out.insert(key.to_string(), Json::String(format!("0x{value:08x}")));
+    }
     out.insert(
         "writes".to_string(),
         Json::Array(

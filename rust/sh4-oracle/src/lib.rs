@@ -192,6 +192,18 @@ pub struct Cpu {
     pub fpscr: u32,
     /// FPU communication register, used by float/ftrc/flds/fsts.
     pub fpul: u32,
+    /// Multiply-accumulate high/low words.
+    pub mach: u32,
+    pub macl: u32,
+    /// System registers the game saves and restores around calls.
+    pub gbr: u32,
+    pub vbr: u32,
+    pub ssr: u32,
+    pub spc: u32,
+    pub sgr: u32,
+    pub dbr: u32,
+    /// R0_BANK..R7_BANK, only reachable through stc/ldc.
+    pub bank: [u32; 8],
     /// Pending delayed-branch target, consumed after the delay slot runs.
     pub delay: Option<u32>,
     pub steps: usize,
@@ -213,6 +225,15 @@ impl Cpu {
             fr: [0.0; 16],
             fpscr: 0,
             fpul: 0,
+            mach: 0,
+            macl: 0,
+            gbr: 0,
+            vbr: 0,
+            ssr: 0,
+            spc: 0,
+            sgr: 0,
+            dbr: 0,
+            bank: [0; 8],
             delay: None,
             steps: 0,
         }
@@ -291,6 +312,9 @@ impl Cpu {
     }
 
     fn execute(&mut self, op: u16, mem: &mut Memory, pc: u32) -> Result<(), Error> {
+        if let Some(result) = self.execute_system(op, mem, pc) {
+            return result;
+        }
         let n = ((op >> 8) & 0xF) as usize;
         let m = ((op >> 4) & 0xF) as usize;
         let disp8 = (op & 0xFF) as i8 as i32;
@@ -570,16 +594,18 @@ impl Cpu {
                 Ok(())
             }
             0xA => {
-                // bra disp12 (delayed)
-                let disp = (op & 0x0FFF) as i16 as i32;
-                self.delay = Some((pc as i32 + 4 + disp * 2) as u32);
+                // bra disp12 (delayed). The displacement is a signed 12-bit
+                // value; `(op & 0x0FFF) as i16` leaves bit 11 positive, so a
+                // backward branch used to jump forward instead.
+                let disp = (((op & 0x0FFF) << 4) as i16) >> 4;
+                self.delay = Some((pc as i32 + 4 + disp as i32 * 2) as u32);
                 Ok(())
             }
             0xB => {
                 // bsr disp12 (delayed)
-                let disp = (op & 0x0FFF) as i16 as i32;
+                let disp = (((op & 0x0FFF) << 4) as i16) >> 4;
                 self.pr = pc.wrapping_add(4);
-                self.delay = Some((pc as i32 + 4 + disp * 2) as u32);
+                self.delay = Some((pc as i32 + 4 + disp as i32 * 2) as u32);
                 Ok(())
             }
             0xC => match op >> 8 {
@@ -619,6 +645,463 @@ impl Cpu {
             0xF => self.execute_fpu(op, mem, pc, n, m),
             _ => Err(Error::Unimplemented(pc, op, "top nibble")),
         }
+    }
+
+
+    /// Instructions outside the original core: system-register transfers,
+    /// multiply/accumulate, carry/overflow arithmetic, and the cache hints.
+    ///
+    /// Returns `None` when the opcode is not one of these, so the caller falls
+    /// through to the original decoder.
+    fn execute_system(
+        &mut self,
+        op: u16,
+        mem: &mut Memory,
+        pc: u32,
+    ) -> Option<Result<(), Error>> {
+        match self.execute_system_impl(op, mem, pc) {
+            Err(Error::Unimplemented(_, _, "not a system instruction")) => None,
+            other => Some(other),
+        }
+    }
+
+    fn execute_system_impl(
+        &mut self,
+        op: u16,
+        mem: &mut Memory,
+        pc: u32,
+    ) -> Result<(), Error> {
+        let n = ((op >> 8) & 0xF) as usize;
+        let m = ((op >> 4) & 0xF) as usize;
+        let low = (op & 0xFF) as u8;
+        let unhandled = || Error::Unimplemented(pc, op, "not a system instruction");
+
+        match op >> 12 {
+            0x0 => {
+                match op {
+                    0x0028 => { self.mach = 0; self.macl = 0; return Ok(()); }  // clrmac
+                    0x0029 => { self.r[n] = self.t() as u32; return Ok(()); }    // movt Rn
+                    0x0048 => { self.sr &= !(1 << 1); return Ok(()); }           // clrs
+                    0x0058 => { self.sr |= 1 << 1; return Ok(()); }              // sets
+                    0x0019 => {                                                  // div0u
+                        self.sr &= !((1 << 8) | (1 << 9) | 1);
+                        return Ok(());
+                    }
+                    0x0038 => return Ok(()),                                     // ldtlb: no MMU
+                    _ => {}
+                }
+                match low {
+                    0x02 => { self.r[n] = self.sr; return Ok(()); }
+                    0x12 => { self.r[n] = self.gbr; return Ok(()); }
+                    0x22 => { self.r[n] = self.vbr; return Ok(()); }
+                    0x32 => { self.r[n] = self.ssr; return Ok(()); }
+                    0x42 => { self.r[n] = self.spc; return Ok(()); }
+                    0x3A => { self.r[n] = self.sgr; return Ok(()); }
+                    0xFA => { self.r[n] = self.dbr; return Ok(()); }
+                    0x0A => { self.r[n] = self.mach; return Ok(()); }
+                    0x1A => { self.r[n] = self.macl; return Ok(()); }
+                    0x2A => { self.r[n] = self.pr; return Ok(()); }
+                    0x5A => { self.r[n] = self.fpul; return Ok(()); }
+                    0x6A => { self.r[n] = self.fpscr; return Ok(()); }
+                    0x03 => {                                                    // bsrf Rn
+                        self.pr = pc.wrapping_add(4);
+                        self.delay = Some(self.r[n].wrapping_add(pc.wrapping_add(4)));
+                        return Ok(());
+                    }
+                    0x23 => {                                                    // braf Rn
+                        self.delay = Some(self.r[n].wrapping_add(pc.wrapping_add(4)));
+                        return Ok(());
+                    }
+                    // pref, ocbi, ocbp, ocbwb: cache hints, no architectural effect.
+                    0x83 | 0x93 | 0xA3 | 0xB3 => return Ok(()),
+                    0xC3 => {                                                    // movca.l R0,@Rn
+                        mem.write_u32(self.r[n], self.r[0])?;
+                        return Ok(());
+                    }
+                    _ if low & 0xF == 0x2 && low >> 4 >= 8 => {                  // stc Rn_BANK,Rn
+                        let idx = ((low >> 4) as usize) - 8;
+                        self.r[n] = self.bank[idx];
+                        return Ok(());
+                    }
+                    _ => {}
+                }
+                match op & 0xF {
+                    0x7 => {                                                 // mul.l Rm,Rn
+                        let p = (self.r[n] as i32 as i64) * (self.r[m] as i32 as i64);
+                        self.mach = (p >> 32) as u32;
+                        self.macl = p as u32;
+                        return Ok(());
+                    }
+                    0xF => {                                                 // mac.l @Rm+,@Rn+
+                        let a = mem.read_u32(self.r[m])? as i32 as i64;
+                        let b = mem.read_u32(self.r[n])? as i32 as i64;
+                        self.r[m] = self.r[m].wrapping_add(4);
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        let acc = (((self.mach as u64) << 32) | self.macl as u64) as i64;
+                        let sum = acc.wrapping_add(a.wrapping_mul(b));
+                        self.mach = (sum >> 32) as u32;
+                        self.macl = sum as u32;
+                        return Ok(());
+                    }
+                    _ => {}
+                }
+            }
+            0x2 => match op & 0xF {
+                0x7 => {                                                     // div0s Rm,Rn
+                    let q = (self.r[n] >> 31) & 1;
+                    let mm = (self.r[m] >> 31) & 1;
+                    self.sr = (self.sr & !((1 << 8) | (1 << 9))) | (q << 8) | (mm << 9);
+                    self.set_t(q == mm);
+                    return Ok(());
+                }
+                0xC => {                                                     // cmp/str Rm,Rn
+                    let x = self.r[n] ^ self.r[m];
+                    self.set_t(
+                        x & 0xFF == 0
+                            || x & 0xFF00 == 0
+                            || x & 0xFF_0000 == 0
+                            || x & 0xFF00_0000 == 0,
+                    );
+                    return Ok(());
+                }
+                0xD => {                                                     // xtrct Rm,Rn
+                    self.r[n] = (self.r[n] >> 16) | (self.r[m] << 16);
+                    return Ok(());
+                }
+                0xE => {                                                     // mulu.w Rm,Rn
+                    self.macl = (self.r[n] & 0xFFFF).wrapping_mul(self.r[m] & 0xFFFF);
+                    return Ok(());
+                }
+                0xF => {                                                     // muls.w Rm,Rn
+                    let a = self.r[n] as i16 as i32;
+                    let b = self.r[m] as i16 as i32;
+                    self.macl = a.wrapping_mul(b) as u32;
+                    return Ok(());
+                }
+                _ => {}
+            },
+            0x3 => match op & 0xF {
+                0x5 => {                                                     // dmulu.l Rm,Rn
+                    let p = (self.r[n] as u64) * (self.r[m] as u64);
+                    self.mach = (p >> 32) as u32;
+                    self.macl = p as u32;
+                    return Ok(());
+                }
+                0xA => {                                                     // subc Rm,Rn
+                    let (d, b1) = self.r[n].overflowing_sub(self.r[m]);
+                    let (d, b2) = d.overflowing_sub(self.t() as u32);
+                    self.r[n] = d;
+                    self.set_t(b1 || b2);
+                    return Ok(());
+                }
+                0xB => {                                                     // subv Rm,Rn
+                    let a = self.r[n] as i32;
+                    let b = self.r[m] as i32;
+                    let d = a.wrapping_sub(b);
+                    self.r[n] = d as u32;
+                    self.set_t(((a ^ b) & (a ^ d)) < 0);
+                    return Ok(());
+                }
+                0xD => {                                                     // dmuls.l Rm,Rn
+                    let p = (self.r[n] as i32 as i64) * (self.r[m] as i32 as i64);
+                    self.mach = (p >> 32) as u32;
+                    self.macl = p as u32;
+                    return Ok(());
+                }
+                0xE => {                                                     // addc Rm,Rn
+                    let (s, c1) = self.r[n].overflowing_add(self.r[m]);
+                    let (s, c2) = s.overflowing_add(self.t() as u32);
+                    self.r[n] = s;
+                    self.set_t(c1 || c2);
+                    return Ok(());
+                }
+                0xF => {                                                     // addv Rm,Rn
+                    let a = self.r[n] as i32;
+                    let b = self.r[m] as i32;
+                    let s = a.wrapping_add(b);
+                    self.r[n] = s as u32;
+                    self.set_t(((a ^ s) & (b ^ s)) < 0);
+                    return Ok(());
+                }
+                _ => {}
+            },
+            0x4 => {
+                match low {
+                    0x04 => {                                                // rotl Rn
+                        let t = self.r[n] >> 31 != 0;
+                        self.r[n] = (self.r[n] << 1) | self.t() as u32;
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x05 => {                                                // rotr Rn
+                        let t = self.r[n] & 1 != 0;
+                        self.r[n] = (self.r[n] >> 1) | ((self.t() as u32) << 31);
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x20 => {                                                // shal Rn
+                        let t = self.r[n] >> 31 != 0;
+                        self.r[n] <<= 1;
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x21 => {                                                // shar Rn
+                        let t = self.r[n] & 1 != 0;
+                        self.r[n] = ((self.r[n] as i32) >> 1) as u32;
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x24 => {                                                // rotcl Rn
+                        let t = self.r[n] >> 31 != 0;
+                        self.r[n] = (self.r[n] << 1) | self.t() as u32;
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x25 => {                                                // rotcr Rn
+                        let t = self.r[n] & 1 != 0;
+                        self.r[n] = (self.r[n] >> 1) | ((self.t() as u32) << 31);
+                        self.set_t(t);
+                        return Ok(());
+                    }
+                    0x1B => {                                                // tas.b @Rn
+                        let v = mem.read_u8(self.r[n])?;
+                        self.set_t(v == 0);
+                        mem.write_u8(self.r[n], v | 0x80)?;
+                        return Ok(());
+                    }
+                    _ => {}
+                }
+                match op & 0xF {
+                    0xC => {                                                 // shad Rm,Rn
+                        let amount = self.r[m] as i32;
+                        if amount >= 0 {
+                            self.r[n] <<= (amount as u32) & 31;
+                        } else {
+                            self.r[n] = ((self.r[n] as i32) >> ((-amount) as u32 & 31)) as u32;
+                        }
+                        return Ok(());
+                    }
+                    0xD => {                                                 // shld Rm,Rn
+                        let amount = self.r[m] as i32;
+                        if amount >= 0 {
+                            self.r[n] <<= (amount as u32) & 31;
+                        } else {
+                            self.r[n] >>= ((-amount) as u32) & 31;
+                        }
+                        return Ok(());
+                    }
+                    0xF => {                                                 // mac.w @Rm+,@Rn+
+                        let a = mem.read_u16(self.r[m])? as i16 as i32;
+                        let b = mem.read_u16(self.r[n])? as i16 as i32;
+                        self.r[m] = self.r[m].wrapping_add(2);
+                        self.r[n] = self.r[n].wrapping_add(2);
+                        let (sum, ovf) = (self.macl as i32).overflowing_add(a.wrapping_mul(b));
+                        self.macl = sum as u32;
+                        self.mach = u32::from(ovf);
+                        return Ok(());
+                    }
+                    _ => {}
+                }
+                match low {
+                    0x02 => {                                                // sts.l MACH,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.mach)?;
+                        return Ok(());
+                    }
+                    0x12 => {                                                // sts.l MACL,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.macl)?;
+                        return Ok(());
+                    }
+                    0x52 => {                                                // sts.l FPUL,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.fpul)?;
+                        return Ok(());
+                    }
+                    0x62 => {                                                // sts.l FPSCR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.fpscr)?;
+                        return Ok(());
+                    }
+                    0x03 => {                                                // stc.l SR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.sr)?;
+                        return Ok(());
+                    }
+                    0x13 => {                                                // stc.l GBR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.gbr)?;
+                        return Ok(());
+                    }
+                    0x23 => {                                                // stc.l VBR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.vbr)?;
+                        return Ok(());
+                    }
+                    0x33 => {                                                // stc.l SSR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.ssr)?;
+                        return Ok(());
+                    }
+                    0x43 => {                                                // stc.l SPC,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.spc)?;
+                        return Ok(());
+                    }
+                    0x32 => {                                                // stc.l SGR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.sgr)?;
+                        return Ok(());
+                    }
+                    0xF2 => {                                                // stc.l DBR,@-Rn
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.dbr)?;
+                        return Ok(());
+                    }
+                    _ if low & 0xF == 0x3 && low >> 4 >= 8 => {              // stc.l Rn_BANK,@-Rn
+                        let idx = ((low >> 4) as usize) - 8;
+                        self.r[n] = self.r[n].wrapping_sub(4);
+                        mem.write_u32(self.r[n], self.bank[idx])?;
+                        return Ok(());
+                    }
+                    0x0E => {                                                // ldc Rn,SR
+                        self.sr = self.r[n];
+                        return Ok(());
+                    }
+                    0x1E => { self.gbr = self.r[n]; return Ok(()); }         // ldc Rn,GBR
+                    0x2E => { self.vbr = self.r[n]; return Ok(()); }         // ldc Rn,VBR
+                    0x3E => { self.ssr = self.r[n]; return Ok(()); }         // ldc Rn,SSR
+                    0x4E => { self.spc = self.r[n]; return Ok(()); }         // ldc Rn,SPC
+                    0x3A => { self.sgr = self.r[n]; return Ok(()); }         // ldc Rn,SGR
+                    0xFA => { self.dbr = self.r[n]; return Ok(()); }         // ldc Rn,DBR
+                    _ if low & 0xF == 0xE && low >> 4 >= 8 => {              // ldc Rn,Rn_BANK
+                        let idx = ((low >> 4) as usize) - 8;
+                        self.bank[idx] = self.r[n];
+                        return Ok(());
+                    }
+                    0x07 => {                                                // ldc.l @Rn+,SR
+                        self.sr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x17 => {                                                // ldc.l @Rn+,GBR
+                        self.gbr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x27 => {                                                // ldc.l @Rn+,VBR
+                        self.vbr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x37 => {                                                // ldc.l @Rn+,SSR
+                        self.ssr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x47 => {                                                // ldc.l @Rn+,SPC
+                        self.spc = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x36 => {                                                // ldc.l @Rn+,SGR
+                        self.sgr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0xF6 => {                                                // ldc.l @Rn+,DBR
+                        self.dbr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    _ if low & 0xF == 0x7 && low >> 4 >= 8 => {              // ldc.l @Rn+,Rn_BANK
+                        let idx = ((low >> 4) as usize) - 8;
+                        self.bank[idx] = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x0A => { self.mach = self.r[n]; return Ok(()); }        // lds Rn,MACH
+                    0x1A => { self.macl = self.r[n]; return Ok(()); }        // lds Rn,MACL
+                    0x5A => { self.fpul = self.r[n]; return Ok(()); }        // lds Rn,FPUL
+                    0x6A => { self.fpscr = self.r[n]; return Ok(()); }       // lds Rn,FPSCR
+                    0x06 => {                                                // lds.l @Rn+,MACH
+                        self.mach = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x16 => {                                                // lds.l @Rn+,MACL
+                        self.macl = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x56 => {                                                // lds.l @Rn+,FPUL
+                        self.fpul = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    0x66 => {                                                // lds.l @Rn+,FPSCR
+                        self.fpscr = mem.read_u32(self.r[n])?;
+                        self.r[n] = self.r[n].wrapping_add(4);
+                        return Ok(());
+                    }
+                    _ => {}
+                }
+            }
+            0x6 => match op & 0xF {
+                0x8 => {                                                     // swap.b Rm,Rn
+                    let v = self.r[m];
+                    self.r[n] = (v & 0xFFFF_0000) | ((v & 0xFF) << 8) | ((v >> 8) & 0xFF);
+                    return Ok(());
+                }
+                0x9 => {                                                     // swap.w Rm,Rn
+                    self.r[n] = self.r[m].rotate_left(16);
+                    return Ok(());
+                }
+                0xA => {                                                     // negc Rm,Rn
+                    let (d, b1) = 0u32.overflowing_sub(self.r[m]);
+                    let (d, b2) = d.overflowing_sub(self.t() as u32);
+                    self.r[n] = d;
+                    self.set_t(b1 || b2);
+                    return Ok(());
+                }
+                _ => {}
+            },
+            0xC => match op >> 8 {
+                0xCC => {                                                    // tst.b #imm,@(R0,GBR)
+                    let addr = self.gbr.wrapping_add(self.r[0]);
+                    let v = mem.read_u8(addr)?;
+                    self.set_t(v & (op & 0xFF) as u8 == 0);
+                    return Ok(());
+                }
+                0xCD => {                                                    // and.b #imm,@(R0,GBR)
+                    let addr = self.gbr.wrapping_add(self.r[0]);
+                    let v = mem.read_u8(addr)?;
+                    mem.write_u8(addr, v & (op & 0xFF) as u8)?;
+                    return Ok(());
+                }
+                0xCE => {                                                    // xor.b #imm,@(R0,GBR)
+                    let addr = self.gbr.wrapping_add(self.r[0]);
+                    let v = mem.read_u8(addr)?;
+                    mem.write_u8(addr, v ^ (op & 0xFF) as u8)?;
+                    return Ok(());
+                }
+                0xCF => {                                                    // or.b #imm,@(R0,GBR)
+                    let addr = self.gbr.wrapping_add(self.r[0]);
+                    let v = mem.read_u8(addr)?;
+                    mem.write_u8(addr, v | (op & 0xFF) as u8)?;
+                    return Ok(());
+                }
+                _ => {}
+            },
+            0xF => match op & 0xFF {
+                0x4D => { self.fr[n] = -self.fr[n]; return Ok(()); }         // fneg FRn
+                0x5D => { self.fr[n] = self.fr[n].abs(); return Ok(()); }    // fabs FRn
+                0x6D => { self.fr[n] = self.fr[n].sqrt(); return Ok(()); }   // fsqrt FRn
+                _ => {}
+            },
+            _ => {}
+        }
+        Err(unhandled())
     }
 
     /// Load/store helper.

@@ -29,9 +29,20 @@ IMPLEMENTED = {
     "not", "neg", "stc", "ldc", "fsts", "flds", "ftrc", "float",
     # control flow
     "jsr", "jmp", "bsr", "bra", "bt", "bf", "bt.s", "bf.s", "lds", "sts",
+    "braf", "bsrf",
+    # system registers and multiply/accumulate
+    "lds.l", "sts.l", "ldc.l", "stc.l", "clrmac", "clrs", "sets", "movt",
+    "mul.l", "mulu.w", "muls.w", "dmulu.l", "dmuls.l", "mac.w", "mac.l",
+    "div0s", "div0u", "tas.b", "xtrct", "cmp/str",
+    # carry / overflow / rotate / shift-by-register
+    "addc", "addv", "subc", "subv", "negc", "shad", "shld", "shal", "shar",
+    "rotl", "rotr", "rotcl", "rotcr", "swap.b", "swap.w",
+    # gbr-relative byte logic and cache hints
+    "tst.b", "and.b", "or.b", "xor.b", "pref", "ocbi", "ocbp", "ocbwb", "ldtlb",
+    "movca.l",
     # fpu
     "fadd", "fsub", "fmul", "fdiv", "fmac", "fmov", "fmov.s", "fldi0", "fldi1",
-    "fcmp/eq", "fcmp/gt",
+    "fcmp/eq", "fcmp/gt", "fneg", "fabs", "fsqrt",
 }
 
 

@@ -21,7 +21,13 @@ struct Seed {
     regs: Vec<(usize, u32)>,
     fr: Vec<(usize, f32)>,
     memory: Vec<(u32, Vec<u8>)>,
+    /// System registers, by JSON key, seeded and compared as a unit.
+    special: Vec<(&'static str, u32)>,
 }
+
+const SPECIAL: [&str; 11] = [
+    "sr", "mach", "macl", "gbr", "vbr", "ssr", "spc", "sgr", "dbr", "fpul", "fpscr",
+];
 
 fn read_seed(spec: &Json, base: u32) -> Seed {
     let entry = spec.get("entry").and_then(Json::as_u32).unwrap_or(base);
@@ -59,7 +65,13 @@ fn read_seed(spec: &Json, base: u32) -> Seed {
             }
         }
     }
-    Seed { entry, regs, fr, memory }
+    let mut special = Vec::new();
+    for key in SPECIAL {
+        if let Some(v) = spec.get(key).and_then(Json::as_u32) {
+            special.push((key, v));
+        }
+    }
+    Seed { entry, regs, fr, memory, special }
 }
 
 fn seeded(seed: &Seed, bytes: &[u8], base: u32) -> (Cpu, Memory) {
@@ -79,6 +91,22 @@ fn seeded(seed: &Seed, bytes: &[u8], base: u32) -> (Cpu, Memory) {
     for (addr, data) in &seed.memory {
         for (i, byte) in data.iter().enumerate() {
             let _ = mem.write_u8(addr + i as u32, *byte);
+        }
+    }
+    for (key, value) in &seed.special {
+        match *key {
+            "sr" => cpu.sr = *value,
+            "mach" => cpu.mach = *value,
+            "macl" => cpu.macl = *value,
+            "gbr" => cpu.gbr = *value,
+            "vbr" => cpu.vbr = *value,
+            "ssr" => cpu.ssr = *value,
+            "spc" => cpu.spc = *value,
+            "sgr" => cpu.sgr = *value,
+            "dbr" => cpu.dbr = *value,
+            "fpul" => cpu.fpul = *value,
+            "fpscr" => cpu.fpscr = *value,
+            _ => {}
         }
     }
     mem.writes.clear();
@@ -175,9 +203,34 @@ fn main() -> ExitCode {
             diffs.push(format!("r{i}: port 0x{:08x} != original 0x{want:08x}", cpu.r[i]));
         }
     }
-    if let Some(want_sr) = oracle.get("sr").and_then(Json::as_u32) {
-        if (cpu.sr & 1) != (want_sr & 1) {
-            diffs.push(format!("T bit: port {} != original {}", cpu.sr & 1, want_sr & 1));
+    for key in SPECIAL {
+        let Some(want) = oracle.get(key).and_then(Json::as_u32) else {
+            continue;
+        };
+        let got = match key {
+            "sr" => cpu.sr,
+            "mach" => cpu.mach,
+            "macl" => cpu.macl,
+            "gbr" => cpu.gbr,
+            "vbr" => cpu.vbr,
+            "ssr" => cpu.ssr,
+            "spc" => cpu.spc,
+            "sgr" => cpu.sgr,
+            "dbr" => cpu.dbr,
+            "fpul" => cpu.fpul,
+            "fpscr" => cpu.fpscr,
+            _ => 0,
+        };
+        if got != want {
+            if key == "sr" {
+                diffs.push(format!(
+                    "sr: port 0x{got:08x} != original 0x{want:08x} (T {} vs {})",
+                    got & 1,
+                    want & 1
+                ));
+            } else {
+                diffs.push(format!("{key}: port 0x{got:08x} != original 0x{want:08x}"));
+            }
         }
     }
     if let Some(Json::Array(oracle_fr)) = oracle.get("fr") {
