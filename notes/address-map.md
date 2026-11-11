@@ -209,6 +209,7 @@
 | `0x8c05d3bc` | `FUN_8c05d3bc` | `notes/verifications/0x8c05d3bc.json` — 3 oracle steps; r0 = *0x8c1f72a0 via literal pool at 0x8c05d3c4 + rts delay slot |
 | `0x8c05d60c` | `FUN_8c05d60c` | `notes/verifications/0x8c05d60c.json` — 4 oracle steps; r1 = [r15] dest ptr, r0 = [r4] value; store in rts delay slot |
 | `0x8c05dbfc` | `FUN_8c05dbfc` | `notes/verifications/0x8c05dbfc.json` — 4 oracle steps; r1 = [r5] src, r0 = original r4; store in rts delay slot |
+| `0x8c027580` | `FUN_8c027580` | `notes/verifications/0x8c027580.json` — 312 oracle steps; stores: 6x(4xu16 p2->p1 at +0xb4/0xe4/0x114+off, u32 p2->p1 at +0x144+dw) in bt.s-delay-slot order; r0=20 (pre-inc r9), r1=last u32, r3/r6/r7=advanced +0x114/+0xe4 ptrs, r4/r5=+0x144 ptrs, T=0; r8-r15 restored by epilogue |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

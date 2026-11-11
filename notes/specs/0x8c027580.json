@@ -1,11 +1,11 @@
 {
   "entry": "0x8c027580",
-  "regs": { "r4": "0x8c200000", "r5": "0x8c210000" },
+  "regs": { "r4": "0x8c240000", "r5": "0x8c250000" },
   "memory": [
-    { "addr": "0x8c2100b4", "hex": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef" },
-    { "addr": "0x8c2100e4", "hex": "cafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabe" },
-    { "addr": "0x8c210114", "hex": "feedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedface" },
-    { "addr": "0x8c210144", "hex": "baadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00d" }
+    { "addr": "0x8c2500b4", "hex": "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef" },
+    { "addr": "0x8c2500e4", "hex": "cafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabe" },
+    { "addr": "0x8c250114", "hex": "feedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedfacefeedface" },
+    { "addr": "0x8c250144", "hex": "baadf00dbaadf00dbaadf00dbaadf00dbaadf00dbaadf00d" }
   ],
   "steps": 400
 }
