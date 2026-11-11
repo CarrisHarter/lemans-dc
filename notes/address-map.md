@@ -491,6 +491,7 @@
 | `0x8c0c0d64` | `load_float_via_global_32` | `notes/verifications/0x8c0c0d64.json` — verified |
 | `0x8c0c0d74` | `load_float_via_global_36` | `notes/verifications/0x8c0c0d74.json` — verified |
 | `0x8c0c0d84` | `load_float_via_global_28` | `notes/verifications/0x8c0c0d84.json` — verified |
+| `0x8c0b3148` | `FUN_8c0b3148` | `notes/verifications/0x8c0b3148.json` — 224 oracle steps; 9 f32 stores to r4[0..36); path A leaves r0=36, r1=stack[r15+36], r4+=32, r5=r4_orig+28, r6+=32, r2/r3/r7-r13 leftover pointers, T=0; path B (r4==r5||r4==r6) stages 9 results at r15+48..80 then copies to r4, leaves r5=r15+48, T=1; delay-slot fmov fr3,@r4 runs after bra; plain bf has no delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
