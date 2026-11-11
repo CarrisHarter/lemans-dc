@@ -37,7 +37,19 @@ def main(argv):
     if "--skip" in argv:
         skip = {int(a, 16) for a in argv[argv.index("--skip") + 1].split(",") if a}
 
-    ported = {int(p.stem[2:], 16) for p in PORTS.glob("p_*.rs")}
+    import json
+    verifs = ROOT / "notes/verifications"
+    ported = set()
+    for p in PORTS.glob("p_*.rs"):
+        a = int(p.stem[2:], 16)
+        v = verifs / f"0x{a:08x}.json"
+        if not v.exists():
+            continue
+        try:
+            if json.loads(v.read_text()).get("result") == "pass":
+                ported.add(a)
+        except Exception:
+            pass
     funcs = parse_functions(FN)
     instructions = load_instructions(ASM)
     pcs = [pc for pc, _, _ in instructions]

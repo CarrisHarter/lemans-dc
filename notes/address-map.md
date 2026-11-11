@@ -1285,6 +1285,8 @@
 | `0x8c21a5e0` | `FUN_8c21a5e0` | `notes/verifications/0x8c21a5e0.json` — 11264 oracle steps; stores 192 bytes near r4+0xba (net r4 = entry-6); r5 advanced 1536; r1/r2/r3/r6/r7/r0 clobbered; final T=1 |
 | `0x8c2192e4` | `FUN_8c2192e4` | `notes/verifications/0x8c2192e4.json` — 608 oracle steps; 24 iterations copying 24-byte records (stride 44 src, 24 dst) with field permutation; r4/r5/r6/r7/r2/r3/r0 clobbered |
 | `0x8c010084` | `release_and_clear` | `notes/verifications/0x8c010084.json` — first call-crossing port |
+| `0x8c0100e4` | `release_and_maybe_owner` | `notes/verifications/0x8c0100e4.json` — 18 oracle steps |
+| `0x8c010394` | `call_two_helpers` | `notes/verifications/0x8c010394.json` — 33 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
