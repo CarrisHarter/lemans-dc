@@ -718,6 +718,16 @@
 | `0x8c10c7bc` | `load_double_indirect_store_to_stack_7` | `notes/verifications/0x8c10c7bc.json` — verified |
 | `0x8c10c878` | `follow_pointer_and_store_back_8` | `notes/verifications/0x8c10c878.json` — verified |
 | `0x8c10c884` | `load_double_indirect_store_to_stack_8` | `notes/verifications/0x8c10c884.json` — verified |
+| `0x8c10d7c8` | `load_byte_at_4` | `notes/verifications/0x8c10d7c8.json` — verified |
+| `0x8c10e278` | `store_arg_return_self_7` | `notes/verifications/0x8c10e278.json` — verified |
+| `0x8c10e280` | `advance_12_8` | `notes/verifications/0x8c10e280.json` — verified |
+| `0x8c10e288` | `store_arg_return_self_8` | `notes/verifications/0x8c10e288.json` — verified |
+| `0x8c10e290` | `advance_12_9` | `notes/verifications/0x8c10e290.json` — verified |
+| `0x8c10e344` | `load_byte_via_field_82` | `notes/verifications/0x8c10e344.json` — verified |
+| `0x8c10e350` | `load_byte_via_field_81` | `notes/verifications/0x8c10e350.json` — verified |
+| `0x8c10e35c` | `load_word_via_field_68` | `notes/verifications/0x8c10e35c.json` — verified |
+| `0x8c10e364` | `load_field_plus_36` | `notes/verifications/0x8c10e364.json` — verified |
+| `0x8c10e36c` | `load_field_plus_32` | `notes/verifications/0x8c10e36c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
