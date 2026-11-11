@@ -322,6 +322,13 @@
 | `0x8c07a27c` | `init_record` | `notes/verifications/0x8c07a27c.json` — verified |
 | `0x8c07b0c4` | `swap_four_words` | `notes/verifications/0x8c07b0c4.json` — verified |
 | `0x8c07c024` | `float_is_zero_to_byte` | `notes/verifications/0x8c07c024.json` — verified |
+| `0x8c07496c` | `record_init` | `notes/verifications/0x8c07496c.json` — 37 oracle steps; "r1=0x8c1f82e8 (literal load), r3=r4+32, r5=0, r0=r4 (rts delay mov r4,r0), fr0=1.0 (fldi1); stores at +4(incoming r5),+8,+12,+16,+17,+20,+28(=r6),+40,+44,+48,+0(fmov fr0=1.0f),+32..37(copied from 0x8c1f82e8),+52,+56,+60; T untouched" |
+| `0x8c074aa0` | `flag_test_0x4000` | `notes/verifications/0x8c074aa0.json` — 24 oracle steps; "r5<<=2, r4=base+16, r6=0xf8 if [base+8]==3 else 0xe8, r3=final flags word, r1=result via subc r1,r1;add #1,r1, r0=r1 (delay mov r1,r0), T=(flags&0x4000)==0" |
+| `0x8c074aec` | `record_set_56` | `notes/verifications/0x8c074aec.json` — 22 oracle steps; "r6<<=2, r4=base+16, r3=rec, r1=0, r0=60; stores [rec+56]=r5 then byte [rec+60]=0; T=0" |
+| `0x8c074b68` | `get_val_0x30_flag_0x80` | `notes/verifications/0x8c074b68.json` — 25 oracle steps; "r5<<=2, r4=base+16, r0=0x80 (literal), r1=flags&0x80, r3=[rec+8]+48 on set / [rec+8] on clear / 0xe8|0xf8 on idx5, fr0=[r3] via fmov or 0.0 via fldi0, T=(flags&0x80)==0" |
+| `0x8c074bbc` | `get_val_0x2c_flag_0x40` | `notes/verifications/0x8c074bbc.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&0x40 (and #64 immediate), r1=[rec+8]+44 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&0x40)==0" |
+| `0x8c074c08` | `get_val_0x20_flag_0x08` | `notes/verifications/0x8c074c08.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&8 (and #8 immediate), r1=[rec+8]+32 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&8)==0" |
+| `0x8c074c54` | `get_val_0x1c_flag_0x04` | `notes/verifications/0x8c074c54.json` — 24 oracle steps; "r5<<=2, r4=base+16, r0=flags&4 (and #4 immediate), r1=[rec+8]+28 or [rec+8], r3=0xe8/0xf8, fr0=[r1] or 0.0, T=(flags&4)==0" |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
