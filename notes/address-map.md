@@ -387,6 +387,12 @@
 | `0x8c0adec0` | `clamp_float_to_range` | `notes/verifications/0x8c0adec0.json` — verified |
 | `0x8c0adf14` | `load_through_field` | `notes/verifications/0x8c0adf14.json` — verified |
 | `0x8c0adf1c` | `copy_three_words_at_28` | `notes/verifications/0x8c0adf1c.json` — verified |
+| `0x8c0adf2c` | `copy_three_words_at_16` | `notes/verifications/0x8c0adf2c.json` — verified |
+| `0x8c0ae814` | `init_record_with_arg` | `notes/verifications/0x8c0ae814.json` — verified |
+| `0x8c0b2670` | `advance_4` | `notes/verifications/0x8c0b2670.json` — verified |
+| `0x8c0b2780` | `abs_copy` | `notes/verifications/0x8c0b2780.json` — verified |
+| `0x8c0b2c00` | `hypot` | `notes/verifications/0x8c0b2c00.json` — verified |
+| `0x8c0b2f68` | `copy_three_words_at_36` | `notes/verifications/0x8c0b2f68.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
