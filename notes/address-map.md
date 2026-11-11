@@ -429,6 +429,16 @@
 | `0x8c0b4db4` | `negate_three_floats` | `notes/verifications/0x8c0b4db4.json` — verified |
 | `0x8c0b4e0c` | `scale_three_floats` | `notes/verifications/0x8c0b4e0c.json` — verified |
 | `0x8c0b4e30` | `scale_three_floats_2` | `notes/verifications/0x8c0b4e30.json` — verified |
+| `0x8c085684` | `FUN_8c085684` | `notes/verifications/0x8c085684.json` — 70 oracle steps; time-add: r5 clobbered to 60, r7=1000, r0=final r4; mov.w loads sign-extend so sums are of sign-extended shorts; r12/r13/r14/r15 restored by pops; T=0 at exit |
+| `0x8c08579c` | `FUN_8c08579c` | `notes/verifications/0x8c08579c.json` — 3 oracle steps; r0=r4 from rts delay slot (return value hidden by C) |
+| `0x8c086b00` | `FUN_8c086b00` | `notes/verifications/0x8c086b00.json` — 9 oracle steps; r1=r4+4 left behind; r0=r4 not r4+8 (rts delay overwrites add #8 result) |
+| `0x8c086b14` | `FUN_8c086b14` | `notes/verifications/0x8c086b14.json` — 43 oracle steps; r15 -24/+24 (net 0) so live r2=r15-16, r5=r15-24, r7=r15-12; r0=orig r4, r1=r4+12, r3=0, r4=0, r6=r4+16, fr0=0.0 |
+| `0x8c08bf38` | `FUN_8c08bf38` | `notes/verifications/0x8c08bf38.json` — 3 oracle steps; r0 = **(0x8c23ddc0) via rts delay slot, not the pointer |
+| `0x8c08bf80` | `FUN_8c08bf80` | `notes/verifications/0x8c08bf80.json` — 21 oracle steps; r5=r5+12 and r1=r4+4 left mid-copy; fr0=src[3]; r0=r4 via rts delay |
+| `0x8c08bfac` | `FUN_8c08bfac` | `notes/verifications/0x8c08bfac.json` — 23 oracle steps; r3=r4+12, r1=r4+4, r0=0x8c1cfa18 (then) or r4+8 (else); fr0/fr1/fr2 clobbered; T=last fcmp/gt; path B stores p[2]=0 in rts delay slot with r4 already +8 |
+| `0x8c08c05c` | `FUN_8c08c05c` | `notes/verifications/0x8c08c05c.json` — 6 oracle steps; fr0=0.0 (fldi0); r0=r4 via rts delay |
+| `0x8c090ac0` | `FUN_8c090ac0` | `notes/verifications/0x8c090ac0.json` — 45 oracle steps; r5=src+32, r6=src+20, r7=dst+20, r3=*(src+20), fr0=f32(src+32); the bf's are undelayed (0x8B) so on no-wrap r0=*(r4+4) unchanged and T=last cmp/eq |
+| `0x8c090b30` | `FUN_8c090b30` | `notes/verifications/0x8c090b30.json` — 4 oracle steps; store to p[2] happens in rts delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
