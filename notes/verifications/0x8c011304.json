@@ -1,0 +1,22 @@
+{
+  "address": "0x8c011304",
+  "spec": "~/Projects/lemans-dc/notes/specs/0x8c011304.json",
+  "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "85a58d9",
+  "verified_at": "2026-11-11T10:03:27+00:00",
+  "result": "fail",
+  "oracle": {
+    "stop": "halt",
+    "steps": 33
+  },
+  "verifier_output": [
+    "FAIL 0x8c011304: 6 difference(s)",
+    "  r0: port 0x00000000 != original 0xffffffea",
+    "  r2: port 0x00637861 != original 0x00000078",
+    "  r3: port 0x00000061 != original 0x00000078",
+    "  r4: port 0x8c200001 != original 0x8c200002",
+    "  r5: port 0x00000000 != original 0x00000001",
+    "  r7: port 0x8c200100 != original 0x8c200101"
+  ]
+}
