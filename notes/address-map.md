@@ -1236,6 +1236,15 @@
 | `0x8c236880` | `release_slot` | `notes/verifications/0x8c236880.json` — 36 oracle steps |
 | `0x8c23a300` | `extract_five_fields` | `notes/verifications/0x8c23a300.json` — 28 oracle steps |
 | `0x8c23a8a0` | `insert_into_control_word` | `notes/verifications/0x8c23a8a0.json` — 26 oracle steps |
+| `0x8c1b7998` | `pass` | `notes/verifications/0x8c1b7998.json` — 9 oracle steps; 9 |
+| `0x8c1b79d0` | `pass` | `notes/verifications/0x8c1b79d0.json` — 10 oracle steps; 10 |
+| `0x8c1bbf74` | `pass` | `notes/verifications/0x8c1bbf74.json` — 19 oracle steps; 19 |
+| `0x8c1bc370` | `pass` | `notes/verifications/0x8c1bc370.json` — 26 oracle steps; 26 |
+| `0x8c1c1394` | `pass` | `notes/verifications/0x8c1c1394.json` — 7 oracle steps; 7 |
+| `0x8c1cc3b4` | `pass` | `notes/verifications/0x8c1cc3b4.json` — 8 oracle steps; 8 |
+| `0x8c215ec8` | `pass` | `notes/verifications/0x8c215ec8.json` — 124 oracle steps; 124 |
+| `0x8c215f6c` | `pass` | `notes/verifications/0x8c215f6c.json` — 77 oracle steps; 77 |
+| `0x8c216008` | `pass` | `notes/verifications/0x8c216008.json` — 285 oracle steps; 285 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

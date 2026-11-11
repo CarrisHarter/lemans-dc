@@ -1,0 +1,86 @@
+{
+  "entry": "0x8c215ec8",
+  "memory": [
+    {
+      "addr": "0x8c215f44",
+      "hex": "4ccf1c8c"
+    },
+    {
+      "addr": "0x8c215f48",
+      "hex": "40cf1c8c"
+    },
+    {
+      "addr": "0x8c215f4c",
+      "hex": "3ccf1c8c"
+    },
+    {
+      "addr": "0x8c215f50",
+      "hex": "30cf1c8c"
+    },
+    {
+      "addr": "0x8c215f54",
+      "hex": "28cf1c8c"
+    },
+    {
+      "addr": "0x8c215f58",
+      "hex": "04bd238c"
+    },
+    {
+      "addr": "0x8c215f5c",
+      "hex": "f8bc238c"
+    },
+    {
+      "addr": "0x8c215f60",
+      "hex": "f4bc238c"
+    },
+    {
+      "addr": "0x8c215f64",
+      "hex": "e8bc238c"
+    },
+    {
+      "addr": "0x8c215f68",
+      "hex": "e0bc238c"
+    },
+    {
+      "addr": "0x8c1ccf40",
+      "hex": "00002a8c"
+    },
+    {
+      "addr": "0x8c1ccf4c",
+      "hex": "00002a8c"
+    },
+    {
+      "addr": "0x8c1ccf28",
+      "hex": "00102a8c"
+    },
+    {
+      "addr": "0x8c1ccf30",
+      "hex": "00202a8c"
+    },
+    {
+      "addr": "0x8c1ccf3c",
+      "hex": "00202a8c"
+    },
+    {
+      "addr": "0x8c23bcf8",
+      "hex": "00302a8c"
+    },
+    {
+      "addr": "0x8c23bd04",
+      "hex": "00302a8c"
+    },
+    {
+      "addr": "0x8c23bce0",
+      "hex": "00402a8c"
+    },
+    {
+      "addr": "0x8c23bce8",
+      "hex": "00502a8c"
+    },
+    {
+      "addr": "0x8c23bcf4",
+      "hex": "00502a8c"
+    }
+  ],
+  "steps": 500
+}
