@@ -1293,6 +1293,9 @@
 | `0x8c0203d4` | `call_if_flag_clear` | `notes/verifications/0x8c0203d4.json` — 35 oracle steps |
 | `0x8c026e50` | `call_and_clear_flag` | `notes/verifications/0x8c026e50.json` — 15 oracle steps |
 | `0x8c010b38` | `classify_float_result` | `notes/verifications/0x8c010b38.json` — 48 oracle steps |
+| `0x8c010b88` | `saturate_and_classify` | `notes/verifications/0x8c010b88.json` — 105 oracle steps |
+| `0x8c018f08` | `link_and_zero_blocks` | `notes/verifications/0x8c018f08.json` — 21802 oracle steps |
+| `0x8c02c41c` | `accumulate_and_scatter` | `notes/verifications/0x8c02c41c.json` — 50 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
