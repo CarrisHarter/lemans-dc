@@ -235,9 +235,15 @@ fn main() -> ExitCode {
     }
     if let Some(Json::Array(oracle_fr)) = oracle.get("fr") {
         for (i, expected) in oracle_fr.iter().enumerate().take(16) {
-            let want = expected.as_f32().unwrap_or(0.0);
-            if cpu.fr[i].to_bits() != want.to_bits() {
-                diffs.push(format!("fr{i}: port {} != original {want}", cpu.fr[i]));
+            // The oracle emits raw bit patterns so infinities and NaNs survive
+            // JSON, which has no representation for them.
+            let want = expected.as_u32().unwrap_or(0);
+            if cpu.fr[i].to_bits() != want {
+                diffs.push(format!(
+                    "fr{i}: port 0x{:08x} ({}) != original 0x{want:08x}",
+                    cpu.fr[i].to_bits(),
+                    cpu.fr[i]
+                ));
             }
         }
     }

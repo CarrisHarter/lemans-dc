@@ -506,3 +506,38 @@ fn bra_sign_extends_a_backward_displacement() {
     cpu.step(&mut mem).unwrap(); // delay slot, then pc = target
     assert_eq!(cpu.pc, LOAD_BASE, "backward bra must land behind the instruction");
 }
+
+#[test]
+fn fpu_moves_cover_post_increment_and_indexed_forms() {
+    // 0x8c011d00: `fmov.s @r5+,fr5` = 0xF559
+    let (mut cpu, mut mem) = one(0xF559);
+    cpu.r[5] = DATA;
+    mem.write_f32(DATA, 1.5).unwrap();
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.fr[5], 1.5);
+    assert_eq!(cpu.r[5], DATA + 4);
+
+    // 0x8c01474e: `fmov @(r0,r15),fr2` = 0xF2F6
+    let (mut cpu, mut mem) = one(0xF2F6);
+    cpu.r[0] = 8;
+    cpu.r[15] = DATA;
+    mem.write_f32(DATA + 8, -2.25).unwrap();
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.fr[2], -2.25);
+
+    // 0x8c01478e: `fmov fr4,@(r0,r15)` = 0xFF47
+    let (mut cpu, mut mem) = one(0xFF47);
+    cpu.r[0] = 4;
+    cpu.r[15] = DATA;
+    cpu.fr[4] = 3.75;
+    let (cpu, mem) = run(cpu, mem);
+    assert_eq!(mem.read_f32(DATA + 4).unwrap(), 3.75);
+
+    // `fmov.s fr3,@-r4` = 0x43FB? encoding 0xFnmB with n=4, m=3 -> 0xF43B
+    let (mut cpu, mut mem) = one(0xF43B);
+    cpu.r[4] = DATA + 8;
+    cpu.fr[3] = 9.5;
+    let (cpu, mem) = run(cpu, mem);
+    assert_eq!(cpu.r[4], DATA + 4);
+    assert_eq!(mem.read_f32(DATA + 4).unwrap(), 9.5);
+}

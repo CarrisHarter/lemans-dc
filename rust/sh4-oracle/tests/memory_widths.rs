@@ -12,8 +12,9 @@ const DATA: u32 = 0x8C20_0000;
 
 fn machine(code: &[u8]) -> (Cpu, Memory) {
     let mut mem = image(LOAD_BASE, code);
-    mem.regions
-        .push(Region::new(DATA, vec![0xAA, 0xBB, 0xCC, 0xDD, 0x11, 0x22]));
+    let mut data = vec![0xAA, 0xBB, 0xCC, 0xDD, 0x11, 0x22];
+    data.resize(64, 0);
+    mem.regions.push(Region::new(DATA, data));
     (Cpu::new(), mem)
 }
 
@@ -69,4 +70,40 @@ fn pr_is_the_default_return_target() {
     let (mut cpu, mut mem) = machine(&[0x0B, 0x00, 0x09, 0x00]);
     assert_eq!(cpu.pr, HALT_PC);
     assert_eq!(cpu.run(&mut mem, 4).unwrap(), Stop::Halt);
+}
+
+#[test]
+fn displacement_group_uses_the_m_field_and_low_nibble() {
+    // 0x8c0115e4: `mov.b r0,@(7,r3)` = 0x8037. Rn is the m field (r3) and the
+    // displacement is the low nibble (7). The decoder used to address
+    // r[n] + 0x37.
+    let (mut cpu, mut mem) = machine(&[0x37, 0x80, 0x0B, 0x00, 0x09, 0x00]);
+    cpu.r[0] = 0x5A;
+    cpu.r[3] = DATA;
+    let stop = cpu.run(&mut mem, 10).unwrap();
+    assert_eq!(stop, Stop::Halt);
+    assert_eq!(mem.read_u8(DATA + 7).unwrap(), 0x5A);
+    assert_eq!(mem.read_u8(DATA).unwrap(), 0xAA, "base byte untouched");
+
+    // 0x8c0115e0: `mov.b @(7,r3),r0` = 0x8437, here with disp 3 to land on 0xDD.
+    let (mut cpu, mut mem) = machine(&[0x33, 0x84, 0x0B, 0x00, 0x09, 0x00]);
+    cpu.r[3] = DATA;
+    let stop = cpu.run(&mut mem, 10).unwrap();
+    assert_eq!(stop, Stop::Halt);
+    assert_eq!(cpu.r[0], 0xFFFF_FFDD, "byte at DATA+3 is 0xDD, sign-extended");
+
+    // 0x8c011fdc: `mov.w r0,@(4,r15)` = 0x81F2 — disp 2 scaled by 2.
+    let (mut cpu, mut mem) = machine(&[0xF2, 0x81, 0x0B, 0x00, 0x09, 0x00]);
+    cpu.r[0] = 0x1234;
+    cpu.r[15] = DATA;
+    let stop = cpu.run(&mut mem, 10).unwrap();
+    assert_eq!(stop, Stop::Halt);
+    assert_eq!(mem.read_u16(DATA + 4).unwrap(), 0x1234);
+
+    // 0x8c011ffa: `mov.w @(4,r15),r0` = 0x85F2.
+    let (mut cpu, mut mem) = machine(&[0xF2, 0x85, 0x0B, 0x00, 0x09, 0x00]);
+    cpu.r[15] = DATA;
+    let stop = cpu.run(&mut mem, 10).unwrap();
+    assert_eq!(stop, Stop::Halt);
+    assert_eq!(cpu.r[0], 0x0000_2211, "word at DATA+4 is bytes 11 22");
 }

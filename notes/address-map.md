@@ -68,6 +68,7 @@
 | `0x8c04347c` | `FUN_8c04347c` | `notes/verifications/0x8c04347c.json` — 5 oracle steps; stores [[r4]] at [[r15]]; leaves r1=[r15], r0=[[r4]] |
 | `0x8c043960` | `FUN_8c043960` | `notes/verifications/0x8c043960.json` — 3 oracle steps; stores r4 at [literal 0x8c23dbf8]; leaves r0=global addr |
 | `0x8c0443ec` | `FUN_8c0443ec` | `notes/verifications/0x8c0443ec.json` — 24 oracle steps; writes 11 u32s at [r4..r4+40] (1.0f,1,0,1,0,0,1,1,fr0,fr0,fr0); leaves r6=1, r5=r4+32, r3=r4+36, r1=r4+40, r0=r4, fr0=[0x8c04441c] |
+| `0x8c02b3a0` | `FUN_8c02b3a0` | `notes/verifications/0x8c02b3a0.json` — 151 oracle steps; stores: [r4+0x3f8]=state(0/1/2) u32, byte [r4+0x405]=0 (paths 1/2 only), 17 scaled f32 at [r4+4]+off, [r4+0x4f8]=0.0, [r4+0x4f0]=[r4+0x4ec], [r4+0x4f4]=1.0 (p1/p3) or 0.99f (p2, delay slot of bra); r4+=0x4f4 on all paths; r11-r14/r15 restored by epilogue; T=1 on p1/p2, 0 on p3; leftover regs p1: r0=0x405 r1=0 r3=0x4f4 r5=r4+0x4ec r6=r4+0x4f0 r7=r4+0x4f8; p2: r0=0x8c02b694 r1=0x4f4 r3=r4+0x4ec r5=r4+0x4f0 r6=r4+0x4f8 r7=0; p3: r0=0x4f4 r1=r4+0x4f0 r3=r4+0x4f8 r5=2; fr leftovers p1 fr1=[r4+0x4ec] fr2=[P+0x380]*1.15 fr3=1.15, p2 fr1=[P+0x380]*1.07 fr2=1.07 fr3=1.1, p3 fr0=1.0 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

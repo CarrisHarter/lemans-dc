@@ -553,26 +553,30 @@ impl Cpu {
                 Ok(())
             }
             0x8 => {
-                let disp = disp8;
-                let target = (pc as i32 + 4 + disp * 2) as u32;
+                // The displacement group puts Rn/Rm in the *m* field and the
+                // 4-bit displacement in the low nibble. Using the full low byte
+                // as displacement and the n field as base (the original code)
+                // addressed r[n]+(m<<4) instead of r[m]+disp.
+                let disp = (op & 0xF) as u32;
+                let target = (pc as i32 + 4 + disp8 * 2) as u32;
                 match op >> 8 {
                     0x80 => {                            // mov.b R0,@(disp,Rn)
-                        let addr = self.r[n].wrapping_add(disp as u32);
+                        let addr = self.r[m].wrapping_add(disp);
                         self.store(mem, addr, self.r[0], 0x0)?;
                         Ok(())
                     }
                     0x81 => {                            // mov.w R0,@(disp,Rn)
-                        let addr = self.r[n].wrapping_add(disp as u32 * 2);
+                        let addr = self.r[m].wrapping_add(disp * 2);
                         self.store(mem, addr, self.r[0], 0x1)?;
                         Ok(())
                     }
                     0x84 => {                            // mov.b @(disp,Rm),R0
-                        let addr = self.r[m].wrapping_add(disp as u32);
+                        let addr = self.r[m].wrapping_add(disp);
                         self.r[0] = self.load(mem, addr, 0x0)?;
                         Ok(())
                     }
                     0x85 => {                            // mov.w @(disp,Rm),R0
-                        let addr = self.r[m].wrapping_add(disp as u32 * 2);
+                        let addr = self.r[m].wrapping_add(disp * 2);
                         self.r[0] = self.load(mem, addr, 0x1)?;
                         Ok(())
                     }
@@ -1152,7 +1156,27 @@ impl Cpu {
             }
             0xC => { self.fr[n] = self.fr[m]; Ok(()) }                // fmov
             0x8 => { self.fr[n] = mem.read_f32(self.r[m])?; Ok(()) }  // fmov.s @Rm,FRn
+            0x9 => {                                                  // fmov.s @Rm+,FRn
+                self.fr[n] = mem.read_f32(self.r[m])?;
+                self.r[m] = self.r[m].wrapping_add(4);
+                Ok(())
+            }
             0xA => { mem.write_f32(self.r[n], self.fr[m])?; Ok(()) }  // fmov.s FRm,@Rn
+            0xB => {                                                  // fmov.s FRm,@-Rn
+                self.r[n] = self.r[n].wrapping_sub(4);
+                mem.write_f32(self.r[n], self.fr[m])?;
+                Ok(())
+            }
+            0x6 => {                                                  // fmov.s @(R0,Rm),FRn
+                let addr = self.r[0].wrapping_add(self.r[m]);
+                self.fr[n] = mem.read_f32(addr)?;
+                Ok(())
+            }
+            0x7 => {                                                  // fmov.s FRm,@(R0,Rn)
+                let addr = self.r[0].wrapping_add(self.r[n]);
+                mem.write_f32(addr, self.fr[m])?;
+                Ok(())
+            }
             0xD => match op & 0x00FF {
                 0x0D => { self.fr[n] = f32::from_bits(self.fpul); Ok(()) }  // fsts FPUL,FRn
                 0x1D => { self.fpul = self.fr[m].to_bits(); Ok(()) }        // flds FRm,FPUL

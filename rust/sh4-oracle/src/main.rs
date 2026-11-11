@@ -287,7 +287,12 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
     );
     out.insert(
         "fr".to_string(),
-        Json::Array(cpu.fr.iter().map(|v| Json::Number(*v as f64)).collect()),
+        Json::Array(
+            cpu.fr
+                .iter()
+                .map(|v| Json::String(format!("0x{:08x}", v.to_bits())))
+                .collect(),
+        ),
     );
     out.insert("fpul".to_string(), Json::String(format!("0x{:08x}", cpu.fpul)));
     out.insert("sr".to_string(), Json::String(format!("0x{:08x}", cpu.sr)));

@@ -1,0 +1,17 @@
+{
+  "entry": "0x8c027418",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "0x8c200400",
+    "r6": "0x8c200600",
+    "r11": "0xbbbb0001",
+    "r12": "0xbbbb0002",
+    "r13": "0xbbbb0003",
+    "r14": "0xbbbb0004"
+  },
+  "memory": [
+    { "addr": "0x8c200400", "hex": "3412cdab0100ff7f0080feffff00111122223333444455556666777788889999aaaabbbbccccddddeeeeffff00010102" },
+    { "addr": "0x8c200600", "hex": "efbeadde78563412bebafecadec0ad0b0004208cffffffff" }
+  ],
+  "steps": 2000
+}
