@@ -1158,6 +1158,7 @@
 | `0x8c221db8` | `index_times_128_store` | `notes/verifications/0x8c221db8.json` — 8 oracle steps |
 | `0x8c225ae4` | `index_times_10_plus_low_nibble` | `notes/verifications/0x8c225ae4.json` — 12 oracle steps |
 | `0x8c238998` | `init_or_reset_global` | `notes/verifications/0x8c238998.json` — 6 oracle steps |
+| `0x8c21ae2c` | `set_enable_and_clear_flag` | `notes/verifications/0x8c21ae2c.json` — 11 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
