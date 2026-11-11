@@ -275,6 +275,7 @@
 | `0x8c06f6cc` | `FUN_8c06f6cc` | `notes/verifications/0x8c06f6cc.json` — 131 oracle steps; r0=table+idx*12; r1=r7+4; r3=r6+8; r4=r6+4; r7=r7+8; T=bit31 of shll operand (idx bit15); fr0-fr12 clobbered, fr13-15 restored via stack; reads table ptr from [r15_entry] via @(28,r15) after 7 pushes |
 | `0x8c06fdc0` | `FUN_8c06fdc0` | `notes/verifications/0x8c06fdc0.json` — 258 oracle steps; r4 += 0xbc and r5 += 0xd0 at the end (last 3 stores land at old_r4+0xbc..); leftovers r0=src[0xd8], r1=src[0xd0], r2=r15_entry-44, r3=src[0xc8], r6=src[0xc4], r7=old_r5+0xc4, r8=old_r4+0xb0, r9=old_r4+60, r10=old_r4+0xd8; only fr0 clobbered (=f32[old_r5+0xc0]); T unchanged |
 | `0x8c070b40` | `store_arg_to_global` | `notes/verifications/0x8c070b40.json` — store is the rts delay slot |
+| `0x8c01471c` | `float_classify_scale` | `notes/verifications/0x8c01471c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
