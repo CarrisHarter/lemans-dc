@@ -31,30 +31,29 @@ proven; run it unattended and report results, not questions.
   the batch. This is expected work, not a question for the user.
 - **On an ambiguous name or struct:** record it as unknown in
   `notes/address-map.md` and continue. Do not invent evidence and do not stop.
-- **Stop the run and report** only when one of these is true:
-  1. the oracle hits an instruction you cannot implement without guessing
-     semantics;
-  2. a function's behaviour cannot be pinned by any spec (e.g. it depends on
-     hardware registers or DMA);
-  3. an action would touch the legal constraints above;
+- **Stop the run and report only when one of these is true:**
+  1. the oracle hits an instruction you cannot implement without guessing;
+  2. a function's behaviour cannot be pinned by any spec (hardware registers, DMA);
+  3. an action would touch the legal constraints below;
   4. ten consecutive functions fail.
 - **Always leave the repo green:** `cargo test` in `rust/sh4-oracle` passes,
-  `git status` is clean, every claimed port has a verification file.
-- **Never wait for a "go".** If the user is silent, keep porting. The project's
-  bottleneck is 5,211 functions, not permission.
+  `git status` is clean, every claimed port has a passing verification file.
+- **Never wait for a "go".** If the user is silent, keep porting. The bottleneck
+  is 5,211 functions, not permission.
 
 ## Legal constraints — do not violate these
 
 - Permission was granted by Business Affairs, Atari SA (2026-11-11) for personal,
-  non-commercial **static analysis** and publication of notes/pseudocode only.
+  non-commercial static analysis and publication of notes/pseudocode only.
   Archive in `notes/permission/`; approved notice in `NOTICE.md` and generated
   into every export by `scripts/08-export.sh`.
-- **Never publish the port.** No repo, demo, video or WASM build of the Rust
-  game. The grant covers analysis, not a derivative playable work.
+- Never publish the port. No repo, demo, video or WASM build of the Rust game.
 - Never redistribute the ROM, disc image, or any extracted asset (art, audio,
-  models, textures).
+  models, textures). A padded copy of the game image was once committed as a test
+  fixture; it has been purged from all history and `.gitignore` now refuses
+  `fixtures/lemans24*.bin`. Never copy the image into the repository.
 - Third-party rights (car manufacturers, sponsors, liveries, Le Mans marks) are
-  **not** covered by the Atari grant.
+  not covered by the Atari grant.
 - `work/`, `analysis/*.bin`, `analysis/data/` and `analysis/export/` are
   gitignored on purpose. Keep it that way.
 
@@ -66,87 +65,128 @@ proven; run it unattended and report results, not questions.
 | JDK 21 (Temurin) | `~/opt/jdk-21.0.13+9` (`JAVA_HOME`) |
 | SH-4 cross compiler | `~/opt/sh-elf/bin/sh-elf-gcc` (freestanding, no newlib) |
 | cross tool symlinks | `~/opt/sh-elf/toolbin` (needed with `-B`) |
-| rea (patched fork) | `~/Projects/rea-sh4` + MCP server `rea` in `~/.pi/agent/mcp.json` |
-| SH-4 binutils | `sh4-elf-objdump` (package `sh4-elf-binutils`) |
+| rea (patched fork) | `~/Projects/rea-sh4` + MCP server `rea` |
+| SH-4 binutils | `sh4-elf-objdump` |
 
-Facts learned the hard way — do not rediscover them:
+Facts learned the hard way:
 
-- The Ghidra language for Dreamcast is **`SuperH4:LE:32:default`**. The id
-  `SuperH:LE:32:SH-4` does not exist in Ghidra 12.x.
-- `sh-elf` defaults to **big-endian**; always pass `-ml`.
-- Float code needs **`-m4-single-only`**; without it GCC emits soft-float calls
-  (`__addsf3`), which is a different program.
-- The stage-1 compiler has no target program prefix, so pass
-  `-B$HOME/opt/sh-elf/toolbin` or it calls the host x86 `as`.
-- rea's raw-binary lane was patched to accept `architecture: "sh4"`; diff at
-  `notes/rea-sh4-sh4-lane.patch`.
+- The Ghidra language for Dreamcast is `SuperH4:LE:32:default`.
+- `sh-elf` defaults to big-endian; always pass `-ml`.
+- Float code needs `-m4-single-only`; without it GCC emits soft-float calls.
+- The stage-1 compiler has no target prefix: pass `-B$HOME/opt/sh-elf/toolbin`.
+- `sh-elf-as` is the arbiter for an encoding question: assemble the instruction
+  and read the bytes.
 
 ## What exists on disk
 
-- `work/raw/extracted/` — frozen disc: `.cue` + 5 track `.bin` (read-only, hashed
-  in `SHA256SUMS`). Track 3 and track 5 are data; audio tracks sit between them.
-- `analysis/lemans24.bin` — **the game**: 2,283,504 bytes, sha256 `08016236…`,
-  mapped at `0x8C010000`. This is the analysis target.
-- `analysis/1st_read.bin` — 108 KB boot stub (not the game). `analysis/ip.bin` —
-  disc header (title, product number, boot filename).
-- `analysis/export/` — 5,211 per-function Ghidra pseudocode files, `symbols.tsv`,
-  and `disassembly.asm` (41 MB, 969,383 instructions).
-- `analysis/labels.tsv` — 310 auto-proposed names from Ghidra string labels.
-- `rust/sh4-oracle/` — SH-4 interpreter, 15 tests, covers **96.67%** of static
-  instructions. CLI + `--spec` JSON mode.
-- `rust/lemans-verify/` — registry of ported functions + differ.
-- `notes/` — `04-first-contact.md` (disc findings), `05-progress.md` (metrics),
-  `address-map.md` (ledger), `specs/` (spec schema + files), `verifications/`
-  (evidence JSON per verified function).
+- `work/raw/extracted/` — frozen disc: `.cue` + 5 track `.bin` (read-only).
+- `analysis/lemans24.bin` — the game, 2,283,504 bytes, mapped at `0x8C010000`
+  (image ends at `0x8C23D7F0`). The analysis target.
+- `analysis/export/` — 5,211 per-function pseudocode files, `symbols.tsv`, and
+  `disassembly.asm` (41 MB, 969,383 instructions).
+- `rust/sh4-oracle/` — SH-4 interpreter, 55 tests, 99.70% static coverage.
+  Models MACH/MACL/GBR/VBR/SSR/SPC/SGR/DBR/bank registers and maps zeroed RAM
+  from the image end to the stack, so globals past the image are addressable.
+- `rust/lemans-verify/` — one port per file in `src/ports/p_<address>.rs`, with
+  `src/registry.rs` generated by `scripts/gen-registry.py`.
+- `notes/` — `05-progress.md` (metrics), `address-map.md` (ledger),
+  `specs/` (schema + files), `verifications/` (evidence per verified function).
 
 ## The verification loop (this is the whole method)
 
 1. Pick a function address from `analysis/export/pseudocode/functions/<addr>.c`.
-2. Write `notes/specs/<addr>.json` — seed registers and memory (schema in
-   `notes/specs/README.md`). One spec per code path; a function with branches
-   gets several specs (`<addr>.json`, `<addr>.invalid.json`, …).
-3. Implement it in `rust/lemans-verify/src/registry.rs` as
-   `fn(&mut Cpu, &mut Memory)` and register the address in `lookup()`.
-4. Run `./scripts/verify-function.sh <addr> [binary] [spec]`.
-5. Only when it prints `ok` does the port count. The evidence lands in
-   `notes/verifications/`. Record it in `notes/address-map.md`.
-6. Commit.
-
-Verified so far: `0x8c175c72` (`am_sound_is_playing`), `0x8c18b9c8`
-(`array_lookup`, both branches), `0x8c1552e4` (`store_through_two_levels`), plus
-the fixture `0x8c010000` as the harness regression test.
+2. Write `notes/specs/<addr>.json` — seed registers, FR, memory, steps. One spec
+   per code path; branches get `<addr>.invalid.json` and so on. Always leave a
+   default `<addr>.json`, or the standard verify command fails with "no spec".
+   `memory[].hex` is raw little-endian bytes; FR seeds use keys like `f4`, not
+   `fr4` (a wrong key is silently ignored).
+3. Write `rust/lemans-verify/src/ports/p_<addr>.rs` exporting
+   `pub fn run(cpu: &mut Cpu, mem: &mut Memory)`.
+4. `python3 scripts/gen-registry.py`.
+5. `./scripts/verify-function.sh <addr>` must print `ok`, and
+   `notes/verifications/<addr>.json` must say `"result": "pass"`.
+6. Append a row to `notes/address-map.md` (`scripts/record-batch.py` does this
+   from a workspace ledger), then commit.
 
 ## The single most important lesson
 
-**Every ported function so far failed first, and every failure was a register
-side effect that the decompiled C did not show**: an argument copied into `r4`,
-a loaded field left in `r3`, `base[1]` left in `r1`, an inner pointer left in
-`r0`, and the T flag differing per branch. Diff registers and T, always. A port
-that "looks right" and compiles is not evidence of anything.
+Every port failed first, and every failure was a register side effect the
+decompiled C did not show: an argument copied into r4, a loaded field left in
+r3, a base pointer left in r1, an inner pointer left in r0, a different T bit
+per branch, and delay-slot instructions that run after `rts`/`bra`/`bf.s`.
+Diff registers and T, always. A port that "looks right" and compiles is not
+evidence.
+
+## Instruction semantics that cost ports a retry
+
+- Plain `bt`/`bf` have **no** delay slot. `bt.s`/`bf.s`, `bra` and `rts` do, and
+  the delay slot runs whether or not the branch is taken.
+- `fcmp/gt frA,frB` sets T = `frB > frA` — the encoding's operand order is the
+  reverse of the listing text.
+- `shll2`/`shlr2` do not touch T; `shll`/`shlr`/`shar`/`shal` do.
+- `flds`/`ftrc` take their register from the `n` field (`sh-elf-as`:
+  `ftrc fr4,fpul` → `0xF43D`). The oracle used to read `m`.
+- `mov.b` sign-extends; `mov.w` sign-extends; `extu.b`/`extu.w` zero-extend.
+- A `bra` whose target is the loop test makes a while loop; a body before the
+  test is a do-while. Read which address the branch targets.
+
+## Decoder bugs found by ports (keep these fixed)
+
+1. `load`/`store` decoded width only for nibbles 0/1/2, so `mov.b @Rm+,Rn` read
+   four bytes. Widths are 0/4/C byte, 1/5/D word, 2/6/E long.
+2. `bra`/`bsr` left bit 11 of the displacement positive, so backward branches
+   jumped forward.
+3. The `0x8x` group used the `n` field and the whole low byte: Rn/Rm is bits
+   7-4 and the displacement is bits 3-0.
+4. `fmov.s` was missing its post-increment and indexed forms; FR values are now
+   emitted as bit patterns so infinities survive JSON.
+5. `flds`/`ftrc` read the `m` field; the register is in `n`.
+
+`tools/decode-check.py` re-proves 1–5 against objdump across the whole listing:
+153,248 width nibbles, 4,379 displacements, 20,509 branch targets, 5,181
+indexed FPU moves, 926 FPU/FPUL transfers, zero mismatches. Run it after any
+decoder change.
+
+## Parallel porting
+
+One port per file means agents never edit a shared file.
+`scripts/agent-workspace.sh <name>` creates an isolated copy at `/tmp/lm-<name>`
+(analysis symlinked, own `rust/`, own specs and target dir).
+`scripts/collect-batch.py <workspace>` copies ports and specs back and refuses to
+overwrite a differing file; `scripts/verify-ports.sh` then re-runs every address
+canonically. `scripts/record-batch.py` adds ledger rows only for addresses whose
+evidence says `"result": "pass"`. `scripts/audit-ledger.py` checks that every
+ledger row has passing evidence — a row with a *failing* evidence file is a lie.
+
+**Do not run the full verification while collecting a batch** — it races the
+collector and reports phantom failures.
 
 ## Known gaps / next work
 
-- Oracle coverage 96.67% static; the remaining mnemonics are a long tail under
-  0.08% each (`pref`, `tst.b`, `mac.w`, `cmp/str`, `shal`, `mac.l`, `subc`).
-  Run `python3 tools/opcode-census.py analysis/export/disassembly.asm` to see the
-  current list. Anything unimplemented fails loudly as `Unimplemented`.
-- Specs cannot cross calls: a function that calls into another subsystem cannot
-  be verified yet. That blocks most of the binary (only 1,616 of 5,211 functions
-  have no outgoing calls at all).
-- No modelling of store queues, DMA, hardware registers, or interrupts.
-- The synthetic stack window is `0x8C300000`–`0x8C310000`; stack writes are
-  excluded from the diff on purpose.
+- Oracle coverage 99.70%. The gaps are `div1` (1,001 instructions) and the vector
+  FPU set (`ftrv`, `fipr`, `frchg`, `fschg`, `fsca`, `fsrra`, `fcnvsd`; 303).
+  Both are left `Unimplemented` on purpose: `div1`'s non-restoring step could not
+  be validated against a trusted division sequence, and the vector instructions
+  need the matrix-register model. A wrong oracle is worse than a loud gap.
+- Specs cannot cross calls. 1,391 of 5,211 functions are leaves; the rest need a
+  spec that can stub or inline a callee.
+- No modelling of store queues, DMA, hardware registers, or interrupts. Nineteen
+  leaves touching `0xa05f****`, `0xff00****` or BIOS vectors are recorded as
+  blocked, as is `0x8c018244`, which branches to itself.
 - `DATA.ZIP` is a reordered zip (central directory first) — 3,552 entries parsed
   by directory walk, but extraction is not implemented yet.
-- Only the USA disc is analysed; the Japan SKU (named in the permission) has
-  different offsets.
+- Only the USA disc is analysed; the Japan SKU has different offsets.
 
 ## Useful commands
 
 ```bash
 cd ~/Projects/lemans-dc
-python3 scripts/discfs.py "work/raw/extracted/Test Drive Le Mans (USA) (En,Fr,Es).cue" --list
-./scripts/verify-function.sh 0x8c175c72
+./scripts/verify-function.sh <address>        # spec -> oracle -> port -> diff
+./scripts/verify-ports.sh <address>...        # canonical batch re-verification
+python3 scripts/gen-registry.py               # regenerate the lookup table
+python3 scripts/audit-ledger.py               # every ledger row must pass
+python3 tools/next-batch.py --count 10        # next leaves the oracle can pin
+python3 tools/decode-check.py                 # decoder differential
 python3 tools/opcode-census.py analysis/export/disassembly.asm
 cd rust/sh4-oracle && cargo test
 ```
@@ -156,7 +196,7 @@ cd rust/sh4-oracle && cargo test
 - Never invent evidence. If a name, struct layout or branch is ambiguous, log it
   in `notes/address-map.md` as unknown and move on.
 - Never mark a function verified without `scripts/verify-function.sh` printing
-  `ok` and a file in `notes/verifications/`.
+  `ok` and a file in `notes/verifications/` whose `result` is `pass`.
 - Do not touch the frozen disc in `work/raw/`.
 - Commit after each verified port, with the side effect you had to add in the
   message — that is the knowledge that would otherwise be lost.
