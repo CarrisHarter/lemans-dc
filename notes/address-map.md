@@ -668,6 +668,16 @@
 | `0x8c100350` | `empty_stub_10` | `notes/verifications/0x8c100350.json` — verified |
 | `0x8c1031dc` | `empty_stub_11` | `notes/verifications/0x8c1031dc.json` — verified |
 | `0x8c103f94` | `store_byte_at_4_2` | `notes/verifications/0x8c103f94.json` — verified |
+| `0x8c0c817c` | `FUN_8c0c817c` | `notes/verifications/0x8c0c817c.json` — 78 oracle steps; stores:none; r0=r6 (rts delay), r1=shifted table index on tail path / last table entry on word-only path, r3=last word loaded, r4=ptr+4*nwords+rem, r5=0xFFFFFFFF on tail path (bf.s delay slot runs once more) else 0, r7=nwords, r14 restored, T=1 always |
+| `0x8c0c81ec` | `FUN_8c0c81ec` | `notes/verifications/0x8c0c81ec.json` — 23596 oracle steps; stores: flag bytes at *0x8c27a6b0/*0x8c27a6a8 + 256 words at 0x8c27a2a8; r0=0x8c27a2a8 and r1=8 stay live (not 1/ptr), r3=0, r4=last LFSR feedback word (0 or 0x04c11db7), r5=0, r6=256, r7=8, T=0 (final cmp/gt), r8..r14 pushed/popped |
+| `0x8c0c9fe8` | `FUN_8c0c9fe8` | `notes/verifications/0x8c0c9fe8.json` — 48 oracle steps; stores: 40 zero bytes at r4 + r4 to *0x8c27a6e0; r0=r4 (rts delay, overwrites the 40 loop residue), r1=10, r3=r4+32, r5=0, r6=10, T=0 |
+| `0x8c0cbf00` | `FUN_8c0cbf00` | `notes/verifications/0x8c0cbf00.json` — 65 oracle steps; stores: 7 fmovs at r4+48..72 (0,0,1.0f,0,0,0,0) then 12 dwords; fr0=1.0 and fr1=0.0 left live (fldi1/fldi0), r0=r4, r1=*(p6+8), r3=*p6, r5=0x8c1d3f40, r6=r4+24, r7=0x8c1d3f50, r12..r14 restored; store order matters (+0,+4,+8,+12..+20,+36,+40,+44,+24,+28,+32) |
+| `0x8c0d0074` | `FUN_8c0d0074` | `notes/verifications/0x8c0d0074.json` — 23 oracle steps; stores: f32 1.0 at *r4+12, product at *r4+44, flag byte r3 at *r4+22 (rts delay); fcmp/gt sets T=fr4>frN (operand order reversed vs listing); then-path: r0=22, r1=*r4, r3=1, fr0=0.9f, fr1=0.9*seed, T=1; else path mutates fr4 and fr2 |
+| `0x8c0d00ec` | `FUN_8c0d00ec` | `notes/verifications/0x8c0d00ec.json` — 23 oracle steps; stores: f32 1.0 at *r4+8, product at *r4+40, flag byte at *r4+21 (rts delay); T=fr4>frN; then-path: r0=21, r1=*r4, r3=1, fr0=0.4f, fr1=0.4*seed, T=1 |
+| `0x8c0d0edc` | `FUN_8c0d0edc` | `notes/verifications/0x8c0d0edc.json` — 24 oracle steps; no stores; r0=new r4 (rts delay), r1=12*(~r5&7), r3=r4+76+12*r5, r4=r4+68+12*min side, r6=12*r5, fr0/fr1 hold the two compared floats, T=fr0>fr1 (fcmp/gt fr1,fr0); bra delay slot add #68,r4 runs on the taken path too |
+| `0x8c0d5210` | `FUN_8c0d5210` | `notes/verifications/0x8c0d5210.json` — 30 oracle steps; stores: 9 dwords r4+0..+32 then fr4 at +36, fr5 at +40; r0=r4+36, r1=*(r6+8), r3=*r6, r4=r4_entry+40, r7=r4_entry+24, r14 restored |
+| `0x8c0d524c` | `FUN_8c0d524c` | `notes/verifications/0x8c0d524c.json` — 32 oracle steps; stores: 9 dwords r4+0..+32 then fr4 at +36, fr5 at +40; r0=r4+36, r1=*(r7+8), r3=*r7, r4=r4_entry+40, r13/r14 restored |
+| `0x8c0d98a0` | `FUN_8c0d98a0` | `notes/verifications/0x8c0d98a0.json` — 7 oracle steps; stores: literal value 0x8c1e8b2c then 0x8c1ec3f0 at r4 (second wins, single indirection - not *0x8c1e8b2c), r5 at r4+4; r0=r4 (rts delay), T untouched |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

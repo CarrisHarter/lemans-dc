@@ -1,0 +1,8 @@
+{
+  "entry": "0x8c0d98a0",
+  "regs": {
+    "r4": "0x8c28d000",
+    "r5": "0xaabbccdd"
+  },
+  "steps": 20
+}
