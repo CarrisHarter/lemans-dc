@@ -1265,6 +1265,21 @@
 | `0x8c21fa8a` | `mode_code` | `notes/verifications/0x8c21fa8a.json` — 16 oracle steps |
 | `0x8c236a44` | `hash_lookup` | `notes/verifications/0x8c236a44.json` — 17 oracle steps |
 | `0x8c226868` | `crc16` | `notes/verifications/0x8c226868.json` — 407 oracle steps |
+| `0x8c194e84` | `FUN_8c194e84` | `notes/verifications/0x8c194e84.json` — 7 oracle steps; store none; r0 = pool-selected pointer, fr0/fr1 only on byte1!=0 path; T per last tst/fcmp |
+| `0x8c195610` | `FUN_8c195610` | `notes/verifications/0x8c195610.json` — 23 oracle steps; stores 4 floats at [r1..r1+12); r1+=12, r4=base+12, r0=r1+8, r3=r1+4, fr0=[base+12] |
+| `0x8c195748` | `FUN_8c195748` | `notes/verifications/0x8c195748.json` — 23 oracle steps; stores 4 floats at [r1..r1+12); r1+=12, r4=base+12, r0=r1+8, r3=r1+4, fr0=[base+12] |
+| `0x8c19a648` | `FUN_8c19a648` | `notes/verifications/0x8c19a648.json` — 393 oracle steps; stores 0xe4-byte struct copy r5 -> r4 (dwords 0/4, floats 8..32, words 36..106, dwords 108..128, floats/dwords/bytes per map); r0=r4, r1=byte[r5+0xe3], r3=r4+0xc8, r6=r5+0xd4, r7=r4+0xd4, fr0=f32[r5+0xd4], r9..r14/r15 restored, T untouched |
+| `0x8c19b7c8` | `FUN_8c19b7c8` | `notes/verifications/0x8c19b7c8.json` — 16 oracle steps; store fr2 at [r0] ([r15]); fr0=1.0 only on fr1>fr2 path; r0 = [r15] kept |
+| `0x8c1ac904` | `FUN_8c1ac904` | `notes/verifications/0x8c1ac904.json` — 1448 oracle steps; stores 2 floats per iteration at 0x8c2b7a30+4*r4'+... x64; r4 clobbered to r6+r13, r13/r14 restored, T=0 exit |
+| `0x8c1aeb94` | `FUN_8c1aeb94` | `notes/verifications/0x8c1aeb94.json` — 54 oracle steps; no stores; r0 = 0 (r3&0xff==0) or last a-b, r3/r1 = last bytes, r4/r5 advanced; T=1 on zero exit else 0 |
+| `0x8c1af6b4` | `FUN_8c1af6b4` | `notes/verifications/0x8c1af6b4.json` — 104 oracle steps; stores 8 floats per 32-byte block r4->r6 while r6!=0; r4/r6 += 32 per iter, r0 = r6 final (rts delay), T=1 exit |
+| `0x8c1b5cb0` | `FUN_8c1b5cb0` | `notes/verifications/0x8c1b5cb0.json` — 108 oracle steps; stores u32[sp+32..44) at r4+16..28, u32[sp+16..28) at r4+0..16, floats 0x8c1b5d90/94/98/9c at r4+32/36/40/44, u32[sp+0..16) at r4+48..64; r0=r4, r1=u32[sp+12], r2=sp+12, r3=u32[sp+8], r5=sp, r6=r4+48, r7=r4+40, r10..r14/r15 restored |
+| `0x8c216040` | `FUN_8c216040` | `notes/verifications/0x8c216040.json` — 1802 oracle steps; stores 192 bytes at r5 (r1=r6<<6 iterations); r1/r2/r4/r5/r6/r7/r0 clobbered; r11/r12/r15 saved+restored; final T=0 |
+| `0x8c2165cc` | `FUN_8c2165cc` | `notes/verifications/0x8c2165cc.json` — 26 oracle steps; stores [r6+28]=2,[r6+32]=2,[r6+40]=r4,[r6+48]=r5,[r6+36]=0; r4 zeroed; r0=-11/-9/-5/0 |
+| `0x8c217326` | `FUN_8c217326` | `notes/verifications/0x8c217326.json` — 4 oracle steps; init path stores 11 fields at r4+4..r4+82 and returns r4; rts paths return 0 |
+| `0x8c21741e` | `FUN_8c21741e` | `notes/verifications/0x8c21741e.json` — 21 oracle steps; bt.s delay slot loads r7=[r4+16] on all paths; success stores [r4+20]=r6, r0=0; else r0=-10/-16/-17 |
+| `0x8c21a5e0` | `FUN_8c21a5e0` | `notes/verifications/0x8c21a5e0.json` — 11264 oracle steps; stores 192 bytes near r4+0xba (net r4 = entry-6); r5 advanced 1536; r1/r2/r3/r6/r7/r0 clobbered; final T=1 |
+| `0x8c2192e4` | `FUN_8c2192e4` | `notes/verifications/0x8c2192e4.json` — 608 oracle steps; 24 iterations copying 24-byte records (stride 44 src, 24 dst) with field permutation; r4/r5/r6/r7/r2/r3/r0 clobbered |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

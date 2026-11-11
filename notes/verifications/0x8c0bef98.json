@@ -3,8 +3,8 @@
   "spec": "~/Projects/lemans-dc/notes/specs/0x8c0bef98.json",
   "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "30f31c2f",
-  "verified_at": "2026-11-11T13:35:05+00:00",
+  "commit": "a39f8f6a",
+  "verified_at": "2026-11-11T14:01:18+00:00",
   "result": "pass",
   "oracle": {
     "stop": "halt",
