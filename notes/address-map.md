@@ -195,6 +195,10 @@
 | `0x8c05abe0` | `FUN_8c05abe0` | `notes/verifications/0x8c05abe0.json` — 3 oracle steps; r0=[r4+4] then reloaded to [r0+4] in rts delay slot |
 | `0x8c05ac20` | `FUN_8c05ac20` | `notes/verifications/0x8c05ac20.json` — 7 oracle steps; r0=base+0x10 left live; base reloaded from r4+4 for 2nd store; [base+0xc]=fr4, [base+0x10]=fr5 (2nd in rts delay slot) |
 | `0x8c05ac30` | `FUN_8c05ac30` | `notes/verifications/0x8c05ac30.json` — 3 oracle steps; r0=[r4+4] left live; [r0+0x14]=r5 in rts delay slot |
+| `0x8c012260` | `FUN_8c012260 (classify fr4 bits)` | `notes/verifications/0x8c012260.json` — 15 oracle steps; verified: r15 spilled -8/+8, r4/r2 keep stack addresses (r4 drops 4 more on the return-2 path), r5=0x7ff00000, r3=last tested word, T=last cmp/eq or tst (1 on return 0/2 paths, 0 on return 1); two fmov stores land in the stack window; return 0 when fr4 finite, 2 when fr4 is exactly +/-inf and fr5 bits are 0, else 1 |
+| `0x8c0146bc` | `FUN_8c0146bc (ftrc-based float normalise)` | `notes/verifications/0x8c0146bc.json` — 26 oracle steps; verified positive large-exponent path (fr4=16777216.0): r15 spilled/restored, r2=r15+4, r3=last word, r4=sign bit of fr4, r5=masked exponent, r6=0x80000000, T=tst r3,r6 (1 positive); fr0=fr4; fmov stores land in stack window |
+| `0x8c011d1c` | `FUN_8c011d1c (Horner fr4^2 over table 0x8c1cd040)` | `notes/verifications/0x8c011d1c.json` — 49 oracle steps; BLOCKED: oracle lacks fmov.s @Rm+,FRn (0xf459 hit at 0x8c011d24). Port written: loop target is 0x8c011d26 so fr4 is loaded once pre-loop then carries the accumulator via the bt.s delay slot; r5 ends 0x8c1cd05c, fr4=fr0=acc, fr5=fr4_input^2, T=0 |
+| `0x8c011d3c` | `FUN_8c011d3c (Horner fr4^2 over table 0x8c1cd060)` | `notes/verifications/0x8c011d3c.json` — 51 oracle steps; BLOCKED: oracle lacks fmov.s @Rm+,FRn (0xf559 hit at 0x8c011d44). Port written: 6 iterations, r5 ends 0x8c1cd07c, fr5=fr6=acc, fr0=fr4*acc in rts delay slot, T=0 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
