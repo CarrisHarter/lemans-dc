@@ -3,6 +3,7 @@
 use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
+    cpu.r[0] = cpu.r[4].wrapping_add(4); // mov r4,r0 ; add #4,r0
     for i in 0..3u32 {
         let addr = cpu.r[4].wrapping_add(i * 4);
         let v = f32::from_bits(mem.read_u32(addr).unwrap_or(0));
