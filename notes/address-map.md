@@ -555,6 +555,10 @@
 | `0x8c0d50bc` | `load_field_8` | `notes/verifications/0x8c0d50bc.json` — verified |
 | `0x8c0d50c0` | `load_field_4` | `notes/verifications/0x8c0d50c0.json` — verified |
 | `0x8c0d50c4` | `load_field_8_2` | `notes/verifications/0x8c0d50c4.json` — verified |
+| `0x8c0d50c8` | `load_field_4_2` | `notes/verifications/0x8c0d50c8.json` — verified |
+| `0x8c0d50e4` | `load_float_via_field_24` | `notes/verifications/0x8c0d50e4.json` — verified |
+| `0x8c0d5148` | `advance_24_load_float` | `notes/verifications/0x8c0d5148.json` — verified |
+| `0x8c0d5204` | `zero_three_words_2` | `notes/verifications/0x8c0d5204.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
