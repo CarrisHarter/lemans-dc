@@ -1393,6 +1393,7 @@ memory` before a diff can mean anything.
 | `0x8c21f4d8` | hardware register access: `0xffd00000` |
 | `0x8c2201fa` | hardware register access: `0xf6000000` |
 | `0x8c027260` | callee `0x8c050fa8` jumps through an unseeded pointer (`pc 0x21d5357c`) |
+| `0x8c013248` | non-contiguous export (9 ranges, first ends 0x8c013327 with `bra` into the next range); the porting loop needs one linear body |
 
 ## Auto-proposed names (debug strings)
 
