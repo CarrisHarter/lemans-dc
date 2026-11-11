@@ -2423,12 +2423,16 @@ pub mod p_8c23a900;
 pub mod p_8c23a960;
 #[path = "ports/p_8c23ae00.rs"]
 pub mod p_8c23ae00;
+#[path = "ports/p_8c23aef8.rs"]
+pub mod p_8c23aef8;
 #[path = "ports/p_8c23b0c0.rs"]
 pub mod p_8c23b0c0;
 #[path = "ports/p_8c23b990.rs"]
 pub mod p_8c23b990;
 #[path = "ports/p_8c23b9b4.rs"]
 pub mod p_8c23b9b4;
+#[path = "ports/p_8c23b9d0.rs"]
+pub mod p_8c23b9d0;
 
 pub fn lookup(address: u32) -> Option<Port> {
     match address {
@@ -3638,9 +3642,11 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C23A900 => Some(p_8c23a900::run),
         0x8C23A960 => Some(p_8c23a960::run),
         0x8C23AE00 => Some(p_8c23ae00::run),
+        0x8C23AEF8 => Some(p_8c23aef8::run),
         0x8C23B0C0 => Some(p_8c23b0c0::run),
         0x8C23B990 => Some(p_8c23b990::run),
         0x8C23B9B4 => Some(p_8c23b9b4::run),
+        0x8C23B9D0 => Some(p_8c23b9d0::run),
         _ => None,
     }
 }

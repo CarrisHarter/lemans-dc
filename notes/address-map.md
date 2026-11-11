@@ -1220,6 +1220,8 @@
 | `0x8c22817e` | `set_bit_and_bump` | `notes/verifications/0x8c22817e.json` — 23 oracle steps |
 | `0x8c236d40` | `pack_five_fields` | `notes/verifications/0x8c236d40.json` — 24 oracle steps |
 | `0x8c23ae00` | `unknown` | `notes/verifications/0x8c23ae00.json` — 5 oracle steps |
+| `0x8c23aef8` | `link_object` | `notes/verifications/0x8c23aef8.json` — 22 oracle steps |
+| `0x8c23b9d0` | `unlink_node` | `notes/verifications/0x8c23b9d0.json` — 18 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
