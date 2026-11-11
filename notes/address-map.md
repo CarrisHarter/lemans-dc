@@ -959,6 +959,13 @@
 | `0x8c172e10` | `invert_table_byte_if_enabled` | `notes/verifications/0x8c172e10.json` — verified |
 | `0x8c172e2e` | `range_check_global` | `notes/verifications/0x8c172e2e.json` — verified |
 | `0x8c1730f6` | `increment_global_n_times` | `notes/verifications/0x8c1730f6.json` — verified |
+| `0x8c17ead0` | `store_r5_at_72` | `notes/verifications/0x8c17ead0.json` — verified |
+| `0x8c1738c6` | `table_entry_nonzero` | `notes/verifications/0x8c1738c6.json` — verified |
+| `0x8c1745b8` | `global_pointer` | `notes/verifications/0x8c1745b8.json` — verified |
+| `0x8c1755ea` | `range_check_descriptor` | `notes/verifications/0x8c1755ea.json` — verified |
+| `0x8c17a038` | `index_times_28` | `notes/verifications/0x8c17a038.json` — verified |
+| `0x8c155e4c` | `init_from_rom_block` | `notes/verifications/0x8c155e4c.json` — verified |
+| `0x8c156f8c` | `init_node` | `notes/verifications/0x8c156f8c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
