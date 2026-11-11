@@ -340,6 +340,9 @@
 | `0x8c07bcd8` | `max_counter_clamped` | `notes/verifications/0x8c07bcd8*.json` — both selection paths |
 | `0x8c07581c` | `clear_records` | `notes/verifications/0x8c07581c.json` — r4 advanced by 68 before the loop, r5 walks one byte per record |
 | `0x8c07e018` | `cursor_advance_wrap` | `notes/verifications/0x8c07e018*.json` — wrap and skip paths |
+| `0x8c073738` | `FUN_8c073738` | `notes/verifications/0x8c073738.json` — 107 oracle steps; r1:=param_5 kept; r2:=entry_r15+4 set every loop iteration (r15 already -36); r3:=base+4 in loop but param_6 when loop skipped; r5:=p3low, r6:=flag byte, r7 ends at param_6; T clear on all exits; r8-r14 pushed/popped so finals are seeds |
+| `0x8c07cb98` | `FUN_8c07cb98` | `notes/verifications/0x8c07cb98.json` — 35 oracle steps; r4 clobbered to base+0x1c on all compute paths; r3:=base+0x10; r1:=base+0x14 (plain) or base+0x1c (store paths); r0:=0 via rts delay slot on compute paths; fr0 ends 0.0/1.0 from fldi, fr1 = clamped source; T set iff a clamp store happened (or matched cmp/eq #n on early returns); early returns leave r1/r3/r4/fr at seeds |
+| `0x8c07d9ac` | `FUN_8c07d9ac` | `notes/verifications/0x8c07d9ac.json` — 124 oracle steps; r1 live on every path (size from *struct, then scan pointer, then offset on match); r3:=end ptr, r4 clobbered to buffer base, r6:=last candidate byte compared (seed on len-1 match), r0:=result, T true on every -1 exit and false on match; r11-r14 pushed/popped |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
