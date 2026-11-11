@@ -1309,6 +1309,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c23b9b4` | `FUN_8c23b9b4` | `notes/verifications/0x8c23b9b4.json` — ok; list insert, *(r6+8)=r5, T=1 in rts delay |
 | `0x8c23b9d0` | `unlink_node` | `notes/verifications/0x8c23b9d0.json` — 18 oracle steps |
 | `0x8c23bbc0` | `list_max` | `notes/verifications/0x8c23bbc0.json` — 14 oracle steps |
+| `0x8c010d8c` | `classify_float_result_2` | `notes/verifications/0x8c010d8c.json` — 168 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
