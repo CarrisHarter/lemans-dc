@@ -19,10 +19,19 @@ LINE = re.compile(r"^\s*[0-9a-f]+:\s+(?:[0-9a-f]{2} )+\s*\t?([a-z][a-z0-9._/]*)"
 # Mnemonics the oracle currently executes, by name (forms may still differ).
 IMPLEMENTED = {
     "nop", "rts", "clrt", "sett",
-    "mov", "mov.l",
-    "add", "dt", "cmp/pl",
-    "jsr", "jmp", "bt", "bf", "bt.s", "bf.s",
+    # data movement
+    "mov", "mov.b", "mov.w", "mov.l", "mova",
+    # arithmetic / logic
+    "add", "sub", "and", "or", "xor", "tst",
+    "cmp/eq", "cmp/hs", "cmp/ge", "cmp/hi", "cmp/gt", "cmp/pl", "cmp/pz",
+    "dt", "extu.b", "extu.w", "exts.b", "exts.w",
+    "shll", "shlr", "shll2", "shlr2", "shll8", "shlr8", "shll16", "shlr16",
+    "not", "neg", "stc", "ldc", "fsts", "flds", "ftrc", "float",
+    # control flow
+    "jsr", "jmp", "bsr", "bra", "bt", "bf", "bt.s", "bf.s", "lds", "sts",
+    # fpu
     "fadd", "fsub", "fmul", "fdiv", "fmac", "fmov", "fmov.s", "fldi0", "fldi1",
+    "fcmp/eq", "fcmp/gt",
 }
 
 

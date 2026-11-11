@@ -166,3 +166,68 @@ fn call_helper_uses_r4_convention() {
     let mut cpu = Cpu::new();
     assert_eq!(cpu.call(&mut mem, LOAD_BASE, &[1, 2, 3], 100).unwrap(), 7);
 }
+
+#[test]
+fn byte_and_word_access_sign_extend() {
+    // mov.b R0,@R1 ; mov.b @R1,R2 ; mov.w R0,@R3 ; mov.w @R3,R4 ; rts
+    let mut code = vec![];
+    for op in [0x2100u16, 0x6210, 0x2301, 0x6431, 0x000B, 0x0009] {
+        code.extend_from_slice(&op.to_le_bytes());
+    }
+    code.resize(64, 0);
+    let mut mem = sh4_oracle::Memory::with_region(sh4_oracle::Region::new(LOAD_BASE, code));
+    let mut cpu = Cpu::new();
+    cpu.pc = LOAD_BASE;
+    cpu.r[0] = 0x0000_00FF;
+    cpu.r[1] = LOAD_BASE + 0x20;
+    cpu.r[3] = LOAD_BASE + 0x24;
+    cpu.run(&mut mem, 100).unwrap();
+    assert_eq!(mem.read_u8(LOAD_BASE + 0x20).unwrap(), 0xFF);
+    assert_eq!(cpu.r[2], 0xFFFF_FFFF, "mov.b sign-extends");
+    assert_eq!(cpu.r[4], 0x0000_00FF, "mov.w loaded the stored 0x00FF");
+}
+
+#[test]
+fn logic_and_compare_set_t() {
+    // tst r1,r2 ; cmp/eq r1,r2 ; extu.b r1,r3
+    let mut code = vec![];
+    for op in [0x2218u16, 0x3120, 0x631C, 0x000B, 0x0009] {
+        code.extend_from_slice(&op.to_le_bytes());
+    }
+    let mut mem = image(LOAD_BASE, &code);
+    let mut cpu = Cpu::new();
+    cpu.pc = LOAD_BASE;
+    cpu.r[1] = 0x0000_1234;
+    cpu.r[2] = 0x0000_1234;
+    cpu.run(&mut mem, 100).unwrap();
+    assert_eq!(cpu.r[3], 0x0000_0034, "extu.b keeps the low byte");
+}
+
+#[test]
+fn bra_and_bsr_are_delayed() {
+    // bra +2 ; add #1,r0 (delay slot) ; nop ; rts ; nop
+    let mut code = vec![];
+    for op in [0xA001u16, 0x7001, 0x0009, 0x000B, 0x0009] {
+        code.extend_from_slice(&op.to_le_bytes());
+    }
+    let mut mem = image(LOAD_BASE, &code);
+    let mut cpu = Cpu::new();
+    cpu.pc = LOAD_BASE;
+    cpu.run(&mut mem, 100).unwrap();
+    assert_eq!(cpu.r[0], 1, "delay slot runs before the branch takes effect");
+}
+
+#[test]
+fn mova_computes_a_pc_relative_address() {
+    // mova @(2,pc),r0 -> literal slot at ((pc+4)&~3)+8
+    let mut code = vec![];
+    for op in [0xC702u16, 0x000B, 0x0009] {
+        code.extend_from_slice(&op.to_le_bytes());
+    }
+    code.resize(64, 0);
+    let mut mem = sh4_oracle::Memory::with_region(sh4_oracle::Region::new(LOAD_BASE, code));
+    let mut cpu = Cpu::new();
+    cpu.pc = LOAD_BASE;
+    cpu.run(&mut mem, 100).unwrap();
+    assert_eq!(cpu.r[0], LOAD_BASE + 4 + 8);
+}
