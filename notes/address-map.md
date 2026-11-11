@@ -567,6 +567,13 @@
 | `0x8c0b301c` | `FUN_8c0b301c` | `notes/verifications/0x8c0b301c.json` — 149 oracle steps; stores 9 floats to r4+0..0x20 (order +0,+12,+24,+4,+16,+28,+8,+20,+32); epilogue pops restore r8-r14, leaving r0=r4+20 r1=r4+8 r3=r4+28 r4=r4+32 r6=r5+12 r7=r5+24; fr0=1/cross fr5=cross stay live |
 | `0x8c0b3b3c` | `FUN_8c0b3b3c` | `notes/verifications/0x8c0b3b3c.json` — 74 oracle steps; stores 4 floats to out+0,+4,+8,+12 where out=[r15+44] (stack arg); writes 3-int table [1,2,0]@0x8c1fcaf0 and 4 stack slots [r15+12..+28] that are read back (index 0 aliasing matters); r12/r11/r13/r14 restored by pops so r12 ends as seed; final r2=r15+24 r3=r15+12+4i r4=r15+12 r5=4k r6/r7 advanced; T=fcmp/eq(sqrt==0) on negative path, fcmp/gt(sum>0) on positive |
 | `0x8c0ab3f0` | `FUN_8c0ab3f0` | `notes/verifications/0x8c0ab3f0.json` — 40 oracle steps; stores [r4+0x6c]=r5, byte [r4+0x84]=1, float [r4+0x88]=0, then per mode: 0->[r4+0x7c]=180/0 [r4+0x80]=90 [r4+0x8c]=4; 1->swap [r4+0x7c]<->[r4+0x80] with 0, [r4+0x8c]=2; 2/default->[r4+0x7c]=old[r4+0x80] [r4+0x80]=90 [r4+0x8c]=4; 3->byte [r4+0x84]=0; rts delay slot performs the [r4+0x8c] store; r4 ends +=0x8c, r0/r1/r3/r5/r6/r7 hold last constants; T=byte-test/matching cmp/eq/0(default) |
+| `0x8c0d5bf0` | `advance_24_2` | `notes/verifications/0x8c0d5bf0.json` — verified |
+| `0x8c0d5bf8` | `store_two_args_at_0_4` | `notes/verifications/0x8c0d5bf8.json` — verified |
+| `0x8c0d8b74` | `store_float_to_global` | `notes/verifications/0x8c0d8b74.json` — verified |
+| `0x8c0d91d0` | `reciprocal_at_124` | `notes/verifications/0x8c0d91d0.json` — verified |
+| `0x8c0d91dc` | `reciprocal_at_120` | `notes/verifications/0x8c0d91dc.json` — verified |
+| `0x8c0bd76c` | `zero_twelve_words` | `notes/verifications/0x8c0bd76c.json` — verified |
+| `0x8c0bd8c8` | `set_mode_or_clear` | `notes/verifications/0x8c0bd8c8.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
