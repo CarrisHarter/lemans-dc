@@ -7,7 +7,8 @@
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-use sh4_oracle::{image, Cpu, Stop, LOAD_BASE};
+use sh4_oracle::json::{self, Json};
+use sh4_oracle::{image, install_default_stack, Cpu, Memory, Stop, LOAD_BASE};
 
 fn parse_hex(s: &str) -> Result<u32, String> {
     let t = s.trim();
@@ -30,6 +31,7 @@ fn main() -> ExitCode {
     };
     let path = PathBuf::from(path);
 
+    let mut spec_path: Option<PathBuf> = None;
     let mut base = LOAD_BASE;
     let mut entry = LOAD_BASE;
     let mut steps = 1_000_000usize;
@@ -51,6 +53,7 @@ fn main() -> ExitCode {
                     .map_err(|_| ExitCode::from(2))
             }),
             "--set" => take("--set").map(|v| sets.push(v)),
+            "--spec" => take("--spec").map(|v| spec_path = Some(PathBuf::from(v))),
             other => {
                 eprintln!("unknown flag {other}");
                 return usage();
@@ -72,6 +75,10 @@ fn main() -> ExitCode {
     let mut mem = image(base, &bytes);
     let mut cpu = Cpu::new();
     cpu.pc = entry;
+
+    if let Some(path) = spec_path {
+        return run_spec(&path, &mut cpu, &mut mem, base);
+    }
 
     for spec in sets {
         let (reg, value) = match spec.split_once('=') {
@@ -149,6 +156,141 @@ fn main() -> ExitCode {
     match stop {
         Ok(Stop::Halt) => ExitCode::SUCCESS,
         Ok(Stop::Steps(_)) => ExitCode::from(3),
+        Err(_) => ExitCode::from(1),
+    }
+}
+
+/// Machine-readable oracle run: everything `lemans-verify` needs to diff.
+fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitCode {
+    let text = match std::fs::read_to_string(path) {
+        Ok(t) => t,
+        Err(e) => {
+            eprintln!("cannot read spec {}: {e}", path.display());
+            return ExitCode::from(1);
+        }
+    };
+    let spec = match json::parse(&text) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("bad spec JSON: {e}");
+            return ExitCode::from(1);
+        }
+    };
+
+    let entry = spec
+        .get("entry")
+        .and_then(Json::as_u32)
+        .unwrap_or(base);
+    let steps = spec
+        .get("steps")
+        .and_then(Json::as_u64)
+        .unwrap_or(1_000_000) as usize;
+
+    if let Some(regs) = spec.get("regs").and_then(|v| match v {
+        Json::Object(m) => Some(m),
+        _ => None,
+    }) {
+        for (key, value) in regs {
+            if let Some(idx) = key.strip_prefix('r').and_then(|i| i.parse::<usize>().ok()) {
+                if idx < 16 {
+                    if let Some(v) = value.as_u32() {
+                        cpu.r[idx] = v;
+                    }
+                }
+            }
+        }
+    }
+    if let Some(fr) = spec.get("fr").and_then(|v| match v {
+        Json::Object(m) => Some(m),
+        _ => None,
+    }) {
+        for (key, value) in fr {
+            if let Some(idx) = key.strip_prefix('f').and_then(|i| i.parse::<usize>().ok()) {
+                if idx < 16 {
+                    if let Some(v) = value.as_f32() {
+                        cpu.fr[idx] = v;
+                    }
+                }
+            }
+        }
+    }
+    if let Some(regions) = spec.get("memory").and_then(Json::as_array) {
+        for region in regions {
+            let addr = region.get("addr").and_then(Json::as_u32);
+            let hex = region.get("hex").and_then(Json::as_str);
+            if let (Some(addr), Some(hex)) = (addr, hex) {
+                let bytes: Vec<u8> = (0..hex.len() / 2)
+                    .filter_map(|i| u8::from_str_radix(&hex[i * 2..i * 2 + 2], 16).ok())
+                    .collect();
+                for (i, byte) in bytes.iter().enumerate() {
+                    let _ = mem.write_u8(addr + i as u32, *byte);
+                }
+            }
+        }
+    }
+
+    install_default_stack(cpu, mem);
+    mem.writes.clear(); // seeding is not an effect of the function
+    cpu.pc = entry;
+    let stop = if std::env::var("SH4_TRACE").is_ok() {
+        let mut result = Ok(Stop::Steps(steps));
+        for _ in 0..steps.min(64) {
+            if cpu.pc == sh4_oracle::HALT_PC { result = Ok(Stop::Halt); break; }
+            eprintln!("pc=0x{:08x} op=0x{:04x} r15=0x{:08x} pr=0x{:08x}",
+                cpu.pc, mem.read_u16(cpu.pc).unwrap_or(0), cpu.r[15], cpu.pr);
+            if let Err(e) = cpu.step(mem) { result = Err(e); break; }
+        }
+        result
+    } else {
+        cpu.run(mem, steps)
+    };
+
+    let mut out = std::collections::BTreeMap::new();
+    out.insert(
+        "stop".to_string(),
+        Json::String(match &stop {
+            Ok(Stop::Halt) => "halt".into(),
+            Ok(Stop::Steps(_)) => "limit".into(),
+            Err(_) => "error".into(),
+        }),
+    );
+    out.insert("steps".to_string(), Json::Number(cpu.steps as f64));
+    if let Err(e) = &stop {
+        out.insert("error".to_string(), Json::String(e.to_string()));
+    }
+    out.insert(
+        "regs".to_string(),
+        Json::Array(
+            cpu.r
+                .iter()
+                .map(|v| Json::String(format!("0x{v:08x}")))
+                .collect(),
+        ),
+    );
+    out.insert(
+        "fr".to_string(),
+        Json::Array(cpu.fr.iter().map(|v| Json::Number(*v as f64)).collect()),
+    );
+    out.insert("fpul".to_string(), Json::String(format!("0x{:08x}", cpu.fpul)));
+    out.insert("sr".to_string(), Json::String(format!("0x{:08x}", cpu.sr)));
+    out.insert(
+        "writes".to_string(),
+        Json::Array(
+            mem.writes
+                .iter()
+                .map(|(a, b)| {
+                    Json::Array(vec![
+                        Json::String(format!("0x{a:08x}")),
+                        Json::Number(*b as f64),
+                    ])
+                })
+                .collect(),
+        ),
+    );
+
+    println!("{}", Json::Object(out));
+    match stop {
+        Ok(_) => ExitCode::SUCCESS,
         Err(_) => ExitCode::from(1),
     }
 }

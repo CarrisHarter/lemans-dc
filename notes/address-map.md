@@ -1,5 +1,16 @@
 # Address map
 
+## Verified ports
+
+| address | name | evidence |
+| --- | --- | --- |
+| `0x8c175c72` | `am_sound_is_playing` | `notes/verifications/0x8c175c72.json` — 9 oracle steps, registers + T bit match |
+
+Two side effects found by the verifier and required by the port: the original
+copies the argument into `r4` (not present here) and leaves the `+0x38` field in
+`r3`. Neither is visible in the C, which is why the diff is the source of truth.
+
+
 Nothing recovered yet: no binary. Add rows as evidence lands.
 
 | address | name | kind | evidence |

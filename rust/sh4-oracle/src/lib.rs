@@ -12,10 +12,33 @@
 //! queues (writes are recorded so a test can compare memory effects), and no
 //! multi-threading. Those belong to the console, not to a function-level oracle.
 
+pub mod json;
+
 use std::fmt;
 
 /// Address the Katana bootstrap maps `1ST_READ.BIN` at.
 pub const LOAD_BASE: u32 = 0x8C01_0000;
+
+/// Default stack window, outside any real image, so a function prologue has
+/// somewhere to push. Both the oracle and the verifier use it, so a port that
+/// spills differently still compares green.
+pub const STACK_BASE: u32 = 0x8C30_0000;
+pub const STACK_SIZE: u32 = 0x1_0000;
+
+/// Give the CPU a stack if the spec did not supply one.
+pub fn install_default_stack(cpu: &mut Cpu, mem: &mut Memory) {
+    if !mem.regions.iter().any(|r| r.base == STACK_BASE) {
+        mem.regions.push(Region::new(STACK_BASE, vec![0u8; STACK_SIZE as usize]));
+    }
+    if cpu.r[15] == 0 {
+        cpu.r[15] = STACK_BASE + STACK_SIZE - 16;
+    }
+}
+
+/// True when an address lies inside the synthetic stack window.
+pub fn in_stack(addr: u32) -> bool {
+    addr >= STACK_BASE && addr < STACK_BASE + STACK_SIZE
+}
 
 /// Sentinel return address: `rts` to this stops the machine.
 pub const HALT_PC: u32 = 0xFFFF_FFF0;
@@ -201,7 +224,7 @@ impl Cpu {
     }
 
     #[inline]
-    fn set_t(&mut self, v: bool) {
+    pub fn set_t(&mut self, v: bool) {
         if v {
             self.sr |= 1;
         } else {
@@ -432,12 +455,12 @@ impl Cpu {
                     self.r[n] = self.pr;
                     Ok(())
                 }
-                0x400E => {                              // ldc Rm,SR
-                    self.sr = self.r[m];
+                0x400E => {                              // ldc Rn,SR (register is in the high nibble)
+                    self.sr = self.r[n];
                     Ok(())
                 }
-                0x402A => {                              // lds Rm,PR
-                    self.pr = self.r[m];
+                0x402A => {                              // lds Rn,PR
+                    self.pr = self.r[n];
                     Ok(())
                 }
                 0x4022 => {                              // sts.l PR,@-Rn
@@ -445,9 +468,9 @@ impl Cpu {
                     mem.write_u32(self.r[n], self.pr)?;
                     Ok(())
                 }
-                0x4026 => {                              // lds.l @Rm+,PR
-                    self.pr = mem.read_u32(self.r[m])?;
-                    self.r[m] = self.r[m].wrapping_add(4);
+                0x4026 => {                              // lds.l @Rn+,PR
+                    self.pr = mem.read_u32(self.r[n])?;
+                    self.r[n] = self.r[n].wrapping_add(4);
                     Ok(())
                 }
                 0x400B => {                              // jsr @Rn (delayed)
@@ -461,6 +484,12 @@ impl Cpu {
                 }
                 _ => Err(Error::Unimplemented(pc, op, "0x4 family")),
             },
+            0x5 => {
+                // mov.l @(disp,Rm),Rn   (disp scaled by 4)
+                let addr = self.r[m].wrapping_add((op & 0xF) as u32 * 4);
+                self.r[n] = mem.read_u32(addr)?;
+                Ok(())
+            }
             0x6 => match op & 0xF {
                 0x0 | 0x1 | 0x2 => {                     // mov.b/w/l @Rm,Rn
                     self.r[n] = self.load(mem, self.r[m], op & 0xF)?;
@@ -617,92 +646,32 @@ impl Cpu {
         n: usize,
         m: usize,
     ) -> Result<(), Error> {
+        // The low nibble selects the operation; the `…1101` family is
+        // disambiguated by the low byte (fsts/flds/float/ftrc/fldi0/fldi1).
         match op & 0xF {
-            0x0 => {
-                // fadd FRm,FRn
-                self.fr[n] = self.fr[n] + self.fr[m];
-                Ok(())
-            }
-            0x1 => {
-                // fsub FRm,FRn
-                self.fr[n] = self.fr[n] - self.fr[m];
-                Ok(())
-            }
-            0x2 => {
-                // fmul FRm,FRn
-                self.fr[n] = self.fr[n] * self.fr[m];
-                Ok(())
-            }
-            0x3 => {
-                // fdiv FRm,FRn
-                self.fr[n] = self.fr[n] / self.fr[m];
-                Ok(())
-            }
+            0x0 => { self.fr[n] = self.fr[n] + self.fr[m]; Ok(()) }   // fadd
+            0x1 => { self.fr[n] = self.fr[n] - self.fr[m]; Ok(()) }   // fsub
+            0x2 => { self.fr[n] = self.fr[n] * self.fr[m]; Ok(()) }   // fmul
+            0x3 => { self.fr[n] = self.fr[n] / self.fr[m]; Ok(()) }   // fdiv
+            0x4 => { self.set_t(self.fr[n] == self.fr[m]); Ok(()) }   // fcmp/eq
+            0x5 => { self.set_t(self.fr[n] > self.fr[m]); Ok(()) }    // fcmp/gt
             0xE => {
-                // fmac FR0,FRm,FRn: FRn = FRn + FR0 * FRm, one rounding step.
-                // mul_add(a, b) computes a*b + b, so the product pair comes first.
+                // fmac FR0,FRm,FRn: FRn = FRn + FR0*FRm, one rounding step
                 self.fr[n] = self.fr[0].mul_add(self.fr[m], self.fr[n]);
                 Ok(())
             }
-            0x4 => {
-                // fcmp/eq FRm,FRn
-                self.set_t(self.fr[n] == self.fr[m]);
-                Ok(())
-            }
-            0x5 => {
-                // fcmp/gt FRm,FRn
-                self.set_t(self.fr[n] > self.fr[m]);
-                Ok(())
-            }
-            0x2D if op & 0x00FF == 0x2D => {
-                // float FPUL,FRn
-                self.fr[n] = self.fpul as i32 as f32;
-                Ok(())
-            }
-            0x3D if op & 0x00FF == 0x3D => {
-                // ftrc FRm,FPUL
-                self.fpul = self.fr[m] as i32 as u32;
-                Ok(())
-            }
-            0x0D if op & 0x00FF == 0x1D => {
-                // fsts FPUL,FRn
-                self.fr[n] = f32::from_bits(self.fpul);
-                Ok(())
-            }
-            0x0D if op & 0x00FF == 0x0D => {
-                // flds FRm,FPUL
-                self.fpul = self.fr[m].to_bits();
-                Ok(())
-            }
-            0xC => {
-                // fmov FRm,FRn
-                self.fr[n] = self.fr[m];
-                Ok(())
-            }
-            0x8 => {
-                // fmov.s @Rm,FRn
-                self.fr[n] = mem.read_f32(self.r[m])?;
-                Ok(())
-            }
-            0xA => {
-                // fmov.s FRm,@Rn
-                mem.write_f32(self.r[n], self.fr[m])?;
-                Ok(())
-            }
-            0x5 if op & 0x00FF == 0x0D => {
-                // flds FRm,FPUL  (FPUL is not modelled; keep the value in fpscr-unused)
-                Err(Error::Unimplemented(pc, op, "flds (FPUL not modelled)"))
-            }
-            0xD if op & 0x00FF == 0x8D => {
-                // fldi0 FRn
-                self.fr[n] = 0.0;
-                Ok(())
-            }
-            0xD if op & 0x00FF == 0x9D => {
-                // fldi1 FRn
-                self.fr[n] = 1.0;
-                Ok(())
-            }
+            0xC => { self.fr[n] = self.fr[m]; Ok(()) }                // fmov
+            0x8 => { self.fr[n] = mem.read_f32(self.r[m])?; Ok(()) }  // fmov.s @Rm,FRn
+            0xA => { mem.write_f32(self.r[n], self.fr[m])?; Ok(()) }  // fmov.s FRm,@Rn
+            0xD => match op & 0x00FF {
+                0x0D => { self.fr[n] = f32::from_bits(self.fpul); Ok(()) }  // fsts FPUL,FRn
+                0x1D => { self.fpul = self.fr[m].to_bits(); Ok(()) }        // flds FRm,FPUL
+                0x2D => { self.fr[n] = self.fpul as i32 as f32; Ok(()) }    // float FPUL,FRn
+                0x3D => { self.fpul = self.fr[m] as i32 as u32; Ok(()) }    // ftrc FRm,FPUL
+                0x8D => { self.fr[n] = 0.0; Ok(()) }                        // fldi0
+                0x9D => { self.fr[n] = 1.0; Ok(()) }                        // fldi1
+                _ => Err(Error::Unimplemented(pc, op, "0xF.1101 family")),
+            },
             _ => Err(Error::Unimplemented(pc, op, "0xF family")),
         }
     }

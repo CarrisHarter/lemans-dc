@@ -1,0 +1,8 @@
+[package]
+name = "lemans-verify"
+version = "0.1.0"
+edition = "2021"
+description = "Diff a hand-written Rust port against the SH-4 oracle on the same spec"
+
+[dependencies]
+sh4-oracle = { path = "../sh4-oracle" }
