@@ -1,32 +1,50 @@
-//! 0x8c06be1c — two-phase indirect store through r4's struct.
+//! 0x8c06be1c — unlink a node from a doubly linked list.
 //!
-//! Phase 1: if *(r4+72) != 0, store *(r4+68) at absolute (68 + *(r4+72));
-//! else store *(r4+68) at *r5. Phase 2: if *(r4+68) != 0, r4 += 72 and store
-//! *(r4+72) at absolute (72 + *(r4+68)). T = last tst.
+//! ```text
+//! r3 = node->back
+//! if (r3 == 0) *out = node->next
+//! else         r3->next = node->next
+//! r3 = node->next
+//! if (r3 != 0) r3->back = node->back
+//! ```
+//!
+//! Hidden side effects: `r4` is advanced by 72 on the second fixup, `r0` ends
+//! as 72 when that fixup ran and as node+0x44 otherwise, `r1` holds the value
+//! last stored (node->next on the first path, node->back on the second), and
+//! T is the second `tst` — 1 exactly when the node had no successor.
 
 use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
-    cpu.r[0] = cpu.r[4].wrapping_add(72);
-    cpu.r[3] = mem.read_u32(cpu.r[0]).unwrap_or(0);
-    cpu.set_t(cpu.r[3] == 0); // tst r3,r3
-    if cpu.r[3] != 0 {
-        cpu.r[0] = cpu.r[4].wrapping_add(68);
-        cpu.r[1] = mem.read_u32(cpu.r[0]).unwrap_or(0);
-        cpu.r[0] = 68;
-        let _ = mem.write_u32(cpu.r[3].wrapping_add(cpu.r[0]), cpu.r[1]); // bra delay: mov.l r1,@(r0,r3)
+    let node = cpu.r[4];
+    let out = cpu.r[5];
+
+    let back = mem.read_u32(node + 0x48).unwrap_or(0);
+    cpu.r[3] = back;
+    cpu.set_t(back == 0);
+
+    if back == 0 {
+        cpu.r[0] = node.wrapping_add(0x44);
+        let next = mem.read_u32(cpu.r[0]).unwrap_or(0);
+        cpu.r[0] = next;
+        let _ = mem.write_u32(out, next);
     } else {
-        cpu.r[0] = cpu.r[4].wrapping_add(68);
-        cpu.r[0] = mem.read_u32(cpu.r[0]).unwrap_or(0);
-        let _ = mem.write_u32(cpu.r[5], cpu.r[0]); // mov.l r0,@r5
+        cpu.r[0] = node.wrapping_add(0x44);
+        let next = mem.read_u32(cpu.r[0]).unwrap_or(0);
+        cpu.r[1] = next;
+        cpu.r[0] = 68;
+        let _ = mem.write_u32(back + 68, next); // delay slot of `bra`
     }
-    cpu.r[0] = cpu.r[4].wrapping_add(68);
-    cpu.r[3] = mem.read_u32(cpu.r[0]).unwrap_or(0);
-    cpu.set_t(cpu.r[3] == 0);
-    if cpu.r[3] != 0 {
-        cpu.r[4] = cpu.r[4].wrapping_add(72);
+
+    cpu.r[0] = node.wrapping_add(0x44);
+    let next = mem.read_u32(cpu.r[0]).unwrap_or(0);
+    cpu.r[3] = next;
+    cpu.set_t(next == 0);
+
+    if next != 0 {
+        cpu.r[4] = node.wrapping_add(72);
         cpu.r[1] = mem.read_u32(cpu.r[4]).unwrap_or(0);
         cpu.r[0] = 72;
-        let _ = mem.write_u32(cpu.r[3].wrapping_add(cpu.r[0]), cpu.r[1]); // mov.l r1,@(r0,r3)
+        let _ = mem.write_u32(next + 72, cpu.r[1]);
     }
 }
