@@ -241,6 +241,12 @@
 | `0x8c017c0c` | `FUN_8c017c0c` | `notes/verifications/0x8c017c0c.json` — 38 oracle steps; r4 itself ends advanced (delay-slot mov r4,r0 mirrors it into r0); r6=decoded value; r3=b1<<16 and r1=b2<<8 (shll16/shll8 in place); T=bit2 of first byte (1 only on 4-byte path); follow-up bytes read at r4+1..3 (group-8 base=bits 7-4, disp=bits 3-0) |
 | `0x8c05f29c` | `FUN_8c05f29c` | `notes/verifications/0x8c05f29c.json` — 162 oracle steps; r1=*0x8c26cff0 (eq path) or [r5+52] (copy path); r3=r4+56; r5+=12 on copy path; r6=0x8c1d0f24; r7=r4+52; fr0=+0.0 (fldi0); fr1=table[3]; T=(r4==r5); header masks at +4/+5 are dead stores (overwritten by mov.l at 0x8c05f37c / copy block); bt.s delay slot stores 0 at +0 on both paths; r8..r14 restored by epilogue pops |
 | `0x8c05f3f4` | `FUN_8c05f3f4` | `notes/verifications/0x8c05f3f4.json` — 120 oracle steps; r1=r4+4; r3=r4+56; r5=0x8c1d0f24; r6=0; r7=0x8c26cff0; fr0=+0.0 (fldi0); fr1=table[3]; T untouched (no flag ops); header masks at +4/+5 dead (overwritten at 0x8c05f4cc); r8..r14 restored by pops |
+| `0x8c05e8cc` | `FUN_8c05e8cc` | `notes/verifications/0x8c05e8cc.json` — 15 oracle steps; list path: r1=0, r0=last node, T=1, [r4]=node in rts delay slot; hash path: r5=0xfffffffe (from [0x8c05e908]), r3/r6=bucket chain, r1=next&~1, r0=[bucket]==r3, T=0 (shlr+shll pair), [r4] stored every iteration |
+| `0x8c05ef44` | `FUN_8c05ef44` | `notes/verifications/0x8c05ef44.json` — 17 oracle steps; fr0=1.0; [r4+28]=fr4 always (bf.s delay slot); r3=0xffffff8f; r1=0xfffffff0; r0=sign-extended final byte; T=fcmp/eq result; byte [r4+4] stored twice per path |
+| `0x8c05f21c` | `FUN_8c05f21c` | `notes/verifications/0x8c05f21c.json` — 28 oracle steps; r4+=12; r1=[r5+40]; r0=[r5+48]; 13 dword stores to r4+12.. in order |
+| `0x8c05f294` | `FUN_8c05f294` | `notes/verifications/0x8c05f294.json` — 3 oracle steps; r4+=4; r0=new r4 (rts delay slot) |
+| `0x8c05a828` | `FUN_8c05a828` | `notes/verifications/0x8c05a828.json` — 238 oracle steps; builds 4x4 float matrix at r4 from lit 2.0f@0x8c05a94c and fr4/fr5/fr6/fr7, transposes in place; final r0=4, r1=4, r2=sp+12, r3=r4+64, r5=16, r6=r4+44, r7=r4+56; r10-r14 restored by pops; T=0; fr0=last swapped val, fr1=0, fr2=1/(fr5-fr4), fr3=1, fr4=-fr4*fr2, fr5=fr5-fr4 |
+| `0x8c06be50` | `unknown` | `notes/verifications/0x8c06be50.json` — 13 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
