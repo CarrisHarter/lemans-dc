@@ -1083,6 +1083,10 @@ impl Cpu {
                     self.r[n] = self.r[m].rotate_left(16);
                     return Ok(());
                 }
+                0x7 => {                                                     // not Rm,Rn
+                    self.r[n] = !self.r[m];
+                    return Ok(());
+                }
                 0xB => {                                                     // neg Rm,Rn
                     self.r[n] = (self.r[m] as i32).wrapping_neg() as u32;
                     return Ok(());

@@ -550,3 +550,12 @@ fn neg_register_form_negates_rm() {
     let (cpu, _) = run(cpu, mem);
     assert_eq!(cpu.r[3], 0xFFFF_FFFB);
 }
+
+#[test]
+fn not_register_form_inverts_rm() {
+    // 0x8c05d274: `not r5,r0` = 0x6057 -> n=0, m=5.
+    let (mut cpu, mem) = one(0x6057);
+    cpu.r[5] = 0x00FF_00FF;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[0], 0xFF00_FF00);
+}

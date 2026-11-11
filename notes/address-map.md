@@ -199,6 +199,16 @@
 | `0x8c0146bc` | `FUN_8c0146bc (ftrc-based float normalise)` | `notes/verifications/0x8c0146bc.json` — 26 oracle steps; verified positive large-exponent path (fr4=16777216.0): r15 spilled/restored, r2=r15+4, r3=last word, r4=sign bit of fr4, r5=masked exponent, r6=0x80000000, T=tst r3,r6 (1 positive); fr0=fr4; fmov stores land in stack window |
 | `0x8c011d1c` | `FUN_8c011d1c (Horner fr4^2 over table 0x8c1cd040)` | `notes/verifications/0x8c011d1c.json` — 49 oracle steps; BLOCKED: oracle lacks fmov.s @Rm+,FRn (0xf459 hit at 0x8c011d24). Port written: loop target is 0x8c011d26 so fr4 is loaded once pre-loop then carries the accumulator via the bt.s delay slot; r5 ends 0x8c1cd05c, fr4=fr0=acc, fr5=fr4_input^2, T=0 |
 | `0x8c011d3c` | `FUN_8c011d3c (Horner fr4^2 over table 0x8c1cd060)` | `notes/verifications/0x8c011d3c.json` — 51 oracle steps; BLOCKED: oracle lacks fmov.s @Rm+,FRn (0xf559 hit at 0x8c011d44). Port written: 6 iterations, r5 ends 0x8c1cd07c, fr5=fr6=acc, fr0=fr4*acc in rts delay slot, T=0 |
+| `0x8c05ac38` | `FUN_8c05ac38` | `notes/verifications/0x8c05ac38.json` — 3 oracle steps; r0 = double deref [[r4+4]+0x24] via rts delay slot |
+| `0x8c05ad44` | `FUN_8c05ad44` | `notes/verifications/0x8c05ad44.json` — 3 oracle steps; r0 = *0x8c23de10 via literal pool at 0x8c05ad4c + rts delay slot |
+| `0x8c05b2ac` | `FUN_8c05b2ac` | `notes/verifications/0x8c05b2ac.json` — 5 oracle steps; T = ([r4+0x24]==0); null path r0 = [0x8c05b2bc] = 0x40000840 |
+| `0x8c05cb04` | `FUN_8c05cb04` | `notes/verifications/0x8c05cb04.json` — 12 oracle steps; r4 = link addr of matched node, r0 = 0 and T = 1 on every exit, r1 = old [r5+8] only on match |
+| `0x8c05cb24` | `FUN_8c05cb24` | `notes/verifications/0x8c05cb24.json` — 6 oracle steps; prepend: r0 = old head; walk: r0 = last node, r1 = 0; T = 1 on all paths |
+| `0x8c05d274` | `FUN_8c05d274` | `notes/verifications/0x8c05d274.json` — 7 oracle steps; extu.b r6 decides (upper bytes ignored); set: r0 = old|mask; clear: r0 = ~mask, r1 = old&~mask; T = 0/1 |
+| `0x8c05d28c` | `FUN_8c05d28c` | `notes/verifications/0x8c05d28c.json` — 2 oracle steps; none |
+| `0x8c05d3bc` | `FUN_8c05d3bc` | `notes/verifications/0x8c05d3bc.json` — 3 oracle steps; r0 = *0x8c1f72a0 via literal pool at 0x8c05d3c4 + rts delay slot |
+| `0x8c05d60c` | `FUN_8c05d60c` | `notes/verifications/0x8c05d60c.json` — 4 oracle steps; r1 = [r15] dest ptr, r0 = [r4] value; store in rts delay slot |
+| `0x8c05dbfc` | `FUN_8c05dbfc` | `notes/verifications/0x8c05dbfc.json` — 4 oracle steps; r1 = [r5] src, r0 = original r4; store in rts delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
