@@ -818,6 +818,12 @@
 | `0x8c12b4a8` | `FUN_8c12b4a8` | `notes/verifications/0x8c12b4a8.json` — 3 oracle steps; none beyond r0; second deref @(8,r0) in rts delay slot; T untouched |
 | `0x8c12b4b0` | `FUN_8c12b4b0` | `notes/verifications/0x8c12b4b0.json` — 3 oracle steps; none beyond r0; second deref @(4,r0) in rts delay slot; T untouched |
 | `0x8c12b4b8` | `FUN_8c12b4b8` | `notes/verifications/0x8c12b4b8.json` — 36 oracle steps; r5=*r4+32, r4/r3/r1 clobbered (end=base+4*count, r1=4*count), r0 incremented in bf.s delay slot every iteration incl. last, T=1 on both exits; shll2 leaves T alone; header words re-read each iteration |
+| `0x8c10e3c4` | `FUN_8c10e3c4` | `notes/verifications/0x8c10e3c4.json` — 3 oracle steps; r0 = *r4 + 12 |
+| `0x8c10e3cc` | `FUN_8c10e3cc` | `notes/verifications/0x8c10e3cc.json` — 3 oracle steps; r0 = *r4 + 8 |
+| `0x8c10e3d4` | `FUN_8c10e3d4` | `notes/verifications/0x8c10e3d4.json` — 3 oracle steps; r0 = *r4 + 4 |
+| `0x8c10e3dc` | `FUN_8c10e3dc` | `notes/verifications/0x8c10e3dc.json` — 4 oracle steps; r0 = *(u32*)(*r4 + 0x4c) |
+| `0x8c10ef38` | `FUN_8c10ef38` | `notes/verifications/0x8c10ef38.json` — 2 oracle steps; r0 = r4 |
+| `0x8c10efc4` | `FUN_8c10efc4` | `notes/verifications/0x8c10efc4.json` — 4 oracle steps; byte store 0 at r4; r0 = r4 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
