@@ -1,0 +1,5 @@
+{
+  "entry": "0x8c06c854",
+  "regs": { "r4": "0xdeadbeef" },
+  "steps": 20
+}

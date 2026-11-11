@@ -257,6 +257,9 @@
 | `0x8c067f08` | `FUN_8c067f08` | `notes/verifications/0x8c067f08.json` — 4 oracle steps; r0 = 0x9c, r1 = 1 survive; byte store mem[0x9c+r4] = 1 in rts delay slot |
 | `0x8c069260` | `FUN_8c069260` | `notes/verifications/0x8c069260.json` — 4 oracle steps; T = last cmp/gt; r6 = r4 on the fall path; r0 = r5/r6/r4 per path |
 | `0x8c069c74` | `FUN_8c069c74` | `notes/verifications/0x8c069c74.json` — 25 oracle steps; r6 = out+12, r0 = out+8, r1 = out+4, r3 = in+4, r5 = in+8; fr0..fr3 overwritten with scaled values; 4 stores incl. [out+12] in rts delay slot |
+| `0x8c06c854` | `store_arg_to_global` | `notes/verifications/0x8c06c854.json` — store is the rts delay slot; r0 ends as the pool address 0x8c23f438 |
+| `0x8c06caa8` | `advance_arg_12` | `notes/verifications/0x8c06caa8.json` — r4 itself is advanced; r0 is the advanced value |
+| `0x8c06cab4` | `advance_arg_4_store_float` | `notes/verifications/0x8c06cab4.json` — r4 advanced before the delay-slot fmov store |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
