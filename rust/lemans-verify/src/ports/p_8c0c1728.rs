@@ -1,0 +1,10 @@
+//! 0x8c0c1728 — load_field_24_via_36.
+//!
+//! `r0=[r4+36] ; rts ; r0=[r0+24]` — the load is the delay slot.
+
+use sh4_oracle::{Cpu, Memory};
+
+pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
+    cpu.r[0] = mem.read_u32(cpu.r[4] + 36).unwrap_or(0);
+    cpu.r[0] = mem.read_u32(cpu.r[0] + 24).unwrap_or(0); // delay slot of `rts`
+}

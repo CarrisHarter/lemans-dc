@@ -223,6 +223,8 @@
 | `0x8c110b7c` | `FUN_8c110b7c` | `notes/verifications/0x8c110b7c.json` — ok; *r4=*(r4+4)=*(r4+8)=0 (last in rts delay), r1=0, r0=r4 |
 | `0x8c123d9c` | `FUN_8c123d9c` | `notes/verifications/0x8c123d9c.*.json` — both branches; byte r5 clamped to 10 → r4+56, *(r4+60)=0.0f, byte r4+56→r4+57 if byte r4+57 is 0 or >10 |
 | `0x8c124d50` | `FUN_8c124d50` | `notes/verifications/0x8c124d50.json` — ok; *r4 = **r4, *(*r15) = *r4_old in rts delay |
+| `0x8c12b3f8` | `FUN_8c12b3f8` | `notes/verifications/0x8c12b3f8.*.json` — found+miss; linear search r5 in array at (*r4)+32, r0=1/0 |
+| `0x8c12b474` | `FUN_8c12b474` | `notes/verifications/0x8c12b474.json` — ok; same search at (*r4)+44 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -492,6 +494,16 @@
 | `0x8c0c0d74` | `load_float_via_global_36` | `notes/verifications/0x8c0c0d74.json` — verified |
 | `0x8c0c0d84` | `load_float_via_global_28` | `notes/verifications/0x8c0c0d84.json` — verified |
 | `0x8c0b3148` | `FUN_8c0b3148` | `notes/verifications/0x8c0b3148.json` — 224 oracle steps; 9 f32 stores to r4[0..36); path A leaves r0=36, r1=stack[r15+36], r4+=32, r5=r4_orig+28, r6+=32, r2/r3/r7-r13 leftover pointers, T=0; path B (r4==r5||r4==r6) stages 9 results at r15+48..80 then copies to r4, leaves r5=r15+48, T=1; delay-slot fmov fr3,@r4 runs after bra; plain bf has no delay slot |
+| `0x8c0c0d94` | `float_is_zero_via_global` | `notes/verifications/0x8c0c0d94.json` — verified |
+| `0x8c0c0da8` | `store_field_4_via_36` | `notes/verifications/0x8c0c0da8.json` — verified |
+| `0x8c0c0ecc` | `indexed_load_via_36` | `notes/verifications/0x8c0c0ecc.json` — verified |
+| `0x8c0c1288` | `empty_stub_4` | `notes/verifications/0x8c0c1288.json` — verified |
+| `0x8c0c128c` | `empty_stub_5` | `notes/verifications/0x8c0c128c.json` — verified |
+| `0x8c0c1720` | `store_field_24_via_36` | `notes/verifications/0x8c0c1720.json` — verified |
+| `0x8c0c1728` | `load_field_24_via_36` | `notes/verifications/0x8c0c1728.json` — verified |
+| `0x8c0c1730` | `load_byte_28_via_36` | `notes/verifications/0x8c0c1730.json` — verified |
+| `0x8c0c173c` | `store_field_4_via_36_2` | `notes/verifications/0x8c0c173c.json` — verified |
+| `0x8c0c1744` | `load_field_4_via_36` | `notes/verifications/0x8c0c1744.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
