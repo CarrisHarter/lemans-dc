@@ -211,6 +211,7 @@
 | `0x8c0d8ef0` | `FUN_8c0d8ef0` | `notes/verifications/0x8c0d8ef0.*.json` — all 3 branches; bounds-checked table lookup, byte r4+68==1 → **(r4+64), else *(*(r4+64)+r5*4), r0=0 if OOB |
 | `0x8c0e2884` | `FUN_8c0e2884` | `notes/verifications/0x8c0e2884.*.json` — both branches; r0 = 7 if byte r5 != 0 else 2 |
 | `0x8c0e28c0` | `FUN_8c0e28c0` | `notes/verifications/0x8c0e28c0.json` — ok; r0 = *(*[r4+8]+4) + 0x240 in rts delay |
+| `0x8c0e1f3c` | `FUN_8c0e1f3c` | `notes/verifications/0x8c0e1f3c.*.json` — all 3 branches; byte[r4+97] = (byte r5 && byte r4+98) in rts delay |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -451,6 +452,8 @@
 | `0x8c0b4e68` | `scale_two_floats` | `notes/verifications/0x8c0b4e68.json` — verified |
 | `0x8c0b4e80` | `subtract_two_pairs` | `notes/verifications/0x8c0b4e80.json` — verified |
 | `0x8c0b4e98` | `add_two_pairs` | `notes/verifications/0x8c0b4e98.json` — verified |
+| `0x8c082660` | `FUN_8c082660` | `notes/verifications/0x8c082660.json` — 17 oracle steps; writes global float 0x8c264ed0 and string 0x8c264ed8 (leading+trailing space strip), *(r4+0x38), *r5 (mode 4, >1 words); leaves r6=r7=0x8c264ed0 (mode!=4), r3=r4+0x60 or r1-2, r0=r4+0x38 or 1, r4+=0x40 (modes 2/3 only), fpul=wordcount, fr0-fr4 clobbered, T=0 |
+| `0x8c084f0c` | `FUN_8c084f0c` | `notes/verifications/0x8c084f0c.json` — 131 oracle steps; writes 32-byte records into [r4,r5): byte@+0, dwords@+4..+24, word@+28; leaves r1=r6+4, r3=r6+20, r7=dst+20, r0=sext16(src+28), fr0=src dword@+24, T=1 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
