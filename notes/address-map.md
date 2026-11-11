@@ -898,6 +898,14 @@
 | `0x8c159e7c` | `copy_three_words_to_globals` | `notes/verifications/0x8c159e7c.json` — verified |
 | `0x8c15a1d8` | `empty_stub_15` | `notes/verifications/0x8c15a1d8.json` — verified |
 | `0x8c15a27c` | `double_indirect_global` | `notes/verifications/0x8c15a27c.json` — verified |
+| `0x8c163450` | `byte_at_92` | `notes/verifications/0x8c163450.json` — verified |
+| `0x8c163458` | `store_byte_indexed_global` | `notes/verifications/0x8c163458.json` — verified |
+| `0x8c163464` | `load_byte_indexed_global` | `notes/verifications/0x8c163464.json` — verified |
+| `0x8c16436c` | `store_r5_at_20` | `notes/verifications/0x8c16436c.json` — verified |
+| `0x8c164370` | `store_r5_at_28` | `notes/verifications/0x8c164370.json` — verified |
+| `0x8c164374` | `store_r5_at_24` | `notes/verifications/0x8c164374.json` — verified |
+| `0x8c164404` | `store_r5_at_48` | `notes/verifications/0x8c164404.json` — verified |
+| `0x8c164408` | `store_indexed_at_32` | `notes/verifications/0x8c164408.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
