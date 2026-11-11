@@ -1336,6 +1336,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c231720` | `quant_table_build` | `notes/verifications/0x8c231720.json` — 2322 oracle steps; builds 128-entry ftrc(t*255) table at 0x8c2c8850 from the f32 table at r4 (read descending), sets bit 2 of [0x8c2c8a50]; r4 is a caller-provided table (callers at 0x8c092716/0x8c0a8fde) |
 | `0x8c232e40` | `masked_slot_init` | `notes/verifications/0x8c232e40.json` — 44 oracle steps; IMASK-masked slot init writing r5/r6/0/r4 at offsets 0/12/4/8 of slot r4 (stride 16) at 0x8c2c8b08+48 |
 | `0x8c236480` | `cond_imask_set` | `notes/verifications/0x8c236480*.json` — both branches (17/7 oracle steps); when [0x8c2c8b08+4] is zero sets IMASK from [0x8c2c8b08+8] and returns 0, else returns 0xeeee; both returns via rts delay slot `mov r5,r0` |
+| `0x8c236e60` | `desc_count_fill` | `notes/verifications/0x8c236e60*.json` — 2 seeds (62/32 oracle steps); fills [r4+4..28] with paired list lengths (next at +8, except +4 for the [68] list) and copied descriptor words |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
