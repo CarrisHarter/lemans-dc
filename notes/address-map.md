@@ -317,6 +317,8 @@
 | `0x8c07ae60` | `store_three_args_2` | `notes/verifications/0x8c07ae60.json` — verified |
 | `0x8c07bffc` | `flag_to_float` | `notes/verifications/0x8c07bffc.json` — verified |
 | `0x8c07a27c` | `init_record` | `notes/verifications/0x8c07a27c.json` — verified |
+| `0x8c07b0c4` | `swap_four_words` | `notes/verifications/0x8c07b0c4.json` — verified |
+| `0x8c07c024` | `float_is_zero_to_byte` | `notes/verifications/0x8c07c024.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
