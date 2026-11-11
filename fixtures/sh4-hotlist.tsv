@@ -1,0 +1,7 @@
+# generated from sh4-hotlist.json; base=0x8c010000 size=0x38
+0x8c010000	function
+0x8c010010	function
+0x8c010028	function
+0x8c010030	function
+0x8c010036	code
+0x8c010020	label	ptr_entry

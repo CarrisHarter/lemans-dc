@@ -1,0 +1,10 @@
+{
+  "seeds": [
+    {"address": "0x8c010000", "kind": "function", "name": "entry"},
+    {"address": "0x8c010010", "kind": "function", "name": "call_via_literal"},
+    {"address": "0x8c010028", "kind": "function", "name": "fpu_probe"},
+    {"address": "0x8c010030", "kind": "function", "name": "store_byte"},
+    {"address": "0x8c010036", "kind": "code", "why": "delay slot after rts"},
+    {"address": "0x8c010020", "kind": "label", "name": "ptr_entry"}
+  ]
+}

@@ -1,0 +1,9 @@
+# Game data never enters version control: the port is local-only under the
+# Atari grant, and every binary here belongs to the rights holders.
+analysis/*.bin
+analysis/data/
+analysis/export/
+work/
+rust/*/target/
+__pycache__/
+*.pyc

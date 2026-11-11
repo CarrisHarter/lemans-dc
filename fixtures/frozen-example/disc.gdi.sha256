@@ -1,0 +1,7 @@
+# baseline frozen 2026-11-11T07:15:34Z
+# source: fixtures/fake-disc-scrambled/flat/disc.gdi
+# region note: Le Mans 24 Hours — Japan release (verify via IP.BIN product number)
+17b175379e7263acdc287567f79aac0982fe4ed812df6e802b4bcbb84d7ff945  disc.gdi
+2a42ca28eb429bd56b07dea2293db3db180e700ab1502402e6c9c45437f2a5da  track01.bin
+f0fa6132b393d392e7dccb2be82a032f08aab4309252bbaa601f17ecde5af940  track03.bin
+2a42ca28eb429bd56b07dea2293db3db180e700ab1502402e6c9c45437f2a5da  track02.raw

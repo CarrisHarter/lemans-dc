@@ -1,0 +1,16 @@
+[package]
+name = "sh4-oracle"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal SH-4 interpreter used as a behavioural oracle for a verified Rust port"
+
+[lib]
+name = "sh4_oracle"
+path = "src/lib.rs"
+
+[[bin]]
+name = "sh4-oracle"
+path = "src/main.rs"
+
+[profile.release]
+debug = true

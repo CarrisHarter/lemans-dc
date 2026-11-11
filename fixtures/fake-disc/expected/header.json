@@ -1,0 +1,43 @@
+{
+  "source_iso": "/home/holden/Projects/lemans-dc/work/unpacked/disc-track3.iso",
+  "iso_sha256": "d8f77b234612c2999a7b0afbccc2211cdeb475c2ed6f4954bb72d25b7564caf5",
+  "boot_entry": "1ST_READ.BIN",
+  "boot_extent_lba": 20,
+  "boot_size": 1022,
+  "boot_sha256": "d8268816f8e8d8987437c56312b3498e664700e8a4660c372454fe33b4b3c147",
+  "header": {
+    "magic": "SEGA SEGAKATANA",
+    "magic_ok": true,
+    "maker_id": "SEGA ENTERPRISES",
+    "device_info": "0000 CD-ROM1/1",
+    "area_symbols": "E",
+    "peripherals": "00000000",
+    "product_number": "T-9707N",
+    "version": "V1.000",
+    "release_date": "20010329",
+    "boot_filename": "1ST_READ.BIN",
+    "company": "SEGA ENTERPRISES",
+    "title": "LE MANS 24 HOURS"
+  },
+  "ip_header": {
+    "magic": "SEGA SEGAKATANA",
+    "magic_ok": true,
+    "maker_id": "SEGA ENTERPRISES",
+    "device_info": "0000 CD-ROM1/1",
+    "area_symbols": "E",
+    "peripherals": "00000000",
+    "product_number": "T-9707N",
+    "version": "V1.000",
+    "release_date": "20010329",
+    "boot_filename": "1ST_READ.BIN",
+    "company": "SEGA ENTERPRISES",
+    "title": "LE MANS 24 HOURS"
+  },
+  "shannon_entropy_bits_per_byte": 1.226,
+  "scrambled": false,
+  "load_base": "0x8c010000",
+  "entry_point_guess": "0x8c010100",
+  "notes": [
+    "Katana magic present. The 0x00-0xFF region is the bootstrap header, not code; map the file at load_base and use the reported entry."
+  ]
+}

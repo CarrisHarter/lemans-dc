@@ -1,0 +1,31 @@
+{
+  "source_iso": "/home/holden/Projects/lemans-dc/work/unpacked/Test Drive Le Mans (USA) (En,Fr,Es)-track03.iso",
+  "iso_sha256": "9389f04c2c955f5c9068d34aa313137837d1a29d394a87a873b4879acc8334f3",
+  "boot_entry": "1ST_READ.BIN",
+  "boot_extent_lba": 548947,
+  "boot_size": 108376,
+  "boot_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "descrambled_by_katana_permutation": false,
+  "header": {
+    "magic": "",
+    "magic_ok": false,
+    "maker_id": "",
+    "device_info": "",
+    "area_symbols": "",
+    "peripherals": "",
+    "product_number": "",
+    "version": "",
+    "release_date": "",
+    "boot_filename": "",
+    "company": "",
+    "title": ""
+  },
+  "ip_header": null,
+  "shannon_entropy_bits_per_byte": 0.0,
+  "scrambled": true,
+  "load_base": "0x8c010000",
+  "entry_point_guess": "0x8c010100",
+  "notes": [
+    "No Katana magic at offset 0. Descramble before analysis; do not map this file as SH-4 code yet."
+  ]
+}

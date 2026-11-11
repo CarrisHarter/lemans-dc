@@ -1,0 +1,223 @@
+diff --git i/docs/providers/raw-binary.md w/docs/providers/raw-binary.md
+index fd7ccc0..7d9228a 100644
+--- i/docs/providers/raw-binary.md
++++ w/docs/providers/raw-binary.md
+@@ -32,14 +32,14 @@ The example maps a 32-bit ARM-state image at `0x8000`. For `arm`, decoding
+ starts at the entry in ARM (A32) state, so Thumb-only images, including Cortex-M
+ firmware, are not supported. See [Limitations](#limitations).
+ 
+-`architecture` is one of `x86`, `x86_64`, `arm`, `arm64`, `6502`, or `m68k`. `entry_point` is a
++`architecture` is one of `x86`, `x86_64`, `arm`, `arm64`, `6502`, `m68k`, or `sh4`. `entry_point` is a
+ hexadecimal address of the form `0x…`. The complete file is mapped starting at
+ that address, and Ghidra seeds an `entry` function there before auto-analysis.
+-ARM and AArch64 entries must be 4-byte aligned; m68k entries must be 2-byte
+-aligned; x86 and 6502 entries may be byte-aligned.
++ARM and AArch64 entries must be 4-byte aligned; m68k and SH-4 entries must be
++2-byte aligned; x86 and 6502 entries may be byte-aligned.
+ For 6502, the entry and complete mapped file must fit within `0x0000..0xffff`;
+ images that cross the 16-bit boundary are rejected before provider startup.
+-For m68k, the mapping must fit within `0x0..0xffffffff`.
++For m68k and SH-4, the mapping must fit within `0x0..0xffffffff`.
+ `open_binary` and an open `binary_session` return the canonical `entry_point`
+ for raw targets so callers can verify the selected mapping directly.
+ Omitted `format` keeps header-based detection; architecture and entry without
+@@ -57,6 +57,12 @@ m68k is big-endian and the others are little-endian.
+ | arm64        | `AARCH64:LE:64:v8A`   | `default`        |
+ | 6502         | `6502:LE:16:default`  | `default`        |
+ | m68k         | `68000:BE:32:default` | `default`        |
++| sh4          | `SuperH4:LE:32:default` | `default`      |
++
++`sh4` selects Ghidra's SuperH4 processor module (SH-4/SH-4a), which Ghidra 12.x
++ships separately from its `SuperH` module. The older `SuperH:LE:32:SH-4`
++spelling no longer exists, and `SuperH` holds big-endian SH-1/SH-2/SH-2A only;
++big-endian SH-4 (`SuperH4:BE:32:default`) is not part of this lane.
+ 
+ Compiler specifications select analysis conventions; they do not identify the
+ original compiler or ABI of a headerless target. Ghidra's x86 languages do not
+@@ -86,6 +92,22 @@ applications/DLLs and explicitly selected raw 6502 images. Other raw CPU familie
+ remain outside the Windows boundary. Native path admission, private DACLs, Job
+ Object ownership, immutable snapshots, and the no-mutation policy still apply.
+ 
++## SuperH-4 (Dreamcast)
++
++```bash
++rea inspect /absolute/path/to/1ST_READ.BIN --target-format raw-binary --architecture sh4 --entry-point 0x8C010000 --provider ghidra --json
++rea function /absolute/path/to/1ST_READ.BIN 0x8C010000 --target-format raw-binary --architecture sh4 --entry-point 0x8C010000 --provider ghidra --json
++```
++
++Select only headerless little-endian SH-4 code with a known, even entry. A
++Dreamcast `1ST_READ.BIN` is a good fit once it has been descrambled: the Katana
++bootstrap header at file offset 0 is not code, so map the whole file at its load
++address and pass the real code entry (commonly `0x8C010000 + 0x100`).
++Ghidra's default auto-analysis does not discover functions in a raw image, so
++name the entry and use the returned inventory plus `search_procedures` to seed
++computed targets. Katana binaries carry no ELF header, no symbol table and no
++linker map, so call targets reached only through computed jumps remain unknown.
++
+ ## NMOS 6502
+ 
+ ```bash
+diff --git i/src/domain/binaryTargetTypes.ts w/src/domain/binaryTargetTypes.ts
+index 755912e..7153620 100644
+--- i/src/domain/binaryTargetTypes.ts
++++ w/src/domain/binaryTargetTypes.ts
+@@ -13,6 +13,7 @@ export const BINARY_ARCHITECTURES = [
+   "riscv",
+   "powerpc",
+   "m68k",
++  "sh4",
+   "hexagon",
+ ] as const;
+ export type BinaryArchitecture = (typeof BINARY_ARCHITECTURES)[number];
+@@ -24,6 +25,7 @@ export type BinaryArchitecture = (typeof BINARY_ARCHITECTURES)[number];
+ export const RAW_ONLY_ARCHITECTURES = [
+   "6502",
+   "m68k",
++  "sh4",
+ ] as const satisfies readonly BinaryArchitecture[];
+ export type RawOnlyArchitecture = (typeof RAW_ONLY_ARCHITECTURES)[number];
+ 
+diff --git i/src/domain/rawBinary.test.ts w/src/domain/rawBinary.test.ts
+index 708cb72..0768e1c 100644
+--- i/src/domain/rawBinary.test.ts
++++ w/src/domain/rawBinary.test.ts
+@@ -226,6 +226,51 @@ describe("m68k raw-binary admission", () => {
+   );
+ });
+ 
++describe("SuperH-4 raw-binary admission", () => {
++  it("admits an even Dreamcast entry at the Katana load base", () => {
++    const result = admitRawBinary({
++      architecture: "sh4",
++      entryPoint: "0x8C010100",
++      fileBytes: 0x40000,
++    });
++    if (!result.ok) throw new Error(result.error.reason);
++    expect(result.value).toEqual({
++      architecture: "sh4",
++      entryPoint: "0x8c010100",
++      entryPointSource: "0x8C010100",
++    });
++  });
++  it.each(["0x8c010101", "0x1001"])(
++    "rejects the odd sh4 entry %s",
++    (entryPoint) => {
++      expect(
++        admitRawBinary({ architecture: "sh4", entryPoint, fileBytes: 2 }),
++      ).toEqual({
++        ok: false,
++        error: {
++          reason: `raw-binary sh4 entry_point ${entryPoint} must be 2-byte aligned`,
++          constraint: "load_selection_rejected",
++        },
++      });
++    },
++  );
++  it("rejects an sh4 mapping that exceeds 32 bits", () => {
++    expect(
++      admitRawBinary({
++        architecture: "sh4",
++        entryPoint: "0xfffffffe",
++        fileBytes: 4,
++      }),
++    ).toEqual({
++      ok: false,
++      error: {
++        reason: "raw-binary mapping from 0xfffffffe must fit in the sh4 address width",
++        constraint: "load_selection_rejected",
++      },
++    });
++  });
++});
++
+ describe("raw-binary selection pairing", () => {
+   it("requires architecture and entry with format=raw-binary", () => {
+     expect(rawBinarySelectionError({ format: "raw-binary" })).toBe(
+diff --git i/src/domain/rawBinary.ts w/src/domain/rawBinary.ts
+index 8a23541..61c0cdf 100644
+--- i/src/domain/rawBinary.ts
++++ w/src/domain/rawBinary.ts
+@@ -16,6 +16,7 @@ export const BINARY_ARCHITECTURES = [
+   "arm64",
+   "6502",
+   "m68k",
++  "sh4",
+ ] as const satisfies readonly BinaryArchitecture[];
+ 
+ /** Provider-neutral CPU family for a caller-supplied raw-binary load. */
+@@ -82,7 +83,8 @@ const addressWidth = (architecture: BinaryArchitecture): bigint =>
+     ? 0xffffn
+     : architecture === "x86" ||
+         architecture === "arm" ||
+-        architecture === "m68k"
++        architecture === "m68k" ||
++        architecture === "sh4"
+       ? 0xffffffffn
+       : 0xffffffffffffffffn;
+ 
+@@ -96,7 +98,7 @@ export const admitRawBinary = (input: {
+   if (!architecture.success)
+     return err({
+       reason:
+-        "raw-binary format requires architecture (x86, x86_64, arm, arm64, 6502, or m68k)",
++        "raw-binary format requires architecture (x86, x86_64, arm, arm64, 6502, m68k, or sh4)",
+       constraint: "load_selection_rejected",
+     });
+   if (typeof input.entryPoint !== "string")
+@@ -125,6 +127,12 @@ export const admitRawBinary = (input: {
+       reason: `raw-binary m68k entry_point ${entry.value.canonical} must be 2-byte aligned`,
+       constraint: "load_selection_rejected",
+     });
++  // SH-4 fetches 16-bit instruction words, so an odd entry cannot be decoded.
++  if (architecture.data === "sh4" && entry.value.value % 2n !== 0n)
++    return err({
++      reason: `raw-binary sh4 entry_point ${entry.value.canonical} must be 2-byte aligned`,
++      constraint: "load_selection_rejected",
++    });
+   const length = validateRawBinaryLength(input.fileBytes);
+   if (!length.ok)
+     return err({
+diff --git i/src/ghidra/GhidraProvider.ts w/src/ghidra/GhidraProvider.ts
+index 15d25ef..dbd533c 100644
+--- i/src/ghidra/GhidraProvider.ts
++++ w/src/ghidra/GhidraProvider.ts
+@@ -102,6 +102,7 @@ const SUPPORTED_ARCHITECTURES = new Set<BinaryArchitecture>([
+   "riscv",
+   "powerpc",
+   "m68k",
++  "sh4",
+   "hexagon",
+ ]);
+ 
+diff --git i/src/ghidra/GhidraProviderClient.ts w/src/ghidra/GhidraProviderClient.ts
+index 0e2e1e3..254568e 100644
+--- i/src/ghidra/GhidraProviderClient.ts
++++ w/src/ghidra/GhidraProviderClient.ts
+@@ -551,7 +551,7 @@ export const createGhidraProviderClient = (input: {
+     ...(target.format === "raw-binary"
+       ? [
+           "Headerless raw-binary analysis uses the caller-supplied architecture and entry address; file offset 0 is mapped at that address. Headers are not discovered from file bytes.",
+-          "Little-endian generic Ghidra languages are used for x86, x86_64, arm, arm64, and NMOS 6502; m68k uses the big-endian 68000 default language, which decodes the 68040 superset. Big-endian ARM, Thumb-only, Cortex-M, 65C02, 65816, separate 68020/68030/CPU32/ColdFire variants, and other processor variants are unsupported in this increment.",
++          "Little-endian generic Ghidra languages are used for x86, x86_64, arm, arm64, NMOS 6502 and SuperH-4 (sh4, Ghidra's SuperH4 processor module); m68k uses the big-endian 68000 default language, which decodes the 68040 superset. Big-endian ARM, Thumb-only, Cortex-M, 65C02, 65816, separate 68020/68030/CPU32/ColdFire variants, big-endian SH-4, and other processor variants are unsupported in this increment.",
+           "Static analysis does not emulate reset vectors, memory-mapped I/O, or firmware boot sequences.",
+         ]
+       : []),
+diff --git i/src/ghidra/GhidraRawBinaryLanguage.ts w/src/ghidra/GhidraRawBinaryLanguage.ts
+index e29b747..b8fa947 100644
+--- i/src/ghidra/GhidraRawBinaryLanguage.ts
++++ w/src/ghidra/GhidraRawBinaryLanguage.ts
+@@ -56,5 +56,14 @@ export const ghidraRawBinaryLanguage = (
+         compilerSpecId: "default",
+         defaultAddressSpace: "ram",
+       };
++    case "sh4":
++      // Ghidra 12.x ships SH-4/SH-4a in its own SuperH4 processor module; the
++      // older `SuperH:LE:32:SH-4` spelling no longer exists, and the `SuperH`
++      // module now holds big-endian SH-1/SH-2/SH-2A only.
++      return {
++        languageId: "SuperH4:LE:32:default",
++        compilerSpecId: "default",
++        defaultAddressSpace: "ram",
++      };
+   }
+ };
