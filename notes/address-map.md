@@ -529,6 +529,11 @@
 | `0x8c0cf6bc` | `follow_pointer_and_store_back_3` | `notes/verifications/0x8c0cf6bc.json` — verified |
 | `0x8c0cf6c8` | `load_double_indirect_store_to_stack_4` | `notes/verifications/0x8c0cf6c8.json` — verified |
 | `0x8c0cf8dc` | `load_store_to_stack_4` | `notes/verifications/0x8c0cf8dc.json` — verified |
+| `0x8c0d0aac` | `advance_40_2` | `notes/verifications/0x8c0d0aac.json` — verified |
+| `0x8c0d0ab4` | `advance_28_2` | `notes/verifications/0x8c0d0ab4.json` — verified |
+| `0x8c0d1288` | `indexed_pool_load` | `notes/verifications/0x8c0d1288.json` — verified |
+| `0x8c0d1294` | `indexed_pool_load_2` | `notes/verifications/0x8c0d1294.json` — verified |
+| `0x8c0d1360` | `offset_table_entry` | `notes/verifications/0x8c0d1360.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
