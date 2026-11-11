@@ -51,6 +51,9 @@ def main(argv):
     if "--count" in argv:
         count = int(argv[argv.index("--count") + 1])
     want_all = "--all" in argv
+    skip = set()
+    if "--skip" in argv:
+        skip = {int(a, 16) for a in argv[argv.index("--skip") + 1].split(",") if a}
 
     impl = implemented()
     done = ported()
@@ -60,7 +63,7 @@ def main(argv):
 
     picked = []
     for row in callgraph.classify(ins, funcs):
-        if not row["leaf"] or row["address"] in done:
+        if not row["leaf"] or row["address"] in done or row["address"] in skip:
             continue
         lo = callgraph.bisect.bisect_left(pcs, row["address"])
         hi = callgraph.bisect.bisect_right(pcs, row["end"])

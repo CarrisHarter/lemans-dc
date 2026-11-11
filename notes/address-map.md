@@ -17,6 +17,14 @@
 | `0x8c01013c` | `FUN_8c01013c` | `notes/verifications/0x8c01013c.json` — 2 oracle steps; r0=0 |
 | `0x8c010140` | `FUN_8c010140` | `notes/verifications/0x8c010140.json` — 2 oracle steps; r0=0 |
 | `0x8c010144` | `FUN_8c010144` | `notes/verifications/0x8c010144.json` — 2 oracle steps; none |
+| `0x8c010148` | `FUN_8c010148` | `notes/verifications/0x8c010148.json` — 4 oracle steps; store none; r0 = *ptr+1 |
+| `0x8c010154` | `FUN_8c010154` | `notes/verifications/0x8c010154.json` — 4 oracle steps; none; r0 = table[idx], r4 <<= 2 |
+| `0x8c010178` | `FUN_8c010178` | `notes/verifications/0x8c010178.json` — 2 oracle steps; none |
+| `0x8c01017c` | `FUN_8c01017c` | `notes/verifications/0x8c01017c.json` — 2 oracle steps; none |
+| `0x8c010438` | `FUN_8c010438` | `notes/verifications/0x8c010438.json` — 7 oracle steps; store at [slot]; r5/r6/r2 leftovers; T per path |
+| `0x8c01044c` | `FUN_8c01044c` | `notes/verifications/0x8c01044c.json` — 2 oracle steps; none |
+| `0x8c010d6c` | `FUN_8c010d6c` | `notes/verifications/0x8c010d6c.json` — 6 oracle steps; r1 = table base; r0 = byte&7 |
+| `0x8c010d7c` | `FUN_8c010d7c` | `notes/verifications/0x8c010d7c.json` — 6 oracle steps; r1 = table base; r0 = byte&0x40 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

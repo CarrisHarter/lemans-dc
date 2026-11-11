@@ -1,0 +1,5 @@
+{
+  "entry": "0x8c010178",
+  "regs": { "r0": "0xcafebabe" },
+  "steps": 4
+}
