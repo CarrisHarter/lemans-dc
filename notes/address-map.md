@@ -382,6 +382,8 @@
 | `0x8c1cb4d0` | `FUN_8c1cb4d0` | `notes/verifications/0x8c1cb4d0.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c216a48` | `FUN_8c216a48` | `notes/verifications/0x8c216a48.json` — ok; r0=0x8c23c010, bare rts;nop |
 | `0x8c216d44` | `FUN_8c216d44` | `notes/verifications/0x8c216d44.json` — ok; 'a'..'z' → r4-=32, r0=r4 in rts delay |
+| `0x8c217374` | `FUN_8c217374` | `notes/verifications/0x8c217374.json` — ok; *r4=0, *(r4+4)=r5, *(r4+8)=0, r0=r4 in rts delay |
+| `0x8c217e60` | `FUN_8c217e60` | `notes/verifications/0x8c217e60.json` — ok; *(*(0x8c23d428)+48)=r4, r0=1 in rts delay |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -1063,6 +1065,10 @@
 | `0x8c1bcc04` | `sum_two_fields` | `notes/verifications/0x8c1bcc04.json` — verified |
 | `0x8c1af68c` | `copy_16_bytes_in_32_byte_strides` | `notes/verifications/0x8c1af68c.json` — verified |
 | `0x8c1a3a70` | `lookup_pair_by_index` | `notes/verifications/0x8c1a3a70.json` — verified |
+| `0x8c19f538` | `set_mode_and_clear` | `notes/verifications/0x8c19f538.json` — verified |
+| `0x8c1cc338` | `conditional_global_byte` | `notes/verifications/0x8c1cc338.json` — verified |
+| `0x8c1cc35c` | `conditional_global_byte_2` | `notes/verifications/0x8c1cc35c.json` — verified |
+| `0x8c1cc380` | `clear_and_copy_flag` | `notes/verifications/0x8c1cc380.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
