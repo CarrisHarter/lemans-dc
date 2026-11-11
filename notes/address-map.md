@@ -412,6 +412,7 @@
 | `0x8c0b4860` | `copy_four_words_at_4` | `notes/verifications/0x8c0b4860.json` — verified |
 | `0x8c0b487c` | `copy_three_words_at_20` | `notes/verifications/0x8c0b487c.json` — verified |
 | `0x8c0b4894` | `advance_32_load_float` | `notes/verifications/0x8c0b4894.json` — verified |
+| `0x8c0b48c8` | `copy_three_floats` | `notes/verifications/0x8c0b48c8.json` — r4 advanced by 28, third store in the delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
