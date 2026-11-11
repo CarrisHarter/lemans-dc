@@ -1128,6 +1128,16 @@
 | `0x8c21b10a` | `store_two_fields_10e0` | `notes/verifications/0x8c21b10a.json` — 8 oracle steps |
 | `0x8c21b11a` | `load_field_10e4` | `notes/verifications/0x8c21b11a.json` — 5 oracle steps |
 | `0x8c21b12e` | `store_field_10dc` | `notes/verifications/0x8c21b12e.json` — 5 oracle steps |
+| `0x8c187560` | `pass` | `notes/verifications/0x8c187560.json` — 124 oracle steps; 124 |
+| `0x8c18787c` | `pass` | `notes/verifications/0x8c18787c.json` — 69 oracle steps; 69 |
+| `0x8c18b8c8` | `pass` | `notes/verifications/0x8c18b8c8.json` — 28 oracle steps; 28 |
+| `0x8c18c594` | `pass` | `notes/verifications/0x8c18c594.json` — 24 oracle steps; 24 |
+| `0x8c18d28c` | `pass` | `notes/verifications/0x8c18d28c.json` — 60 oracle steps; 60 |
+| `0x8c18d9d4` | `pass` | `notes/verifications/0x8c18d9d4.json` — 44 oracle steps; 44 |
+| `0x8c18da2c` | `pass` | `notes/verifications/0x8c18da2c.json` — 58 oracle steps; 58 |
+| `0x8c18db34` | `pass` | `notes/verifications/0x8c18db34.json` — 40 oracle steps; 40 |
+| `0x8c190b08` | `pass` | `notes/verifications/0x8c190b08.json` — 22 oracle steps; 22 |
+| `0x8c193ac4` | `pass` | `notes/verifications/0x8c193ac4.json` — 66 oracle steps; 66 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
