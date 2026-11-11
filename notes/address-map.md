@@ -442,6 +442,10 @@
 | `0x8c08c05c` | `FUN_8c08c05c` | `notes/verifications/0x8c08c05c.json` — 6 oracle steps; fr0=0.0 (fldi0); r0=r4 via rts delay |
 | `0x8c090ac0` | `FUN_8c090ac0` | `notes/verifications/0x8c090ac0.json` — 45 oracle steps; r5=src+32, r6=src+20, r7=dst+20, r3=*(src+20), fr0=f32(src+32); the bf's are undelayed (0x8B) so on no-wrap r0=*(r4+4) unchanged and T=last cmp/eq |
 | `0x8c090b30` | `FUN_8c090b30` | `notes/verifications/0x8c090b30.json` — 4 oracle steps; store to p[2] happens in rts delay slot |
+| `0x8c0b4e54` | `dot2` | `notes/verifications/0x8c0b4e54.json` — verified |
+| `0x8c0b4e68` | `scale_two_floats` | `notes/verifications/0x8c0b4e68.json` — verified |
+| `0x8c0b4e80` | `subtract_two_pairs` | `notes/verifications/0x8c0b4e80.json` — verified |
+| `0x8c0b4e98` | `add_two_pairs` | `notes/verifications/0x8c0b4e98.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
