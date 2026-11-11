@@ -1325,6 +1325,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c010450` | `masked_list_sum_max` | `notes/verifications/0x8c010450*.json` — 3 seeds (67/47/52 oracle steps); raises IMASK to 15, walks circular list summing (count-1) and tracking max, both ×64; `bt.s` delay slot `add r0,r14` runs on both paths so the sum is unconditional |
 | `0x8c0612f8` | `set_imask` | `notes/verifications/0x8c0612f8*.json` — 2 seeds (11/11 oracle steps); SR IMASK = r4 & 15, other bits preserved |
 | `0x8c0e7218` | `set_imask_2` | `notes/verifications/0x8c0e7218.json` — 11 oracle steps; twin of 0x8c0612f8 |
+| `0x8c1739f4` | `raise_imask_unless_high` | `notes/verifications/0x8c1739f4*.json` — both branches (22/15 oracle steps); raises IMASK to 15 then lowers to r4 unless old IMASK already >= r4; SR seeds use the top-level `sr` key, not `regs` |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
