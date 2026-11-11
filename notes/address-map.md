@@ -348,6 +348,12 @@
 | `0x8c074cf4` | `FUN_8c074cf4` | `notes/verifications/0x8c074cf4.json` — 39 oracle steps; same as 0x8c074ca0 plus gate byte: r0=extu.b(*(0x108+p)) and T=1 when gate==0 (bt.s exit); mask at +0x14 |
 | `0x8c074d58` | `FUN_8c074d58` | `notes/verifications/0x8c074d58.json` — 39 oracle steps; same as 0x8c074cf4; mask at +0x18 |
 | `0x8c0753fc` | `FUN_8c0753fc` | `notes/verifications/0x8c0753fc.json` — 117 oracle steps; *param=0 then ++ per match; slots written at param+0xf8; r4=param+0xf8 if fill loop runs else param; r3=final count; r5=r7=4; r6=4*iterations (bt.s delay slot runs on last pass); r13/r14 restored from stack; r1=5; r0=last fill idx*4; T from cmp/hi |
+| `0x8c07fd6c` | `advance_12` | `notes/verifications/0x8c07fd6c.json` — verified |
+| `0x8c08087c` | `init_iterator` | `notes/verifications/0x8c08087c.json` — verified |
+| `0x8c081fd0` | `set_mode_byte` | `notes/verifications/0x8c081fd0.json` — verified |
+| `0x8c082054` | `init_struct` | `notes/verifications/0x8c082054.json` — verified |
+| `0x8c082210` | `copy_four_words` | `notes/verifications/0x8c082210.json` — verified |
+| `0x8c082224` | `advance_24_store_float` | `notes/verifications/0x8c082224.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
