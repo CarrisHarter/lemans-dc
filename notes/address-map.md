@@ -299,6 +299,7 @@
 | `0x8c104a64` | `FUN_8c104a64` | `notes/verifications/0x8c104a64.json` — ok; 4 floats r5→r4, r5+=12, r0=r4, r1=r4+4, fr0=last |
 | `0x8c10eae0` | `FUN_8c10eae0` | `notes/verifications/0x8c10eae0.json` — ok; byte-compare loop like 0x8c05e038 |
 | `0x8c10eb04` | `FUN_8c10eb04` | `notes/verifications/0x8c10eb04.json` — ok; struct init, pool 0x8c2049b8 single deref |
+| `0x8c10ec98` | `FUN_8c10ec98` | `notes/verifications/0x8c10ec98.json` — ok; struct init, pool 0x8c2049a0 single deref |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -779,6 +780,16 @@
 | `0x8c0e5988` | `FUN_8c0e5988` | `notes/verifications/0x8c0e5988.json` — 160 oracle steps; r0/r1 are clip flags set by delay slots (mov #1,r0 at 0x8c0e59b4/0x8c0e5a08, mov r1,r0 at 0x8c0e59c6/0x8c0e59e8/0x8c0e59fa, mov #1,r1 at 0x8c0e5a56); r0 ends as the queue pointer 0x8c27ad10 and r1 as r3+4 on the output path; r3/r4 are queue head/cursor; fr0-fr15 all churn (fr9/fr6 negated twice, fr13/fr14 restored from stack); T ends as last fcmp/gt or tst; every bf.s/bra delay slot (fmov fr14,fr1 / fmov fr13,fr2 / fmov fr0,fr1 / fadd fr3,fr0 / fneg fr9 / fmul fr2,fr10) runs per branch-taken rules; pref @r3/@r1 are no-ops; 12 queue stores incl. fr9 stored twice and one store at the un-incremented head |
 | `0x8c215fc4` | `word_copy_rounded` | `notes/verifications/0x8c215fc4.json` — verified |
 | `0x8c215fe4` | `byte_copy_do_while` | `notes/verifications/0x8c215fe4.json` — verified |
+| `0x8c12e280` | `load_pool_constant_7` | `notes/verifications/0x8c12e280.json` — verified |
+| `0x8c12e424` | `load_pool_constant_8` | `notes/verifications/0x8c12e424.json` — verified |
+| `0x8c12e60c` | `load_pool_constant_9` | `notes/verifications/0x8c12e60c.json` — verified |
+| `0x8c12e86c` | `load_pool_constant_10` | `notes/verifications/0x8c12e86c.json` — verified |
+| `0x8c12ea64` | `load_pool_constant_11` | `notes/verifications/0x8c12ea64.json` — verified |
+| `0x8c12eb68` | `load_pool_constant_12` | `notes/verifications/0x8c12eb68.json` — verified |
+| `0x8c12ecc0` | `load_pool_constant_13` | `notes/verifications/0x8c12ecc0.json` — verified |
+| `0x8c12ee78` | `load_pool_constant_14` | `notes/verifications/0x8c12ee78.json` — verified |
+| `0x8c12f028` | `load_pool_constant_15` | `notes/verifications/0x8c12f028.json` — verified |
+| `0x8c13edcc` | `store_arg_return_self_8` | `notes/verifications/0x8c13edcc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
