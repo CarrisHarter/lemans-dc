@@ -1,0 +1,5 @@
+{
+  "entry": "0x8c21a036",
+  "memory": [ { "addr": "0x8c21a0b4", "hex": "cc8d2b8c" }, { "addr": "0x8c2b8dcc", "hex": "78563412" } ],
+  "steps": 20
+}
