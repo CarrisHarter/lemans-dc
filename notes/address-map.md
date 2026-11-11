@@ -1119,6 +1119,15 @@
 | `0x8c173a20` | `FUN_8c173a20` | `notes/verifications/0x8c173a20.json` — 22 oracle steps; no stores (ocbp/ocbi are cache hints); r1/r5 advanced by 32-step delay slots, r2=0xffffffe0, T=1 |
 | `0x8c173a6c` | `FUN_8c173a6c` | `notes/verifications/0x8c173a6c.json` — 24 oracle steps; no stores (ocbwb cache hint); r4 mutated to (r4+r5-1)&~31, r2 advances past it, r1=0xffffffe0, T=1 |
 | `0x8c178e54` | `FUN_8c178e54` | `notes/verifications/0x8c178e54.json` — 29 oracle steps; stores: 3 u32 from [r5] at r4+0/4/8, f32 fr4-fr8 at r4+12..28, r6/r7 at r4+32/36 |
+| `0x8c21b0b6` | `store_field_10d0` | `notes/verifications/0x8c21b0b6.json` — 5 oracle steps |
+| `0x8c21b0c0` | `load_field_10d0` | `notes/verifications/0x8c21b0c0.json` — 5 oracle steps |
+| `0x8c21b0e2` | `store_field_10c8` | `notes/verifications/0x8c21b0e2.json` — 5 oracle steps |
+| `0x8c21b0ec` | `load_field_10c8` | `notes/verifications/0x8c21b0ec.json` — 5 oracle steps |
+| `0x8c21b0f6` | `store_field_10d8` | `notes/verifications/0x8c21b0f6.json` — 5 oracle steps |
+| `0x8c21b100` | `load_field_10d8` | `notes/verifications/0x8c21b100.json` — 5 oracle steps |
+| `0x8c21b10a` | `store_two_fields_10e0` | `notes/verifications/0x8c21b10a.json` — 8 oracle steps |
+| `0x8c21b11a` | `load_field_10e4` | `notes/verifications/0x8c21b11a.json` — 5 oracle steps |
+| `0x8c21b12e` | `store_field_10dc` | `notes/verifications/0x8c21b12e.json` — 5 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
