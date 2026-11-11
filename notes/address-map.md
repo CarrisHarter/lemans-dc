@@ -979,6 +979,12 @@
 | `0x8c17fffc` | `float_at_64` | `notes/verifications/0x8c17fffc.json` — verified |
 | `0x8c180004` | `float_at_48` | `notes/verifications/0x8c180004.json` — verified |
 | `0x8c182648` | `zero_byte_return_self` | `notes/verifications/0x8c182648.json` — verified |
+| `0x8c183198` | `compare_tables_at_index` | `notes/verifications/0x8c183198.json` — verified |
+| `0x8c18320c` | `compare_table_prefix` | `notes/verifications/0x8c18320c.json` — verified |
+| `0x8c18629c` | `copy_three_words_and_clear_byte` | `notes/verifications/0x8c18629c.json` — verified |
+| `0x8c18ca20` | `advance_36_return_self` | `notes/verifications/0x8c18ca20.json` — verified |
+| `0x8c18ddf0` | `pool_constant` | `notes/verifications/0x8c18ddf0.json` — verified |
+| `0x8c18e010` | `pool_constant_2` | `notes/verifications/0x8c18e010.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
