@@ -1,0 +1,20 @@
+{
+  "address": "0x8c104a64",
+  "spec": "/tmp/lm-join10/notes/specs/0x8c104a64.json",
+  "binary": "/tmp/lm-join10/analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "unknown",
+  "verified_at": "2026-11-11T12:15:27+00:00",
+  "result": "fail",
+  "oracle": {
+    "stop": "halt",
+    "steps": 21
+  },
+  "verifier_output": [
+    "FAIL 0x8c104a64: 4 difference(s)",
+    "  r0: port 0x00000000 != original 0x8c200100",
+    "  r1: port 0x00000000 != original 0x8c200104",
+    "  fr0: port 0x00000000 (0) != original 0x5220202e",
+    "  writes: port 12 entries, original 16 entries"
+  ]
+}
