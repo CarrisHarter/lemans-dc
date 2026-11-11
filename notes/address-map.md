@@ -920,6 +920,15 @@
 | `0x8c165ab0` | `add_through_pointer` | `notes/verifications/0x8c165ab0.json` — verified |
 | `0x8c165abc` | `zero_field` | `notes/verifications/0x8c165abc.json` — verified |
 | `0x8c165c84` | `store_r5_at_0_2` | `notes/verifications/0x8c165c84.json` — verified |
+| `0x8c16ca6c` | `increment_until_nonpositive` | `notes/verifications/0x8c16ca6c.json` — verified |
+| `0x8c16cbb4` | `store_through_stack_pointer` | `notes/verifications/0x8c16cbb4.json` — verified |
+| `0x8c16cbbc` | `store_r5_return_self` | `notes/verifications/0x8c16cbbc.json` — verified |
+| `0x8c16cbc4` | `advance_8_return_self` | `notes/verifications/0x8c16cbc4.json` — verified |
+| `0x8c16d328` | `store_advanced_through_stack_pointer` | `notes/verifications/0x8c16d328.json` — verified |
+| `0x8c16d330` | `copy_word_return_self` | `notes/verifications/0x8c16d330.json` — verified |
+| `0x8c16d338` | `store_field8_through_stack_pointer` | `notes/verifications/0x8c16d338.json` — verified |
+| `0x8c16e438` | `float_through_two_fields` | `notes/verifications/0x8c16e438.json` — verified |
+| `0x8c16eadc` | `store_indexed_through_two_fields` | `notes/verifications/0x8c16eadc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
