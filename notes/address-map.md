@@ -577,6 +577,16 @@
 | `0x8c0d91dc` | `reciprocal_at_120` | `notes/verifications/0x8c0d91dc.json` — verified |
 | `0x8c0bd76c` | `zero_twelve_words` | `notes/verifications/0x8c0bd76c.json` — verified |
 | `0x8c0bd8c8` | `set_mode_or_clear` | `notes/verifications/0x8c0bd8c8.json` — verified |
+| `0x8c0a9030` | `FUN_8c0a9030` | `notes/verifications/0x8c0a9030.json` — 31 oracle steps; r0 keeps DAT_8c0a9070 ptr (0x26c); r1 zeroed; r3=r4+0x254; r5=4th src word; r6=r4+0x250; r7=3rd src word; r14 pushed/popped so seed survives; T untouched |
+| `0x8c0ab08c` | `FUN_8c0ab08c` | `notes/verifications/0x8c0ab08c.json` — 254 oracle steps; r4->field4 stored even when all objects skipped; r0=1 after a store else last [obj+0x28] (or r14 on null); r1=27; r3=1; r6=last array entry; r7=27; T=0 after loop, 1 on early-out |
+| `0x8c0ac3c4` | `FUN_8c0ac3c4` | `notes/verifications/0x8c0ac3c4.json` — 52 oracle steps; r4 itself +=16 on the flag path (final store lands on orig r4+0x10); r0=0x8c0ac430 (flag) or the flag byte (skip); r1=r4+0x10; r3=r4+0x20; r5=r4+0x18; fr0/fr1 keep intermediates; T=last fcmp/gt (flag) or 1 (skip) |
+| `0x8c0ae11c` | `FUN_8c0ae11c` | `notes/verifications/0x8c0ae11c.json` — 115 oracle steps; r0 returns 0; r1=final outer index (mode 1) or 1 (mode 0); r3=table base (mode 1) or last index (mode 0); r6/r7 keep inner counters; r12-r14 pushed/popped; T=0 on every path |
+| `0x8c0ae1a0` | `FUN_8c0ae1a0` | `notes/verifications/0x8c0ae1a0.json` — 117 oracle steps; r0=r1=match count; r1 is zeroed by the bf.s delay slot on every path; r3=final index (mode 1) or r4->count (mode 0); r7=table base; r11-r14 pushed/popped; T=0 |
+| `0x8c0ae228` | `FUN_8c0ae228` | `notes/verifications/0x8c0ae228.json` — 114 oracle steps; r0 returns 0; r1=final index (mode 1) or last loaded u32 (mode 0); r3=table base; r6/r7 inner counters; r12-r14 pushed/popped; T=0 |
+| `0x8c0ae64c` | `FUN_8c0ae64c` | `notes/verifications/0x8c0ae64c.json` — 95 oracle steps; stores [r4+0xc]/[r4+0x10] run on every path (mode not 0/1 stores 999999999/0); r0=last inner byte offset; r1=last entry read; r3/r5=min/max; r6=final index (mode 1) or count (mode 0); r7=last inner counter or count; compares signed; T=0 |
+| `0x8c0ae74c` | `FUN_8c0ae74c` | `notes/verifications/0x8c0ae74c.json` — 62 oracle steps; out pointer is read from [r15] at entry (stack slot), not from r6; r4 is clobbered to the saved mode on every loop iteration; r0=mode; r1=iteration count; r3=table base; r6=count; r7=accumulated offset; T=0 |
+| `0x8c0b2ca0` | `FUN_8c0b2ca0` | `notes/verifications/0x8c0b2ca0.json` — 21 oracle steps; r4/r5 post-incremented to +12; r0=out+8 where out=[r15]; fr0 keeps fr4; fr5/fr6/fr7 keep pairwise differences; pref @r0 is a no-op; T untouched |
+| `0x8c0b2e38` | `FUN_8c0b2e38` | `notes/verifications/0x8c0b2e38.json` — 83 oracle steps; stores land at r4+0,16,32,28,20,24,8,12,4 in that order; r4 ends +4; r0/r1/r3/r5/r6/r7/r14 all keep r4-derived offsets; fr13/fr14/fr15 and r14 pushed/popped so seeds survive; T untouched |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
