@@ -10,6 +10,8 @@ checked exhaustively over every instance in the binary:
                      suffix says which.
   2. displacement  — 0x80/0x81/0x84/0x85 put Rn/Rm in the m field and the
                      4-bit displacement in the low nibble.
+  3. branch target — bra/bsr carry a signed 12-bit displacement; leaving
+                     bit 11 positive sends every backward branch forward.
 
 Usage: tools/decode-check.py [disassembly.asm]
 Exit code 1 on any mismatch.
@@ -33,6 +35,7 @@ def main(argv):
     path = Path(argv[1]) if len(argv) > 1 else ROOT / "analysis/export/disassembly.asm"
     width_checked = width_bad = 0
     disp_checked = disp_bad = 0
+    branch_checked = branch_bad = 0
 
     with path.open(errors="replace") as fh:
         for line in fh:
@@ -55,6 +58,20 @@ def main(argv):
                             print(f"width  {m.group(1)} 0x{op:04x} {mnemonic} "
                                   f"{m.group(4).strip()} (nibble {low:x})")
 
+            if mnemonic in ("bra", "bsr"):
+                pc = int(m.group(1), 16)
+                disp = ((op & 0x0FFF) << 4) & 0xFFFF
+                disp = disp - 0x10000 if disp & 0x8000 else disp
+                target = (pc + 4 + (disp >> 4) * 2) & 0xFFFFFFFF
+                tm = re.search(r"0x([0-9a-f]+)", m.group(4))
+                if tm:
+                    branch_checked += 1
+                    if target != int(tm.group(1), 16):
+                        branch_bad += 1
+                        if branch_bad <= 5:
+                            print(f"branch {m.group(1)} 0x{op:04x} {mnemonic} "
+                                  f"{m.group(4).strip()} -> 0x{target:08x}")
+
             if mnemonic in ("mov.b", "mov.w") and (op >> 8) in (0x80, 0x81, 0x84, 0x85):
                 pm = DISP_OPS.match(m.group(4).strip())
                 if not pm:
@@ -71,9 +88,10 @@ def main(argv):
                         print(f"disp   {m.group(1)} 0x{op:04x} {mnemonic} "
                               f"{m.group(4).strip()}")
 
-    print(f"width: {width_checked} checked, {width_bad} mismatches")
-    print(f"disp:  {disp_checked} checked, {disp_bad} mismatches")
-    return 1 if (width_bad or disp_bad) else 0
+    print(f"width:  {width_checked} checked, {width_bad} mismatches")
+    print(f"disp:   {disp_checked} checked, {disp_bad} mismatches")
+    print(f"branch: {branch_checked} checked, {branch_bad} mismatches")
+    return 1 if (width_bad or disp_bad or branch_bad) else 0
 
 
 if __name__ == "__main__":
