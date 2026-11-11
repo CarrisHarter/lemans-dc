@@ -1315,6 +1315,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c024d84` | `vector_blend_pipeline` | `notes/verifications/0x8c024d84.json` — 191 oracle steps |
 | `0x8c0109e4` | `classify_float_result_3` | `notes/verifications/0x8c0109e4.json` — 209 oracle steps |
 | `0x8c0113f4` | `bounded_substring_search` | `notes/verifications/0x8c0113f4.json` — 204 oracle steps |
+| `0x8c011878` | `cursor_token_scan` | `notes/verifications/0x8c011878.json` — 103 oracle steps; call-crossing port (callee 0x8c011374); `bra` at 0x896 skips the `add #1,r4`, delay slot resets r4 = r13 = 0 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
