@@ -381,6 +381,11 @@
 | `0x8c0a41b8` | `empty_stub_3` | `notes/verifications/0x8c0a41b8.json` — verified |
 | `0x8c0a4db4` | `store_byte_at_20` | `notes/verifications/0x8c0a4db4.json` — verified |
 | `0x8c0ab080` | `indexed_load` | `notes/verifications/0x8c0ab080.json` — verified |
+| `0x8c0a4a4c` | `zero_struct` | `notes/verifications/0x8c0a4a4c.json` — verified |
+| `0x8c0ab700` | `store_two_floats_at_f4_f8` | `notes/verifications/0x8c0ab700.json` — verified |
+| `0x8c0adec0` | `clamp_float_to_range` | `notes/verifications/0x8c0adec0.json` — verified |
+| `0x8c0adf14` | `load_through_field` | `notes/verifications/0x8c0adf14.json` — verified |
+| `0x8c0adf1c` | `copy_three_words_at_28` | `notes/verifications/0x8c0adf1c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
