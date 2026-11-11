@@ -8,9 +8,9 @@ Updated 2026-11-11.
 | strings decoded | 10,983 (5,612 Ghidra string Data) |
 | oracle coverage (static, mnemonic) | 99.70% of 969,383 instructions |
 | functions auto-named | 310 (proposals, unreviewed) |
-| oracle tests | 54 passing |
-| ports verified | 223 |
-| verification files | 274 |
+| oracle tests | 56 passing |
+| ports verified | 254 |
+| verification files | 312 |
 
 ## Instruction gaps remaining
 
