@@ -621,19 +621,26 @@ impl Cpu {
         }
     }
 
-    /// Load/store helper: size 0 = byte, 1 = word, 2 = long, sign-extended.
+    /// Load/store helper.
+    ///
+    /// Two encodings reach this function: the `mov @Rm,Rn` families pass the
+    /// low nibble 0/1/2, while the post-increment and `@(R0,Rm)` families pass
+    /// the opcode's size nibble 4/5/6 (or C/D/E for the indexed loads). Both
+    /// mean the same three widths; mapping
+    /// only 0/1/2 and falling through to a 32-bit access for 4/5/6 made
+    /// `mov.b @Rm+,Rn` read four bytes.
     fn load(&self, mem: &Memory, addr: u32, size: u16) -> Result<u32, Error> {
         match size {
-            0 => Ok(mem.read_u8(addr)? as i8 as i32 as u32),
-            1 => Ok(mem.read_u16(addr)? as i16 as i32 as u32),
+            0 | 4 | 0xC => Ok(mem.read_u8(addr)? as i8 as i32 as u32),
+            1 | 5 | 0xD => Ok(mem.read_u16(addr)? as i16 as i32 as u32),
             _ => mem.read_u32(addr),
         }
     }
 
     fn store(&self, mem: &mut Memory, addr: u32, value: u32, size: u16) -> Result<(), Error> {
         match size {
-            0 => mem.write_u8(addr, value as u8),
-            1 => mem.write_u16(addr, value as u16),
+            0 | 4 | 0xC => mem.write_u8(addr, value as u8),
+            1 | 5 | 0xD => mem.write_u16(addr, value as u16),
             _ => mem.write_u32(addr, value),
         }
     }
