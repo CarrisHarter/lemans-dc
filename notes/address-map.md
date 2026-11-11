@@ -1200,6 +1200,11 @@
 | `0x8c222410` | `compare_512_bytes` | `notes/verifications/0x8c222410.json` — 5095 oracle steps |
 | `0x8c227560` | `set_bit_from_flag` | `notes/verifications/0x8c227560.json` — 16 oracle steps |
 | `0x8c239860` | `find_slot_by_key` | `notes/verifications/0x8c239860.json` — 41 oracle steps |
+| `0x8c227320` | `insert_bits_179f8` | `notes/verifications/0x8c227320.json` — 6 oracle steps |
+| `0x8c227380` | `insert_bits_20000_shift29` | `notes/verifications/0x8c227380.json` — 18 oracle steps |
+| `0x8c227620` | `insert_bits_181ff` | `notes/verifications/0x8c227620.json` — 6 oracle steps |
+| `0x8c227800` | `insert_bits_20000` | `notes/verifications/0x8c227800.json` — 19 oracle steps |
+| `0x8c22f40c` | `state_gate` | `notes/verifications/0x8c22f40c.json` — 9 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
