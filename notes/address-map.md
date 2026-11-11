@@ -620,6 +620,9 @@
 | `0x8c0f4094` | `follow_pointer_and_store_back_5` | `notes/verifications/0x8c0f4094.json` — verified |
 | `0x8c0f6cc4` | `advance_68_load` | `notes/verifications/0x8c0f6cc4.json` — verified |
 | `0x8c0f6ccc` | `advance_56_load_float` | `notes/verifications/0x8c0f6ccc.json` — verified |
+| `0x8c0bd614` | `FUN_8c0bd614` | `notes/verifications/0x8c0bd614.json` — 166 oracle steps; r4/r5 end at arg+24 (not restored); r3=param_3+24; r1=frame+24; r6=6; r7=param_2[11]; r0=local[11]; r4 clobbered to local[10] by tail stores; r12/r13/r14 restored from stack (loop counter discarded); r15=entry sp; T=0 on exit (6>6 false); param_3 read from [entry sp], not r6 |
+| `0x8c0da7b0` | `FUN_8c0da7b0` | `notes/verifications/0x8c0da7b0.json` — 135 oracle steps; r1=r4+108; r2=entry sp; r3=r4+104; r5=r4+100; r6=r4+96; r7=r4+92; r0=r4; fr0=@(entry sp) last load; fr4..fr11 untouched; r12-r14 restored; r15=entry sp; T untouched; args [[sp+8]]/[[sp+12]] are pointers read from stack slots |
+| `0x8c0da8c0` | `FUN_8c0da8c0` | `notes/verifications/0x8c0da8c0.json` — 126 oracle steps; fr1=0.0 and fr3=1.0 (fldi clobber seeds); fr2=c0; fr0=g[3] last load; r0=r4; r1=r4+104; r3=g+8; r5=g+4; r7=r4+92; r2 untouched; r10-r14 restored; r15=entry sp; T untouched; r6=global ptr @0x8c0da9bc |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
