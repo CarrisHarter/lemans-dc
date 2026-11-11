@@ -1178,6 +1178,16 @@
 | `0x8c21e0c8` | `conditional_append` | `notes/verifications/0x8c21e0c8.json` — 6 oracle steps |
 | `0x8c221d54` | `fill_stride_116` | `notes/verifications/0x8c221d54.json` — 49 oracle steps |
 | `0x8c221d70` | `fill_stride_120` | `notes/verifications/0x8c221d70.json` — 49 oracle steps |
+| `0x8c1816d0` | `pass` | `notes/verifications/0x8c1816d0.json` — 31 oracle steps; 31 |
+| `0x8c183724` | `pass` | `notes/verifications/0x8c183724.json` — 30 oracle steps; 30 |
+| `0x8c18439c` | `pass` | `notes/verifications/0x8c18439c.json` — 98 oracle steps; 98 |
+| `0x8c184474` | `pass` | `notes/verifications/0x8c184474.json` — 61 oracle steps; 61 |
+| `0x8c18598c` | `pass` | `notes/verifications/0x8c18598c.json` — 149 oracle steps; 149 |
+| `0x8c185aec` | `pass` | `notes/verifications/0x8c185aec.json` — 89 oracle steps; 89 |
+| `0x8c185ba4` | `pass` | `notes/verifications/0x8c185ba4.json` — 111 oracle steps; 111 |
+| `0x8c1863e8` | `pass` | `notes/verifications/0x8c1863e8.json` — 91 oracle steps; 91 |
+| `0x8c187210` | `pass` | `notes/verifications/0x8c187210.json` — 66 oracle steps; 66 |
+| `0x8c187344` | `pass` | `notes/verifications/0x8c187344.json` — 128 oracle steps; 128 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
