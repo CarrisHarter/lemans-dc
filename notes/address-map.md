@@ -1330,6 +1330,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21c460` | `restore_imask` | `notes/verifications/0x8c21c460.json` — 11 oracle steps; SR IMASK = *r4 & 15, companion of 0x8c21c448 |
 | `0x8c21ef74` | `masked_table_zero` | `notes/verifications/0x8c21ef74.json` — 1824 oracle steps; IMASK-masked zero-fill of two RAM tables (0x8c2bc9a8+12 step 16, 0x8c2bd9a8 step 4) |
 | `0x8c220678` | `masked_row_flag_set` | `notes/verifications/0x8c220678.json` — 32 oracle steps; IMASK-masked write of 1 to [[0x8c23d468]] + (*r4*32) + 28; r0 = 0 via rts delay slot |
+| `0x8c221e18` | `slot_string_fill` | `notes/verifications/0x8c221e18*.json` — 2 seeds (401/209 oracle steps); zeros slot+44..57 and +60..73, copies ≤12 bytes from r5/r6 stopping before the first zero; dual cursors (peek @r4, consume @r0/@r14+) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
