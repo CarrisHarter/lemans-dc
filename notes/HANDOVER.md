@@ -120,6 +120,13 @@ evidence.
 
 ## Instruction semantics that cost ports a retry
 
+- **A `bt.s` delay slot runs even on the FINAL, non-taken iteration.**
+  In `0x8c011d1c`, `fmov fr3,fr4` in the delay slot overwrites the
+  accumulator with a half-computed value on exit; a `loop { if !t break }`
+  transcription that `break`s before the write-back produces a wrong `fr4`
+  (and wrong `fr0`) on every input. Model: unconditional write-back, then
+  `if t { continue } else { break }`.
+
 - Plain `bt`/`bf` have **no** delay slot. `bt.s`/`bf.s`, `bra` and `rts` do, and
   the delay slot runs whether or not the branch is taken.
 - `fcmp/gt frA,frB` sets T = `frB > frA` — the encoding's operand order is the
