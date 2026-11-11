@@ -28,4 +28,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     }
     cpu.fr[0] = cpu.fr[4];
     cpu.fr[6] = cpu.fr[5];
+    cpu.fr[0] = cpu.fr[0] * cpu.fr[6]; // rts delay slot: fmul fr6,fr0
 }
