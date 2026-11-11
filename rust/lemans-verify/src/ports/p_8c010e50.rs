@@ -18,10 +18,10 @@
 //! ```
 //! Hidden side effects: r7 is always initialized from r5 (delay slot of
 //! `bf.s` runs even when not taken); r4/r7 end advanced by the number of
-//! loop iterations; r2/r3 hold the last values loaded by the (oracle-u32)
-//! post-increment loads, with r3 re-truncated by `extu.b` at the end; r5 is
-//! the match count; T is 1 only when the loop ran to r6 matches (or r6 == 0),
-//! else 0 from the mismatching cmp/eq.
+//! loop iterations; r2/r3 hold the sign-extended bytes from the `mov.b
+//! @Rm+` loads (r3 re-truncated by `extu.b` in the tail); r5 is the match
+//! count; T is 1 only when the loop ran to r6 matches (or r6 == 0), else 0
+//! from the mismatching cmp/eq.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -36,13 +36,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
 
     cpu.r[5] = 0; // mov #0,r5
     loop {
-        // The oracle's `mov.b @Rm+,Rn` (0x6 family, low nibble 4/5/6) passes the
-        // raw nibble as load size, and its load() treats any size other than
-        // 0/1 as a 32-bit read — so both post-increment loads below fetch a
-        // full u32 and advance the pointer by 1, not by the element size.
-        cpu.r[2] = mem.read_u32(cpu.r[7]).unwrap(); // mov.b @r7+,r2
+        cpu.r[2] = (mem.read_u8(cpu.r[7]).unwrap() as i8 as i32) as u32; // mov.b @r7+,r2 (byte, sign-extended)
         cpu.r[7] = cpu.r[7].wrapping_add(1);
-        cpu.r[3] = mem.read_u32(cpu.r[4]).unwrap(); // mov.b @r4+,r3
+        cpu.r[3] = (mem.read_u8(cpu.r[4]).unwrap() as i8 as i32) as u32; // mov.b @r4+,r3 (byte, sign-extended)
         cpu.r[4] = cpu.r[4].wrapping_add(1);
         cpu.set_t(cpu.r[2] == cpu.r[3]); // cmp/eq r2,r3
         if cpu.r[2] != cpu.r[3] {
