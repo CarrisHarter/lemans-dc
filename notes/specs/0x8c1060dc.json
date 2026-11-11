@@ -1,0 +1,17 @@
+{
+  "entry": "0x8c1060dc",
+  "regs": {
+    "r4": "0x8c200000"
+  },
+  "steps": 20,
+  "memory": [
+    {
+      "addr": "0x8c200000",
+      "hex": "0002208c"
+    },
+    {
+      "addr": "0x8c20020c",
+      "hex": "efbeadde"
+    }
+  ]
+}

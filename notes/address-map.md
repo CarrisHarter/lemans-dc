@@ -843,6 +843,16 @@
 | `0x8c14dd90` | `copy_words_until_limit` | `notes/verifications/0x8c14dd90.json` — verified |
 | `0x8c14dda8` | `copy_words_until_limit_2` | `notes/verifications/0x8c14dda8.json` — verified |
 | `0x8c14e740` | `copy_words_until_limit_3` | `notes/verifications/0x8c14e740.json` — verified |
+| `0x8c110308` | `FUN_8c110308` | `notes/verifications/0x8c110308.json` — 3 oracle steps; store *(r4+0x14)=r5; r0=1 via rts delay slot |
+| `0x8c11181c` | `FUN_8c11181c` | `notes/verifications/0x8c11181c.json` — 74 oracle steps; r3/r6/r7/r0/r1 clobbered; r14/r13 saved+restored; insertion store is the bt.s delay slot (runs both ways); bra delay slot pre-decrements r7; T=0 on all exits |
+| `0x8c111c30` | `FUN_8c111c30` | `notes/verifications/0x8c111c30.json` — 38 oracle steps; BLOCKED: oracle lacks movt r1 (op 0x0129) at 0x8c111c6c/0x8c111c88; every path hits it |
+| `0x8c124d48` | `FUN_8c124d48` | `notes/verifications/0x8c124d48.json` — 4 oracle steps; r1=*r15 and r0=*r4 left set; store *r1=r0 is the rts delay slot |
+| `0x8c124d5c` | `FUN_8c124d5c` | `notes/verifications/0x8c124d5c.json` — 5 oracle steps; r0=**r4, r1=*r15; store in rts delay slot |
+| `0x8c1261d4` | `FUN_8c1261d4` | `notes/verifications/0x8c1261d4.json` — 10 oracle steps; stores to global 0x8c2ab5e0, *r4, byte r4+4=1, r4+8 (rts delay); r0=r4, r1=*0x8c206c28 |
+| `0x8c127c6c` | `FUN_8c127c6c` | `notes/verifications/0x8c127c6c.json` — 3 oracle steps; r4+=0x40; 32-bit fr4 store at new r4 in rts delay slot |
+| `0x8c127c74` | `FUN_8c127c74` | `notes/verifications/0x8c127c74.json` — 3 oracle steps; r4+=0x4c; fr4 store in rts delay slot |
+| `0x8c127c7c` | `FUN_8c127c7c` | `notes/verifications/0x8c127c7c.json` — 3 oracle steps; r4+=0x44; fr4 store in rts delay slot |
+| `0x8c1282a4` | `FUN_8c1282a4` | `notes/verifications/0x8c1282a4.json` — 3 oracle steps; r4+=0x4c; fr0=mem32[r4] (bit-exact, NaN payload survives) in rts delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

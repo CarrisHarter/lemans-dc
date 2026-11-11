@@ -577,3 +577,13 @@ fn ftrc_and_flds_source_the_n_field() {
     let (cpu, _) = run(cpu, mem);
     assert_eq!(cpu.fpul, 0x2222_2222, "flds must read fr4, not fr3");
 }
+
+#[test]
+fn movt_targets_any_register() {
+    // `movt r1` = 0x0129 (the oracle used to match only the r0 form, 0x0029).
+    let (mut cpu, mem) = one(0x0129);
+    cpu.set_t(true);
+    cpu.r[1] = 0;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[1], 1);
+}

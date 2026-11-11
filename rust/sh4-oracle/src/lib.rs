@@ -706,7 +706,10 @@ impl Cpu {
             0x0 => {
                 match op {
                     0x0028 => { self.mach = 0; self.macl = 0; return Ok(()); }  // clrmac
-                    0x0029 => { self.r[n] = self.t() as u32; return Ok(()); }    // movt Rn
+                    _ if op & 0xF0FF == 0x0029 => {                            // movt Rn
+                        self.r[n] = self.t() as u32;
+                        return Ok(());
+                    }
                     0x0048 => { self.sr &= !(1 << 1); return Ok(()); }           // clrs
                     0x0058 => { self.sr |= 1 << 1; return Ok(()); }              // sets
                     0x0019 => {                                                  // div0u
