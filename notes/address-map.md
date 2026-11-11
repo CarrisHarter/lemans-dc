@@ -706,6 +706,16 @@
 | `0x8c0dab10` | `FUN_8c0dab10` | `notes/verifications/0x8c0dab10.json` — 74 oracle steps; three paths: flag@0x8c27a8a8!=0 -> r0:=0x8c27a8c8,T=0; copy path stores dest+4..=64 <- inner+4..=64 (16 words) with r1:=inner[16],r3:=inner[15],r5:=inner[13],r6:=inner+36,r7:=dest+36,T=0; skip path only r0:=inner,T=1 (last tst); return [[0x5e0+r4]]+12 |
 | `0x8c0d59a4` | `FUN_8c0d59a4` | `notes/verifications/0x8c0d59a4.json` — 76 oracle steps; fcmp/gt frA,frB sets T=(frB>frA); mov #0,r0 is the bf.s delay slot so r0 is zeroed on BOTH block-0 paths; bit 1<<2k when t=d-sum>0, else bit 2<<2k when d+sum<0; r1:=p+20,r3:=p+8,r4:=p+44,r5:=p+32, fr0:=0, fr1:=block2 t, fr2:=[p+44] or +sum, fr3:=block2 sum; T=1 unless block2 else-path with fr2>=0 |
 | `0x8c0d8cfc` | `FUN_8c0d8cfc` | `notes/verifications/0x8c0d8cfc.json` — 71 oracle steps; fcmp/gt direction T=(2nd>1st): path A when fr4>[r4+120]; path C when fr4>[r4+124]; fr4 clobbered only on path C ((fr4-lo)*[r4+128]); bf.s delay fldi0 fr0 runs even when not taken so the fr5==1.0 return is fr0=0.0; fr5==0 path sets fpul:=count-1, r4:=r4+76, r0:=count-1; loop found path sets fpul:=i, r0:=4i, r4:=r4+88+4i, r1:=r4+92+4i; miss exit keeps r0:=r1+r5 (last probe addr), r3/r5 loop leftovers, T=0; fr1:=lo on check paths, last table float on miss path |
+| `0x8c10bcc0` | `empty_stub_13` | `notes/verifications/0x8c10bcc0.json` — verified |
+| `0x8c10c3b0` | `load_store_to_stack_6` | `notes/verifications/0x8c10c3b0.json` — verified |
+| `0x8c10c484` | `load_store_to_stack_7` | `notes/verifications/0x8c10c484.json` — verified |
+| `0x8c10c558` | `load_store_to_stack_8` | `notes/verifications/0x8c10c558.json` — verified |
+| `0x8c10c6c4` | `follow_pointer_and_store_back_6` | `notes/verifications/0x8c10c6c4.json` — verified |
+| `0x8c10c6d0` | `load_double_indirect_store_to_stack_6` | `notes/verifications/0x8c10c6d0.json` — verified |
+| `0x8c10c7b0` | `follow_pointer_and_store_back_7` | `notes/verifications/0x8c10c7b0.json` — verified |
+| `0x8c10c7bc` | `load_double_indirect_store_to_stack_7` | `notes/verifications/0x8c10c7bc.json` — verified |
+| `0x8c10c878` | `follow_pointer_and_store_back_8` | `notes/verifications/0x8c10c878.json` — verified |
+| `0x8c10c884` | `load_double_indirect_store_to_stack_8` | `notes/verifications/0x8c10c884.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
