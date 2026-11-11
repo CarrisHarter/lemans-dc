@@ -1911,6 +1911,8 @@ pub mod p_8c17fffc;
 pub mod p_8c180004;
 #[path = "ports/p_8c182648.rs"]
 pub mod p_8c182648;
+#[path = "ports/p_8c182c2c.rs"]
+pub mod p_8c182c2c;
 #[path = "ports/p_8c182c34.rs"]
 pub mod p_8c182c34;
 #[path = "ports/p_8c1837dc.rs"]
@@ -1923,6 +1925,10 @@ pub mod p_8c184360;
 pub mod p_8c1844f0;
 #[path = "ports/p_8c18b9c8.rs"]
 pub mod p_8c18b9c8;
+#[path = "ports/p_8c18c058.rs"]
+pub mod p_8c18c058;
+#[path = "ports/p_8c18ca18.rs"]
+pub mod p_8c18ca18;
 #[path = "ports/p_8c193188.rs"]
 pub mod p_8c193188;
 #[path = "ports/p_8c1a3ad0.rs"]
@@ -2918,12 +2924,15 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C17FFFC => Some(p_8c17fffc::run),
         0x8C180004 => Some(p_8c180004::run),
         0x8C182648 => Some(p_8c182648::run),
+        0x8C182C2C => Some(p_8c182c2c::run),
         0x8C182C34 => Some(p_8c182c34::run),
         0x8C1837DC => Some(p_8c1837dc::run),
         0x8C183B40 => Some(p_8c183b40::run),
         0x8C184360 => Some(p_8c184360::run),
         0x8C1844F0 => Some(p_8c1844f0::run),
         0x8C18B9C8 => Some(p_8c18b9c8::run),
+        0x8C18C058 => Some(p_8c18c058::run),
+        0x8C18CA18 => Some(p_8c18ca18::run),
         0x8C193188 => Some(p_8c193188::run),
         0x8C1A3AD0 => Some(p_8c1a3ad0::run),
         0x8C1A3AF8 => Some(p_8c1a3af8::run),
