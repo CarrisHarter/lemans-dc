@@ -730,6 +730,16 @@
 | `0x8c10e35c` | `load_word_via_field_68` | `notes/verifications/0x8c10e35c.json` — verified |
 | `0x8c10e364` | `load_field_plus_36` | `notes/verifications/0x8c10e364.json` — verified |
 | `0x8c10e36c` | `load_field_plus_32` | `notes/verifications/0x8c10e36c.json` — verified |
+| `0x8c10e374` | `load_double_indirect_2` | `notes/verifications/0x8c10e374.json` — verified |
+| `0x8c10e37c` | `load_word_via_field_60` | `notes/verifications/0x8c10e37c.json` — verified |
+| `0x8c10e384` | `load_word_via_field_56` | `notes/verifications/0x8c10e384.json` — verified |
+| `0x8c10e38c` | `load_byte_via_field_80` | `notes/verifications/0x8c10e38c.json` — verified |
+| `0x8c10e394` | `load_word_via_field_52` | `notes/verifications/0x8c10e394.json` — verified |
+| `0x8c10e39c` | `load_word_via_field_48` | `notes/verifications/0x8c10e39c.json` — verified |
+| `0x8c10e3a4` | `load_field_plus_28_2` | `notes/verifications/0x8c10e3a4.json` — verified |
+| `0x8c10e3ac` | `load_field_plus_24` | `notes/verifications/0x8c10e3ac.json` — verified |
+| `0x8c10e3b4` | `load_field_plus_20` | `notes/verifications/0x8c10e3b4.json` — verified |
+| `0x8c10e3bc` | `load_field_plus_16` | `notes/verifications/0x8c10e3bc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
