@@ -435,8 +435,10 @@
 | `0x8c215f6c` | `FUN_8c215f6c` | `notes/verifications/0x8c215f6c.json` — ok; CRC-style loop, r0=~u16(r6) |
 | `0x8c23a300` | `FUN_8c23a300` | `notes/verifications/0x8c23a300.json` — ok; base-4 unpack of r4 to r5/r6/r7/stack |
 | `0x8c236880` | `FUN_8c236880` | `notes/verifications/0x8c236880.json` — ok; slot search @0x8c2c8740, clear *(slot+40), r0=0 |
-| `0x8c23a8a0` | `FUN_8c23a8a0` | `notes/verifications/0x8c23a8a0.json` — ok; bit-pack into 0x8c2c8698, r0=0 in rts delay |
 | `0x8c236a44` | `FUN_8c236a44` | `notes/verifications/0x8c236a44.json` — ok; hash lookup @0x8c23d7b0, r0=r7 in rts delay |
+| `0x8c197a5c` | `FUN_8c197a5c` | `notes/verifications/0x8c197a5c.json` — ok; list node copy + pointer fixup |
+| `0x8c216590` | `FUN_8c216590` | `notes/verifications/0x8c216590.json` — ok; validate + struct init via 0x8c23d418 |
+| `0x8c23a8a0` | `FUN_8c23a8a0` | `notes/verifications/0x8c23a8a0.json` — ok; bit-pack into 0x8c2c8698, r0=0 in rts delay |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
