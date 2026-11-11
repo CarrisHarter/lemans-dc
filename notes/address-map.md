@@ -152,6 +152,7 @@
 | `0x8c013bfa` | `FUN_8c013bfa` | `notes/verifications/0x8c013bfa*.json` — both branches (9 and 5 oracle steps); eq: r0=0; else r0=mem.b[*(r4+4)+16]&0x40, r1=16 |
 | `0x8c013226` | `FUN_8c013226` | `notes/verifications/0x8c013226.*.json` — both branches (9 and 13 oracle steps); clear: *(r4+4)-=1 in r2; set: r1=*(r4+4), *(r1+4)+=1, **r1-=1 in r3 |
 | `0x8c011cf8` | `FUN_8c011cf8` | `notes/verifications/0x8c011cf8.json` — 44 oracle steps; fr6=fr4^2, 5x fmac over table at 0x8c1cd028, r4=0, r5=0x8c1cd040, fr0=fr4, fr6=fr5 |
+| `0x8c011c50` | `FUN_8c011c50` | `notes/verifications/0x8c011c50*.json` — all branches (34, 15, 6 oracle steps); r6=count, r2=last byte, r4 advanced, r0=0/1, T=last cmp/pl or cmp/ge |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
