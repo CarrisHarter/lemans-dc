@@ -424,6 +424,10 @@
 | `0x8c0851f8` | `FUN_8c0851f8` | `notes/verifications/0x8c0851f8.json` — 21 oracle steps; fmov fr4,@r0 follows an UNdelayed bf (0x8B) so param[2]:=fr4 only when param[2]==0.0; r1=fpul=old *param, r3=param+4, r0=old*param+1, fr0=re-read param[2], fr1=result; T=(orig param[2]==0.0) |
 | `0x8c085264` | `FUN_8c085264` | `notes/verifications/0x8c085264.json` — 13 oracle steps; *(0x8c26c230)=param; r1=param+4, fr0=0.0 (fldi0), r0=param via rts delay slot mov r4,r0 (return value); T untouched |
 | `0x8c085628` | `FUN_8c085628` | `notes/verifications/0x8c085628.json` — 44 oracle steps; r1=param_3 from @(4,r15) after r14 push; r14 restored by rts delay slot; r0=r3 at exit; T=last cmp/pz; only bt.s (0x8D) has a delay slot (sub r0,r3 always runs) — plain bt (0x89) is undelayed so add #60 runs only on the borrow fall-through |
+| `0x8c0b4d4c` | `lerp_two_pairs` | `notes/verifications/0x8c0b4d4c.json` — verified |
+| `0x8c0b4db4` | `negate_three_floats` | `notes/verifications/0x8c0b4db4.json` — verified |
+| `0x8c0b4e0c` | `scale_three_floats` | `notes/verifications/0x8c0b4e0c.json` — verified |
+| `0x8c0b4e30` | `scale_three_floats_2` | `notes/verifications/0x8c0b4e30.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
