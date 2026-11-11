@@ -888,6 +888,14 @@
 | `0x8c152bf8` | `pool_plus_arg` | `notes/verifications/0x8c152bf8.json` — verified |
 | `0x8c155258` | `store_r5_at_40` | `notes/verifications/0x8c155258.json` — verified |
 | `0x8c154ec4` | `round_up_to_12_boundary` | `notes/verifications/0x8c154ec4.json` — verified |
+| `0x8c1556d0` | `count_nonzero_bytes` | `notes/verifications/0x8c1556d0.json` — verified |
+| `0x8c155e14` | `global_pointer_deref` | `notes/verifications/0x8c155e14.json` — verified |
+| `0x8c1570a0` | `store_r5_at_56` | `notes/verifications/0x8c1570a0.json` — verified |
+| `0x8c159e64` | `store_byte_to_global` | `notes/verifications/0x8c159e64.json` — verified |
+| `0x8c159e70` | `store_fr4_to_global` | `notes/verifications/0x8c159e70.json` — verified |
+| `0x8c159e7c` | `copy_three_words_to_globals` | `notes/verifications/0x8c159e7c.json` — verified |
+| `0x8c15a1d8` | `empty_stub_15` | `notes/verifications/0x8c15a1d8.json` — verified |
+| `0x8c15a27c` | `double_indirect_global` | `notes/verifications/0x8c15a27c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
