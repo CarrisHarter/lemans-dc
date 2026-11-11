@@ -395,6 +395,9 @@
 | `0x8c0b2780` | `abs_copy` | `notes/verifications/0x8c0b2780.json` — verified |
 | `0x8c0b2c00` | `hypot` | `notes/verifications/0x8c0b2c00.json` — verified |
 | `0x8c0b2f68` | `copy_three_words_at_36` | `notes/verifications/0x8c0b2f68.json` — verified |
+| `0x8c09d598` | `init_node_1` | `notes/verifications/0x8c09d598.json` — verified |
+| `0x8c09d774` | `init_node_2` | `notes/verifications/0x8c09d774.json` — verified |
+| `0x8c09d950` | `init_node_3` | `notes/verifications/0x8c09d950.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
