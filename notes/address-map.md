@@ -338,6 +338,7 @@
 | `0x8c07fc24` | `store_two_args` | `notes/verifications/0x8c07fc24.json` — verified |
 | `0x8c07bcd8` | `max_counter_clamped` | `notes/verifications/0x8c07bcd8*.json` — both selection paths |
 | `0x8c07581c` | `clear_records` | `notes/verifications/0x8c07581c.json` — r4 advanced by 68 before the loop, r5 walks one byte per record |
+| `0x8c07e018` | `cursor_advance_wrap` | `notes/verifications/0x8c07e018*.json` — wrap and skip paths |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
