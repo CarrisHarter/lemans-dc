@@ -872,6 +872,15 @@
 | `0x8c127c74` | `FUN_8c127c74` | `notes/verifications/0x8c127c74.json` — 3 oracle steps; r4+=0x4c; fr4 store in rts delay slot |
 | `0x8c127c7c` | `FUN_8c127c7c` | `notes/verifications/0x8c127c7c.json` — 3 oracle steps; r4+=0x44; fr4 store in rts delay slot |
 | `0x8c1282a4` | `FUN_8c1282a4` | `notes/verifications/0x8c1282a4.json` — 3 oracle steps; r4+=0x4c; fr0=mem32[r4] (bit-exact, NaN payload survives) in rts delay slot |
+| `0x8c151b24` | `advance_96_return_self` | `notes/verifications/0x8c151b24.json` — verified |
+| `0x8c151f60` | `store_to_global` | `notes/verifications/0x8c151f60.json` — verified |
+| `0x8c152004` | `advance_76_return_self` | `notes/verifications/0x8c152004.json` — verified |
+| `0x8c152084` | `store_fr4_at_72` | `notes/verifications/0x8c152084.json` — verified |
+| `0x8c152100` | `advance_60_return_self` | `notes/verifications/0x8c152100.json` — verified |
+| `0x8c152138` | `advance_44_return_self` | `notes/verifications/0x8c152138.json` — verified |
+| `0x8c152bf8` | `pool_plus_arg` | `notes/verifications/0x8c152bf8.json` — verified |
+| `0x8c155258` | `store_r5_at_40` | `notes/verifications/0x8c155258.json` — verified |
+| `0x8c154ec4` | `round_up_to_12_boundary` | `notes/verifications/0x8c154ec4.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
