@@ -155,6 +155,11 @@
 | `0x8c011c50` | `FUN_8c011c50` | `notes/verifications/0x8c011c50*.json` — all branches (34, 15, 6 oracle steps); r6=count, r2=last byte, r4 advanced, r0=0/1, T=last cmp/pl or cmp/ge |
 | `0x8c0163e8` | `FUN_8c0163e8` | `notes/verifications/0x8c0163e8.json` — 39 oracle steps; record copy while cmp/str clear, 4-byte tail unrolled (4th byte sets no flag, T from 3rd); r3/r4/r5/r6 end as popped stack zeros, r15 net +8, r0=orig dst |
 | `0x8c015194` | `FUN_8c015194` | `notes/verifications/0x8c015194*.json` — both specs (74 and 12 oracle steps); r7=8-r6/carry, r12=mask, r3=-exts.w(r6), r2/r1 last byte ops, r0=(final carry != 0), T=(carry==0); r12/r13/r14 net unchanged |
+| `0x8c05dc1c` | `FUN_8c05dc1c` | `notes/verifications/0x8c05dc1c.json` — ok; r1=*r15, r0=**r4, store *r1=r0 in rts delay slot |
+| `0x8c05ef7c` | `FUN_8c05ef7c` | `notes/verifications/0x8c05ef7c.*.json` — both branches; set: *(r4+8)\|=r5; clr: r1=*(r4+8)&~r5; T=(r6 byte==0) |
+| `0x8c05e038` | `FUN_8c05e038` | `notes/verifications/0x8c05e038.*.json` — both branches; byte loop, r0=diff or 0 at NUL, r4/r5 advanced, T=last cmp/eq |
+| `0x8c05de64` | `FUN_8c05de64` | `notes/verifications/0x8c05de64.json` — ok; struct init, [0]=pool value (single deref), [4]=0, [8]=byte(r5), [12]=r4+4; r0=r6, r4=0 |
+| `0x8c05e108` | `FUN_8c05e108` | `notes/verifications/0x8c05e108.json` — ok; same shape, pool 0x8c1f7528 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
