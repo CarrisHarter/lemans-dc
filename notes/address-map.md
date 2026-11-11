@@ -967,6 +967,15 @@
 | `0x8c17a038` | `index_times_28` | `notes/verifications/0x8c17a038.json` — verified |
 | `0x8c155e4c` | `init_from_rom_block` | `notes/verifications/0x8c155e4c.json` — verified |
 | `0x8c156f8c` | `init_node` | `notes/verifications/0x8c156f8c.json` — verified |
+| `0x8c17eb20` | `reset_flag_1` | `notes/verifications/0x8c17eb20.json` — verified |
+| `0x8c17eb38` | `reset_flag_0` | `notes/verifications/0x8c17eb38.json` — verified |
+| `0x8c17fd14` | `store_through_stack_pointer_2` | `notes/verifications/0x8c17fd14.json` — verified |
+| `0x8c17fd1c` | `deref_in_place` | `notes/verifications/0x8c17fd1c.json` — verified |
+| `0x8c17fd28` | `store_double_deref_through_stack_pointer` | `notes/verifications/0x8c17fd28.json` — verified |
+| `0x8c17fff4` | `float_at_80` | `notes/verifications/0x8c17fff4.json` — verified |
+| `0x8c17fffc` | `float_at_64` | `notes/verifications/0x8c17fffc.json` — verified |
+| `0x8c180004` | `float_at_48` | `notes/verifications/0x8c180004.json` — verified |
+| `0x8c182648` | `zero_byte_return_self` | `notes/verifications/0x8c182648.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
