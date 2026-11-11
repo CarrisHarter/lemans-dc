@@ -473,6 +473,11 @@
 | `0x8c0b8380` | `store_byte_at_4_2` | `notes/verifications/0x8c0b8380.json` — verified |
 | `0x8c0b8388` | `load_byte_at_4_2` | `notes/verifications/0x8c0b8388.json` — verified |
 | `0x8c0b838c` | `init_three_vtables_3` | `notes/verifications/0x8c0b838c.json` — verified |
+| `0x8c0b90e8` | `load_byte_zext` | `notes/verifications/0x8c0b90e8.json` — verified |
+| `0x8c0b90f0` | `store_byte_at_0` | `notes/verifications/0x8c0b90f0.json` — verified |
+| `0x8c0b9768` | `zero_word_and_byte` | `notes/verifications/0x8c0b9768.json` — verified |
+| `0x8c0b9edc` | `clear_byte_return_self` | `notes/verifications/0x8c0b9edc.json` — verified |
+| `0x8c0b9f78` | `indexed_table_then_field` | `notes/verifications/0x8c0b9f78.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
