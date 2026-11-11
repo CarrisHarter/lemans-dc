@@ -9,8 +9,6 @@
 //! 0x100 (`mov.w @0x8c01539a`); the return is -1 only when the final borrow
 //! is set AND r4 == 0, else 0 when every result byte was 0, else 1.
 //! The exit T bit comes from the last `tst r4,r4` / `cmp/eq #1,r0`.
-//! The result store `mov.b r3,@-r1` is executed by the oracle as a long
-//! store at the pre-decremented address, and the port mirrors that.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -47,8 +45,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             r6 = r6.wrapping_sub(1);
             let cont = r6 >= a; // cmp/hs r5,r6
             r1 = r1.wrapping_sub(1);
-            // mov.b r3,@-r1: pre-decrement, then the oracle stores a long
-            let _ = mem.write_u32(r1, res);
+            let _ = mem.write_u8(r1, res as u8); // mov.b r3,@-r1 (delay slot)
             r7 = r7.wrapping_sub(1); // delay slot of bt.s
             if !cont {
                 break;

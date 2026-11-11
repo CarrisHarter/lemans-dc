@@ -3,20 +3,14 @@
   "spec": "~/Projects/lemans-dc/notes/specs/0x8c01539c.json",
   "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "2fd6950",
-  "verified_at": "2026-11-11T10:00:38+00:00",
-  "result": "fail",
+  "commit": "938269c",
+  "verified_at": "2026-11-11T10:02:04+00:00",
+  "result": "pass",
   "oracle": {
     "stop": "halt",
     "steps": 35
   },
   "verifier_output": [
-    "FAIL 0x8c01539c: 6 difference(s)",
-    "  r0: port 0x00000000 != original 0xfffffffe",
-    "  r2: port 0x64656261 != original 0x00000065",
-    "  r3: port 0x00000061 != original 0x00000065",
-    "  r4: port 0x8c200001 != original 0x8c200003",
-    "  r5: port 0x00000000 != original 0x00000002",
-    "  r7: port 0x8c200010 != original 0x8c200012"
+    "ok   0x8c01539c matches original (35 oracle steps)"
   ]
 }

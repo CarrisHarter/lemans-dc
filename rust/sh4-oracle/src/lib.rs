@@ -25,10 +25,32 @@ pub const LOAD_BASE: u32 = 0x8C01_0000;
 pub const STACK_BASE: u32 = 0x8C30_0000;
 pub const STACK_SIZE: u32 = 0x1_0000;
 
-/// Give the CPU a stack if the spec did not supply one.
+/// Main RAM the loaded image does not cover.
+///
+/// The image is the first 2.28 MB of a 16 MB bank at 0x8c000000. Globals live
+/// past the end of the image, so a spec that dereferences one used to die with
+/// `data access ... outside mapped memory`. This window is zeroed RAM, exactly
+/// what the hardware has before the game writes it.
+pub const RAM_BASE: u32 = 0x8C24_0000;
+
+/// Give the CPU a stack and the RAM the image does not cover.
 pub fn install_default_stack(cpu: &mut Cpu, mem: &mut Memory) {
     if !mem.regions.iter().any(|r| r.base == STACK_BASE) {
         mem.regions.push(Region::new(STACK_BASE, vec![0u8; STACK_SIZE as usize]));
+    }
+    // Start exactly where the loaded image ends, so globals that sit just past
+    // its last byte are addressable.
+    let image_end = mem
+        .regions
+        .iter()
+        .filter(|r| r.base == LOAD_BASE)
+        .map(|r| r.base + r.bytes.len() as u32)
+        .max()
+        .unwrap_or(RAM_BASE);
+    let ram_base = (image_end + 3) & !3;
+    if ram_base < STACK_BASE && !mem.regions.iter().any(|r| r.base == ram_base) {
+        mem.regions
+            .push(Region::new(ram_base, vec![0u8; (STACK_BASE - ram_base) as usize]));
     }
     if cpu.r[15] == 0 {
         cpu.r[15] = STACK_BASE + STACK_SIZE - 16;

@@ -3,17 +3,14 @@
   "spec": "~/Projects/lemans-dc/notes/specs/0x8c01644c.json",
   "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "2fd6950",
-  "verified_at": "2026-11-11T10:00:38+00:00",
-  "result": "fail",
+  "commit": "938269c",
+  "verified_at": "2026-11-11T10:02:04+00:00",
+  "result": "pass",
   "oracle": {
     "stop": "halt",
-    "steps": 19
+    "steps": 32
   },
   "verifier_output": [
-    "FAIL 0x8c01644c: 3 difference(s)",
-    "  r0: port 0x8c200000 != original 0x00000000",
-    "  writes: port 2 entries, original 2 entries",
-    "    first write diff #1: original (2350907649, 0) port (2350907409, 0)"
+    "ok   0x8c01644c matches original (32 oracle steps)"
   ]
 }

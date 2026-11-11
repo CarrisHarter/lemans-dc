@@ -3,10 +3,10 @@
 //!
 //! Hidden side effects the C does not show: the `bf.s` delay slot copies
 //! r5 into r7 even on the n==0 early return; r4 ends one past the last
-//! byte examined and r7 is then decremented; r2 keeps the value of the
-//! `@r7+` load (the oracle reads it as a full long) while r3 is reloaded
-//! as a byte at exit; exit T is the deciding compare (0 on mismatch, 1 on
-//! counter exhaustion or n==0).
+//! byte examined and r7 is then decremented (r4 = a+i+1, r7 = b+i on
+//! mismatch; r4 = a+n, r7 = b+n-1 on full match); r2 keeps the sign-
+//! extended b byte while r3 is reloaded zero-extended; exit T is the
+//! deciding compare (0 on mismatch, 1 on counter exhaustion or n==0).
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -29,10 +29,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut t = r2 >= r6; // cmp/hs r6,r2 (pre-loop check)
     if !t {
         loop {
-            // mov.b @r7+,r2 — the oracle's @Rm+ byte load reads a long
-            r2 = mem.read_u32(r7).unwrap_or(0);
+            r2 = (mem.read_u8(r7).unwrap_or(0) as i8 as i32) as u32; // mov.b @r7+,r2
             r7 = r7.wrapping_add(1);
-            r3 = mem.read_u32(r4).unwrap_or(0); // mov.b @r4+,r3 (same quirk)
+            r3 = (mem.read_u8(r4).unwrap_or(0) as i8 as i32) as u32; // mov.b @r4+,r3
             r4 = r4.wrapping_add(1);
             t = r2 == r3; // cmp/eq r2,r3
             if !t {
