@@ -549,6 +549,11 @@
 | `0x8c0b4d74` | `FUN_8c0b4d74` | `notes/verifications/0x8c0b4d74.json` — 32 oracle steps; dest r3 = [r15]; fr2=a2*b1 (clobbered by fmul), fr3=a1*b0, fr8=a0*b2; r0=r3+4, r1=r5+4, r3=r3+8, r4=r4+8, r5=r5+8 |
 | `0x8c0b4dd8` | `FUN_8c0b4dd8` | `notes/verifications/0x8c0b4dd8.json` — 25 oracle steps; dest r6 = [r15]; fr0-fr3 = scaled values; r0=r6+8, r1=r6+4, r3=r4+4, r5=r4+8, r6=r6+12 |
 | `0x8c0b4eb0` | `FUN_8c0b4eb0` | `notes/verifications/0x8c0b4eb0.json` — 15 oracle steps; dest r3 = [r15]; fr0=[r5+4], fr1/fr2 = differences; r0=r5+4, r1=r4+4, r3=r3+4 |
+| `0x8c0d474c` | `advance_61_load_byte` | `notes/verifications/0x8c0d474c.json` — verified |
+| `0x8c0d4b60` | `zero_field_52` | `notes/verifications/0x8c0d4b60.json` — verified |
+| `0x8c0d50bc` | `load_field_8` | `notes/verifications/0x8c0d50bc.json` — verified |
+| `0x8c0d50c0` | `load_field_4` | `notes/verifications/0x8c0d50c0.json` — verified |
+| `0x8c0d50c4` | `load_field_8_2` | `notes/verifications/0x8c0d50c4.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
