@@ -364,6 +364,8 @@
 | `0x8c082de8` | `advance_12_2` | `notes/verifications/0x8c082de8.json` — verified |
 | `0x8c082fc0` | `store_arg_return_self_2` | `notes/verifications/0x8c082fc0.json` — verified |
 | `0x8c084280` | `advance_12_3` | `notes/verifications/0x8c084280.json` — verified |
+| `0x8c0851e0` | `zero_word_and_two_floats` | `notes/verifications/0x8c0851e0.json` — verified, write order differs from its twin |
+| `0x8c085224` | `zero_two_floats_then_word` | `notes/verifications/0x8c085224.json` — verified, write order differs from its twin |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
