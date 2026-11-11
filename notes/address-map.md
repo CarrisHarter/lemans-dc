@@ -659,6 +659,15 @@
 | `0x8c0c6904` | `FUN_8c0c6904` | `notes/verifications/0x8c0c6904.json` — 12 oracle steps; r0 = 0 (head match) / predecessor node / 0 (empty) / last node (r5==0 walk); r1 = seed / r5 / seed / 0; every exit path leaves T=1 |
 | `0x8c0cc51c` | `FUN_8c0cc51c` | `notes/verifications/0x8c0cc51c.json` — 149 oracle steps; r0=O+0x60 r1=O+0x48 r3=O+0x50 r4=O+0x4c r5=0x8c27a730 r6=E+4 r7=E+8; fr2=1.0 fr3=0.0; T=0 body/T=1 skip; pointer cell 0x8c27a730 stored 4x (O+0x18/0x30/0x48/0x60) |
 | `0x8c0b9784` | `FUN_8c0b9784` | `notes/verifications/0x8c0b9784.json` — 418 oracle steps; r0=4 (loop)/0 (early) r1=0 r3=5 r4=arg+4 r7=0; r5=last *entry or mov.w or inner2 base 0x8c27a038+24*r13; r6=inner1 base 0x8c27a038+24*[*entry] or 5; fr0=accumulator fr2=last reloaded weight+fr0 fr8=last row sum; fpul=last extu.w; T=0 loop/T=1 early (*r4==0) |
+| `0x8c0fdc8c` | `store_arg_to_global_3` | `notes/verifications/0x8c0fdc8c.json` — verified |
+| `0x8c0fee78` | `store_advanced_arg_to_stack_pointer_3` | `notes/verifications/0x8c0fee78.json` — verified |
+| `0x8c0ff28c` | `advance_12_6` | `notes/verifications/0x8c0ff28c.json` — verified |
+| `0x8c0ff294` | `store_arg_return_self_5` | `notes/verifications/0x8c0ff294.json` — verified |
+| `0x8c100330` | `store_float_indexed` | `notes/verifications/0x8c100330.json` — verified |
+| `0x8c100340` | `load_float_indexed` | `notes/verifications/0x8c100340.json` — verified |
+| `0x8c100350` | `empty_stub_10` | `notes/verifications/0x8c100350.json` — verified |
+| `0x8c1031dc` | `empty_stub_11` | `notes/verifications/0x8c1031dc.json` — verified |
+| `0x8c103f94` | `store_byte_at_4_2` | `notes/verifications/0x8c103f94.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
