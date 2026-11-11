@@ -1,0 +1,26 @@
+{
+  "entry": "0x8c03376c",
+  "regs": { "r4": "0x8c200800" },
+  "memory": [
+    { "addr": "0x8c20083c", "hex": "9a99d93f" },
+    { "addr": "0x8c200870", "hex": "cdcc6c40" },
+    { "addr": "0x8c200874", "hex": "3333b33e" },
+    { "addr": "0x8c2008ec", "hex": "3333733f" },
+    { "addr": "0x8c20091c", "hex": "cdcc0c40" },
+    { "addr": "0x8c200a70", "hex": "6666263f" },
+    { "addr": "0x8c200a78", "hex": "0000a03f" },
+    { "addr": "0x8c200b1c", "hex": "6666e63e" },
+    { "addr": "0x8c200b58", "hex": "00000040" },
+    { "addr": "0x8c200b64", "hex": "cdcc0c3f" },
+    { "addr": "0x8c200b70", "hex": "9a99993e" },
+    { "addr": "0x8c20097c", "hex": "cdcc0c40" },
+    { "addr": "0x8c200b74", "hex": "00008040" },
+    { "addr": "0x8c200b78", "hex": "0000c03f" },
+    { "addr": "0x8c200b88", "hex": "00002040" },
+    { "addr": "0x8c200b8c", "hex": "cdcccc3d" },
+    { "addr": "0x8c200b90", "hex": "9a99593f" },
+    { "addr": "0x8c200b94", "hex": "0000803e" },
+    { "addr": "0x8c200be4", "hex": "33335340" }
+  ],
+  "steps": 200
+}

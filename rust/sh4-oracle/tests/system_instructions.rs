@@ -541,3 +541,12 @@ fn fpu_moves_cover_post_increment_and_indexed_forms() {
     assert_eq!(cpu.r[4], DATA + 4);
     assert_eq!(mem.read_f32(DATA + 4).unwrap(), 9.5);
 }
+
+#[test]
+fn neg_register_form_negates_rm() {
+    // 0x8c014c1c: `neg r6,r3` = 0x633B? encoding 0x6nmB with n=3, m=6 -> 0x636B.
+    let (mut cpu, mem) = one(0x636B);
+    cpu.r[6] = 5;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[3], 0xFFFF_FFFB);
+}

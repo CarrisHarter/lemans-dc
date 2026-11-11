@@ -7,3 +7,7 @@ work/
 rust/*/target/
 __pycache__/
 *.pyc
+
+# Never commit the game image or a padded copy of it: the grant covers
+# analysis, not redistribution.
+fixtures/lemans24*.bin

@@ -1083,6 +1083,10 @@ impl Cpu {
                     self.r[n] = self.r[m].rotate_left(16);
                     return Ok(());
                 }
+                0xB => {                                                     // neg Rm,Rn
+                    self.r[n] = (self.r[m] as i32).wrapping_neg() as u32;
+                    return Ok(());
+                }
                 0xA => {                                                     // negc Rm,Rn
                     let (d, b1) = 0u32.overflowing_sub(self.r[m]);
                     let (d, b2) = d.overflowing_sub(self.t() as u32);
