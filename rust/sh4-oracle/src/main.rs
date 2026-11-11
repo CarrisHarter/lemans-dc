@@ -214,6 +214,10 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
             }
         }
     }
+    // Synthetic regions first: a spec may legitimately seed the stack window or
+    // the RAM past the image, and a patch to an unmapped address is dropped.
+    install_default_stack(cpu, mem);
+
     if let Some(regions) = spec.get("memory").and_then(Json::as_array) {
         for region in regions {
             let addr = region.get("addr").and_then(Json::as_u32);
@@ -247,7 +251,6 @@ fn run_spec(path: &PathBuf, cpu: &mut Cpu, mem: &mut Memory, base: u32) -> ExitC
         }
     }
 
-    install_default_stack(cpu, mem);
     mem.writes.clear(); // seeding is not an effect of the function
     cpu.pc = entry;
     let stop = if std::env::var("SH4_TRACE").is_ok() {

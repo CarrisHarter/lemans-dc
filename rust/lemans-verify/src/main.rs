@@ -88,6 +88,7 @@ fn seeded(seed: &Seed, bytes: &[u8], base: u32) -> (Cpu, Memory) {
             cpu.fr[*i] = *v;
         }
     }
+    install_default_stack(&mut cpu, &mut mem);
     for (addr, data) in &seed.memory {
         for (i, byte) in data.iter().enumerate() {
             let _ = mem.write_u8(addr + i as u32, *byte);
@@ -191,7 +192,6 @@ fn main() -> ExitCode {
 
     // Port side: same seed, hand-written implementation.
     let (mut cpu, mut mem) = seeded(&seed, &bytes, LOAD_BASE);
-    install_default_stack(&mut cpu, &mut mem);
     mem.writes.clear();
     port(&mut cpu, &mut mem);
     mem.writes.retain(|(a, _)| !in_stack(*a));

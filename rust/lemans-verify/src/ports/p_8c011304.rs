@@ -1,14 +1,13 @@
-//! 0x8c011304 — strncmp: compare up to n bytes of r4 vs r5.
+//! 0x8c011304 — strncmp: compare up to n bytes of r4 vs r5, byte at a time.
 //!
 //! The `bf.s` delay slot at 0x8c011308 copies r5 into r7 on every entry,
-//! including the n==0 path (which returns 0 through the rts delay slot).
-//! NOTE: the oracle decodes both `mov.b @r7+,r2` and `mov.b @r4+,r3` as
-//! u32 loads with a 1-byte step, so the loop actually compares overlapping
-//! dwords; the mismatch exit therefore usually fires on the first pair.
-//! On exit r4 is past the last read, r7 is decremented back (0x8c011330),
-//! r2 holds either the mismatched src dword or the address r4-1, and r3
-//! the zero-extended src byte. Return r0 = (u8)s1[k-1] - (u8)s2[k-1];
-//! T reflects the last test: clear on mismatch, set on NUL or count exit.
+//! including the n==0 path (which returns 0 through the rts delay slot, T
+//! set). On the n>0 paths each `mov.b @Rn+,Rm` loads one sign-extended byte
+//! and steps by 1; the loop leaves r4 past the last compared byte, r7 one
+//! before it (decremented at 0x8c011330), r2 holding either the mismatched
+//! src byte or the address r4-1, r5 the count, and r3 the zero-extended src
+//! byte. Return r0 = (u8)s1[k-1] - (u8)s2[k-1]; T reflects the last test:
+//! clear on mismatch, set on NUL or count exit.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -32,9 +31,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut r2: u32;
     let t: bool;
     loop {
-        r2 = mem.read_u32(r7).unwrap_or(0); // mov.b @r7+,r2 as decoded (u32, step 1)
+        r2 = sext8(mem, r7);          // mov.b @r7+,r2 (one byte, step 1)
         r7 = r7.wrapping_add(1);
-        let r3 = mem.read_u32(r4).unwrap_or(0); // mov.b @r4+,r3 as decoded (u32, step 1)
+        let r3 = sext8(mem, r4);      // mov.b @r4+,r3 (one byte, step 1)
         r4 = r4.wrapping_add(1);
         if r2 != r3 {
             t = false;                // cmp/eq -> bf taken
