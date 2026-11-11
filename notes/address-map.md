@@ -362,6 +362,9 @@
 | `0x8c19b530` | `FUN_8c19b530` | `notes/verifications/0x8c19b530.json` — ok; bare rts;nop |
 | `0x8c19b7f0` | `FUN_8c19b7f0` | `notes/verifications/0x8c19b7f0.json` — ok; bare rts;nop |
 | `0x8c19ca78` | `FUN_8c19ca78` | `notes/verifications/0x8c19ca78.json` — ok; *(*r15)=*r4 in rts delay |
+| `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
+| `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
+| `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -1015,6 +1018,9 @@
 | `0x8c13dbc0` | `FUN_8c13dbc0` | `notes/verifications/0x8c13dbc0.json` — 4 oracle steps; copies 8-byte elements r4..r5 to r6 unless r6==0; bf.s delay slot advances r6 every iteration incl. last; returns advanced r6 in r0 |
 | `0x8c143210` | `FUN_8c143210` | `notes/verifications/0x8c143210.json` — 40 oracle steps; stores 4 longs at r4+32 (f32[r5], f32[r5+4], f32[r5+8], 1.0 via stack frame) and 3 longs from r6 at r4+48; r4+=48, r5+=8, r7=r4+32, r2=r15-4, r3=r15-16 |
 | `0x8c144ba8` | `FUN_8c144ba8` | `notes/verifications/0x8c144ba8.json` — 10 oracle steps; walks list at [r4+4]; stores r4+4 (r4 incremented) or last <= node r3 through [r15]; r6 ends 0 |
+| `0x8c19ae78` | `init_two_pointers` | `notes/verifications/0x8c19ae78.json` — verified |
+| `0x8c19ae00` | `find_entry_by_key` | `notes/verifications/0x8c19ae00.json` — verified |
+| `0x8c19b01c` | `copy_12_byte_records` | `notes/verifications/0x8c19b01c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
