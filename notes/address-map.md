@@ -1027,6 +1027,15 @@
 | `0x8c19d550` | `deref_in_place_3` | `notes/verifications/0x8c19d550.json` — verified |
 | `0x8c19d33c` | `clear_float_and_byte` | `notes/verifications/0x8c19d33c.json` — verified |
 | `0x8c19d39c` | `init_object` | `notes/verifications/0x8c19d39c.json` — verified |
+| `0x8c08c704` | `FUN_8c08c704` | `notes/verifications/0x8c08c704.json` — 77 oracle steps; stores: 14/12-u32 record copy + head ptr + flag byte |
+| `0x8c08c978` | `FUN_8c08c978` | `notes/verifications/0x8c08c978.json` — 72 oracle steps; stores: 12-u32 record copy + head ptr + flag byte |
+| `0x8c093070` | `FUN_8c093070` | `notes/verifications/0x8c093070.json` — 13 oracle steps; stores: flag byte at r4+0x96=1 on store paths |
+| `0x8c09309c` | `FUN_8c09309c` | `notes/verifications/0x8c09309c.json` — 13 oracle steps; stores: flag byte at r4+0x5f=1 on store paths |
+| `0x8c0b4f5c` | `FUN_8c0b4f5c` | `notes/verifications/0x8c0b4f5c.json` — 27 oracle steps; stores: 3 f32 at stack-arg dst (last is rts delay slot) |
+| `0x8c0b4f94` | `FUN_8c0b4f94` | `notes/verifications/0x8c0b4f94.json` — 27 oracle steps; stores: 3 f32 at stack-arg dst (last is rts delay slot) |
+| `0x8c0b5304` | `FUN_8c0b5304` | `notes/verifications/0x8c0b5304.json` — 76 oracle steps; stores: per 44-byte record f32 zeros x7, f32 [0x8c1cd000] at +4, u32 0 at +20/+36 |
+| `0x8c0dfb10` | `FUN_8c0dfb10` | `notes/verifications/0x8c0dfb10.json` — 47 oracle steps; stores: byte 0 at r4+0x194, key/value/count updates on insert paths |
+| `0x8c100354` | `FUN_8c100354` | `notes/verifications/0x8c100354.json` — 24 oracle steps; stores: 8 f32 zeros at 0x8c2ab318+0..28 (last is rts delay slot) |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

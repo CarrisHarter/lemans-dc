@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c15a23c",
+  "memory": [
+    { "addr": "0x8c15a274", "hex": "f81e2b8c" },
+    { "addr": "0x8c15a278", "hex": "ffffff7f" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" },
+    { "addr": "0x8c210008", "hex": "0000218c" },
+    { "addr": "0x8c21000c", "hex": "10000000" },
+    { "addr": "0x8c210018", "hex": "0000218c" },
+    { "addr": "0x8c21001c", "hex": "20000000" }
+  ],
+  "steps": 60
+}
