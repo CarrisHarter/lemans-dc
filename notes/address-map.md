@@ -1151,6 +1151,13 @@
 | `0x8c21c40a` | `mask_28_bits` | `notes/verifications/0x8c21c40a.json` — 3 oracle steps |
 | `0x8c21ccec` | `indexed_word_from_table` | `notes/verifications/0x8c21ccec.json` — 5 oracle steps |
 | `0x8c21d8b0` | `set_global_or_minus_one` | `notes/verifications/0x8c21d8b0.json` — 7 oracle steps |
+| `0x8c21b198` | `byteswap_words` | `notes/verifications/0x8c21b198.json` — 18 oracle steps |
+| `0x8c21c3e0` | `set_high_bit_on_field` | `notes/verifications/0x8c21c3e0.json` — 10 oracle steps |
+| `0x8c21c3f4` | `fill_words` | `notes/verifications/0x8c21c3f4.json` — 21 oracle steps |
+| `0x8c221da8` | `index_times_128_load` | `notes/verifications/0x8c221da8.json` — 8 oracle steps |
+| `0x8c221db8` | `index_times_128_store` | `notes/verifications/0x8c221db8.json` — 8 oracle steps |
+| `0x8c225ae4` | `index_times_10_plus_low_nibble` | `notes/verifications/0x8c225ae4.json` — 12 oracle steps |
+| `0x8c238998` | `init_or_reset_global` | `notes/verifications/0x8c238998.json` — 6 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
