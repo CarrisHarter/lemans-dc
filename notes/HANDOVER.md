@@ -129,6 +129,26 @@ evidence.
 - `mov.b` sign-extends; `mov.w` sign-extends; `extu.b`/`extu.w` zero-extend.
 - A `bra` whose target is the loop test makes a while loop; a body before the
   test is a do-while. Read which address the branch targets.
+- **The `rts` delay slot is the return value more often than not.** A loop that
+  computes a count usually ends `rts ; mov r3,r0`, so the register the C calls
+  the loop index is overwritten by the result. Always read the word after `rts`.
+- `subc r4,r4` then `add #1,r4` is the standard "materialise a boolean" idiom:
+  `r4 = 1 - T`. `movt rN` (any register, `op & 0xF0FF == 0x0029`) is the other.
+- `mov.w @(disp,PC),Rn` and `mov.l @(disp,PC),Rn` read the *code* stream, so a
+  port must read the pool word from memory rather than hardcode it if the spec
+  might patch it.
+
+## Spec-writing traps
+
+- Little-endian hex, always. `0x8c210000` is `"0000218c"`, not `"00218c00"`.
+  Getting this wrong produces `data access 0x008c2100 outside mapped memory`,
+  which looks like a port bug and is not one.
+- JSON has no hex literals: `"r4": 64`, never `"r4": 0x40`. The verifier reports
+  `bad spec JSON: bad object at byte N`.
+- Seed every pointer you dereference, including the literal-pool words the code
+  loads (`mov.l @(disp,PC),Rn`), and every table the function indexes.
+- A function whose `rts` returns to `pr = 0` halts at `HALT_PC`; that is the
+  normal stop, not a failure.
 
 ## Decoder bugs found by ports (keep these fixed)
 
