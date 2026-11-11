@@ -481,6 +481,16 @@
 | `0x8c0b9768` | `zero_word_and_byte` | `notes/verifications/0x8c0b9768.json` — verified |
 | `0x8c0b9edc` | `clear_byte_return_self` | `notes/verifications/0x8c0b9edc.json` — verified |
 | `0x8c0b9f78` | `indexed_table_then_field` | `notes/verifications/0x8c0b9f78.json` — verified |
+| `0x8c0bde60` | `zero_three_words` | `notes/verifications/0x8c0bde60.json` — verified |
+| `0x8c0bde6c` | `return_self` | `notes/verifications/0x8c0bde6c.json` — verified |
+| `0x8c0bef98` | `store_arg_return_self_3` | `notes/verifications/0x8c0bef98.json` — verified |
+| `0x8c0bf364` | `advance_12_4` | `notes/verifications/0x8c0bf364.json` — verified |
+| `0x8c0bfd88` | `set_slot_if_empty` | `notes/verifications/0x8c0bfd88.json` — verified |
+| `0x8c0c01ec` | `copy_fields_0_8_12` | `notes/verifications/0x8c0c01ec.json` — verified |
+| `0x8c0c0d58` | `load_global_byte` | `notes/verifications/0x8c0c0d58.json` — verified |
+| `0x8c0c0d64` | `load_float_via_global_32` | `notes/verifications/0x8c0c0d64.json` — verified |
+| `0x8c0c0d74` | `load_float_via_global_36` | `notes/verifications/0x8c0c0d74.json` — verified |
+| `0x8c0c0d84` | `load_float_via_global_28` | `notes/verifications/0x8c0c0d84.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
