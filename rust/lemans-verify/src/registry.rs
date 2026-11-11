@@ -12,6 +12,8 @@ pub fn lookup(address: u32) -> Option<Port> {
     match address {
         0x8C01_0000 => Some(fixture_sum_loop),
         0x8C17_5C72 => Some(am_sound_is_playing),
+        0x8C18_B9C8 => Some(array_lookup),
+        0x8C15_52E4 => Some(store_through_two_levels),
         _ => None,
     }
 }
@@ -53,4 +55,38 @@ pub fn am_sound_is_playing(cpu: &mut Cpu, mem: &mut Memory) {
     let playing = mem.read_u32(sound + 0x38).unwrap_or(0);
     cpu.r[3] = playing; // the original leaves the field in r3
     cpu.r[0] = u32::from(playing != 0);
+}
+
+/// 0x8c18b9c8 — bounds-checked element lookup.
+///
+/// `if (index >= 0 && index < *base) return index * 0x14 + base[1];`
+/// `return base[2];`
+pub fn array_lookup(cpu: &mut Cpu, mem: &mut Memory) {
+    let base = cpu.r[4];
+    let index = cpu.r[5] as i32;
+    let count = mem.read_u32(base).unwrap_or(0) as i32;
+    // `cmp/pz` then `cmp/gt` leave T observable on every path.
+    if index < 0 {
+        cpu.set_t(false);
+        cpu.r[0] = mem.read_u32(base + 8).unwrap_or(0);
+        return;
+    }
+    cpu.set_t(count > index);
+    cpu.r[0] = if count > index {
+        let stride = mem.read_u32(base + 4).unwrap_or(0);
+        cpu.r[1] = stride; // the original leaves base[1] in r1 on this path
+        (index as u32).wrapping_mul(0x14).wrapping_add(stride)
+    } else {
+        mem.read_u32(base + 8).unwrap_or(0)
+    };
+}
+
+/// 0x8c1552e4 — write a value at `base+4` and through a pointer at `base+0x20`.
+pub fn store_through_two_levels(cpu: &mut Cpu, mem: &mut Memory) {
+    let base = cpu.r[4];
+    let value = cpu.r[5];
+    let _ = mem.write_u32(base + 4, value);
+    let inner = mem.read_u32(base + 0x20).unwrap_or(0);
+    cpu.r[0] = inner; // the original keeps the pointer in r0
+    let _ = mem.write_u32(inner + 8, value);
 }

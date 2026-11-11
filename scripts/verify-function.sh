@@ -9,10 +9,10 @@
 # files is a claim, not a result.
 set -euo pipefail
 
-ADDR="${1:?usage: verify-function.sh <0xaddress> [binary]}"
+ADDR="${1:?usage: verify-function.sh <0xaddress> [binary] [spec]}"
 ROOT="$HOME/Projects/lemans-dc"
 BIN="${2:-$ROOT/analysis/lemans24.bin}"
-SPEC="$ROOT/notes/specs/$ADDR.json"
+SPEC="${3:-$ROOT/notes/specs/$ADDR.json}"
 VERIFY="$ROOT/rust/lemans-verify"
 ORACLE="$ROOT/rust/sh4-oracle/target/release/sh4-oracle"
 OUT="$ROOT/notes/verifications"
@@ -35,7 +35,7 @@ set -e
 COMMIT="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo unknown)"
 SHA="$(sha256sum "$BIN" | cut -d' ' -f1)"
 
-python3 - "$OUT/$ADDR.json" "$ADDR" "$SPEC" "$BIN" "$SHA" "$COMMIT" "$STATUS" "$RESULT" "$ORACLE_JSON" <<'PY'
+python3 - "$OUT/$(basename "${SPEC%.json}").json" "$ADDR" "$SPEC" "$BIN" "$SHA" "$COMMIT" "$STATUS" "$RESULT" "$ORACLE_JSON" <<'PY'
 import json, sys, pathlib, datetime
 path, addr, spec, binary, sha, commit, status, result, oracle_json = sys.argv[1:10]
 oracle = json.loads(oracle_json)

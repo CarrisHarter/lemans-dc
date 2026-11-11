@@ -4,9 +4,11 @@
 
 | address | name | evidence |
 | --- | --- | --- |
-| `0x8c175c72` | `am_sound_is_playing` | `notes/verifications/0x8c175c72.json` — 9 oracle steps, registers + T bit match |
+| `0x8c175c72` | `am_sound_is_playing` | `notes/verifications/0x8c175c72.json` — 9 oracle steps |
+| `0x8c18b9c8` | `array_lookup` | `notes/verifications/0x8c18b9c8*.json` — both branches (12 and 7 oracle steps) |
+| `0x8c1552e4` | `store_through_two_levels` | `notes/verifications/0x8c1552e4.json` — 4 oracle steps, stores match |
 
-Two side effects found by the verifier and required by the port: the original
+Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
 `r3`. Neither is visible in the C, which is why the diff is the source of truth.
 
@@ -333,3 +335,17 @@ string itself. Names are proposals until a spec verifies the behaviour.
 | `0x8c1b4b00` | `heures` | Heures |
 | `0x8c1b52b4` | `heures_2` | Heures |
 | … | | 10 more in analysis/labels.tsv |
+
+## Verifier findings so far
+
+Four ports, five spec runs, and every failure was a *hidden side effect* that the
+decompiled C did not show:
+
+| address | missed by the C |
+| --- | --- |
+| `0x8c175c72` | argument copied into `r4`; field left in `r3` |
+| `0x8c18b9c8` | `base[1]` left in `r1`; T bit differs per branch |
+| `0x8c1552e4` | inner pointer left in `r0` |
+
+That is the argument for the oracle: register residue is invisible in pseudocode
+and load-bearing for the caller.
