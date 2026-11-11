@@ -1328,6 +1328,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1739f4` | `raise_imask_unless_high` | `notes/verifications/0x8c1739f4*.json` — both branches (22/15 oracle steps); raises IMASK to 15 then lowers to r4 unless old IMASK already >= r4; SR seeds use the top-level `sr` key, not `regs` |
 | `0x8c21c448` | `save_imask_raise` | `notes/verifications/0x8c21c448.json` — 12 oracle steps; saves IMASK to *r4, raises to 15 |
 | `0x8c21c460` | `restore_imask` | `notes/verifications/0x8c21c460.json` — 11 oracle steps; SR IMASK = *r4 & 15, companion of 0x8c21c448 |
+| `0x8c21ef74` | `masked_table_zero` | `notes/verifications/0x8c21ef74.json` — 1824 oracle steps; IMASK-masked zero-fill of two RAM tables (0x8c2bc9a8+12 step 16, 0x8c2bd9a8 step 4) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
