@@ -293,6 +293,9 @@
 | `0x8c06b68c` | `FUN_8c06b68c` | `notes/verifications/0x8c06b68c.json` — 291 oracle steps; r0=r4; r1,r3=loaded words; r2=entry_r15-32; r5=entry_r15-44; r6=r4+64; r7=r4+80; r8-r14,r15 restored by pops; fr0-fr8 clobbered (fr9-fr15 untouched); T/sysregs unchanged; 144 non-stack stores to the r4 output struct |
 | `0x8c07093c` | `byte_copy` | `notes/verifications/0x8c07093c*.json` — empty and 4-byte paths (9 and 60 steps); r6 becomes the end pointer even when empty |
 | `0x8c0749f0` | `table_scale` | `notes/verifications/0x8c0749f0*.json` — sentinel and scale paths; r5 shifted in place, r4 advanced only on the scale path |
+| `0x8c06c16c` | `FUN_8c06c16c` | `notes/verifications/0x8c06c16c.json` — 18 oracle steps; r8:=-1, r3:=r5+0x68, r1:=0, r10:=1, fr0:=0.0 (fldi0); append stores fr0 to [base20+count*4] then (r5,node,0) at [base1c+count*12] and count++; r0 ends 1 if pair existed else base1c; search loop leaves r9/r11/r12/r13/r14; shll r9 @0x8c06c218 sets T to shifted-out bit; exit T=1 |
+| `0x8c06c244` | `FUN_8c06c244` | `notes/verifications/0x8c06c244.json` — 58 oracle steps; r6:=-4, r3:=-12 (bra delay 0x8c06c254); on match r1 is dec then re-inc (net 0, slot retried with count-1), r7:=count-1, fr0:=moved float, r0:=base+12*scanned, r13:=4*i, r12/r14:=float pointers; exit T=0 |
+| `0x8c06c2c0` | `FUN_8c06c2c0` | `notes/verifications/0x8c06c2c0.json` — 74 oracle steps; r14:=-4, r7:=-12 (bra delay 0x8c06c2d2); r3 dec on removal then re-inc (slot re-examined with count-1); r1 += 12 only on skip; fr0:=moved float only on removal; r0/r10/r11/r12/r13 hold node/pair pointers; exit T=0 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
