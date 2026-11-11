@@ -1021,6 +1021,10 @@
 | `0x8c19ae78` | `init_two_pointers` | `notes/verifications/0x8c19ae78.json` — verified |
 | `0x8c19ae00` | `find_entry_by_key` | `notes/verifications/0x8c19ae00.json` — verified |
 | `0x8c19b01c` | `copy_12_byte_records` | `notes/verifications/0x8c19b01c.json` — verified |
+| `0x8c19cefc` | `deref_in_place_2` | `notes/verifications/0x8c19cefc.json` — verified |
+| `0x8c19d550` | `deref_in_place_3` | `notes/verifications/0x8c19d550.json` — verified |
+| `0x8c19d33c` | `clear_float_and_byte` | `notes/verifications/0x8c19d33c.json` — verified |
+| `0x8c19d39c` | `init_object` | `notes/verifications/0x8c19d39c.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
