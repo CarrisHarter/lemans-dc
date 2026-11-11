@@ -261,6 +261,15 @@
 | `0x8c06c854` | `store_arg_to_global` | `notes/verifications/0x8c06c854.json` — store is the rts delay slot; r0 ends as the pool address 0x8c23f438 |
 | `0x8c06caa8` | `advance_arg_12` | `notes/verifications/0x8c06caa8.json` — r4 itself is advanced; r0 is the advanced value |
 | `0x8c06cab4` | `advance_arg_4_store_float` | `notes/verifications/0x8c06cab4.json` — r4 advanced before the delay-slot fmov store |
+| `0x8c06cabc` | `advance_arg_8_store_float` | `notes/verifications/0x8c06cabc.json` — verified |
+| `0x8c06cac4` | `advance_arg_4_load_float` | `notes/verifications/0x8c06cac4.json` — verified |
+| `0x8c06cacc` | `advance_arg_8_load_float` | `notes/verifications/0x8c06cacc.json` — verified |
+| `0x8c070320` | `offset_0xb0` | `notes/verifications/0x8c070320.json` — verified |
+| `0x8c070bd0` | `empty_stub` | `notes/verifications/0x8c070bd0.json` — verified |
+| `0x8c070e74` | `load_global_8c240470` | `notes/verifications/0x8c070e74.json` — verified |
+| `0x8c071e04` | `load_global_8c2648f0` | `notes/verifications/0x8c071e04.json` — verified |
+| `0x8c071e10` | `store_global_8c2648f0` | `notes/verifications/0x8c071e10.json` — verified |
+| `0x8c06c160` | `load_global_8c23f470` | `notes/verifications/0x8c06c160.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
