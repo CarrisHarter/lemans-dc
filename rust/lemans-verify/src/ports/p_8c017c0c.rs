@@ -1,0 +1,96 @@
+//! 0x8c017c0c — decode a 1..4 byte little-endian integer. The low 3 bits of
+//! the first byte select the length; the value is the first byte shifted
+//! right by the length, with the following bytes packed above it. The
+//! follow-up bytes are read with group-8 `mov.b @(disp,Rn),R0` ops whose
+//! displacement the oracle reads as the full low byte: 0x41/0x42/0x43 (the
+//! disassembler's `@(1..3,r4)` display masks it), i.e. r4+0x41..0x43.
+//!
+//! ABI: r4 = src, r5 = u32* out. Returns r4 advanced past the consumed bytes.
+//!
+//! Side effects the decompiled C does not show: r6 always ends as the decoded
+//! byte paths, left shifted: r3 = b1<<16, r1 = b2<<8 (shll16 r3 / shll8 r1
+//! run in place); T comes from the last `shar r6` executed — 1 only on the
+//! 4-byte path (bit 2 of the first byte shifted out), 0 otherwise. The
+//! returned pointer is produced by `mov r4,r0` in each branch's delay slot,
+//! i.e. after the `add #n,r4`, and r4 itself ends advanced.
+
+use sh4_oracle::{Cpu, Memory};
+
+pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
+    let mut r4 = cpu.r[4];
+    let r5 = cpu.r[5];
+
+    // mov.b @r4,r0 ; exts.b r0,r6
+    let b0 = mem.read_u8(r4).unwrap();
+    let r6 = b0 as i8 as i32 as u32;
+
+    if b0 & 1 == 0 {
+        // 1-byte: shar r6 ; add #1,r4 ; mov.l r6,@r5 ; bra (delay mov r4,r0)
+        let v = ((r6 as i32) >> 1) as u32;
+        r4 = r4.wrapping_add(1);
+        mem.write_u32(r5, v).unwrap();
+        cpu.r[6] = v;
+        cpu.r[4] = r4;
+        cpu.r[0] = r4;
+        cpu.set_t(false); // shar shifted out bit 0, which is 0 on this path
+        return;
+    }
+
+    // mov.b @(0x41,r4),r0 ; extu.b r0,r3
+    let b1 = mem.read_u8(r4.wrapping_add(0x41)).unwrap() as u32;
+    if b0 & 2 == 0 {
+        // 2-byte: shar shar shll8 ; or ; add #2,r4 ; store ; bra (delay mov r4,r0)
+        let mut v = ((r6 as i32) >> 1) as u32;
+        v = ((v as i32) >> 1) as u32;
+        v = v << 8;
+        v |= b1;
+        r4 = r4.wrapping_add(2);
+        mem.write_u32(r5, v).unwrap();
+        cpu.r[6] = v;
+        cpu.r[3] = b1;
+        cpu.r[4] = r4;
+        cpu.r[0] = r4;
+        cpu.set_t(false); // second shar shifted out bit 1 == 0 on this path
+        return;
+    }
+
+    // mov.b @(0x42,r4),r0 ; extu.b r0,r1
+    let b2 = mem.read_u8(r4.wrapping_add(0x42)).unwrap() as u32;
+    if b0 & 4 == 0 {
+        // 3-byte: shar x3, shll16, shll8 r3, or r1 ; add #3,r4 ; store
+        let mut v = ((r6 as i32) >> 1) as u32;
+        v = ((v as i32) >> 1) as u32;
+        v = ((v as i32) >> 1) as u32;
+        v = v << 16;
+        v |= b1 << 8;
+        v |= b2;
+        r4 = r4.wrapping_add(3);
+        mem.write_u32(r5, v).unwrap();
+        cpu.r[6] = v;
+        cpu.r[3] = b1 << 16; // shll16 r3 leaves the shifted value in r3
+        cpu.r[1] = b2 << 8; // shll8 r1 leaves the shifted value in r1
+        cpu.r[4] = r4;
+        cpu.r[0] = r4;
+        cpu.set_t(false); // third shar shifted out bit 2 == 0 on this path
+        return;
+    }
+
+    // 4-byte: shar x3, shll16+shll8, shll16 r3, shll8 r1, or b3
+    let b3 = mem.read_u8(r4.wrapping_add(0x43)).unwrap() as u32;
+    let mut v = ((r6 as i32) >> 1) as u32;
+    v = ((v as i32) >> 1) as u32;
+    v = ((v as i32) >> 1) as u32;
+    v = v << 16;
+    v = v << 8;
+    v |= b1 << 16;
+    v |= b2 << 8;
+    v |= b3;
+    r4 = r4.wrapping_add(4);
+    mem.write_u32(r5, v).unwrap();
+    cpu.r[6] = v;
+    cpu.r[3] = b1 << 16; // shll16 r3
+    cpu.r[1] = b2 << 8; // shll8 r1
+    cpu.r[4] = r4;
+    cpu.r[0] = r4;
+    cpu.set_t(true); // third shar shifted out bit 2 == 1 on this path
+}
