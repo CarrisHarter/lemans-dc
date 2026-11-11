@@ -952,6 +952,13 @@
 | `0x8c1506a4` | `pass` | `notes/verifications/0x8c1506a4.json` — 41 oracle steps; 41 |
 | `0x8c1508b8` | `pass` | `notes/verifications/0x8c1508b8.json` — 8 oracle steps; 8 |
 | `0x8c15132c` | `pass` | `notes/verifications/0x8c15132c.json` — 3 oracle steps; 3 |
+| `0x8c16ec20` | `set_float_if_flag_36` | `notes/verifications/0x8c16ec20.json` — verified |
+| `0x8c16ee30` | `set_float_if_flag_96` | `notes/verifications/0x8c16ee30.json` — verified |
+| `0x8c16f658` | `lerp_ratio` | `notes/verifications/0x8c16f658.json` — verified |
+| `0x8c16fe60` | `scale_and_truncate` | `notes/verifications/0x8c16fe60.json` — verified |
+| `0x8c172e10` | `invert_table_byte_if_enabled` | `notes/verifications/0x8c172e10.json` — verified |
+| `0x8c172e2e` | `range_check_global` | `notes/verifications/0x8c172e2e.json` — verified |
+| `0x8c1730f6` | `increment_global_n_times` | `notes/verifications/0x8c1730f6.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
