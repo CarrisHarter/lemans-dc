@@ -413,6 +413,16 @@
 | `0x8c0b487c` | `copy_three_words_at_20` | `notes/verifications/0x8c0b487c.json` — verified |
 | `0x8c0b4894` | `advance_32_load_float` | `notes/verifications/0x8c0b4894.json` — verified |
 | `0x8c0b48c8` | `copy_three_floats` | `notes/verifications/0x8c0b48c8.json` — r4 advanced by 28, third store in the delay slot |
+| `0x8c083b9c` | `FUN_8c083b9c` | `notes/verifications/0x8c083b9c.json` — 19 oracle steps; writes *param=*(0x8c1f92a8), param[1]=0, byte param[2]=*r5, param[3]=param+4; r4=0, r6=param, r3=param+8, r1=param+4, r0=param at exit (mov r6,r0 after the mov.b) |
+| `0x8c084308` | `FUN_8c084308` | `notes/verifications/0x8c084308.json` — 15 oracle steps; r3=base+r5*32 (or 0 when byte==0), r1=r0=zero-extended byte, r0=r3 via rts delay slot mov r3,r0; T=(byte==0) from tst |
+| `0x8c0848d8` | `FUN_8c0848d8` | `notes/verifications/0x8c0848d8.json` — 19 oracle steps; writes *param=*(0x8c1f94c0), param[1]=0, byte param[2]=*r5, param[3]=param+4; r4=0, r6=param, r3=param+8, r1=param+4, r0=param at exit |
+| `0x8c085110` | `FUN_8c085110` | `notes/verifications/0x8c085110.json` — 25 oracle steps; on state==2 path: r0=1, r1=param+4, r5=g+4, r3=g+8, fr0=old param[1], fr1=param[2], fr2=result, *param=1, f32 param[1]=g[2]*fr4+g[1]-param[2]+param[1]; T=(*param==2); skip path leaves r0=*param |
+| `0x8c085148` | `FUN_8c085148` | `notes/verifications/0x8c085148.json` — 19 oracle steps; on state==1 path: r0=2, r1=param+8, r3=g+4, fr0=g[1], fr1=result, *param=2, f32 param[2]=g[2]*fr4+g[1]; T=(*param==1); skip path leaves r0=*param |
+| `0x8c085174` | `FUN_8c085174` | `notes/verifications/0x8c085174.json` — 15 oracle steps; *param=0 happens in the rts DELAY SLOT (unconditional); r0=0, r1=param+8, r3=g+4, fr0=g[1], fr1=result; no cmp so T untouched |
+| `0x8c085198` | `FUN_8c085198` | `notes/verifications/0x8c085198.json` — 15 oracle steps; *param=1 in the rts DELAY SLOT (unconditional); r0=1, r1=param+4, r3=g+4, fr0=g[1], fr1=result; T untouched |
+| `0x8c0851f8` | `FUN_8c0851f8` | `notes/verifications/0x8c0851f8.json` — 21 oracle steps; fmov fr4,@r0 follows an UNdelayed bf (0x8B) so param[2]:=fr4 only when param[2]==0.0; r1=fpul=old *param, r3=param+4, r0=old*param+1, fr0=re-read param[2], fr1=result; T=(orig param[2]==0.0) |
+| `0x8c085264` | `FUN_8c085264` | `notes/verifications/0x8c085264.json` — 13 oracle steps; *(0x8c26c230)=param; r1=param+4, fr0=0.0 (fldi0), r0=param via rts delay slot mov r4,r0 (return value); T untouched |
+| `0x8c085628` | `FUN_8c085628` | `notes/verifications/0x8c085628.json` — 44 oracle steps; r1=param_3 from @(4,r15) after r14 push; r14 restored by rts delay slot; r0=r3 at exit; T=last cmp/pz; only bt.s (0x8D) has a delay slot (sub r0,r3 always runs) — plain bt (0x89) is undelayed so add #60 runs only on the borrow fall-through |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
