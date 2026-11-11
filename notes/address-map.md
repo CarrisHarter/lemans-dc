@@ -504,6 +504,7 @@
 | `0x8c0c1730` | `load_byte_28_via_36` | `notes/verifications/0x8c0c1730.json` — verified |
 | `0x8c0c173c` | `store_field_4_via_36_2` | `notes/verifications/0x8c0c173c.json` — verified |
 | `0x8c0c1744` | `load_field_4_via_36` | `notes/verifications/0x8c0c1744.json` — verified |
+| `0x8c0b34bc` | `FUN_8c0b34bc` | `notes/verifications/0x8c0b34bc.json` — 222 oracle steps; stores 9 floats to *r4 (path r4!=r6 directly, path r4==r6 via 36-byte copy from stack); T=(r4==r6); path A leaves r4=dest+32, r6=src+32, r5=dest+28, r0=src+8, r1=src+28, r2=sp+20, r3=src+16, r7=src+4, r9=src+24, r10=src+24, r11=src+12, r12=dest+24, r13=src+20, fr0..fr4=last dot operands/result; path B leaves r5=entry_sp-64, r6=src+32, r2=sp+80, r0/r1=copy scratch |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
