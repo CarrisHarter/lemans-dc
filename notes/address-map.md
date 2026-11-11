@@ -244,6 +244,7 @@
 | `0x8c145588` | `FUN_8c145588` | `notes/verifications/0x8c145588.json` — ok; like 0x8c124d50: *r4=**r4, *(*r15)=old in rts delay |
 | `0x8c146730` | `FUN_8c146730` | `notes/verifications/0x8c146730.json` — ok; *(r4+r5*4)=r6, *(r4+0xa8)+=1 in rts delay |
 | `0x8c149dd0` | `FUN_8c149dd0` | `notes/verifications/0x8c149dd0.json` — ok; r0 = pointer-max(r4, r5) by unsigned *values, r5=r4 on low path |
+| `0x8c14b280` | `FUN_8c14b280` | `notes/verifications/0x8c14b280.json` — ok (24 steps); scale fr4 by pool, clamp [0,pool2], ftrc→fpul, shld into r4 masked by ~r6 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
