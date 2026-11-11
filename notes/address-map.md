@@ -198,6 +198,7 @@
 | `0x8c0918e4` | `FUN_8c0918e4` | `notes/verifications/0x8c0918e4.*.json` — both branches; same scan as 0x8c09138c with bound 36 |
 | `0x8c09d30c` | `FUN_8c09d30c` | `notes/verifications/0x8c09d30c.json` — ok; struct init, pool 0x8c1fb6b8 single deref, same shape as 0x8c05de64 |
 | `0x8c0ab680` | `FUN_8c0ab680` | `notes/verifications/0x8c0ab680.json` — ok; merge: r5→r4+108, r6→r4+120, r6→r4+0x90, r4+=0x90 |
+| `0x8c0b274c` | `FUN_8c0b274c` | `notes/verifications/0x8c0b274c.json` — ok; merge: r5→r4+16 (3 words), r6→r4 (4 words), fr4→r4+28, fr5→r4+32, r4+=32 |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -398,6 +399,11 @@
 | `0x8c09d598` | `init_node_1` | `notes/verifications/0x8c09d598.json` — verified |
 | `0x8c09d774` | `init_node_2` | `notes/verifications/0x8c09d774.json` — verified |
 | `0x8c09d950` | `init_node_3` | `notes/verifications/0x8c09d950.json` — verified |
+| `0x8c084ea4` | `FUN_8c084ea4 (copy 32B records r4->r6 until r4==r5)` | `notes/verifications/0x8c084ea4.json` — 98 oracle steps; r0=r6 on return (rts delay slot); r1=dst+24, r3=dst+20, r7=dst+16, fr0=float from src+24 of last copied record; r4=r5; T=1 (final cmp/eq); add #32,r6 runs in bf.s delay slot so r6 advances on the last iteration too |
+| `0x8c084f8c` | `FUN_8c084f8c (copy r5 records r6->r4, stride 32 on r4)` | `notes/verifications/0x8c084f8c.json` — 134 oracle steps; r0=halfword from src+28 of last record (not a real return value); r1=src+4, r3=src+20, r7=dst+20 of last iteration; r5=0, r4=r4+32*count; T=1 (final tst); r8..r14 pushed/popped so unchanged; add #32,r4 in bf.s delay slot |
+| `0x8c0850a4` | `FUN_8c0850a4 (time->float: [r4+4]=B[2]*fr4+B[1]-(h/1000+m+s*60+ms*3600), [r4]=1)` | `notes/verifications/0x8c0850a4.json` — 46 oracle steps; r0=1; r1=r4+4; r3=ms; r5=s; r6=m; fpul=m (last lds r6,fpul); fr1=B[2]*fr4+B[1]; fr2=3600.0 fr3=ms*3600 fr5=60.0 fr6=s*60 fr7=1000.0 fr8=sum; fr0=result; stores ordered f32@r4+4, f32@r4+4, u32@r4 (rts delay slot); T untouched; args are halfwords on the stack at r15, B via global pointer at 0x8c26c230 |
+| `0x8c085434` | `FUN_8c085434 (compare 4 halfwords, high first; a[i]>b[i])` | `notes/verifications/0x8c085434.json` — 10 oracle steps; r0=T as 0/1 via movt in rts delay slot (not the loaded halfword); r1=sign-extended a[i] of the deciding field; T=final cmp/gt r0,r1 |
+| `0x8c085480` | `FUN_8c085480 (compare 4 halfwords, high first; a[i]<b[i])` | `notes/verifications/0x8c085480.json` — 10 oracle steps; r0=T as 0/1 via movt; r1=sign-extended a[i]; T=cmp/gt r1,r0 (opposite operand order vs 0x8c085434); rts delay slot movt r0 on every return path |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
