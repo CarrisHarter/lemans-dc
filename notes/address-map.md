@@ -589,6 +589,16 @@
 | `0x8c0ae74c` | `FUN_8c0ae74c` | `notes/verifications/0x8c0ae74c.json` — 62 oracle steps; out pointer is read from [r15] at entry (stack slot), not from r6; r4 is clobbered to the saved mode on every loop iteration; r0=mode; r1=iteration count; r3=table base; r6=count; r7=accumulated offset; T=0 |
 | `0x8c0b2ca0` | `FUN_8c0b2ca0` | `notes/verifications/0x8c0b2ca0.json` — 21 oracle steps; r4/r5 post-incremented to +12; r0=out+8 where out=[r15]; fr0 keeps fr4; fr5/fr6/fr7 keep pairwise differences; pref @r0 is a no-op; T untouched |
 | `0x8c0b2e38` | `FUN_8c0b2e38` | `notes/verifications/0x8c0b2e38.json` — 83 oracle steps; stores land at r4+0,16,32,28,20,24,8,12,4 in that order; r4 ends +4; r0/r1/r3/r5/r6/r7/r14 all keep r4-derived offsets; fr13/fr14/fr15 and r14 pushed/popped so seeds survive; T untouched |
+| `0x8c0e1f5c` | `store_byte_at_96` | `notes/verifications/0x8c0e1f5c.json` — verified |
+| `0x8c0e1f64` | `store_word_at_92` | `notes/verifications/0x8c0e1f64.json` — verified |
+| `0x8c0e2fc4` | `load_global_indirect` | `notes/verifications/0x8c0e2fc4.json` — verified |
+| `0x8c0e6ea4` | `load_global_field_12` | `notes/verifications/0x8c0e6ea4.json` — verified |
+| `0x8c0e7234` | `sr_imask` | `notes/verifications/0x8c0e7234.json` — verified |
+| `0x8c0e8c60` | `empty_stub_6` | `notes/verifications/0x8c0e8c60.json` — verified |
+| `0x8c0e8dfc` | `swap_float_global` | `notes/verifications/0x8c0e8dfc.json` — verified |
+| `0x8c0eacf4` | `empty_stub_7` | `notes/verifications/0x8c0eacf4.json` — verified |
+| `0x8c0eaef8` | `advance_28_2` | `notes/verifications/0x8c0eaef8.json` — verified |
+| `0x8c0f02fc` | `store_word_at_64` | `notes/verifications/0x8c0f02fc.json` — verified |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
