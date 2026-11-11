@@ -250,6 +250,13 @@
 | `0x8c05f294` | `FUN_8c05f294` | `notes/verifications/0x8c05f294.json` — 3 oracle steps; r4+=4; r0=new r4 (rts delay slot) |
 | `0x8c05a828` | `FUN_8c05a828` | `notes/verifications/0x8c05a828.json` — 238 oracle steps; builds 4x4 float matrix at r4 from lit 2.0f@0x8c05a94c and fr4/fr5/fr6/fr7, transposes in place; final r0=4, r1=4, r2=sp+12, r3=r4+64, r5=16, r6=r4+44, r7=r4+56; r10-r14 restored by pops; T=0; fr0=last swapped val, fr1=0, fr2=1/(fr5-fr4), fr3=1, fr4=-fr4*fr2, fr5=fr5-fr4 |
 | `0x8c06be50` | `unknown` | `notes/verifications/0x8c06be50.json` — 13 oracle steps |
+| `0x8c06116c` | `FUN_8c06116c` | `notes/verifications/0x8c06116c.json` — 3 oracle steps; r0 = 0x8c23dea0 (pointer load survives); store r4 at 0x8c23dea0 in rts delay slot |
+| `0x8c061768` | `FUN_8c061768` | `notes/verifications/0x8c061768.json` — 5 oracle steps; r0 = 0x8c1f7a18 base; r4 = base + (r4<<2); store fr4 at r4 in rts delay slot |
+| `0x8c061be8` | `FUN_8c061be8` | `notes/verifications/0x8c061be8.json` — 2 oracle steps; none (rts; nop) |
+| `0x8c0654b4` | `FUN_8c0654b4` | `notes/verifications/0x8c0654b4.json` — 3 oracle steps; r4 += 0x40 (wrapping, mutates the argument); r0 = incremented r4 in rts delay slot |
+| `0x8c067f08` | `FUN_8c067f08` | `notes/verifications/0x8c067f08.json` — 4 oracle steps; r0 = 0x9c, r1 = 1 survive; byte store mem[0x9c+r4] = 1 in rts delay slot |
+| `0x8c069260` | `FUN_8c069260` | `notes/verifications/0x8c069260.json` — 4 oracle steps; T = last cmp/gt; r6 = r4 on the fall path; r0 = r5/r6/r4 per path |
+| `0x8c069c74` | `FUN_8c069c74` | `notes/verifications/0x8c069c74.json` — 25 oracle steps; r6 = out+12, r0 = out+8, r1 = out+4, r3 = in+4, r5 = in+8; fr0..fr3 overwritten with scaled values; 4 stores incl. [out+12] in rts delay slot |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

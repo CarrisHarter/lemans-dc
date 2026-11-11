@@ -1209,9 +1209,9 @@ impl Cpu {
             }
             0xD => match op & 0x00FF {
                 0x0D => { self.fr[n] = f32::from_bits(self.fpul); Ok(()) }  // fsts FPUL,FRn
-                0x1D => { self.fpul = self.fr[m].to_bits(); Ok(()) }        // flds FRm,FPUL
+                0x1D => { self.fpul = self.fr[n].to_bits(); Ok(()) }        // flds FRn,FPUL
                 0x2D => { self.fr[n] = self.fpul as i32 as f32; Ok(()) }    // float FPUL,FRn
-                0x3D => { self.fpul = self.fr[m] as i32 as u32; Ok(()) }    // ftrc FRm,FPUL
+                0x3D => { self.fpul = self.fr[n] as i32 as u32; Ok(()) }    // ftrc FRn,FPUL
                 0x8D => { self.fr[n] = 0.0; Ok(()) }                        // fldi0
                 0x9D => { self.fr[n] = 1.0; Ok(()) }                        // fldi1
                 _ => Err(Error::Unimplemented(pc, op, "0xF.1101 family")),

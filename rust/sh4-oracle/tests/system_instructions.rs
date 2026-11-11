@@ -559,3 +559,21 @@ fn not_register_form_inverts_rm() {
     let (cpu, _) = run(cpu, mem);
     assert_eq!(cpu.r[0], 0xFF00_FF00);
 }
+
+#[test]
+fn ftrc_and_flds_source_the_n_field() {
+    // Assembled with sh-elf-as: `ftrc fr4,fpul` = 0xF43D, `flds fr4,fpul` =
+    // 0xF41D. The register number is the n field (bits 11-8); the low byte is
+    // the opcode. Reading m instead truncates the wrong register.
+    let (mut cpu, mem) = one(0xF43D);
+    cpu.fr[3] = 2.5;
+    cpu.fr[4] = 7.75;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.fpul, 7, "ftrc must truncate fr4, not fr3");
+
+    let (mut cpu, mem) = one(0xF41D);
+    cpu.fr[3] = f32::from_bits(0x1111_1111);
+    cpu.fr[4] = f32::from_bits(0x2222_2222);
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.fpul, 0x2222_2222, "flds must read fr4, not fr3");
+}

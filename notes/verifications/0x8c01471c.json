@@ -1,23 +1,16 @@
 {
   "address": "0x8c01471c",
-  "spec": "~/Projects/lemans-dc/notes/specs/0x8c01471c.json",
-  "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
+  "spec": "notes/specs/0x8c01471c.json",
+  "binary": "analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "e2dffd1",
-  "verified_at": "2026-11-11T10:12:40+00:00",
-  "result": "fail",
+  "commit": "ffa1f23",
+  "verified_at": "2026-11-11T10:21:55+00:00",
+  "result": "pass",
   "oracle": {
     "stop": "halt",
     "steps": 87
   },
   "verifier_output": [
-    "FAIL 0x8c01471c: 7 difference(s)",
-    "  r2: port 0x3fc00000 != original 0xc0600000",
-    "  fpul: port 0x00000000 != original 0x00000002",
-    "  fr0: port 0x3fc00000 (1.5) != original 0xc0600000",
-    "  fr2: port 0x00000000 (0) != original 0x40a00000",
-    "  fr3: port 0x3fc00000 (1.5) != original 0xc0600000",
-    "  writes: port 4 entries, original 4 entries",
-    "    first write diff #0: original (2350907392, 2) port (2350907392, 0)"
+    "ok   0x8c01471c matches original (87 oracle steps)"
   ]
 }
