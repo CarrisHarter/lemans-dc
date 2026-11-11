@@ -1,0 +1,22 @@
+{
+  "entry": "0x8c227fe2",
+  "memory": [
+    {
+      "addr": "0x8c228020",
+      "hex": "200e"
+    },
+    {
+      "addr": "0x8c228022",
+      "hex": "c401"
+    },
+    {
+      "addr": "0x8c2c6fa0",
+      "hex": "a06f2c8c"
+    },
+    {
+      "addr": "0x8c228028",
+      "hex": "ac6f2c8c"
+    }
+  ],
+  "steps": 200
+}

@@ -1207,6 +1207,10 @@
 | `0x8c227620` | `insert_bits_181ff` | `notes/verifications/0x8c227620.json` — 6 oracle steps |
 | `0x8c227800` | `insert_bits_20000` | `notes/verifications/0x8c227800.json` — 19 oracle steps |
 | `0x8c22f40c` | `state_gate` | `notes/verifications/0x8c22f40c.json` — 9 oracle steps |
+| `0x8c227fe2` | `scan_slots_for_free` | `notes/verifications/0x8c227fe2.json` — 71 oracle steps |
+| `0x8c228040` | `scan_slots_for_free_2` | `notes/verifications/0x8c228040.json` — 71 oracle steps |
+| `0x8c22fb00` | `set_slot_or_error` | `notes/verifications/0x8c22fb00.json` — 8 oracle steps |
+| `0x8c23a4e0` | `store_by_index` | `notes/verifications/0x8c23a4e0.json` — 9 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in

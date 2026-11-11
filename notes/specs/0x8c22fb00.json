@@ -1,0 +1,1 @@
+{"entry": "0x8c22fb00", "regs": {"r4": "0x8c200000"}, "memory": [{"addr": "0x8c22fb64", "hex": "eeee0000"}, {"addr": "0x8c22fb68", "hex": "789d2c8c"}, {"addr": "0x8c2c9d78", "hex": "01000000"}], "steps": 40}
