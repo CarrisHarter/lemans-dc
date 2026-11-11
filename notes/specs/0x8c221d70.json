@@ -1,0 +1,1 @@
+{"entry": "0x8c221d70", "regs": {"r4": "0xdeadbeef"}, "memory": [{"addr": "0x8c221e14", "hex": "98de2b8c"}, {"addr": "0x8c221e12", "hex": "0004"}, {"addr": "0x8c221e10", "hex": "8000"}], "steps": 80}

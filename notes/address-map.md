@@ -1173,6 +1173,9 @@
 | `0x8c166514` | `pass` | `notes/verifications/0x8c166514.json` — 79 oracle steps; 79 |
 | `0x8c16909c` | `pass` | `notes/verifications/0x8c16909c.json` — 385 oracle steps; 385 |
 | `0x8c16c620` | `pass` | `notes/verifications/0x8c16c620.json` — 109 oracle steps; 109 |
+| `0x8c21e0c8` | `conditional_append` | `notes/verifications/0x8c21e0c8.json` — 6 oracle steps |
+| `0x8c221d54` | `fill_stride_116` | `notes/verifications/0x8c221d54.json` — 49 oracle steps |
+| `0x8c221d70` | `fill_stride_120` | `notes/verifications/0x8c221d70.json` — 49 oracle steps |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
