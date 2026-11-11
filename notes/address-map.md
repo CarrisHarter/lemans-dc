@@ -401,6 +401,7 @@
 | `0x8c239020` | `FUN_8c239020` | `notes/verifications/0x8c239020.json` — ok; r3=0x8c2c9db4, rts delay r0=*r3 |
 | `0x8c23a4c0` | `FUN_8c23a4c0` | `notes/verifications/0x8c23a4c0.json` — ok; rts; delay *(r4+24)=r5 |
 | `0x8c23a540` | `FUN_8c23a540` | `notes/verifications/0x8c23a540.json` — ok; rts; delay *(r4+44)=r5 |
+| `0x8c23a544` | `FUN_8c23a544` | `notes/verifications/0x8c23a544.json` — ok; rts; delay r0=*(r4+44) |
 | `0x8c051f68` | `FUN_8c051f68` | `notes/verifications/0x8c051f68.json` — 3 oracle steps; "store *(u32*)(r4+0x194)=r5 is the rts delay slot; r0 left holding 0x194, not the stored value" |
 | `0x8c014c1c` | `FUN_8c014c1c` | `notes/verifications/0x8c014c1c.json` — 79 oracle steps; "r1 = shad(n,0xff) mask left; r7 = final carry byte; r3 = -n; r5 ends r4-1 (r4+len-1 if loop skipped); r0 on the n==0 path is the caller's incoming r0; r14/r15 preserved via stack" |
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
@@ -1108,6 +1109,16 @@
 | `0x8c21b098` | `load_field_10c4` | `notes/verifications/0x8c21b098.json` — 5 oracle steps |
 | `0x8c21b0a2` | `store_field_10cc` | `notes/verifications/0x8c21b0a2.json` — 5 oracle steps |
 | `0x8c21b0ac` | `load_field_10cc` | `notes/verifications/0x8c21b0ac.json` — 5 oracle steps |
+| `0x8c16c9b0` | `FUN_8c16c9b0` | `notes/verifications/0x8c16c9b0.json` — 87 oracle steps; stores: [r4]=0x8c1effa4, 0 at r4+4/byte r4+8, 3-word table 0x8c1d3f68 x5 at r4+12..84, pool f32 at r4+64/68/72, 1.0f at r4+88/+100, byte 0 at r4+92, 0.0f at r4+96 |
+| `0x8c16ea8c` | `FUN_8c16ea8c` | `notes/verifications/0x8c16ea8c.json` — 30 oracle steps; stores: optional f32 fr4 at [r4+92]+40, f32 quotient at +44, byte 1/0 at +48 (rts delay slot); r4 left at r4+92 |
+| `0x8c16eaec` | `FUN_8c16eaec` | `notes/verifications/0x8c16eaec.json` — 31 oracle steps; stores: fr4/fr5/fr6 at [r4+92]+60/64/68, copies at +72/76/80, OR 0x01800000 into [r4+8] |
+| `0x8c16eb30` | `FUN_8c16eb30` | `notes/verifications/0x8c16eb30.json` — 31 oracle steps; stores: [r15]/[r15+4]/[r15+8] at [r4+92]+60/64/68, copies at +72/76/80, OR 0x01800000 into [r4+8] |
+| `0x8c16ed3c` | `FUN_8c16ed3c` | `notes/verifications/0x8c16ed3c.json` — 45 oracle steps; stores: clamped r5 at [r4+92]+108, clamped r6 at +112, OR 0x40000000 into [r4+8] (x2) |
+| `0x8c16eda8` | `FUN_8c16eda8` | `notes/verifications/0x8c16eda8.json` — 34 oracle steps; stores: [obj+20] at obj+16 (bt.s delay slot, always), clamped r5 at obj+20, OR 0x00200000 into [r4+8] |
+| `0x8c1705ca` | `FUN_8c1705ca` | `notes/verifications/0x8c1705ca.json` — 36 oracle steps; stores: one masked mov.w clear at 0x8c2b52f0/2/4/6 depending on r4 and [0x8c2b52dc]==2; r4 -=32/-48 on high paths |
+| `0x8c173a20` | `FUN_8c173a20` | `notes/verifications/0x8c173a20.json` — 22 oracle steps; no stores (ocbp/ocbi are cache hints); r1/r5 advanced by 32-step delay slots, r2=0xffffffe0, T=1 |
+| `0x8c173a6c` | `FUN_8c173a6c` | `notes/verifications/0x8c173a6c.json` — 24 oracle steps; no stores (ocbwb cache hint); r4 mutated to (r4+r5-1)&~31, r2 advances past it, r1=0xffffffe0, T=1 |
+| `0x8c178e54` | `FUN_8c178e54` | `notes/verifications/0x8c178e54.json` — 29 oracle steps; stores: 3 u32 from [r5] at r4+0/4/8, f32 fr4-fr8 at r4+12..28, r6/r7 at r4+32/36 |
 
 Side effects found by the verifier and required by the port: the original
 copies the argument into `r4` (not present here) and leaves the `+0x38` field in
