@@ -1414,6 +1414,7 @@ memory` before a diff can mean anything.
 | `0x8c013248` | non-contiguous export (9 ranges, first ends 0x8c013327 with `bra` into the next range); the porting loop needs one linear body |
 | `0x8c011470` | non-contiguous export (5 ranges spanning 0x8c011470-0x8c011869); the porting loop needs one linear body |
 | `0x8c018244` | infinite spin loop (`bra` to self); exceeds any step budget — behaviour cannot be pinned by a spec |
+| `0x8c21d89e` | hardware register access: `ff800030` |
 
 ## Auto-proposed names (debug strings)
 
