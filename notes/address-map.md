@@ -1254,7 +1254,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21a04a` | `set_indexed_word_if_in_range` | `notes/verifications/0x8c21a04a.json` — 8 oracle steps |
 | `0x8c21a5e0` | `FUN_8c21a5e0` | `notes/verifications/0x8c21a5e0.json` — 11264 oracle steps; stores 192 bytes near r4+0xba (net r4 = entry-6); r5 advanced 1536; r1/r2/r3/r6/r7/r0 clobbered; final T=1 |
 | `0x8c21ae2c` | `set_enable_and_clear_flag` | `notes/verifications/0x8c21ae2c.json` — 11 oracle steps |
-| `0x8c21aff2` | `index_times_8_plus_field` | `notes/verifications/0x8c21aff2.json` — 7 oracle steps |
+| `0x8c21aff2` | `slot_ptr_8` | `notes/verifications/0x8c21aff2*.json` - 3 specs; `*[0x8c2ba634]+4+8*r4`; T is bit 29 of r4 from `shll` |
+| `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
+| `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
+| `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
 | `0x8c21b06e` | `store_shifted_field_10c0` | `notes/verifications/0x8c21b06e.json` — 6 oracle steps |
 | `0x8c21b07a` | `load_field_10c0_high_half` | `notes/verifications/0x8c21b07a.json` — 8 oracle steps |
 | `0x8c21b08a` | `store_bit_field_10c4` | `notes/verifications/0x8c21b08a.json` — 7 oracle steps |
