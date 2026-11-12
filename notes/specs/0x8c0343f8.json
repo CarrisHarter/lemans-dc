@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c0343f8",
+  "regs": {
+    "r4": "0x8c240000",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c30f800"
+  },
+  "steps": 20000
+}
