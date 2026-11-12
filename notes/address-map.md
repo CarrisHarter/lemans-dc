@@ -1710,6 +1710,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c04d3dc` | `FUN_8c04d3dc` | `notes/verifications/0x8c04d3dc.json` — 243 oracle steps; calls 0x8c0bfb4c twice (key 1), 0x8c0c010c, 0x8c0c0100, then 0x8c0b4f94 (dst = frame) and 0x8c0b4ef0 (scale 0.5); writes 3 floats through the 5th-argument pointer |
 | `0x8c0b90f4` | `FUN_8c0b90f4` | `notes/verifications/0x8c0b90f4.json` — 141 oracle steps; unlink matching list nodes and free them; recursive descent into kind=-1 nodes; patches list head, prev link and successor |
 | `0x8c0ed80c` | `FUN_8c0ed80c` | `notes/verifications/0x8c0ed80c.json` — 51 oracle steps; zeros r4+0/4/8/12/16 and r4+44..+76; 0x8c0b4ff0 zeroes r4+20/24/28 and r4+32/36/40, fr0=0; r0=76, r1=0, r14/r15/pr restored |
+| `0x8c0f87d8` | `FUN_8c0f87d8` | `notes/verifications/0x8c0f87d8.json` — 16 oracle steps; calls 0x8c14fe34 when (r5&0xff)!=0 else 0x8c14fe68, argument r4+0x2c; r0 = [[r4+0x30]+0x1c] or [[r4+0x30]+0x10]; r4 += 0x2c; T=(r5&0xff)==0; pr/r15 restored |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
