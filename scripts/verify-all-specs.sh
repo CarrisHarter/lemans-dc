@@ -13,7 +13,7 @@ ORACLE=rust/sh4-oracle/target/release/sh4-oracle
 VERIFY=rust/lemans-verify/target/release/lemans-verify
 run() {
   spec="$1"
-  addr="$(basename "$spec" | cut -d. -f1)"
+  addr="$(basename "$spec" | cut -d. -f1 | cut -d- -f1)"
   out="$("$VERIFY" "$BIN" "$addr" "$spec" --oracle "$ORACLE" 2>&1)"
   if ! grep -q '^ok ' <<<"$out"; then
     printf 'FAIL %s :: %s\n' "$spec" "$(grep -m1 -E '^FAIL|difference|!=|bad spec|no port|oracle' <<<"$out")"

@@ -52,6 +52,10 @@ for addr in "$@"; do
     fi
     continue
     cp "$spec" "notes/specs/$name"
+    case "$name" in
+      0x[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]-*)
+        mv "notes/specs/$name" "notes/specs/${name%%-*}.${name#*-}" ;;
+    esac
   done
 done
 
