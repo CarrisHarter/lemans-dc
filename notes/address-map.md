@@ -1835,6 +1835,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c161a38` | `insertion_sort` | `notes/verifications/0x8c161a38*.json` - 2 specs (154/109 steps) |
 | `0x8c1730f2` | `countdown_loop_thunk` | `notes/verifications/0x8c1730f2*.json` - 2 specs (42/7 steps) |
 | `0x8c161a98` | `three_element_sort_network` | `notes/verifications/0x8c161a98*.json` - 2 specs (124/80 steps) |
+| `0x8c10d5f0` | `insertion_sort_deref` | `notes/verifications/0x8c10d5f0*.json` - 2 specs (104/116 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
