@@ -1,0 +1,14 @@
+{
+  "entry": "0x8c0796b8",
+  "regs": {
+    "r0": "0xdead0000",
+    "r4": "0x8c280000",
+    "r5": "0x00008000",
+    "r6": "0x66666666",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 50,
+  "notes": "count 0x8000 sign-extends to -32768, so the low word is the test: no call at all even though the 32-bit register is positive. T comes from cmp/pl (false)."
+}

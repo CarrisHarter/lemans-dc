@@ -1,0 +1,14 @@
+{
+  "entry": "0x8c0796b8",
+  "regs": {
+    "r0": "0xdead0000",
+    "r4": 0,
+    "r5": 1,
+    "r6": "0x66666666",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 50,
+  "notes": "null handle: the bt skips both calls; returns r0 = 0 with T=1 from tst r13,r13."
+}

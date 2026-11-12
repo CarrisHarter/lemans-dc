@@ -1,0 +1,26 @@
+{
+  "entry": "0x8c0796b8",
+  "regs": {
+    "r0": "0xdead0000",
+    "r4": "0x8c280000",
+    "r5": "0x80000001",
+    "r6": "0x66666666",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c28000c", "hex": "0010288c" },
+    { "addr": "0x8c280ff8", "hex": "d00f288c" },
+    { "addr": "0x8c280ffc", "hex": "30000000" },
+    { "addr": "0x8c280fd4", "hex": "feffffff" },
+    { "addr": "0x8c27fff8", "hex": "d0ff278c" },
+    { "addr": "0x8c27fffc", "hex": "20000000" },
+    { "addr": "0x8c27ffd4", "hex": "feffffff" },
+    { "addr": "0x8c27ffe4", "hex": "ffffff7f" },
+    { "addr": "0x8c2b1ef8", "hex": "0000298c" },
+    { "addr": "0x8c290000", "hex": "00001000" }
+  ],
+  "steps": 500,
+  "notes": "raw r5 is negative as int32 but its low half is +1, so both frees run; the branch test must use exts.w, not the register."
+}

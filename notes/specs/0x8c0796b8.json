@@ -1,0 +1,35 @@
+{
+  "entry": "0x8c0796b8",
+  "regs": {
+    "r0": "0xdead0000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c280000",
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c28000c", "hex": "0010288c" },
+    { "addr": "0x8c280ff8", "hex": "d00f288c" },
+    { "addr": "0x8c280ffc", "hex": "30000000" },
+    { "addr": "0x8c280fd4", "hex": "feffffff" },
+    { "addr": "0x8c27fff8", "hex": "d0ff278c" },
+    { "addr": "0x8c27fffc", "hex": "20000000" },
+    { "addr": "0x8c27ffd4", "hex": "feffffff" },
+    { "addr": "0x8c27ffe4", "hex": "ffffff7f" },
+    { "addr": "0x8c2b1ef8", "hex": "0000298c" },
+    { "addr": "0x8c290000", "hex": "00001000" }
+  ],
+  "steps": 500,
+  "notes": "count 1 > 0 and mem[handle+12] != 0: free(inner block 0x8c281000), then free(handle 0x8c280000). Both blocks carry a previous-chunk word whose +4 is -2 (coalesce skipped) and their next-chunk size is not 0x7fffffff but still negative after +1 (insert skipped); the top chunk at 0x8c290000 shrinks twice. T is free's last cmp/hi residue (0)."
+}
