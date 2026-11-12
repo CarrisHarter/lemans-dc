@@ -111,6 +111,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0cbe30` | `guard_free` | `notes/verifications/0x8c0cbe30*.json` - 5 specs (9-90 steps) |
 | `0x8c0c9f98` | `free_ten_slots_then_array` | `notes/verifications/0x8c0c9f98*.json` - 3 specs (16-801 steps) |
 | `0x8c0d1590` | `stamp_vtable_call_then_free` | `notes/verifications/0x8c0d1590*.json` - 4 specs (12-112 steps) |
+| `0x8c0d0020` | `clamp_abs_to_range` | `notes/verifications/0x8c0d0020*.json` - 4 specs (23-24 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1689,6 +1690,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c07fe0c` | `FUN_8c07fe0c` | `notes/verifications/0x8c07fe0c.json` — 12 oracle steps; destroys the ring at container+4 through 0x8c0802f0 (frees count-1 elements and wraps), frees the item array at container+16 when non-NULL through the 0x8c01032c free thunk, calls 0x8c01e078(container+4, 0) which always early-exits, and frees the container itself when exts.w(flag) > 0; returns the container in r0 and leaves T = (exts.w(flag) > 0), or the entry tst T=1 for a NULL container |
 | `0x8c0bdc0c` | `FUN_8c0bdc0c` | `notes/verifications/0x8c0bdc0c.json` — 110 oracle steps; loops over *(param_1+0xc) 108-byte records at *(param_1+0x10); each iteration calls 0x8c0c0328 with r4=record+8, r5=record+0x14, r6=param_2, r7=param_3 and two zeroed float out-slots pushed on the stack; returns the first successful index in r0 else 0xffffffff; callee advances r4..r7 by 4, mul.l leaves 108*i in MACH/MACL, r11..r14 end at entry values; T clear on both exits |
 | `0x8c0bdcd0` | `FUN_8c0bdcd0` | `notes/verifications/0x8c0bdcd0.json` — 235 oracle steps; reads the descriptor at r4 (signed count at +12, record table at +16); for each i < count derives record table+i*108+32, reads [record+36] then [[record+36]+12] as a C string and compares needle r5 against the string tail starting at str+strlen(str)-strlen(needle); returns the first index whose tail matches, else -1 (also -1 when count <= 0); mul.l writes MACH/MACL = i*108 per tried record; exit r0 = index/-1, r3 = 0 on a match else the last wrapping unsigned byte difference, r4 = last needle byte, r5 = needle advanced past the last compared byte, r9-r14/pr restored from the frame; T=1 on a match, T=0 on -1 |
+| `0x8c0c8cfc` | `FUN_8c0c8cfc` | `notes/verifications/0x8c0c8cfc.json` — 12 oracle steps; releases one reference on the refcounted handle through 0x8c018bd8 with count -1, then, when exts.w(low 16 bits of the flag) > 0, frees the handle slot itself through the 0x8c01032c free thunk; returns the handle in r0; r13, r14 and pr are restored from the frame; T is the entry tst result (1) on the NULL path, cmp/pl result when the free is skipped, and the free callee's T otherwise |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
