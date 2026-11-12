@@ -29,12 +29,28 @@ for addr in "$@"; do
   else
     cp "$src" "$dst" && echo "updated p_$a.rs"
   fi
+  # Some agents write only tagged specs; the harness and the ledger require a
+  # canonical <addr>.json, so promote the first tagged one if it is missing.
+  if [ ! -f "notes/specs/0x$a.json" ] && [ ! -f "$WS/notes/specs/0x$a.json" ]; then
+    first="$(ls "$WS"/notes/specs/0x$a.*.json 2>/dev/null | head -1 || true)"
+    [ -n "$first" ] && cp "$first" "notes/specs/0x$a.json" && echo "promoted $(basename "$first") -> 0x$a.json"
+  fi
   for spec in "$WS/notes/specs/0x$a.json" "$WS"/notes/specs/0x$a.*.json; do
     [ -f "$spec" ] || continue
     name="$(basename "$spec")"
     if [ -f "notes/specs/$name" ] && ! cmp -s "$spec" "notes/specs/$name"; then
-      echo "CONFLICT spec $name (canonical differs)"; fail=1; continue
+      # The owning agent's canonical spec wins over a promoted or stale copy;
+      # tagged witnesses still conflict because another agent could have
+      # written one with the same name.
+      if [ "$name" = "0x$a.json" ]; then
+        cp "$spec" "notes/specs/$name" && echo "replaced $name"
+      else
+        echo "CONFLICT spec $name (canonical differs)"; fail=1; continue
+      fi
+    else
+      cp "$spec" "notes/specs/$name"
     fi
+    continue
     cp "$spec" "notes/specs/$name"
   done
 done

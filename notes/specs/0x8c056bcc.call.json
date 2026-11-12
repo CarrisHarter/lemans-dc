@@ -1,0 +1,16 @@
+{
+  "note": "r4 != 0 and exts.w(r5) > 0: sentinel store then free(r4). Chunk size 16, previous-chunk and next-chunk fields force free down the no-coalesce, no-insert, immediate-bin-exit path: writes [r4-4]=-16 and top += -16, r0-r6 residue from free, T=0",
+  "entry": "0x8c056bcc",
+  "regs": { "r0": 0, "r1": 0, "r4": "0x8c200100", "r5": 1, "r14": "0xdeadbeef", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c2000f4", "hex": "ffffff7f" },
+    { "addr": "0x8c2000f8", "hex": "0001218c" },
+    { "addr": "0x8c2000fc", "hex": "10000000" },
+    { "addr": "0x8c200100", "hex": "44332211" },
+    { "addr": "0x8c210000", "hex": "00000000" },
+    { "addr": "0x8c210104", "hex": "ffffff7f" },
+    { "addr": "0x8c210008", "hex": "00000000" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" }
+  ],
+  "steps": 200
+}

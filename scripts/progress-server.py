@@ -351,6 +351,8 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self.send_header("Access-Control-Allow-Origin", "*")  # aggregates only; polled cross-origin by the Pages copy
+        self.send_header("X-Content-Type-Options", "nosniff")
         self.end_headers()
         if self.command != "HEAD":
             self.wfile.write(body)
@@ -373,11 +375,14 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
 
-def write_static(out_dir: Path, state: State):
+def write_static(out_dir: Path, state: State, live_url: str | None = None):
     out_dir.mkdir(parents=True, exist_ok=True)
     state.refresh()
+    doc = dict(state.get())
+    if live_url:
+        doc["live_url"] = live_url.rstrip("/")  # page polls <live_url>/api/progress every second
     (out_dir / "index.html").write_text(PAGE)
-    (out_dir / "progress.json").write_text(json.dumps(state.get(), indent=2) + "\n")
+    (out_dir / "progress.json").write_text(json.dumps(doc, indent=2) + "\n")
     return out_dir
 
 
@@ -388,11 +393,13 @@ def main():
     ap.add_argument("--interval", type=float, default=30.0)
     ap.add_argument("--static-out", type=Path, default=None,
                     help="write index.html + progress.json here and exit")
+    ap.add_argument("--live-url", default=None,
+                    help="with --static-out: public base URL of a running server for per-second updates")
     args = ap.parse_args()
 
     state = State(args.interval)
     if args.static_out:
-        out = write_static(args.static_out, state)
+        out = write_static(args.static_out, state, args.live_url)
         print(f"wrote {out}/index.html and {out}/progress.json")
         return
 
