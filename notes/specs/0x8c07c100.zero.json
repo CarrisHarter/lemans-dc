@@ -1,0 +1,19 @@
+{
+  "entry": "0x8c07c100",
+  "note": "r4 != 0, exts.w r5 = 0: stores and six frees run, the [r4+36] class store and the final free are skipped; T ends 0 from cmp/pl.",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": 0,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c201000", "hex": "0020208c" },
+    { "addr": "0x8c201008", "hex": "000000000000000000000000000000000000000000000000" },
+    { "addr": "0x8c202000", "hex": "00000000" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" }
+  ],
+  "expect": { "r0": "0x8c201000" },
+  "steps": 2000
+}

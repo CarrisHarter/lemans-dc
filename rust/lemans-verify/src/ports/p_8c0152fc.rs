@@ -12,6 +12,7 @@ use sh4_oracle::{Cpu, Memory};
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let b = mem.read_u8(cpu.r[4]).unwrap_or(0);
     let mut r3 = (b as i8 as i32) as u32; // mov.b @r4,r3 sign-extends
+    cpu.r[3] = r3;
     cpu.set_t(r3 == 0); // tst r3,r3
     if r3 != 0 {
         r3 = 0x0200; // mov.w @0x8c01531a,r3

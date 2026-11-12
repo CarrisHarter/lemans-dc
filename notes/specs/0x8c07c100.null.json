@@ -1,0 +1,17 @@
+{
+  "entry": "0x8c07c100",
+  "note": "r4 == 0: only the prologue/epilogue run. T = 1 from tst; r0 = r13 = the null argument, the caller's r13/r14/pr are restored.",
+  "regs": {
+    "r4": 0,
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r13": "0x13572468",
+    "r14": "0x24681357",
+    "r15": "0x8c308000"
+  },
+  "expect": {
+    "r0": 0
+  },
+  "steps": 200
+}

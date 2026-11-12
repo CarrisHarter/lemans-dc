@@ -27,7 +27,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[6] = 3;
     let _ = mem.write_u32(cpu.r[15] + 8, cpu.r[4]); // delay slot of `jsr`
     crate::registry::p_8c010e84::run(cpu, mem);
-    cpu.r[0] = mem.read_u16(cpu.r[15] + 4).unwrap_or(0) as u32;
+    cpu.r[0] = mem.read_u16(cpu.r[15] + 4).unwrap_or(0) as i16 as u32;
     cpu.r[2] = 0;
     cpu.r[4] = cpu.r[0];
     cpu.r[3] = cpu.r[4];
@@ -51,7 +51,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     } else {
         cpu.r[0] = cpu.r[0] & 1; // delay slot of `bra`
     }
-    cpu.r[1] = mem.read_u8(cpu.r[3]).unwrap_or(0) as u32;
+    cpu.r[1] = mem.read_u8(cpu.r[3]).unwrap_or(0) as i8 as u32;
     cpu.r[2] = 7;
     cpu.r[0] = if (cpu.r[2] as i32) >= 0 {
         cpu.r[0] << cpu.r[2]

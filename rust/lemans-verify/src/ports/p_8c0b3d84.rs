@@ -6,8 +6,51 @@
 //!
 //! Leftover registers: r0=dst+4, r1=r5+8, r3=r4+4, r4=r4+12, r5=r5+4,
 //! r6=dst+8.
+//!
+//! NaN propagation: same rule as 0x8c06f6cc — the oracle keeps the first
+//! operand's NaN bits when both inputs are NaN, else the second's; this was
+//! established by probing the oracle, not from an SH-4 manual. Every product
+//! below is written in the original `fmul frX,frY` operand order (frY first),
+//! so the helpers see the same first NaN the original does. See
+//! notes/address-map.md if that rule ever changes.
 
 use sh4_oracle::{Cpu, Memory};
+
+/// Quiet a NaN the way the hardware does when it propagates the payload.
+fn quiet(v: f32) -> f32 {
+    f32::from_bits(v.to_bits() | 0x0040_0000)
+}
+
+/// NaN-preserving FP ops: first NaN operand wins, else the second.
+fn fadd(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a + b
+    }
+}
+
+fn fsub(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a - b
+    }
+}
+
+fn fmul(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a * b
+    }
+}
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let m = cpu.r[4];
@@ -21,28 +64,28 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let v1 = mem.read_f32(v + 4).unwrap_or(0.0);
     let v2 = mem.read_f32(v + 8).unwrap_or(0.0);
 
-    let a = v0 * m00 - m10 * v1 + m02 * v2; // fr11
-    let b = v0 * m01 + m02 * v1 + m10 * v2; // fr2
-    let c = v2 * m00 - m02 * v0 + m01 * v1; // fr0
-    let d = v1 * m00 - m01 * v2 + m10 * v0; // fr13
-    let out0 = a * m00 + b * m01 + c * m02 - d * m10; // fr10
-    let out1 = d * m00 + b * m02 + a * m10 - c * m01; // fr7
-    let out2 = c * m00 + b * m10 + d * m01 - a * m02; // fr3
+    let a = fadd(fsub(fmul(v0, m00), fmul(v1, m10)), fmul(v2, m02)); // fr11
+    let b = fadd(fadd(fmul(v0, m01), fmul(v1, m02)), fmul(v2, m10)); // fr2
+    let c = fadd(fsub(fmul(v2, m00), fmul(v0, m02)), fmul(v1, m01)); // fr0
+    let d = fadd(fsub(fmul(v1, m00), fmul(v2, m01)), fmul(v0, m10)); // fr13
+    let out0 = fsub(fadd(fadd(fmul(m00, a), fmul(m01, b)), fmul(m02, c)), fmul(m10, d)); // fr10
+    let out1 = fsub(fadd(fadd(fmul(m00, d), fmul(m02, b)), fmul(m10, a)), fmul(m01, c)); // fr7
+    let out2 = fsub(fadd(fadd(fmul(m00, c), fmul(m10, b)), fmul(m01, d)), fmul(m02, a)); // fr3
 
     let _ = mem.write_f32(dst, out0);
     let _ = mem.write_f32(dst + 4, out1);
     let _ = mem.write_f32(dst + 8, out2);
 
     cpu.fr[0] = c;
-    cpu.fr[1] = a * m02;
+    cpu.fr[1] = fmul(m02, a);
     cpu.fr[2] = b;
     cpu.fr[3] = out2;
-    cpu.fr[4] = d * m01;
-    cpu.fr[5] = c * m01;
-    cpu.fr[6] = a * m10;
+    cpu.fr[4] = fmul(m01, d);
+    cpu.fr[5] = fmul(m01, c);
+    cpu.fr[6] = fmul(m10, a);
     cpu.fr[7] = out1;
-    cpu.fr[8] = c * m02;
-    cpu.fr[9] = b * m01;
+    cpu.fr[8] = fmul(m02, c);
+    cpu.fr[9] = fmul(m01, b);
     cpu.fr[10] = out0;
     cpu.fr[11] = a;
 
