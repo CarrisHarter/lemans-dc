@@ -1,6 +1,6 @@
 # Progress
 
-Updated 2026-11-11.
+Updated 2026-11-12.
 
 | metric | value |
 | --- | --- |
@@ -9,8 +9,9 @@ Updated 2026-11-11.
 | oracle coverage (static, mnemonic) | 99.70% of 969,383 instructions |
 | functions auto-named | 310 (proposals, unreviewed) |
 | oracle tests | 56 passing |
-| ports verified | 1262 |
-| verification files | 1380 |
+| ports verified | 1344 |
+| verification files | 1675 |
+| blocked (unpinnable) | 86 |
 
 ## Instruction gaps remaining
 
