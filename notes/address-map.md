@@ -117,6 +117,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0e2c48` | `find_table_slot` | `notes/verifications/0x8c0e2c48*.json` - 3 specs (123-124 steps) |
 | `0x8c0fda3c` | `remap_args_forward` | `notes/verifications/0x8c0fda3c*.json` - 2 specs (7 and 35 steps) |
 | `0x8c0f8f10` | `release_then_free` | `notes/verifications/0x8c0f8f10*.json` - 4 specs (12-127 steps) |
+| `0x8c0f9ab2` | `strcmp_body` | `notes/verifications/0x8c0f9ab2*.json` - 4 specs (15-67 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
