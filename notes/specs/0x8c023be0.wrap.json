@@ -1,0 +1,36 @@
+{
+  "entry": "0x8c023be0",
+  "note": "Wrapping end pointer: count 0x039ED780 times 0x20 wraps the 32-bit sum to 0x100000000, so end = 0 <= base and `cmp/hi`/bf skip the destructor loop even though the count is nonzero. The free still runs on 0x8c251000.",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c250000", "hex": "0000000080d79e030010258c", "note": "descriptor: count=0x039ED780, base=0x8c251000" },
+
+    { "addr": "0x8c250ff8", "hex": "00002a8c", "note": "array chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c250ffc", "hex": "40000000", "note": "array chunk size = 0x40" },
+    { "addr": "0x8c250fc4", "hex": "08000000", "note": "next block size = 8" },
+    { "addr": "0x8c2a0004", "hex": "00000080", "note": "prev chunk size bit31 set: skip coalescing" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0000278c", "note": "heap top -> 0x8c270000" },
+    { "addr": "0x8c270000", "hex": "00100000", "note": "top chunk size = 0x1000" },
+    { "addr": "0x8c270008", "hex": "00000000", "note": "bin entry, empty" }
+  ],
+  "steps": 500
+}

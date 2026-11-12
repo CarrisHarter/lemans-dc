@@ -13,6 +13,7 @@ Both the terminal dashboard (scripts/progress-tui.py) and the web server
 import json
 import re
 import subprocess
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -24,6 +25,10 @@ PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
 PLAN_START_VERIFIED = 1373
 PLAN_TARGET = 1373 + 3751
 PLAN_DAYS = 2.7
+# A minute with this many proofs is a bulk load of existing evidence, not work
+# done then (the initial seed landed ~400-640/min; organic peaks are ~20/min).
+BULK_PER_MIN = 100
+RATE_WINDOW_H = 3  # primary pace window; 1 h and 6 h bound the ETA range
 VERIF = ROOT / "notes/verifications"
 PORTS = ROOT / "rust/lemans-verify/src/ports"
 LEDGER = ROOT / "notes/address-map.md"
@@ -108,6 +113,29 @@ def _buckets(ages, width, count):
     return out
 
 
+def _split_bulk(stamps):
+    """(organic stamps, bulk count): drop minutes with >= BULK_PER_MIN proofs."""
+    per_min = Counter(t.replace(second=0, microsecond=0) for t in stamps)
+    organic = [t for t in stamps if per_min[t.replace(second=0, microsecond=0)] < BULK_PER_MIN]
+    return organic, len(stamps) - len(organic)
+
+
+def _rates(now, organic):
+    """Proofs/hour over the last 1, RATE_WINDOW_H, 6 and 24 h of organic work.
+
+    A window reaching back before the first organic proof is shortened to it, so
+    a loop that started 2 h ago isn't diluted by idle time before it existed.
+    """
+    if not organic:
+        return {}
+    since = max((now - min(organic)).total_seconds() / 3600, 1 / 6)
+    out = {}
+    for h in (1, RATE_WINDOW_H, 6, 24):
+        n = sum(1 for t in organic if (now - t).total_seconds() < h * 3600)
+        out[h] = n / min(h, since)
+    return out
+
+
 def current_task(last_hour: int, last_day: int) -> str:
     """One line describing what the porting loop is doing now.
 
@@ -140,12 +168,16 @@ def snapshot():
     stamps = _verified_timestamps()
     verified = len(stamps)
     blocked = blocked_count()
-    ages = [max((now - t).total_seconds(), 0.0) for t in stamps]  # clock skew: future = now
+    organic, bulk = _split_bulk(stamps)
+    ages = [max((now - t).total_seconds(), 0.0) for t in organic]  # clock skew: future = now
     last24 = sum(1 for a in ages if a < 86400)
     last1h = sum(1 for a in ages if a < 3600)
     remaining = max(TOTAL - verified - blocked, 0)
-    rate_day = float(last24)
-    eta_days = (remaining / rate_day) if rate_day > 0 else None
+    rates = _rates(now, organic)
+    rate = rates.get(RATE_WINDOW_H) or rates.get(24, 0.0)  # idle for 3 h: fall back to the day
+    eta_days = remaining / (rate * 24) if rate > 0 else None
+    bounds = [r for h, r in rates.items() if h != 24 and r > 0] + ([rate] if rate > 0 else [])
+    eta_range = [round(remaining / (max(bounds) * 24), 1), round(remaining / (min(bounds) * 24), 1)] if bounds else None
     if remaining == 0 and stamps:
         finish = max(stamps)
     elif eta_days is not None:
@@ -161,10 +193,13 @@ def snapshot():
         "percent": round(100.0 * verified / TOTAL, 2),
         "evidence_files": sum(1 for _ in VERIF.glob("0x*.json")),
         "port_files": sum(1 for _ in PORTS.glob("p_*.rs")),
-        "last_hour": last1h,
+        "bulk_loaded": bulk,  # counted in verified; excluded from pace, charts and ETA
+        "last_hour": last1h,  # organic proofs only, as are last_day/hourly/minutely
         "last_day": last24,
-        "pace_per_day": round(rate_day, 1),
+        "pace_per_day": round(rate * 24, 1),
+        "rate_window_h": RATE_WINDOW_H,
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
+        "eta_range": eta_range,  # [fastest, slowest] days from the 1 h / 3 h / 6 h paces
         "current_task": current_task(last1h, last24),
         "schedule": schedule(now, verified, finish),
         "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
