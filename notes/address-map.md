@@ -1164,6 +1164,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19ca78` | `FUN_8c19ca78` | `notes/verifications/0x8c19ca78.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19c9b8` | `find_node_by_string` | `notes/verifications/0x8c19c9b8*.json` - empty 70, match 108, miss 106 |
 | `0x8c19be80` | `search_then_clear` | `notes/verifications/0x8c19be80.json` - 89 oracle steps; fr4 forced to 0 |
+| `0x8c19bef4` | `search_vtable_1480` | `notes/verifications/0x8c19bef4.json` - 85 steps; fr4 forced 0, vtable 0x8c1f1480, byte +24 cleared |
+| `0x8c19c228` | `search_keep_fr4_r5` | `notes/verifications/0x8c19c228.json` - 97 steps; search sees r6/r7 and fr4=0, saved fr4 at +28, entry r5 at +48 |
+| `0x8c19c5e4` | `search_store_fr4_twice` | `notes/verifications/0x8c19c5e4.json` - 94 steps; fr4 forced 0, saved fr4 at +24 and +28, byte +32 cleared |
+| `0x8c19c664` | `search_store_fr4_fr5` | `notes/verifications/0x8c19c664.json` - 97 steps; search fr4=entry fr6, saved fr4 at +24, saved fr5 at +28 |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
