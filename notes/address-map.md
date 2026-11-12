@@ -1468,6 +1468,7 @@ memory` before a diff can mean anything.
 | `0x8c044430` | `jsr @[(*e)+0x4c]` virtual dispatch: the call target is a runtime vtable slot into another subsystem, so the non-null-`e` arm cannot be pinned; a port covering only the `e == 0` arms would be incomplete |
 | `0x8c04d948` | runtime vtable dispatch at `0x8c04d9a0` (`[*(r13)]+0x10`) and `0x8c04d9c2` (`[*(r13)]+0x40`), `r13 = [obj+0x24]`; targets are runtime data, unpinnable |
 | `0x8c04d9f8` | runtime vtable dispatch at `0x8c04da4c` (`[*(r13)]+0x10`) and `0x8c04da6e` (`[*(r13)]+0x40`), `r13` reached through two pointer indirections; unpinnable |
+| `0x8c02cd34` | runtime vtable dispatch at `0x8c02cd64` (`[(*r4)+0x24]`, base `[r4]` loaded at `0x8c02cd5c`); the other jsr (`0x8c02cd42`) is static (0x8c151b1c) |
 
 ## Auto-proposed names (debug strings)
 
