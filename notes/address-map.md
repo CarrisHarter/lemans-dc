@@ -1341,6 +1341,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c01097c` | `atan_checked` | `notes/verifications/0x8c01097c*.json` — 5 seeds (303/74/77/83/310 oracle steps); call-crossing port (callee 0x8c014480); NaN result writes 0x44d / Inf writes 0x44c to 0x8c23d8b8, finite writes nothing |
 | `0x8c010ae8` | `exp_checked` | `notes/verifications/0x8c010ae8*.json` — 5 seeds (241/62/75/242/245 oracle steps); call-crossing port (callee 0x8c013d1c); same wrapper shape as 0x8c01097c |
 | `0x8c0111d0` | `sin_checked` | `notes/verifications/0x8c0111d0*.json` — 5 seeds (220/65/65/228/222 oracle steps); call-crossing port (callee 0x8c01412c); same wrapper shape as 0x8c01097c (first run failed: cloned port still called the exp callee) |
+| `0x8c014664` | `atan2_kernel` | `notes/verifications/0x8c014664*.json` — 6 seeds (95/109/100/105/79/304 oracle steps); call-crossing port (callee 0x8c014480); jsr delay slot `fdiv fr3,fr4` feeds the kernel; ±π fixup from spilled input sign bits |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
