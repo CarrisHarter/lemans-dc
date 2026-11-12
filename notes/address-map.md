@@ -1843,6 +1843,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0326d4` | `five_callee_teardown` | `notes/verifications/0x8c0326d4*.json` - 3 specs (869/806/14 steps) |
 | `0x8c0f9a30` | `list_search_strcmp` | `notes/verifications/0x8c0f9a30*.json` - 3 specs (169/109/23 steps) |
 | `0x8c0c9d84` | `fanout_tail_thunk` | `notes/verifications/0x8c0c9d84.json` - 94 oracle steps |
+| `0x8c10d65c` | `three_stage_swap_deref` | `notes/verifications/0x8c10d65c*.json` - 2 specs (75/48 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
