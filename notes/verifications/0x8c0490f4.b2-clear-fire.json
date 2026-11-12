@@ -1,0 +1,16 @@
+{
+  "address": "0x8c0490f4",
+  "spec": "notes/specs/0x8c0490f4.b2-clear-fire.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "2500a901",
+  "verified_at": "2026-11-12T01:29:57+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 66
+  },
+  "verifier_output": [
+    "ok   0x8c0490f4 matches original (66 oracle steps)"
+  ]
+}
