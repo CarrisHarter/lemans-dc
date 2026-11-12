@@ -1,0 +1,30 @@
+{
+  "entry": "0x8c0ed86c",
+  "regs": {
+    "r0": "0x11111111",
+    "r1": "0x22222222",
+    "r2": "0x33333333",
+    "r3": "0x44444444",
+    "r4": "0x8c2c0000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": 0,
+  "note": "all four owned pointers are null: every free call takes the thunk's early return (T=1, r0=0x8c159fc0), then 0x8c0ed80c initialises the struct",
+  "memory": [
+    { "addr": "0x8c2c0004", "hex": "00000000", "note": "+4 = null" },
+    { "addr": "0x8c2c0010", "hex": "00000000", "note": "+16 = null" },
+    { "addr": "0x8c2c0034", "hex": "00000000", "note": "+52 = null" },
+    { "addr": "0x8c2c0038", "hex": "00000000", "note": "+56 = null" }
+  ],
+  "steps": 4000
+}
