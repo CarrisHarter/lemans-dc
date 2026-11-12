@@ -1,0 +1,1 @@
+{"entry":"0x8c17466e","memory":[{"addr":"0x8c2b5630","hex":"01000000"},{"addr":"0x8c2b552c","hex":"cccccccccccccccc"},{"addr":"0x8c2b562c","hex":"cccccccc"}],"regs":{"r4":"0x0","r15":"0x8c308000"},"steps":3000}

@@ -1855,6 +1855,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10cb7c` | `fixpoint_search_twin` | `notes/verifications/0x8c10cb7c*.json` - 2 specs (85/97 steps) |
 | `0x8c162a10` | `keyed_insertion_sort` | `notes/verifications/0x8c162a10*.json` - 2 specs (148/105 steps) |
 | `0x8c070904` | `vtable_restamp_global_copy` | `notes/verifications/0x8c070904.json` - 353 oracle steps |
+| `0x8c175918` | `flag_gate_movt_store` | `notes/verifications/0x8c175918*.json` - 3 specs (264/266/15 steps) |
+| `0x8c172b3c` | `flag_gated_global_swap` | `notes/verifications/0x8c172b3c*.json` - 2 specs (13/78 steps) |
+| `0x8c17466e` | `nested_flag_gate` | `notes/verifications/0x8c17466e*.json` - 3 specs (304/262/15 steps) |
+| `0x8c1759e2` | `flag_gate_slot_read` | `notes/verifications/0x8c1759e2*.json` - 3 specs (272/266/13 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
