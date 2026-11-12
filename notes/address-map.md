@@ -127,6 +127,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c23991c` | `clear_slot_bit` | `notes/verifications/0x8c23991c*.json` - 2 specs (hit and miss, 83 steps each) |
 | `0x8c23bb48` | `clear_record_flag` | `notes/verifications/0x8c23bb48*.json` - 2 specs (47 and 55 steps) |
 | `0x8c23b8c4` | `claim_first_free_slot` | `notes/verifications/0x8c23b8c4*.json` - 4 specs (10-55 steps); `shll` T bit was the hidden side effect |
+| `0x8c23a560` | `mark_found_flags` | `notes/verifications/0x8c23a560*.json` - 3 specs (52-62 steps) |
 | `0x8c0f110c` | `free_array_field` | `notes/verifications/0x8c0f110c*.json` - 3 specs (7-72 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
