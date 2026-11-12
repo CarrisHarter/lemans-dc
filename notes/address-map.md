@@ -1381,6 +1381,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c221d54` | `fill_stride_116` | `notes/verifications/0x8c221d54.json` — 49 oracle steps |
 | `0x8c221d70` | `fill_stride_120` | `notes/verifications/0x8c221d70.json` — 49 oracle steps |
 | `0x8c221da8` | `index_times_128_load` | `notes/verifications/0x8c221da8.json` — 8 oracle steps |
+| `0x8c221244` | `gate_then_admit` | `notes/verifications/0x8c221244*.json` - live index 25, admit 52 |
 | `0x8c221db8` | `index_times_128_store` | `notes/verifications/0x8c221db8.json` — 8 oracle steps |
 | `0x8c221dc8` | `fill_slot_record` | `notes/verifications/0x8c221dc8.json` — 18 oracle steps |
 | `0x8c221f1c` | `FUN_8c221f1c` | `notes/verifications/0x8c221f1c.json` — ok; *0x8c23d480=0 in rts delay |
