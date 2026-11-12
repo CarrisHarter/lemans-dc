@@ -1270,6 +1270,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21ce48` | `tail_call_slot_bit8` | `notes/verifications/0x8c21ce48.json` - 33 oracle steps; jmp to 0x8c21cf1c |
 | `0x8c21d0f2` | `copy_record_bytes` | `notes/verifications/0x8c21d0f2*.json` - 2 specs (241/283); hit copies two bytes, miss returns -2 |
 | `0x8c21caf6` | `fill_or_clear_pair` | `notes/verifications/0x8c21caf6*.json` - 2 specs (47/64); field!=1 copies the stack word, field==1 runs 0x8c21cad4 |
+| `0x8c21fb50` | `publish_hex_pointer` | `notes/verifications/0x8c21fb50.json` - 219 oracle steps; eight nibbles of r4, mode >= 2 so the device poll is skipped |
+| `0x8c221eee` | `tail_call_reschedule` | `notes/verifications/0x8c221eee.json` - 138 oracle steps; jmp to 0x8c21d6bc |
+| `0x8c222430` | `table_byte_and_slot_bit1` | `notes/verifications/0x8c222430*.json` - 3 specs (49/52); 1 only when the byte is nonzero and bit 1 is set |
+| `0x8c225534` | `first_zero_stride32` | `notes/verifications/0x8c225534*.json` - 2 specs (15/28); index of the first zero byte, or -1 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
