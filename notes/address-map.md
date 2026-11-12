@@ -1800,6 +1800,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c165b50` | `seed_then_restamp_vtable` | `notes/verifications/0x8c165b50.json` - 20 oracle steps |
 | `0x8c16628c` | `store_byte_init_sub73` | `notes/verifications/0x8c16628c*.json` - 2 specs (27/9 steps) |
 | `0x8c1662a8` | `store_byte_store_sub96` | `notes/verifications/0x8c1662a8*.json` - 2 specs (15/9 steps) |
+| `0x8c150878` | `clear_global_drain_free` | `notes/verifications/0x8c150878*.json` - 3 specs (257/194/12 steps) |
+| `0x8c152e28` | `vtable_init3_then_free` | `notes/verifications/0x8c152e28*.json` - 3 specs (137/74/12 steps) |
+| `0x8c154de4` | `clear_global_drain_free_2` | `notes/verifications/0x8c154de4*.json` - 3 specs (174/111/12 steps) |
+| `0x8c16c984` | `stamp_vtable_then_free_3` | `notes/verifications/0x8c16c984*.json` - 3 specs (77/14/9 steps) |
+| `0x8c16e200` | `memset_then_clear_flag` | `notes/verifications/0x8c16e200.json` - 5122 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
