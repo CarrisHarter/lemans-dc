@@ -1452,6 +1452,8 @@ memory` before a diff can mean anything.
 | `0x8c029028` | non-contiguous export (16 ranges) and calls unported 0x8c057348; caller-worklist only resolved its first range |
 | `0x8c02c4d0` | non-contiguous export (16 ranges spanning 0x8c02c4d0-0x8c02c8d1); the porting loop needs one linear body |
 | `0x8c044430` | `jsr @[(*e)+0x4c]` virtual dispatch: the call target is a runtime vtable slot into another subsystem, so the non-null-`e` arm cannot be pinned; a port covering only the `e == 0` arms would be incomplete |
+| `0x8c04d948` | runtime vtable dispatch at `0x8c04d9a0` (`[*(r13)]+0x10`) and `0x8c04d9c2` (`[*(r13)]+0x40`), `r13 = [obj+0x24]`; targets are runtime data, unpinnable |
+| `0x8c04d9f8` | runtime vtable dispatch at `0x8c04da4c` (`[*(r13)]+0x10`) and `0x8c04da6e` (`[*(r13)]+0x40`), `r13` reached through two pointer indirections; unpinnable |
 
 ## Auto-proposed names (debug strings)
 
