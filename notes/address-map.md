@@ -1399,6 +1399,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c01088c` | `acos_checked` | `notes/verifications/0x8c01088c.json` — 418 oracle steps; calls 0x8c014370 (acos) on fr4; NaN fr0 stores 0x44d at 0x8c23d8b8 (Inf arm 0x44c unreachable through acos); returns fr0 |
 | `0x8c0b23cc` | `resolve_state_code` | `notes/verifications/0x8c0b23cc.json` — 51 oracle steps; mem: no non-stack writes (8-byte frame copy + r14/r13/pr spills filtered); regs: r0=code (0/2/6), r1=sign-extended state byte [r4+15], r4+=8 (callee), fr1=[r5+16] and fr0=1.0 on the float arm, r13/r14/pr restored, T from the last compare |
 | `0x8c0b2ee4` | `FUN_8c0b2ee4` | `notes/verifications/0x8c0b2ee4.json` — 72 oracle steps; identity 3x3 float matrix at r4+0..+32, calls 0x8c0b4ff0 to zero r4+36..+44, r0..r7 leftovers, r14/r15/pr restored |
+| `0x8c0b38b8` | `mat3_apply_vec_delta` | `notes/verifications/0x8c0b38b8.json` — 100 oracle steps; writes out[0..3] f32 at *(sp) = M * (v - m[9..12]); r13/r14/r15/pr frame-restored; single code path, calls 0x8c0b4f5c |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
