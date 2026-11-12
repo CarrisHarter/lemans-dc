@@ -1859,6 +1859,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c172b3c` | `flag_gated_global_swap` | `notes/verifications/0x8c172b3c*.json` - 2 specs (13/78 steps) |
 | `0x8c17466e` | `nested_flag_gate` | `notes/verifications/0x8c17466e*.json` - 3 specs (304/262/15 steps) |
 | `0x8c1759e2` | `flag_gate_slot_read` | `notes/verifications/0x8c1759e2*.json` - 3 specs (272/266/13 steps) |
+| `0x8c1759ae` | `flag_gate_plain_load` | `notes/verifications/0x8c1759ae*.json` - 3 specs (340/288/13 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
