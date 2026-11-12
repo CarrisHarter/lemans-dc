@@ -1614,6 +1614,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c15b0c0` | `unknown` | `notes/verifications/0x8c15b0c0.json` — 20 oracle steps |
 | `0x8c0855b0` | `FUN_8c0855b0` | `notes/verifications/0x8c0855b0.json` — 57 oracle steps; reads two 4-short arrays and returns fr0 ratio; clobbers r0,r1,r3-r7,mach,macl,fpul,fr0,fr1 |
 | `0x8c07c56c` | `FUN_8c07c56c` | `notes/verifications/0x8c07c56c.json` — 159 oracle steps; writes [r4+4]=0x8c1e981c, *(*r4)=0x8c1e9850, *(*r4+24)=r4+36-*r4; releases handle slot [r4+24] with count -1 via 0x8c018bd8 (decrements [*[r4+24]+8], clears [r4+24] while refs remain); if exts.w r5!=0 stores [r4+36]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
+| `0x8c07cdd4` | `FUN_8c07cdd4` | `notes/verifications/0x8c07cdd4.json` — 137 oracle steps; writes [r4+4]=0x8c1e98cc, *(*r4)=0x8c1e990c, *(*r4+24)=r4+48-*r4; frees [r4+32],[r4+36],[r4+40],[r4+44] via 0x8c0102cc; if exts.w r5!=0 stores [r4+48]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
