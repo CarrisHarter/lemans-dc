@@ -1,0 +1,43 @@
+{
+  "entry": "0x8c18bd70",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c200100", "hex": "aaaaaaaaaaaaaaaaaaaaaaaa0004208c0badf00d" },
+    { "addr": "0x8c200200", "hex": "0201040306050807443322110004208c88776655" },
+    { "addr": "0x8c200400", "hex": "68656c6c6f0000000000000000000000" }
+  ],
+  "steps": 500,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0x55667788",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200400",
+    "r5": "0x8c200400",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "notes": "Records differ but both '+12' fields hold 0x8c200400, so the callee takes its own early-out: its cmp/eq sets T=1 and it returns without calling strncpy. The string buffer keeps 'hello' and the copy then overwrites the record fields only. r3/r6/r7 keep their entry values (only the callee's unequal path would set r3/r6/r7 and r5=15); r4/r5 both read as the shared pointer. T ends 1 from the callee's cmp/eq."
+}

@@ -1,0 +1,44 @@
+{
+  "entry": "0x8c18bd70",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200204",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c200200", "hex": "2211443366558877ccbbaa990003208c0004208c" },
+    { "addr": "0x8c200214", "hex": "0000000000000000" },
+    { "addr": "0x8c200300", "hex": "6162630000000000" },
+    { "addr": "0x8c200400", "hex": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" }
+  ],
+  "steps": 500,
+  "expect": {
+    "r0": "0x8c200204",
+    "r1": "0x8c200400",
+    "r2": "0x22222222",
+    "r3": "0x00000000",
+    "r4": "0x8c200400",
+    "r5": "0x0000000f",
+    "r6": "0x0000000f",
+    "r7": "0x8c20040f",
+    "r8": "0x88888888",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "notes": "dst = src+4, so the records overlap and the copy order decides the result. The callee copies 'abc' into 0x8c200400 (dst+12 field) and NUL-terminates at +15. Then: +8 store overwrites src+12 with 0x99aabbcc; +0 store overwrites src+4 with 0x1122; +2 store overwrites src+6 with 0x3344; the +4 load now reads the freshly written 0x1122 and writes it over src+8's low half; the +6 load reads 0x3344 and writes it over src+10, leaving src+8 = 0x33441122; +16 is read from src+16 (0x8c200400) and written to src+20. A port that cached the source fields before storing would diverge here."
+}

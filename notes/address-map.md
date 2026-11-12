@@ -95,6 +95,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c18c060` | `guard_free` | `notes/verifications/0x8c18c060*.json` - 5 specs (9-90 steps) |
 | `0x8c18d06c` | `guard_free` | `notes/verifications/0x8c18d06c*.json` - 5 specs (9-90 steps) |
 | `0x8c18e40c` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c18e40c.json` - 9 oracle steps |
+| `0x8c0b8400` | `guard_free` | `notes/verifications/0x8c0b8400*.json` - 4 specs |
+| `0x8c0bdddc` | `guard_free` | `notes/verifications/0x8c0bdddc*.json` - 5 specs |
+| `0x8c0b9eb8` | `guard_free` | `notes/verifications/0x8c0b9eb8*.json` - 5 specs |
+| `0x8c0b9744` | `guard_free` | `notes/verifications/0x8c0b9744*.json` - 5 specs |
 | `0x8c18e1e4` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c18e1e4.json` - 9 oracle steps |
 | `0x8c18d048` | `guard_free` | `notes/verifications/0x8c18d048*.json` - 5 specs (9-90 steps) |
 | `0x8c18c570` | `guard_free` | `notes/verifications/0x8c18c570*.json` - 5 specs (9-90 steps) |
@@ -1637,6 +1641,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c184260` | `unknown` | `notes/verifications/0x8c184260.json` — 20 oracle steps |
 | `0x8c184324` | `FUN_8c184324` | `notes/verifications/0x8c184324.json` — 17 oracle steps; bounds-checked 8-byte record copy: count at [r4+0x138], records at r4+0x13c with stride 8; copies record r6 to r5 when r6 is in range, otherwise zeroes the 8 bytes at r5 through memset 0x8c010f88; returns via rts |
 | `0x8c18db84` | `unknown` | `notes/verifications/0x8c18db84.json` — 48 oracle steps |
+| `0x8c18bd70` | `copy_assign_record` | `notes/verifications/0x8c18bd70.json` — 139 oracle steps; callee 0x8c10ef64 recopies the +12 string field (r4=dstbuf, r5=15, r6=15, r7=dstbuf+15, r3=0); T=1; r0=destination; r13/r14 restored |
+| `0x8c183e04` | `FUN_8c183e04` | `notes/verifications/0x8c183e04.json` — 179 oracle steps; scans count=[r4+4] elements at base=[r4+8]; per element calls 0x8c070b0c(name=[*[*p]+12], param_2), returns *p+4 when the compare is 0 else 0; r12-r14/pr restored from the four-word push; T=1 on both exits; no non-stack stores |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

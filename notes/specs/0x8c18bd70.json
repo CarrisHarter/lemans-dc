@@ -1,0 +1,45 @@
+{
+  "entry": "0x8c18bd70",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c200100", "hex": "aaaaaaaaaaaaaaaaaaaaaaaa0004208cbbbbbbbb" },
+    { "addr": "0x8c200200", "hex": "0180ff7fffff3412efbeadde0003208cbebafeca" },
+    { "addr": "0x8c200300", "hex": "6869000000000000" },
+    { "addr": "0x8c200400", "hex": "cccccccccccccccccccccccccccccccc" }
+  ],
+  "steps": 500,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0xcafebabe",
+    "r2": "0x22222222",
+    "r3": "0x00000000",
+    "r4": "0x8c200400",
+    "r5": "0x0000000f",
+    "r6": "0x0000000f",
+    "r7": "0x8c20040f",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "notes": "Distinct, non-overlapping records: the call path runs. 0x8c10ef64 copies the '+12' string ('hi' in 0x8c200300) into 0x8c200400 padded to 15 bytes and NUL-terminates at +15, leaving r4=dstbuf, r5=15, r6=15, r7=dstbuf+15, r3=0. The post-call copies then set +8=0xdeadbeef, the halfwords 0x8001/0x7fff/0xffff/0x1234 (sign-extended loads, low half stored), +16=0xcafebabe. r1 ends as src+16, r0 as the destination; T=1 is whatever the callee left, since every remaining instruction before rts is flag-neutral. r13/r14 come back from the stack at their entry values."
+}
