@@ -126,6 +126,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c239820` | `slot_store_or_defer` | `notes/verifications/0x8c239820*.json` - 2 specs (12 and 21 steps) |
 | `0x8c23991c` | `clear_slot_bit` | `notes/verifications/0x8c23991c*.json` - 2 specs (hit and miss, 83 steps each) |
 | `0x8c23bb48` | `clear_record_flag` | `notes/verifications/0x8c23bb48*.json` - 2 specs (47 and 55 steps) |
+| `0x8c23b8c4` | `claim_first_free_slot` | `notes/verifications/0x8c23b8c4*.json` - 4 specs (10-55 steps); `shll` T bit was the hidden side effect |
 | `0x8c0f110c` | `free_array_field` | `notes/verifications/0x8c0f110c*.json` - 3 specs (7-72 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
@@ -1732,6 +1733,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c104544` | `FUN_8c104544` | `notes/verifications/0x8c104544.json` — 54 oracle steps; calls 0x8c1044f4(r4,[r4+0x44]) via registry (pr=0x8c104552); when result r7 != 0 and [ [r7+0x14] ] == 1 writes [r6+4] to 0x8c2ab350, [r6+8] to 0x8c2ab354, [r6+12] to 0x8c2ab358 and f32 [r6+16] to 0x8c2ab35c, then f32 0x8c203da0 / f32 0x8c2ab35c to 0x8c203d98; returns r7, or 0 on either reject arm; T=1 on null arm (tst r7,r7), T=0 on header-mismatch arm (cmp/eq #1,r0), T=1 on success |
 | `0x8c0f9aa4` | `thunk_FUN_8c0f9ab2` | `notes/verifications/0x8c0f9aa4.json` — 56 oracle steps; bra 0x8c0f9ab2 with nop delay slot; pr untouched, so the callee rts returns to the caller; target is the loop body entry — the 0x8c0f9aa8 fall-through block is only reached via bt.s with r3/T computed, entry r3/T unused |
 | `0x8c0fee44` | `FUN_8c0fee44` | `notes/verifications/0x8c0fee44.json` — 275 oracle steps; calls 0x8c018bd8(handle,-1) via registry when handle != 0, then frees the handle via 0x8c01032c -> free(0x8c159fc0) when exts.w(r5) > 0; returns the handle in r0 and restores r13/r14/pr; T=1 on the null arm (tst r13,r13), T=0 on a non-positive count (cmp/pl), else free's residue (T=0 on every non-null free) |
+| `0x8c0fc5ec` | `FUN_8c0fc5ec` | `notes/verifications/0x8c0fc5ec.json` — 199 oracle steps; decrements refcount [[r4+4]+8] (bumping a zero to 1 first), zeroes [r4+4] when the count remains, and when it reaches zero frees [[r4+4]+12], calls 0x8c018e14([r4+4]+4,-1) (declines), frees [r4+4]; then frees r4 when (i16)low16(r5) > 0; returns r4; T = cmp/pl except when the last free runs (callee T) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
