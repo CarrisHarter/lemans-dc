@@ -865,6 +865,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c124d50` | `FUN_8c124d50` | `notes/verifications/0x8c124d50.json` — ok; *r4 = **r4, *(*r15) = *r4_old in rts delay |
 | `0x8c124d5c` | `FUN_8c124d5c` | `notes/verifications/0x8c124d5c.json` — 5 oracle steps; r0=**r4, r1=*r15; store in rts delay slot |
 | `0x8c1252cc` | `walk_circular_list` | `notes/verifications/0x8c1252cc*.json` - one step 99, empty 46 |
+| `0x8c125364` | `walk_circular_list_reset` | `notes/verifications/0x8c125364*.json` - visit 110, cleanup 329 |
 | `0x8c1261d4` | `FUN_8c1261d4` | `notes/verifications/0x8c1261d4.json` — 10 oracle steps; stores to global 0x8c2ab5e0, *r4, byte r4+4=1, r4+8 (rts delay); r0=r4, r1=*0x8c206c28 |
 | `0x8c127c6c` | `FUN_8c127c6c` | `notes/verifications/0x8c127c6c.json` — 3 oracle steps; r4+=0x40; 32-bit fr4 store at new r4 in rts delay slot |
 | `0x8c127c74` | `FUN_8c127c74` | `notes/verifications/0x8c127c74.json` — 3 oracle steps; r4+=0x4c; fr4 store in rts delay slot |
