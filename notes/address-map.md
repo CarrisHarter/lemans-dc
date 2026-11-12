@@ -1672,6 +1672,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c220cd8` | `FUN_8c220cd8` | `notes/verifications/0x8c220cd8.json` — 38 oracle steps; raises IMASK to 15 around set_indexed_word_if_in_range(*(0x8c23cc68), 0), then restores the saved IMASK nibble |
 | `0x8c21d398` | `FUN_8c21d398` | `notes/verifications/0x8c21d398.json` — 34543 oracle steps; memset(0x8c2bae60,0,0x1af8) via 0x8c010f88 then zero u32 at 0x8c2bc958, 0x8c2bc95c, 0x8c2bc960; r0 ends 0x8c2bc960, r1/r4/r5 0, r2 0x8c2bc958, r3 0x8c2bc95c, r6/r7 0x1af8; T set |
 | `0x8c220ef2` | `FUN_8c220ef2` | `notes/verifications/0x8c220ef2.json` — 62 oracle steps; slot bring-up: first callee's +4 word nonzero -> r0 = 0xffffffff and no stores; else stores +8 = 1, +4 = 1 and zeros at +20..+40, and returns 0; T is left by the last callee's shll (deep) or by tst r0,r0 (busy); r13/r14/pr come back at entry values |
+| `0x8c2205d0` | `FUN_8c2205d0` | `notes/verifications/0x8c2205d0.json` — 99 oracle steps; calls 0x8c2205b0 for each of the 4 records at *0x8c23d468 + 4 + 0x34*n (clears base[id]+28 with base = **0x8c23d468), then clears *(0x8c2bde5c); returns 0, restores r11-r14/pr, T ends set |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
