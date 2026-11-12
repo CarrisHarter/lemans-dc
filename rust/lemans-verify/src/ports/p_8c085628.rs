@@ -10,30 +10,34 @@
 
 use sh4_oracle::{Cpu, Memory};
 
+fn exts_w(v: u16) -> u32 {
+    (v as i16 as i32) as u32
+}
+
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[15] = cpu.r[15].wrapping_sub(4); // mov.l r14,@-r15 (stack window)
     let _ = mem.write_u32(cpu.r[15], cpu.r[14]);
     cpu.r[1] = mem.read_u32(cpu.r[15].wrapping_add(4)).unwrap_or(0); // param_3
     let (p1, p2) = (cpu.r[4], cpu.r[5]);
     let a1 = mem.read_u16(p1.wrapping_add(2)).unwrap_or(0) as u32; // mov.w @(2,r4),r0
-    cpu.r[7] = a1; // mov r0,r7
+    cpu.r[7] = exts_w(a1 as u16); // mov r0,r7 (mov.w @(2,r4) sign-extends)
     let a0 = mem.read_u16(p1).unwrap_or(0) as u32; // mov.w @r4,r3
     let b1 = mem.read_u16(p2.wrapping_add(2)).unwrap_or(0) as u32; // mov.w @(2,r5),r0
     cpu.r[6] = a0 as i16 as i32 as u32; // exts.w r3,r6
     let b0 = mem.read_u16(p2).unwrap_or(0); // mov.w @r5,r3
-    cpu.r[7] = cpu.r[7].wrapping_sub(b1); // sub r0,r7
+    cpu.r[7] = cpu.r[7].wrapping_sub(exts_w(b1 as u16)); // sub r0,r7
     let a2 = mem.read_u16(p1.wrapping_add(4)).unwrap_or(0) as u32; // mov.w @(4,r4),r0
     cpu.r[3] = b0 as i16 as i32 as u32; // exts.w r3,r3
     cpu.r[6] = cpu.r[6].wrapping_sub(cpu.r[3]); // sub r3,r6
-    cpu.r[14] = a2; // mov r0,r14
+    cpu.r[14] = exts_w(a2 as u16); // mov r0,r14 (mov.w sign-extends)
     let b2 = mem.read_u16(p2.wrapping_add(4)).unwrap_or(0) as u32; // mov.w @(4,r5),r0
     let s2 = (cpu.r[6] as i16) as i32; // exts.w r6,r3
     cpu.set_t(s2 >= 0); // cmp/pz r3
-    cpu.r[14] = cpu.r[14].wrapping_sub(b2); // sub r0,r14
+    cpu.r[14] = cpu.r[14].wrapping_sub(exts_w(b2 as u16)); // sub r0,r14
     let a3 = mem.read_u16(p1.wrapping_add(6)).unwrap_or(0) as u32; // mov.w @(6,r4),r0
-    cpu.r[3] = a3; // mov r0,r3
+    cpu.r[3] = exts_w(a3 as u16); // mov r0,r3
     let b3 = mem.read_u16(p2.wrapping_add(6)).unwrap_or(0) as u32; // mov.w @(6,r5),r0
-    cpu.r[3] = cpu.r[3].wrapping_sub(b3); // bt.s delay slot — ALWAYS runs
+    cpu.r[3] = cpu.r[3].wrapping_sub(exts_w(b3 as u16)); // bt.s delay slot — ALWAYS runs
     if s2 < 0 {
         let k = mem.read_u32(0x8c085680).unwrap_or(0); // mov.l literal -> 1000
         cpu.r[7] = cpu.r[7].wrapping_sub(1); // add #-1,r7

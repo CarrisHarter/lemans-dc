@@ -19,12 +19,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         if cpu.r[0] == cpu.r[1] {
             continue; // bt to next field
         }
-        cpu.set_t(cpu.r[1] > cpu.r[0]); // cmp/gt r0,r1
+        cpu.set_t((cpu.r[1] as i32) > (cpu.r[0] as i32)); // cmp/gt r0,r1 (signed)
         cpu.r[0] = cpu.t() as u32; // movt r0 (rts delay slot)
         return;
     }
     cpu.r[1] = exts_w(mem.read_u16(cpu.r[4]).unwrap_or(0));
     cpu.r[0] = exts_w(mem.read_u16(cpu.r[5]).unwrap_or(0));
-    cpu.set_t(cpu.r[1] > cpu.r[0]); // cmp/gt r0,r1
+    cpu.set_t((cpu.r[1] as i32) > (cpu.r[0] as i32)); // cmp/gt r0,r1 (signed)
     cpu.r[0] = cpu.t() as u32; // movt r0
 }

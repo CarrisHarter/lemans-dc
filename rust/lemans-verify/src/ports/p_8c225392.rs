@@ -7,7 +7,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[7] = 12;
     cpu.r[5] = cpu.r[6];
     while cpu.r[6] < 12 {
-        cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as u32;
+        cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as i8 as i32 as u32;
         if cpu.r[3] == 0 { break; }
         cpu.r[6] = cpu.r[6].wrapping_add(1);
         cpu.r[5] = cpu.r[5].wrapping_add(1);

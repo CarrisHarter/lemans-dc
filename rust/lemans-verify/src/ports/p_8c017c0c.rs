@@ -9,11 +9,12 @@
 //! ABI: r4 = src, r5 = u32* out. Returns r4 advanced past the consumed bytes.
 //!
 //! Side effects the decompiled C does not show: r6 always ends as the decoded
-//! byte paths, left shifted: r3 = b1<<16, r1 = b2<<8 (shll16 r3 / shll8 r1
-//! run in place); T comes from the last `shar r6` executed — 1 only on the
-//! 4-byte path (bit 2 of the first byte shifted out), 0 otherwise. The
-//! returned pointer is produced by `mov r4,r0` in each branch's delay slot,
-//! i.e. after the `add #n,r4`, and r4 itself ends advanced.
+//! value, while r3/r1 keep the in-place shifts of the path taken — 3-byte:
+//! r3 = b1<<8, r1 = b2; 4-byte: r3 = b1<<16, r1 = b2<<8. T comes from the
+//! last `shar r6` executed — 1 only on the 4-byte path (bit 2 of the first
+//! byte shifted out), 0 otherwise. The returned pointer is produced by
+//! `mov r4,r0` in each branch's delay slot, i.e. after the `add #n,r4`, and
+//! r4 itself ends advanced.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -68,8 +69,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         r4 = r4.wrapping_add(3);
         mem.write_u32(r5, v).unwrap();
         cpu.r[6] = v;
-        cpu.r[3] = b1 << 16; // shll16 r3 leaves the shifted value in r3
-        cpu.r[1] = b2 << 8; // shll8 r1 leaves the shifted value in r1
+        cpu.r[3] = b1 << 8; // shll8 r3 (3-byte path, before the or)
+        cpu.r[1] = b2; // extu.b r0,r1; the shll8 r1 is 4-byte-only
         cpu.r[4] = r4;
         cpu.r[0] = r4;
         cpu.set_t(false); // third shar shifted out bit 2 == 0 on this path

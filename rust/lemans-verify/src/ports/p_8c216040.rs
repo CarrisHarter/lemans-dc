@@ -32,22 +32,20 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[7] = 8; // mov #8,r7
 
     loop {
+        // 0x8c216082: cmp/pl r1 ; bt 0x8c216054 — tested before the first
+        // byte is emitted, so r1 <= 0 leaves memory untouched.
+        let t = (cpu.r[1] as i32) > 0;
+        cpu.set_t(t);
+        if !t {
+            break;
+        }
         // 0x8c216054: cmp/ge r7,r4  (T = r4 >= 8, signed)
         if (cpu.r[4] as i32) >= (cpu.r[7] as i32) {
-            // mov.b r11,@r5 ; add #1,r5 ; bra 0x8c216080 (SKIPS 0x8c21607e) ; delay add #-8,r4
+            // mov.b r11,@r5 ; add #1,r5 ; bra 0x8c216080 (skips 0x8c21607e)
             let _ = mem.write_u8(cpu.r[5], zero as u8);
             cpu.r[5] = cpu.r[5].wrapping_add(1);
             cpu.r[4] = (cpu.r[4] as i32).wrapping_sub(8) as u32;
-            // loop tail at 0x8c216080: add #-1,r1 ; cmp/pl r1
-            cpu.r[1] = cpu.r[1].wrapping_sub(1);
-            let t = (cpu.r[1] as i32) > 0;
-            cpu.set_t(t);
-            if !t {
-                break;
-            }
-            continue;
-        }
-        if (cpu.r[4] as i32) > 0 {
+        } else if (cpu.r[4] as i32) > 0 {
             // 0x8c216060 taken: cmp/pl r4 was true; mov r7,r0
             cpu.r[0] = cpu.r[7]; // r0 = 8
             loop {
@@ -73,18 +71,15 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             }
             // bra 0x8c21607e ; delay mov.b r6,@r5
             let _ = mem.write_u8(cpu.r[5], cpu.r[6] as u8);
+            // 0x8c21607e: add #1,r5
+            cpu.r[5] = cpu.r[5].wrapping_add(1);
         } else {
-            // 0x8c21607c: mov.b r12,@r5
+            // 0x8c21607c: mov.b r12,@r5 ; 0x8c21607e: add #1,r5
             let _ = mem.write_u8(cpu.r[5], ff as u8);
+            cpu.r[5] = cpu.r[5].wrapping_add(1);
         }
-        // 0x8c21607e: add #1,r5 ; 0x8c216080: add #-1,r1 ; 0x8c216082: cmp/pl r1
-        cpu.r[5] = cpu.r[5].wrapping_add(1);
+        // 0x8c216080: add #-1,r1 ; then the cmp/pl at the loop head.
         cpu.r[1] = cpu.r[1].wrapping_sub(1);
-        let t = (cpu.r[1] as i32) > 0;
-        cpu.set_t(t); // cmp/pl r1
-        if !t {
-            break; // bt 0x8c216054 not taken
-        }
     }
     // mov.l @r15+,r11 ; mov #0,r0 ; rts ; delay mov.l @r15+,r12
     cpu.r[0] = 0;

@@ -29,6 +29,69 @@ const SPECIAL: [&str; 11] = [
     "sr", "mach", "macl", "gbr", "vbr", "ssr", "spc", "sgr", "dbr", "fpul", "fpscr",
 ];
 
+/// Reject anything the readers below would silently drop.
+///
+/// A spec that misnames a key (`"fr4"` for `"f4"`, or a system register nested
+/// under `"special"`) seeds nothing, so both sides agree and the run passes
+/// without proving the state its author intended. That happened: an `.inf`
+/// spec's f-register seed was ignored for three ports before a triage agent
+/// noticed, and `"special"` written by the fuzzer never set T.
+fn validate(spec: &Json) -> Result<(), String> {
+    let Json::Object(top) = spec else {
+        return Err("spec must be a JSON object".into());
+    };
+    for key in top.keys() {
+        let known = matches!(
+            key.as_str(),
+            "entry" | "regs" | "fr" | "memory" | "steps" | "expect" | "note" | "notes"
+        ) || SPECIAL.contains(&key.as_str());
+        if !known {
+            return Err(format!(
+                "unknown spec key {key:?}; system registers are top-level ({})",
+                SPECIAL.join(", ")
+            ));
+        }
+    }
+    if let Some(Json::Object(regs)) = spec.get("regs") {
+        for key in regs.keys() {
+            let ok = key
+                .strip_prefix('r')
+                .and_then(|n| n.parse::<usize>().ok())
+                .is_some_and(|n| n < 16);
+            if !ok {
+                return Err(format!("bad register name {key:?}; expected r0..r15"));
+            }
+        }
+    } else if spec.get("regs").is_some() {
+        return Err("\"regs\" must be an object".into());
+    }
+    if let Some(Json::Object(fr)) = spec.get("fr") {
+        for key in fr.keys() {
+            let ok = key
+                .strip_prefix('f')
+                .and_then(|n| n.parse::<usize>().ok())
+                .is_some_and(|n| n < 16);
+            if !ok {
+                return Err(format!("bad FPU register name {key:?}; expected f0..f15"));
+            }
+        }
+    } else if spec.get("fr").is_some() {
+        return Err("\"fr\" must be an object".into());
+    }
+    if let Some(items) = spec.get("memory").and_then(Json::as_array) {
+        for item in items {
+            if let Json::Object(map) = item {
+                for key in map.keys() {
+                    if !matches!(key.as_str(), "addr" | "hex" | "note") {
+                        return Err(format!("unknown memory key {key:?}; expected addr, hex"));
+                    }
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
 fn read_seed(spec: &Json, base: u32) -> Seed {
     let entry = spec.get("entry").and_then(Json::as_u32).unwrap_or(base);
     let mut regs = Vec::new();
@@ -155,6 +218,9 @@ fn main() -> ExitCode {
         Ok(v) => v,
         Err(e) => return fail(&format!("bad spec JSON: {e}")),
     };
+    if let Err(e) = validate(&spec) {
+        return fail(&format!("bad spec: {e}"));
+    }
     let seed = read_seed(&spec, LOAD_BASE);
 
     let Some(port) = registry::lookup(address) else {
@@ -272,6 +338,25 @@ fn main() -> ExitCode {
                     diffs.push(format!("  first write diff #{i}: original {w:?} port {p:?}"));
                     break;
                 }
+            }
+        }
+    }
+
+    // `expect` is the spec author's own assertion about the port's result. It
+    // used to be inert documentation; checking it here means a spec cannot
+    // claim an outcome it never seeded.
+    if let Some(Json::Object(expect)) = spec.get("expect") {
+        for (key, value) in expect {
+            let want = value.as_u32().unwrap_or(0);
+            let (got, label) = if let Some(n) = key.strip_prefix('r').and_then(|n| n.parse::<usize>().ok()) {
+                (cpu.r.get(n).copied().unwrap_or(0), key.clone())
+            } else if let Some(n) = key.strip_prefix('f').and_then(|n| n.parse::<usize>().ok()) {
+                (cpu.fr.get(n).map(|v| v.to_bits()).unwrap_or(0), key.clone())
+            } else {
+                continue;
+            };
+            if got != want {
+                diffs.push(format!("expect {label}: port 0x{got:08x} != expected 0x{want:08x}"));
             }
         }
     }

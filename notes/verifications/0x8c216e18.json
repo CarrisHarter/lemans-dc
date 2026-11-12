@@ -1,10 +1,10 @@
 {
   "address": "0x8c216e18",
-  "spec": "~/Projects/lemans-dc/notes/specs/0x8c216e18.json",
-  "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
+  "spec": "notes/specs/0x8c216e18.json",
+  "binary": "analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "04ab1c2b",
-  "verified_at": "2026-11-11T14:05:04+00:00",
+  "commit": "55c4899c",
+  "verified_at": "2026-11-12T03:30:05+00:00",
   "result": "pass",
   "oracle": {
     "stop": "halt",

@@ -1,14 +1,41 @@
 {
   "entry": "0x8c0dfb10",
-  "regs": { "r4": "0x8c200000", "r5": "0xdeadbeef", "fr4": 2.5 },
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "0xdeadbeef"
+  },
   "memory": [
-    { "addr": "0x8c200190", "hex": "03000000" },
-    { "addr": "0x8c200000", "hex": "aaaaaaaa" },
-    { "addr": "0x8c200004", "hex": "0000003f" },
-    { "addr": "0x8c200008", "hex": "efbeadde" },
-    { "addr": "0x8c20000c", "hex": "0000c03f" },
-    { "addr": "0x8c200010", "hex": "bbbbbbbb" },
-    { "addr": "0x8c200014", "hex": "00002040" }
+    {
+      "addr": "0x8c200190",
+      "hex": "03000000"
+    },
+    {
+      "addr": "0x8c200000",
+      "hex": "aaaaaaaa"
+    },
+    {
+      "addr": "0x8c200004",
+      "hex": "0000003f"
+    },
+    {
+      "addr": "0x8c200008",
+      "hex": "efbeadde"
+    },
+    {
+      "addr": "0x8c20000c",
+      "hex": "0000c03f"
+    },
+    {
+      "addr": "0x8c200010",
+      "hex": "bbbbbbbb"
+    },
+    {
+      "addr": "0x8c200014",
+      "hex": "00002040"
+    }
   ],
-  "steps": 100
+  "steps": 100,
+  "fr": {
+    "f4": 2.5
+  }
 }

@@ -14,7 +14,9 @@ pub fn run(cpu: &mut Cpu, _mem: &mut Memory) {
         cpu.r[5] = cpu.r[5].wrapping_add(cpu.r[6]);
     }
     cpu.r[3] = 0x800000;
-    if cpu.r[4] >= cpu.r[3] {
+    let high = cpu.r[4] >= cpu.r[3]; // cmp/hs r3,r4
+    cpu.set_t(high);
+    if high {
         cpu.r[5] = cpu.r[5].wrapping_add(cpu.r[6]);
     }
     cpu.r[0] = cpu.r[5]; // rts delay

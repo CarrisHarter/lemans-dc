@@ -20,8 +20,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = 0; // delay slot of `bt.s`
     } else {
         let r4: u32 = 0x7fffffff;
+        r1 = r0; // 0x8c15a24a: mov r0,r1 runs once, before the loop head
         loop {
-            r1 = r0;
             r5 = mem.read_u32(r3 + 4).unwrap_or(0);
             let gt = (r5 as i32) > (r0 as i32);
             cpu.set_t(gt);

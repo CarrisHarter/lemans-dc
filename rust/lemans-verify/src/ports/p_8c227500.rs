@@ -1,8 +1,8 @@
 //! 0x8c227500 — gated bit insert.
 //!
-//! Two mask gates on `[r4+4]` and `r5 == 1` decide whether the call is
-//! accepted; on acceptance it clears `0xff3fffff` in the word at
-//! `r4 + 8*r5 + 8` and inserts `r6 & 3` at a fixed position.
+//! Returns 10 when `[r4+4] & 0x20000 != 0`, or when `[r4+4] & 0x181ff != 0`
+//! and `r5 == 1`; otherwise it clears `0xff3fffff` in the word at
+//! `r4 + 8*r5 + 8` and inserts `r6 & 3` at bit 22.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -19,15 +19,13 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let t2 = (cpu.r[7] & cpu.r[1]) == 0;
     cpu.set_t(t2);
     if !t2 {
-        cpu.r[0] = 10; // delay slot of `rts`
-        return;
-    }
-    cpu.r[0] = cpu.r[5];
-    let eq = cpu.r[0] == 1;
-    cpu.set_t(eq);
-    if !eq {
-        cpu.r[0] = 10; // delay slot of `rts`
-        return;
+        cpu.r[0] = cpu.r[5];
+        let eq = cpu.r[0] == 1;
+        cpu.set_t(eq);
+        if eq {
+            cpu.r[0] = 10; // delay slot of `rts`
+            return;
+        }
     }
     cpu.r[7] = cpu.r[5];
     cpu.set_t((cpu.r[7] >> 31) & 1 != 0); // `shll r7` sets T

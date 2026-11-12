@@ -6,10 +6,10 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     loop {
         let s = mem.read_u8(cpu.r[5]).unwrap_or(0);
         cpu.r[5] = cpu.r[5].wrapping_add(1);
-        cpu.r[2] = s as u32;
+        cpu.r[2] = s as i8 as i32 as u32; // mov.b is sign-extended
         let d = mem.read_u8(cpu.r[4]).unwrap_or(0);
         cpu.r[4] = cpu.r[4].wrapping_add(1);
-        cpu.r[3] = d as u32;
+        cpu.r[3] = d as i8 as i32 as u32; // mov.b is sign-extended
         cpu.set_t(cpu.r[2] == cpu.r[3]); // cmp/eq r2,r3
         if cpu.r[2] != cpu.r[3] {
             cpu.r[0] = 0; // rts delay slot

@@ -9,7 +9,7 @@ use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let b = mem.read_u8(cpu.r[4] + 3).unwrap_or(0); // mov.b @(3,r4),r0
-    cpu.r[0] = b as u32;
+    cpu.r[0] = b as i8 as i32 as u32;
     cpu.set_t(b & 4 == 0); // tst #4,r0
     if b & 4 == 0 {
         cpu.r[2] = mem.read_u32(cpu.r[4] + 4).unwrap_or(0).wrapping_sub(1);

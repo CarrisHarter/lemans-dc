@@ -11,8 +11,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[0] = u32::MAX;
     cpu.r[7] = 0;
     loop {
-        cpu.r[2] = mem.read_u8(cpu.r[5]).unwrap_or(0) as u32;
-        cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as u32;
+        cpu.r[2] = mem.read_u8(cpu.r[5]).unwrap_or(0) as i8 as i32 as u32;
+        cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as i8 as i32 as u32;
         let eq = cpu.r[2] == cpu.r[3];
         cpu.set_t(eq);
         cpu.r[6] = cpu.r[6].wrapping_add(1); // delay slot of `bt.s`

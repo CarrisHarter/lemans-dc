@@ -1,7 +1,8 @@
 //! 0x8c227620 — insert_bits_181ff.
 //!
-//! Gated on bit mask `0x181ff` of `[r4+4]`; clears `0xff3f` in the
-//! target word and inserts `r5 & 3` at a fixed shift.
+//! Returns 10 when `([r4+4] & 0x181ff) == 0`; otherwise clears
+//! `0xffffff3f` (sign-extended `mov.w 0xff3f`) in the word at `r4` and
+//! inserts `r5 & 3` at bit 6.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -17,7 +18,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = 3;
     cpu.r[6] = cpu.r[4];
     cpu.r[5] = cpu.r[5] & cpu.r[3];
-    cpu.r[2] = 65343;
+    cpu.r[2] = 0xffffff3f; // `mov.w` sign-extends 0xff3f
     cpu.r[1] = mem.read_u32(cpu.r[6]).unwrap_or(0);
     cpu.r[5] = cpu.r[5] << 2;
     cpu.r[5] = cpu.r[5] << 2;

@@ -37,7 +37,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut r4 = r4in;
     let mut r6 = 1u32;
     let mut r2 = 0u32;
-    let mut r1 = 0u32;
+    let mut r1 = cpu.r[1]; // paths that skip every store must leave r1 alone
 
     cpu.set_t(r0 == 2); // cmp/eq #2,r0
     if cpu.t() {

@@ -13,7 +13,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     for i in 0..4u32 {
         let _ = mem.write_u16(cpu.r[5] + i * 2, stack[i as usize]);
     }
-    cpu.r[0] = stack[3] as u32;
+    cpu.r[0] = stack[3] as i16 as u32; // mov.w: sign-extend halfword
     cpu.r[1] = cpu.r[15].wrapping_sub(8); // r15 after add #-8
     cpu.r[3] = b as u32;
 }

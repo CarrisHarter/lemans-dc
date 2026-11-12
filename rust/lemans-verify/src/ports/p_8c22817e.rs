@@ -10,7 +10,13 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = 1;
     let _ = mem.write_u32(cpu.r[3], cpu.r[5]);
     cpu.r[2] = mem.read_u32(0x8c228238).unwrap_or(0);
-    cpu.r[5] = cpu.r[5] << cpu.r[4]; // shad
+    // shad: the count is a signed 32-bit value; negative counts shift right.
+    let amount = cpu.r[4] as i32;
+    cpu.r[5] = if amount >= 0 {
+        cpu.r[5] << ((amount as u32) & 31)
+    } else {
+        ((cpu.r[5] as i32) >> (amount.wrapping_neg() as u32 & 31)) as u32
+    };
     cpu.r[1] = mem.read_u32(cpu.r[2]).unwrap_or(0);
     cpu.r[1] = cpu.r[1] | cpu.r[5];
     let _ = mem.write_u32(cpu.r[2], cpu.r[1]);

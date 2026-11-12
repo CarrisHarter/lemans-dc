@@ -1,9 +1,16 @@
 {
   "entry": "0x8c055fec",
-  "regs": { "r4": "0x8c1fff00" },
-  "fr": { "fr4": 2.5 },
+  "regs": {
+    "r4": "0x8c1fff00"
+  },
+  "fr": {
+    "f4": 2.5
+  },
   "memory": [
-    { "addr": "0x8c1fff38", "hex": "0001208c" }
+    {
+      "addr": "0x8c1fff38",
+      "hex": "0001208c"
+    }
   ],
   "steps": 16
 }

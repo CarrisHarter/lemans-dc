@@ -9,9 +9,11 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[4] = 0;
     cpu.r[6] = cpu.r[6].wrapping_add(1);
     loop {
-        cpu.r[2] = mem.read_u8(cpu.r[6]).unwrap_or(0) as u32; cpu.r[6] = cpu.r[6].wrapping_add(1);
-        cpu.r[3] = mem.read_u8(cpu.r[7]).unwrap_or(0) as u32; cpu.r[7] = cpu.r[7].wrapping_add(1);
-        if cpu.r[2] != cpu.r[3] {
+        cpu.r[2] = (mem.read_u8(cpu.r[6]).unwrap_or(0) as i8 as i32) as u32; cpu.r[6] = cpu.r[6].wrapping_add(1);
+        cpu.r[3] = (mem.read_u8(cpu.r[7]).unwrap_or(0) as i8 as i32) as u32; cpu.r[7] = cpu.r[7].wrapping_add(1);
+        let eq = cpu.r[2] == cpu.r[3];
+        cpu.set_t(eq); // cmp/eq r2,r3
+        if !eq {
             cpu.r[0] = 0; // rts delay
             return;
         }

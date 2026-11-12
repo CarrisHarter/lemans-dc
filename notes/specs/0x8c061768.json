@@ -1,7 +1,16 @@
 {
   "entry": "0x8c061768",
-  "regs": { "r4": "0x99fa" },
-  "fr": { "fr4": 1.5 },
-  "memory": [ { "addr": "0x8c240000", "hex": "efbeadde" } ],
+  "regs": {
+    "r4": "0x99fa"
+  },
+  "fr": {
+    "f4": 1.5
+  },
+  "memory": [
+    {
+      "addr": "0x8c240000",
+      "hex": "efbeadde"
+    }
+  ],
   "steps": 16
 }

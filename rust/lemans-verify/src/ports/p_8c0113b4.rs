@@ -23,7 +23,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = cpu.r[5] as i8 as i32 as u32; // delay slot of `bf.s`
     if pz {
         loop {
-            cpu.r[2] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32;
+            cpu.r[2] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32;
             let eq = cpu.r[5] == cpu.r[2];
             cpu.set_t(eq);
             if eq {

@@ -10,6 +10,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let hi = cpu.r[5];
     let mut src = lo;
     let mut dst = cpu.r[6];
+    cpu.set_t(src == hi); // cmp/eq r5,r4
     if src != hi {
         loop {
             if dst != 0 {

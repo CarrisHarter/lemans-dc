@@ -3,6 +3,7 @@
 use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
+    let saved_r12 = cpu.r[12];
     cpu.r[7] = cpu.r[4];
     cpu.r[6] = 0x80000000;
     cpu.r[0] = 32;
@@ -12,7 +13,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     loop {
         cpu.r[3] = cpu.r[6];
         if cpu.r[12] & cpu.r[3] != 0 {
-            if cpu.r[6] == cpu.r[5] { cpu.r[0] = cpu.r[7]; cpu.r[12] = 0; return; } // rts delay pop r12 (no effect here)
+            if cpu.r[6] == cpu.r[5] {
+                cpu.r[0] = cpu.r[7];
+                cpu.set_t(true); // cmp/eq r6,r5 true here
+                cpu.r[12] = saved_r12; // rts delay: mov.l @r15+,r12
+                return;
+            }
             cpu.r[4] = cpu.r[4].wrapping_add(4);
             cpu.r[7] = cpu.r[4];
         }
@@ -20,5 +26,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[6] >>= 1; // shlr
         if cpu.r[1] >= cpu.r[0] { break; } // cmp/ge r0,r1: T = r1>=r0; bf loops while T=0
     }
-    cpu.r[0] = 0; cpu.r[12] = 0; cpu.sr |= 1;
+    cpu.r[0] = 0; cpu.r[12] = saved_r12; cpu.sr |= 1;
 }

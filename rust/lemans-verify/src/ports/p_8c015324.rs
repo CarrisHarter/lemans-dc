@@ -23,10 +23,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut borrow: u32 = 0; // r14 (saved/restored)
     let mut all_zero = true; // r12 (saved/restored)
     let mut res = cpu.r[2]; // r2/r3 keep the last result byte
+    let mut ran = false;
     // cmp/hs r5,r6 ; bf.s (delay slot: r1 += 1, always executed)
     r1 = r1.wrapping_add(1);
     if r6 >= a {
         loop {
+            ran = true;
             let bb = mem.read_u8(r7).unwrap_or(0) as u32;
             let aa = mem.read_u8(r6).unwrap_or(0) as u32;
             let raw = aa.wrapping_sub(bb).wrapping_sub(borrow);
@@ -62,8 +64,10 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = if t { 0 } else { 1 }; // bra delay slot mov #0,r0 / mov #1,r0
     }
     cpu.r[1] = r1;
-    cpu.r[2] = res;
-    cpu.r[3] = res;
+    if ran {
+        cpu.r[2] = res;
+        cpu.r[3] = res;
+    }
     cpu.r[6] = r6;
     cpu.r[7] = r7;
 }

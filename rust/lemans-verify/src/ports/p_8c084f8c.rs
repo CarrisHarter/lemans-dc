@@ -48,7 +48,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             cpu.fr[0] = mem.read_f32(s24).unwrap_or(0.0);
             let _ = mem.write_f32(r0, cpu.fr[0]);
             let hw = mem.read_u16(src + 28).unwrap_or(0);
-            cpu.r[0] = hw as u32; // mov.w @(28,r6),r0
+            cpu.r[0] = hw as i16 as i32 as u32; // mov.w @(28,r6),r0 (sign-extended)
             let _ = mem.write_u16(dst + 28, hw);
             cpu.r[7] = r7; // r7 = dst+20 survives (not saved/restored)
         }

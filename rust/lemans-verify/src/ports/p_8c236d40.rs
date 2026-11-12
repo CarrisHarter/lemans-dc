@@ -28,4 +28,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = mem.read_u32(0x8c236d80).unwrap_or(0);
     cpu.r[5] = cpu.r[5] | cpu.r[6];
     let _ = mem.write_u32(cpu.r[4], cpu.r[5]);
+    cpu.r[0] = 0; // rts delay slot
 }

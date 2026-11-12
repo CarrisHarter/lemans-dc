@@ -36,9 +36,11 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         return;
     }
     // bf.s taken (delay: r1 = r5), then bra with delay fmov @r6,fr1.
+    // The first comparison at 0x8c1b79c0 is against the sentinel itself, not
+    // against the head: r5 is only advanced at 0x8c1b79b0.
     cpu.r[1] = sentinel;
     cpu.fr[1] = mem.read_f32(node).unwrap_or(0.0);
-    let mut r5 = head;
+    let mut r5 = sentinel;
     loop {
         // 0x8c1b79c0: compare current key against the new node's key.
         let fr0 = mem.read_f32(r5).unwrap_or(0.0);

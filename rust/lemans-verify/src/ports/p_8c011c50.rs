@@ -14,16 +14,16 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     }
     loop {
         let b = mem.read_u8(cpu.r[4]).unwrap_or(0); // mov.b @r4,r2
-        cpu.r[2] = b as u32;
+        cpu.r[2] = b as i8 as i32 as u32;
         cpu.set_t(b == 0); // tst r2,r2
         if b != 0 {
             cpu.r[0] = 0; // rts delay slot: mov #0,r0
             return;
         }
         cpu.r[6] = cpu.r[6].wrapping_add(1);
-        cpu.set_t(cpu.r[6] >= cpu.r[5]); // cmp/ge r5,r6
+        cpu.set_t((cpu.r[6] as i32) >= (cpu.r[5] as i32)); // cmp/ge r5,r6
         cpu.r[4] = cpu.r[4].wrapping_add(1); // bf.s delay slot
-        if cpu.r[6] >= cpu.r[5] {
+        if (cpu.r[6] as i32) >= (cpu.r[5] as i32) {
             break;
         }
     }

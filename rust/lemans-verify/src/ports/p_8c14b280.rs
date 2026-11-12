@@ -30,4 +30,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let a = cpu.r[5] as i32;
     cpu.r[1] = if a >= 0 { cpu.r[1] << a } else { cpu.r[1] >> (-a) }; // shld r5,r1
     cpu.r[4] |= cpu.r[1];
+    cpu.r[0] = cpu.r[4]; // rts delay slot: mov r4,r0
 }

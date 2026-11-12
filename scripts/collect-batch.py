@@ -8,6 +8,7 @@ to overwrite an existing file with different content: a silent overwrite would
 hide two agents claiming the same address.
 """
 import filecmp
+import subprocess
 import shutil
 import sys
 from pathlib import Path
@@ -45,6 +46,10 @@ def main(argv):
             copied.append(src.stem[2:])
     for src in sorted((ws / "notes/specs").glob("*.json")):
         copy(src, SPECS / src.name, dry, conflicts)
+
+    if not dry:
+        subprocess.run([sys.executable, str(ROOT / "scripts" / "normalize-specs.py"),
+                        *[str(s) for s in sorted(SPECS.glob("*.json"))]], check=False)
 
     for c in conflicts:
         print(f"CONFLICT {c}", file=sys.stderr)

@@ -5,6 +5,7 @@ use sh4_oracle::{Cpu, Memory};
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = 0x8c23d798;
     cpu.r[6] = 0;
+    cpu.r[2] = cpu.r[6]; // mov r6,r2
     cpu.r[7] = 0xfffe;
     loop {
         cpu.r[3] = mem.read_u32(cpu.r[5] + 8).unwrap_or(0);
