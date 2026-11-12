@@ -1938,6 +1938,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c219ed6` | `lookup_split_two_bytes` | `notes/verifications/0x8c219ed6.json` - 263 oracle steps |
 | `0x8c219cce` | `lookup_pack_be_word` | `notes/verifications/0x8c219cce.json` - 328 oracle steps |
 | `0x8c219e8c` | `lookup_pack_be_word_32` | `notes/verifications/0x8c219e8c.json` - 302 oracle steps |
+| `0x8c2188c0` | `lazy_descriptor_init` | `notes/verifications/0x8c2188c0*.json` - 2 specs (44/6 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
