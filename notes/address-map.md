@@ -1762,6 +1762,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c13d8b4` | `free_stride8_array` | `notes/verifications/0x8c13d8b4*.json` - 3 specs (7-73 steps) |
 | `0x8c13da10` | `free_stride8_array_2` | `notes/verifications/0x8c13da10*.json` - 3 specs (7-73 steps) |
 | `0x8c13844c` | `release_then_free_array` | `notes/verifications/0x8c13844c*.json` - 3 specs (15-123 steps) |
+| `0x8c146d60` | `call_with_r14_one` | `notes/verifications/0x8c146d60.json` - 27 oracle steps |
+| `0x8c14aeb0` | `init_subobject_stamp_minus_one` | `notes/verifications/0x8c14aeb0*.json` - 2 specs (29/23 steps) |
+| `0x8c14b2c0` | `free_stride4_array` | `notes/verifications/0x8c14b2c0*.json` - 2 specs (72/7 steps) |
+| `0x8c14b664` | `free_stride570_array` | `notes/verifications/0x8c14b664*.json` - 2 specs (82/7 steps) |
+| `0x8c146640` | `hash_cached_field` | `notes/verifications/0x8c146640.json` - 23663 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
