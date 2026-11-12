@@ -1646,6 +1646,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c18db84` | `unknown` | `notes/verifications/0x8c18db84.json` — 48 oracle steps |
 | `0x8c18bd70` | `copy_assign_record` | `notes/verifications/0x8c18bd70.json` — 139 oracle steps; callee 0x8c10ef64 recopies the +12 string field (r4=dstbuf, r5=15, r6=15, r7=dstbuf+15, r3=0); T=1; r0=destination; r13/r14 restored |
 | `0x8c183e04` | `FUN_8c183e04` | `notes/verifications/0x8c183e04.json` — 179 oracle steps; scans count=[r4+4] elements at base=[r4+8]; per element calls 0x8c070b0c(name=[*[*p]+12], param_2), returns *p+4 when the compare is 0 else 0; r12-r14/pr restored from the four-word push; T=1 on both exits; no non-stack stores |
+| `0x8c18b71c` | `FUN_8c18b71c` | `notes/verifications/0x8c18b71c.json` — 115 oracle steps; if r4!=0: clears u32 at 0x8c2b7578 (jsr delay slot), releases the refcounted handle r4 with count -1 via 0x8c018bd8, and when exts.w(r5) > 0 frees r4 via thunk 0x8c01032c -> 0x8c159fc0; returns r4 (0 on the null path); r13/r14/r15 and pr restored; T=1 on the null path, cmp/pl T=0 on the non-positive path, callee T on the free path |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
