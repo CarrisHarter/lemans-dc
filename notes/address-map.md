@@ -1923,6 +1923,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1bc940` | `three_subobject_teardown` | `notes/verifications/0x8c1bc940*.json` - 3 specs (250/187/12 steps) |
 | `0x8c17797e` | `enum_to_code_switch_2` | `notes/verifications/0x8c17797e*.json` - 6 specs (12/15/18/21/340/373 steps) |
 | `0x8c1bc318` | `clear_flag_helper_global_free` | `notes/verifications/0x8c1bc318*.json` - 4 specs (107/88/44/12 steps) |
+| `0x8c1b5f74` | `clear_global_drain_free_3` | `notes/verifications/0x8c1b5f74*.json` - 3 specs (173/110/12 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
