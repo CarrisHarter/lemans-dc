@@ -1365,6 +1365,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c031e0c` | `stick_friction_decay` | `notes/verifications/0x8c031e0c.json` — 123 oracle steps; clears byte[obj+0x411]; subtracts 0.13 (plus 0.125 when slot flag byte at obj+0xc0+i*0xac is set) from float[obj+0x10] for each of 4 slots (obj+0xb0+i*0xac) whose float is >1.0; clamps float[obj+0x10] to [0,1]; sets byte[obj+0x411]=1; calls 0x8c151b1c([obj+0x24]); saves/restores r13/r14/pr, clobbers r0-r7 |
 | `0x8c07c180` | `construct_object` | `notes/verifications/0x8c07c180.json` — 47 oracle steps; calls 0x8c082054 on r4+36 when exts.w(r5)!=0; [r4]=r4+36; [r4+4]=0x8c1e9774; [*[r4]]=0x8c1e9794; [*[r4]+24]=(r4+36)-*[r4]; zeroes words r4+8/+12/+16/+20/+24/+28 and byte r4+32; r0=r4 |
 | `0x8c074264` | `swap_records_remap_refs` | `notes/verifications/0x8c074264.json` — 534 oracle steps; writes record array at r6: swaps 0x30-byte records r4/r5 through a stack buffer, then rewrites non-negative index slots +0x14..+0x27 of r7 records; 76-byte stack frame; T=1 only on the r4==r5 early return |
+| `0x8c081ad0` | `find_byte_backward` | `notes/verifications/0x8c081ad0.json` — 61 oracle steps; stack spills only (no non-stack stores); sets sr T; leaves r0=index/-1, r1 and r3 sign-extended low bytes, r4=last probed address |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
