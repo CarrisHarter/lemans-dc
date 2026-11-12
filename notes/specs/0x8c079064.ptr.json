@@ -1,0 +1,10 @@
+{
+  "entry": "0x8c079064",
+  "regs": { "r0": "0x33333333", "r4": "0x44444444" },
+  "memory": [
+    { "addr": "0x8c05fa58", "hex": "1000208c" },
+    { "addr": "0x8c200010", "hex": "bebafeca" }
+  ],
+  "expect": { "r0": "0xcafebabe" },
+  "steps": 12
+}

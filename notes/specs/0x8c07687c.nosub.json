@@ -1,0 +1,33 @@
+{
+  "entry": "0x8c07687c",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r15": "0x8c300000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c200000",
+      "hex": "00000000000000000010208c0030208c0010208c0000000008000000000000000030208c010000000600000000000000"
+    },
+    {
+      "addr": "0x8c201000",
+      "hex": "02"
+    }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0xffffffff",
+    "r1": "0x8c201000",
+    "r3": 96,
+    "r5": "0x8c20100c",
+    "r6": "0x8c2030a8"
+  },
+  "note": "else path: cursor byte 2 != frame 6; shadow 0x8c203000+168 < 0x8c203000+504 so no subtract; accum 1-2 wraps to 0xffffffff; ring 0x8c201000+12 < 0x8c201060 no wrap; countdown 0 wraps to 0xffffffff"
+}
