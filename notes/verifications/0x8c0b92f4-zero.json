@@ -1,0 +1,16 @@
+{
+  "address": "0x8c0b92f4",
+  "spec": "notes/specs/0x8c0b92f4-zero.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "fa5cad78",
+  "verified_at": "2026-11-12T02:36:17+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 36
+  },
+  "verifier_output": [
+    "ok   0x8c0b92f4 matches original (36 oracle steps)"
+  ]
+}
