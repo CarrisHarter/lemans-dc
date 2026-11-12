@@ -101,6 +101,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1bbe3c` | `clear_flag_then_boot_hook` | `notes/verifications/0x8c1bbe3c.json` - 19 oracle steps |
 | `0x8c0bde70` | `element_lookup_108` | `notes/verifications/0x8c0bde70*.json` - 3 specs (6 steps) |
 | `0x8c0c6104` | `tail_thunk_0x8c05d28c` | `notes/verifications/0x8c0c6104.json` - 5 oracle steps |
+| `0x8c0c814c` | `warm_lfsr_then_hash` | `notes/verifications/0x8c0c814c.json` - 23,646 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
 | `0x8c0bdddc` | `guard_free` | `notes/verifications/0x8c0bdddc*.json` - 5 specs |
