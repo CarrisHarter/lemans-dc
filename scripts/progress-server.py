@@ -43,7 +43,10 @@ PAGE = """<!doctype html>
   .fill { height: 100%; width: 0; background: linear-gradient(90deg,#2f81f7,#39d353);
           transition: width .6s ease; }
   .pct { font-size: 2.4rem; font-weight: 700; margin: 1rem 0 .25rem; }
-  .sub { opacity: .75; margin-bottom: 1.75rem; }
+  .sub { opacity: .75; margin-bottom: 1rem; }
+  .task { margin: 0 0 1.75rem; padding: .55rem .8rem; border-left: 3px solid #2f81f7;
+          background: #161b22; border-radius: 0 8px 8px 0; }
+  @media (prefers-color-scheme: light) { .task { background: #eef1f4; } }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
   .cell { border: 1px solid #30363d; border-radius: 10px; padding: .8rem .9rem; }
   @media (prefers-color-scheme: light) { .cell { border-color: #d0d7de; } }
@@ -57,6 +60,7 @@ PAGE = """<!doctype html>
   <div class="pct" id="pct">—</div>
   <div class="bar"><div class="fill" id="fill"></div></div>
   <div class="sub" id="sub">loading…</div>
+  <div class="task"><span class="k">current task</span> <span id="task">—</span></div>
   <div class="grid">
     <div class="cell"><div class="k">verified</div><div class="v" id="verified">—</div></div>
     <div class="cell"><div class="k">blocked</div><div class="v" id="blocked">—</div></div>
@@ -86,6 +90,7 @@ async function tick() {
     el("fill").style.width = d.percent + "%";
     el("sub").textContent = d.verified.toLocaleString() + " of " +
       d.total.toLocaleString() + " functions proven equivalent to the original SH-4 machine code";
+    el("task").textContent = d.current_task;
     for (const k of ["verified","blocked","remaining","last_hour","last_day","evidence_files"])
       el(k === "evidence_files" ? "evidence" : k).textContent = d[k].toLocaleString();
     el("pace").textContent = d.pace_per_day.toLocaleString();

@@ -21,6 +21,7 @@ TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
 VERIF = ROOT / "notes/verifications"
 PORTS = ROOT / "rust/lemans-verify/src/ports"
 LEDGER = ROOT / "notes/address-map.md"
+CANONICAL_RE = re.compile(r"^0x[0-9a-f]{8}$")  # 0xADDR only; seeds add .tag or -tag
 
 
 def sh(*args):
@@ -70,6 +71,18 @@ def blocked_count():
     return len(re.findall(r"^\| `0x[0-9a-f]{8}` \|", section, re.M))
 
 
+def current_task(last_hour: int, last_day: int) -> str:
+    """One plain-language line describing what the porting loop is doing now.
+
+    Derived from aggregate timestamps only: no addresses, names, or code.
+    """
+    if last_hour:
+        return f"verifying rewritten functions — {last_hour} proven in the last hour"
+    if last_day:
+        return f"between verification runs — {last_day} proven in the last 24 hours"
+    return "idle — no functions proven in the last 24 hours"
+
+
 def snapshot():
     """Return the public, aggregate-only progress document."""
     now = datetime.now(timezone.utc)
@@ -94,6 +107,7 @@ def snapshot():
         "last_day": last24,
         "pace_per_day": round(rate_day, 1),
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
+        "current_task": current_task(last1h, last24),
         # commit subjects are intentionally omitted: they contain addresses and
         # proposed names, which stay in the repo, not on a public endpoint.
     }
