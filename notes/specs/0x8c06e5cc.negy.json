@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "Negative y after x passes: cmp/pz r6 returns r0=0 with T cleared.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "1",
+    "r6": "0xffffffff",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r7": "0x77777777"
+  },
+  "sr": 1,
+  "mach": "0x12345678",
+  "macl": "0x9abcdef0",
+  "memory": [
+    { "addr": "0x8c20003c", "hex": "04000000" }
+  ],
+  "steps": 30,
+  "expect": { "r0": 0 }
+}

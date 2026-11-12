@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "y equal to descriptor[0x40]: cmp/ge r0,r6 is true, bf falls through to rts with r0=0 and T set.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "1",
+    "r6": "3",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111"
+  },
+  "sr": 0,
+  "mach": "0x12345678",
+  "macl": "0x9abcdef0",
+  "memory": [
+    { "addr": "0x8c20003c", "hex": "04000000" },
+    { "addr": "0x8c200040", "hex": "03000000" }
+  ],
+  "steps": 30,
+  "expect": { "r0": 0 }
+}

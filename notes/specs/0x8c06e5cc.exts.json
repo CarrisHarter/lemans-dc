@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "mov.w loads the negative halfword 0x8000 sign-extended into r3; the rts delay-slot add then wraps 0xffff8000 + 0xffff0000 to 0xfffe8000.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "3",
+    "r6": "3",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r7": "0x77777777"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c200008", "hex": "02000000" },
+    { "addr": "0x8c200010", "hex": "0001208c" },
+    { "addr": "0x8c20002c", "hex": "01000000" },
+    { "addr": "0x8c200034", "hex": "0002208c" },
+    { "addr": "0x8c200038", "hex": "0003208c" },
+    { "addr": "0x8c20003c", "hex": "04000000" },
+    { "addr": "0x8c200040", "hex": "04000000" },
+    { "addr": "0x8c200044", "hex": "01000000" },
+    { "addr": "0x8c200048", "hex": "01000000" },
+    { "addr": "0x8c20004c", "hex": "01000000" },
+    { "addr": "0x8c200106", "hex": "0300" },
+    { "addr": "0x8c200208", "hex": "0080" },
+    { "addr": "0x8c200308", "hex": "0000ffff" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0xfffe8000" }
+}

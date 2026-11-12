@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c078874",
+  "note": "Non-NULL handle, count +1, object refcount 1: the release helper drops the count to zero, so it destroys the object (free(NULL) inner, the guarded free declines with count 0, free(object)) before returning with its own count -1; then the exts.w/cmp/pl gate frees the handle through 0x8c01032c. Both blocks look like 8-byte headers pointing the coalesce check at their own negated size, and the malloc top at 0x8c2b1ef8 is the zeroed 0x8c2b2000 chunk.",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0x00000001",
+    "r15": "0x8c308000"
+  },
+  "sr": 0,
+  "memory": [
+    { "addr": "0x8c201000", "hex": "0011208c" },
+    { "addr": "0x8c201108", "hex": "01000000" },
+    { "addr": "0x8c20110c", "hex": "00000000" },
+    { "addr": "0x8c2010f8", "hex": "f810208c" },
+    { "addr": "0x8c2010fc", "hex": "08000000" },
+    { "addr": "0x8c200ff8", "hex": "f80f208c" },
+    { "addr": "0x8c200ffc", "hex": "08000000" },
+    { "addr": "0x8c2b1ef8", "hex": "00202b8c" }
+  ],
+  "steps": 300
+}

@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "descriptor[0x44]=0xfffffffe negates to +2, so shad shifts both axes left by 2; full path with count=2 and T=0 from shll.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "5",
+    "r6": "7",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r7": "0x77777777"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c200008", "hex": "03000000" },
+    { "addr": "0x8c200010", "hex": "0001208c" },
+    { "addr": "0x8c20002c", "hex": "05000000" },
+    { "addr": "0x8c200034", "hex": "0002208c" },
+    { "addr": "0x8c200038", "hex": "0003208c" },
+    { "addr": "0x8c20003c", "hex": "10000000" },
+    { "addr": "0x8c200040", "hex": "10000000" },
+    { "addr": "0x8c200044", "hex": "feffffff" },
+    { "addr": "0x8c200048", "hex": "0f000000" },
+    { "addr": "0x8c20004c", "hex": "02000000" },
+    { "addr": "0x8c2001d0", "hex": "0200" },
+    { "addr": "0x8c200254", "hex": "feff" },
+    { "addr": "0x8c200304", "hex": "10000000" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0xe" }
+}

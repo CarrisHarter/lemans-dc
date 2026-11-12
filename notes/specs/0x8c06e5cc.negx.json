@@ -1,0 +1,16 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "Negative x: cmp/pz r5 branches straight to rts with r0=0 and T cleared.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "0xffffffff",
+    "r6": "1",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111"
+  },
+  "sr": 1,
+  "mach": "0x12345678",
+  "macl": "0x9abcdef0",
+  "steps": 30,
+  "expect": { "r0": 0 }
+}

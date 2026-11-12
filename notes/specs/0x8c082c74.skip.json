@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c082c74",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r4": "0x8c201000",
+    "r5": "0x00000000",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000001",
+  "steps": 50,
+  "expect": {
+    "r0": "0x8c201000",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "note": "bf.s taken: cmp/pl sees 0, no free call, but the delay slot still stores 0x8c1e9b50 at *r4; T ends 0 (cmp/pl); entry T=1 proves the store is not a T-flag artifact"
+}

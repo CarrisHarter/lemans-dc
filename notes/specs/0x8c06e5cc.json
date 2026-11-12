@@ -1,0 +1,32 @@
+{
+  "entry": "0x8c06e5cc",
+  "note": "Both axes in range; map entry 4 selects the full lookup path with shift=-1, mask=3 and non-zero entry.",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "3",
+    "r6": "2",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r7": "0x77777777"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c200008", "hex": "05000000" },
+    { "addr": "0x8c200010", "hex": "0001208c" },
+    { "addr": "0x8c20002c", "hex": "07000000" },
+    { "addr": "0x8c200034", "hex": "0002208c" },
+    { "addr": "0x8c200038", "hex": "0003208c" },
+    { "addr": "0x8c20003c", "hex": "04000000" },
+    { "addr": "0x8c200040", "hex": "03000000" },
+    { "addr": "0x8c200044", "hex": "01000000" },
+    { "addr": "0x8c200048", "hex": "03000000" },
+    { "addr": "0x8c20004c", "hex": "06000000" },
+    { "addr": "0x8c20010c", "hex": "0400" },
+    { "addr": "0x8c200246", "hex": "f0ff" },
+    { "addr": "0x8c20030c", "hex": "00010000" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0xf0" }
+}

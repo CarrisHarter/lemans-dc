@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c082c74",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r4": "0x8c201000",
+    "r5": "0x00010000",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "steps": 50,
+  "expect": {
+    "r0": "0x8c201000",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "note": "exts.w keeps only the low half: r5=0x00010000 sign-extends to 0, so bf.s is taken, vtable store happens, free is not called"
+}

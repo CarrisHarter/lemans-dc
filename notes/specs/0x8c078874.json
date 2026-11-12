@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c078874",
+  "note": "Non-NULL handle, count +1: the release helper runs with count -1 and only drops the refcount 2->1 (clearing *handle), then the exts.w/cmp/pl gate frees the handle itself through 0x8c01032c. Layout: H=0x8c201000 holds object 0x8c201100 whose refcount at +8 is 2. H-4 holds a size of 8 and H-8 points at itself so free's coalesce cmp/pz sees 0xfffffff9 and skips; the malloc top pointer at 0x8c2b1ef8 is 0x8c2b2000 with a zero size word so the bin walk stops immediately.",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0x00000001",
+    "r15": "0x8c308000"
+  },
+  "sr": 0,
+  "memory": [
+    { "addr": "0x8c201000", "hex": "0011208c" },
+    { "addr": "0x8c201108", "hex": "02000000" },
+    { "addr": "0x8c200ff8", "hex": "f80f208c" },
+    { "addr": "0x8c200ffc", "hex": "08000000" },
+    { "addr": "0x8c2b1ef8", "hex": "00202b8c" }
+  ],
+  "steps": 300
+}

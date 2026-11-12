@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c078874",
+  "note": "Non-NULL handle whose count word is 0x00010000: only the low 16 bits are tested (exts.w), so the count is 0 and the handle is never freed. The release helper still runs with count -1 and drops the refcount 2->1. T ends clear from cmp/pl.",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0x00010000",
+    "r15": "0x8c308000"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c201000", "hex": "0011208c" },
+    { "addr": "0x8c201108", "hex": "02000000" }
+  ],
+  "steps": 300
+}

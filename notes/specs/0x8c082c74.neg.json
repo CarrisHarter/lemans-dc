@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c082c74",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r4": "0x8c201000",
+    "r5": "0x0000ffff",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "steps": 50,
+  "expect": {
+    "r0": "0x8c201000",
+    "r14": "0x8c2abcde",
+    "r15": "0x8c308000"
+  },
+  "note": "exts.w(r5) = -1: bf.s taken, delay-slot vtable store at *r4 still happens, free not called, T = 0"
+}
