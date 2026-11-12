@@ -1,0 +1,17 @@
+{
+  "address": "0x8c1514f8",
+  "spec": "notes/specs/0x8c1514f8.nofree.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "2ceaab2a",
+  "verified_at": "2026-11-12T07:52:58+00:00",
+  "first_verified_at": "2026-11-12T07:52:58+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 14
+  },
+  "verifier_output": [
+    "ok   0x8c1514f8 matches original (14 oracle steps)"
+  ]
+}
