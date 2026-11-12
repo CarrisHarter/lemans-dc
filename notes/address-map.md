@@ -1313,6 +1313,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c232dde` | `pack_into_slot_24` | `notes/verifications/0x8c232dde*.json` - 2 specs (30/50); same pack, stored at +24 |
 | `0x8c225ba2` | `unpack_eight_bytes` | `notes/verifications/0x8c225ba2.json` - 133 oracle steps; byte 0 times 100 plus byte 1 as a halfword, bytes 2..6 split, byte 7 indexes 0x8c23cca0 |
 | `0x8c221660` | `fill_slot_or_minus1` | `notes/verifications/0x8c221660*.json` - 2 specs (28/348); -1 if the slot word is set, else fill via five callees |
+| `0x8c2363a0` | `store_r4_nonzero` | `notes/verifications/0x8c2363a0*.json` - 2 specs (15/20); 0xeeee if the word is set, else stores 1 or 0 |
+| `0x8c236400` | `slot_bit16` | `notes/verifications/0x8c236400*.json` - 3 specs (29/48/49); sets or clears bit 16 of slot+36 |
+| `0x8c236cd0` | `unlink_node` | `notes/verifications/0x8c236cd0*.json` - 2 specs (19/20); unlinks r5 from the list at r4, head or predecessor |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
