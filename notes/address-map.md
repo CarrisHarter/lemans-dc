@@ -1890,3 +1890,27 @@ random registers) added two more classes that hand-written specs had missed:
 That is the argument for the oracle: register residue is invisible in pseudocode
 and load-bearing for the caller. The audit is the argument for randomizing the
 seed: every one of those ports had passing hand-written specs.
+
+### The 53 ports the randomized audit broke, by root cause
+
+Each row is a port that had passing hand-written specs and a failing random
+case. The witness spec named in the ledger row reproduces the failure.
+
+| class | addresses | what the hand specs missed |
+| --- | --- | --- |
+| byte load zero-extended instead of sign-extended | `0x8c0113b4` `0x8c011c50` `0x8c013226` `0x8c17eb18` `0x8c198b20` `0x8c215fac` `0x8c216dc0` `0x8c216e18` `0x8c217e3e` `0x8c222410` `0x8c225392` | `read_u8(..) as u32`; only visible when the byte is >= 0x80 and the register survives to exit |
+| `mov.w` operand used before sign extension | `0x8c084f8c` `0x8c085628` `0x8c10fe08` `0x8c2275c0` `0x8c227620` `0x8c227720` `0x8c227440` | halfword arithmetic where the instruction writes `sext16`; masks like `0xfffff0ff` became `0x0000f0ff` |
+| register written on one branch, modelled on the other | `0x8c015194` `0x8c015324` `0x8c1705ca` `0x8c23b94c` `0x8c1c13b2` | `neg r13,r3` before `cmp/pl`; `r2/r3` only inside the loop; `mov r6,r2` before an empty loop |
+| T residue from `cmp/eq`, `cmp/pl`, `cmp/hs`, `tst`, `shll` | `0x8c14dda8` `0x8c14dd90` `0x8c164430` `0x8c2199b8` `0x8c226de0` `0x8c232f60` `0x8c21cad4` `0x8c093048` `0x8c216e18` `0x8c217e3e` `0x8c219c9e` | the last flag-setting instruction before an exit is part of the result; `shll` sets T from bit 31, `shll2` does not |
+| signed compare done unsigned | `0x8c011c50` `0x8c085434` `0x8c085480` `0x8c1556d0` `0x8c18320c` `0x8c22817e` `0x8c22828e` | `cmp/gt`, `cmp/ge`, `cmp/pl` and `shad` treat the operand as i32 |
+| delay slot applied on one path only | `0x8c093048` `0x8c21cad4` `0x8c22828e` `0x8c018edc` (found by its port) | a `bf.s`/`bt.s` delay slot runs on both outcomes |
+| wrong field or dispatch offset | `0x8c1cbd88` `0x8c1cbda8` `0x8c1b7998` `0x8c017c0c` | the `r5==1/2/default` slots were shifted by one; the `bra` skips a shift the fall-through performs |
+| inverted gates on the bit-insert family | `0x8c227280` `0x8c2273e0` `0x8c2274a0` `0x8c227500` `0x8c2276c0` | accept is `mask2==0 || r5!=1`, not `mask2==0 && r5==1` |
+| missing store path / hardcoded literals | `0x8c010cf8` | the whole non-zero fall-through (four stores) was absent and the pool literals were baked in |
+| loop shape | `0x8c15a23c` (callee, found by `0x8c018fb0`) | `mov r0,r1` runs once before the loop, not at its head |
+| stack pops hardcoded | `0x8c0163e8` (callee, found by `0x8c016484` and the audit) | the exit pops four words although it pushes two; the extra two are the caller's |
+
+The distribution is the lesson: 18 of 53 are one sign-extension mistake, 15 are
+residue on a path the spec author did not take, and 12 are a flag the C never
+mentions. Every one of them passed a hand-written spec first.
+
