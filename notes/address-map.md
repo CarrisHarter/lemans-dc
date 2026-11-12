@@ -1795,6 +1795,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c15217c` | `compound_init_quaternion` | `notes/verifications/0x8c15217c.json` - 112 oracle steps |
 | `0x8c155fbc` | `flag_store_then_bitset_tail` | `notes/verifications/0x8c155fbc*.json` - 3 specs (27/27/27 steps) |
 | `0x8c15667c` | `release_then_free_twin` | `notes/verifications/0x8c15667c*.json` - 3 specs (112/49/12 steps) |
+| `0x8c15e3c8` | `triple_indirect_tail_thunk` | `notes/verifications/0x8c15e3c8.json` - 11 oracle steps |
+| `0x8c15fb30` | `double_indirect_thunk_2` | `notes/verifications/0x8c15fb30.json` - 10 oracle steps |
+| `0x8c165b50` | `seed_then_restamp_vtable` | `notes/verifications/0x8c165b50.json` - 20 oracle steps |
+| `0x8c16628c` | `store_byte_init_sub73` | `notes/verifications/0x8c16628c*.json` - 2 specs (27/9 steps) |
+| `0x8c1662a8` | `store_byte_store_sub96` | `notes/verifications/0x8c1662a8*.json` - 2 specs (15/9 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
