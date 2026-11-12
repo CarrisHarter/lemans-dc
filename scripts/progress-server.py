@@ -131,6 +131,10 @@ PAGE = """<!doctype html>
     .chart svg, .empty { height: 44px; }
     .ch .m { display: none; }
   }
+  @media (max-width: 720px) and (max-height: 600px) {
+    .scale { display: none; }
+    .chart svg, .empty { height: 34px; }
+  }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 <div class="app">
@@ -159,7 +163,7 @@ PAGE = """<!doctype html>
     <div><span class="k">Δ 24h</span><span class="v" id="last_day">—</span><span class="s">proofs / 24 h</span></div>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s">proofs/h, 24 h mean</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at 24 h rate</span></div>
-    <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">ago</span></div>
+    <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
     <div><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
     <div><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
