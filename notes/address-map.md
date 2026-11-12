@@ -1262,6 +1262,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c219c98` | `tail_slot_byte13_set` | `notes/verifications/0x8c219c98.json` - 19 oracle steps; jmp 0x8c21b05e |
 | `0x8c21c3ac` | `bra_to_tagged_write` | `notes/verifications/0x8c21c3ac.json` - 33 oracle steps; double bra to 0x8c21b8de |
 | `0x8c21bb5e` | `flag_from_two_bytes` | `notes/verifications/0x8c21bb5e*.json` - 4 specs; stores 0 or 1 from bytes +7/+8, returns 0 |
+| `0x8c21bf1e` | `stamp_byte_pattern` | `notes/verifications/0x8c21bf1e.json` - 340 oracle steps; zeroes 30 words then stamps +20..+51; the fill loop reloads r3 from r14 every trip |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
