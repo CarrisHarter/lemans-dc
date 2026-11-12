@@ -47,16 +47,25 @@ every address canonically after a merge.
 
 | metric | value |
 | --- | --- |
-| verified ports | 1,731 of 5,211 (33.2%) |
-| specs | 3,647+, all passing (`verify-all-specs.sh`) |
+| verified ports | 1,832 of 5,211 (35.2%) |
+| specs | 4,042, all passing (`verify-all-specs.sh`) |
 | oracle mnemonic coverage | 99.70% of 969,383 static instructions |
-| blocked ledger entries | 89 |
+| blocked ledger entries | 90 |
 
 Batches 41-43 landed 30 ports. The recurring failure classes remain
 caller-visible register residue and allocator fixtures: a freed pointer is the
 block start, so `[p-8]` must point at the arena head (`0x8c220000`), `[p-4]`
 holds the size (`0x40`) and `[p]` the next-chunk word (`0x1000`); with those
 seeded, four-pointer release chains verify in one shot.
+
+Batches 44-57 (waves 1-13) landed 101 ports. Two failure classes still
+dominate: (a) hand-written dispatch summaries invert branch directions, so every
+dispatch brief now says reconfirm from `disassembly.asm` first — agents have
+caught eight such inversions; (b) inline literal pools (0x8c172ee2, 0x8c176512)
+make a naive linear sweep read data as code, so the sweep must be cross-checked
+against `objdump` before a brief is trusted. One function is now blocked for a
+non-fixture reason: `0x8c1739c0` reads `0x8c004020`, below `LOAD_BASE`, so the
+oracle faults before any diff can mean anything.
 
 ## Next
 
