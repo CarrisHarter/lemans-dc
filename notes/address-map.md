@@ -124,6 +124,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0ed86c` | `release_four_then_zero` | `notes/verifications/0x8c0ed86c*.json` - 298 oracle steps |
 | `0x8c237780` | `strided_table_search` | `notes/verifications/0x8c237780*.json` - 3 specs (15-48 steps) |
 | `0x8c239820` | `slot_store_or_defer` | `notes/verifications/0x8c239820*.json` - 2 specs (12 and 21 steps) |
+| `0x8c23991c` | `clear_slot_bit` | `notes/verifications/0x8c23991c*.json` - 2 specs (hit and miss, 83 steps each) |
 | `0x8c0f110c` | `free_array_field` | `notes/verifications/0x8c0f110c*.json` - 3 specs (7-72 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
