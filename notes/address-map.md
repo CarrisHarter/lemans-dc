@@ -1878,6 +1878,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0bdb94` | `vtable_teardown_wrapper` | `notes/verifications/0x8c0bdb94*.json` - 3 specs (175/112/12 steps) |
 | `0x8c146e8c` | `vtable_teardown_wrapper_2` | `notes/verifications/0x8c146e8c*.json` - 3 specs (175/112/12 steps) |
 | `0x8c183b6c` | `zero_five_reset_sub` | `notes/verifications/0x8c183b6c.json` - 25 oracle steps |
+| `0x8c176df2` | `stride52_slot_store` | `notes/verifications/0x8c176df2*.json` - 4 specs (324/384/18/20 steps) |
+| `0x8c184e88` | `release_stride88_array` | `notes/verifications/0x8c184e88*.json` - 2 specs (138/23 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
