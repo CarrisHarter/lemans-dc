@@ -1338,6 +1338,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c236480` | `cond_imask_set` | `notes/verifications/0x8c236480*.json` — both branches (17/7 oracle steps); when [0x8c2c8b08+4] is zero sets IMASK from [0x8c2c8b08+8] and returns 0, else returns 0xeeee; both returns via rts delay slot `mov r5,r0` |
 | `0x8c236e60` | `desc_count_fill` | `notes/verifications/0x8c236e60*.json` — 2 seeds (62/32 oracle steps); fills [r4+4..28] with paired list lengths (next at +8, except +4 for the [68] list) and copied descriptor words |
 | `0x8c2395c0` | `cond_packet_build` | `notes/verifications/0x8c2395c0*.json` — 4 seeds (236/232/169/236 oracle steps); word0 = ([r4+4] & 0xffc30000) \| (([r4] & 15) << 22), words copied from struct fields with bits 22/24/25 gating optional fields; [dest+4] = byte count |
+| `0x8c01097c` | `atan_checked` | `notes/verifications/0x8c01097c*.json` — 5 seeds (303/74/77/83/310 oracle steps); call-crossing port (callee 0x8c014480); NaN result writes 0x44d / Inf writes 0x44c to 0x8c23d8b8, finite writes nothing |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
