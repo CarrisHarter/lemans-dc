@@ -3,8 +3,9 @@
   "spec": "notes/specs/0x8c21aff2.tflag.json",
   "binary": "analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "c933636c",
-  "verified_at": "2026-11-12T04:56:36+00:00",
+  "commit": "2f630acf",
+  "verified_at": "2026-11-12T21:15:58+00:00",
+  "first_verified_at": "2026-11-12T04:56:36+00:00",
   "result": "pass",
   "oracle": {
     "stop": "halt",
