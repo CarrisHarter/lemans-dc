@@ -1899,6 +1899,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1ade48` | `minimal_guarded_free_5` | `notes/verifications/0x8c1ade48*.json` - 3 specs (75/12/9 steps) |
 | `0x8c1ade78` | `minimal_guarded_free_6` | `notes/verifications/0x8c1ade78*.json` - 3 specs (75/12/9 steps) |
 | `0x8c1ade9c` | `minimal_guarded_free_7` | `notes/verifications/0x8c1ade9c*.json` - 3 specs (75/12/9 steps) |
+| `0x8c1ac718` | `clear_field_then_free` | `notes/verifications/0x8c1ac718*.json` - 3 specs (77/14/9 steps) |
+| `0x8c1cc5dc` | `clear_global_then_free_4` | `notes/verifications/0x8c1cc5dc*.json` - 3 specs (78/15/9 steps) |
+| `0x8c1beb34` | `free_stride92_array` | `notes/verifications/0x8c1beb34*.json` - 2 specs (82/7 steps) |
+| `0x8c1cbb14` | `circular_list_drain_5` | `notes/verifications/0x8c1cbb14*.json` - 2 specs (84/17 steps) |
+| `0x8c03ed5c` | `flag_then_compound_thunk` | `notes/verifications/0x8c03ed5c.json` - 39 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
