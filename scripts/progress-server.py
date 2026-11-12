@@ -263,6 +263,7 @@ PAGE = """<!doctype html>
            max-width: calc(100vw - 2rem); padding: .85rem .9rem .85rem 1.15rem; border-radius: 16px; background: var(--solid);
            border: 1px solid color-mix(in srgb, var(--go) 55%, transparent); box-shadow: 0 20px 50px -15px rgba(0,0,0,.55), 0 0 40px -10px var(--go-glow);
            font-weight: 600; transform: translate(-50%, -160%); transition: transform .55s var(--ease); }
+  .toast[hidden] { display: none; }
   .toast.show { transform: translate(-50%, 0); }
   .toast button { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--line-hi); background: transparent;
                   color: var(--muted); font: 600 1rem/1 var(--sans); cursor: pointer; }

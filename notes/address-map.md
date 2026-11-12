@@ -77,6 +77,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c085700` | `free_payload_clear_global_free_container` | `notes/verifications/0x8c085700*.json` - 4 specs, 9-90 steps |
 | `0x8c090cf0` | `memmove_window` | `notes/verifications/0x8c090cf0.json` - 275 oracle steps |
 | `0x8c090c68` | `clear_fields_then_free` | `notes/verifications/0x8c090c68*.json` - 4 specs, 12-90 steps |
+| `0x8c092fe0` | `guard_free` | `notes/verifications/0x8c092fe0*.json` - 4 specs, 9-90 steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
 | `0x8c015194` | `FUN_8c015194` | `notes/verifications/0x8c015194*.json` — both specs (74 and 12 oracle steps); r7=8-r6/carry, r12=mask, r3=-exts.w(r6), r2/r1 last byte ops, r0=(final carry != 0), T=(carry==0); r12/r13/r14 net unchanged |
 | `0x8c0152fc` | `FUN_8c0152fc (guarded slot store)` | `notes/verifications/0x8c0152fc.json` — 12 oracle steps; rts delay slot mov #1,r0 on store path; r2=slot ptr (loaded from cell 0x8c015320); r1=0x450; r3=0x200; r4=p-q; zero-byte path keeps r3=*p sign-extended and r4 untouched with T=1; short path T=0 |
