@@ -39,13 +39,26 @@ python3 - "$OUT/$(basename "${SPEC%.json}").json" "$ADDR" "$SPEC" "$BIN" "$SHA" 
 import json, sys, pathlib, datetime
 path, addr, spec, binary, sha, commit, status, result, oracle_json = sys.argv[1:10]
 oracle = json.loads(oracle_json)
+now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+# A re-verification of a still-passing port keeps the time it was first proven;
+# progress pace is measured from first proofs, not from re-runs.
+first = None
+if status == "0":
+    try:
+        old = json.loads(pathlib.Path(path).read_text())
+        if old.get("result") == "pass":
+            first = old.get("first_verified_at") or old.get("verified_at")
+    except (OSError, ValueError):
+        pass
+    first = first or now
 doc = {
     "address": addr,
     "spec": spec.replace(str(pathlib.Path.home()), "~"),
     "binary": binary.replace(str(pathlib.Path.home()), "~"),
     "binary_sha256": sha,
     "commit": commit,
-    "verified_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+    "verified_at": now,
+    **({"first_verified_at": first} if first else {}),
     "result": "pass" if status == "0" else "fail",
     "oracle": {
         "stop": oracle.get("stop"),

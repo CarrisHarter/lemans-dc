@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Refuse commits that mix porting results with tooling changes.
+#
+# Several workers commit to this repo at once. A port commit made with
+# `git add -A` / `git commit -a` sweeps up whatever another worker has half
+# finished in scripts/ or tools/ and files it under the wrong message (this
+# happened 28 times in 300 commits). Port evidence and tooling go in separate
+# commits; stage explicit paths.
+#
+# Installed by: git config core.hooksPath scripts/git-hooks
+# Intentional mixed commit: LEMANS_MIXED_COMMIT=1 git commit ...
+set -euo pipefail
+
+[[ "${LEMANS_MIXED_COMMIT:-}" == 1 ]] && exit 0
+
+staged=$(git diff --cached --name-only --diff-filter=ACMRD)
+port=$(grep -E '^(notes/(verifications|specs)/|notes/address-map\.md$|rust/lemans-verify/src/(ports/|registry\.rs$))' <<<"$staged" || true)
+tooling=$(grep -E '^(scripts|tools)/' <<<"$staged" || true)
+
+if [[ -n "$port" && -n "$tooling" ]]; then
+    {
+        echo "pre-commit: this commit mixes port results with tooling changes."
+        echo "Tooling files staged:"
+        sed 's/^/    /' <<<"$tooling"
+        echo "If they are not yours, unstage them:  git restore --staged <path>..."
+        echo "If they are yours, commit them separately. Never use 'git add -A' or 'git commit -a' here."
+        echo "Deliberate mixed commit: LEMANS_MIXED_COMMIT=1 git commit ..."
+    } >&2
+    exit 1
+fi

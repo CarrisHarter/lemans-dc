@@ -201,8 +201,14 @@ python3 scripts/check-integrity.py
 
 It proves the three-way agreement between `src/ports/p_*.rs`, the ledger in
 `notes/address-map.md`, and `notes/verifications/*.json`. A port with no
-passing evidence is not a claim; either finish it or remove it. Prefer
-surgical `git add <paths>` over `git add -A` while another worker is active.
+passing evidence is not a claim; either finish it or remove it.
+
+Stage explicit paths: never `git add -A`, `git add .` or `git commit -a`, which
+sweep another worker's half-finished files into your commit. Port results
+(`notes/verifications/`, `notes/specs/`, `notes/address-map.md`,
+`rust/lemans-verify/src/ports/`, `registry.rs`) and tooling (`scripts/`,
+`tools/`) go in separate commits; `scripts/git-hooks/pre-commit` rejects a commit
+that mixes them (installed with `git config core.hooksPath scripts/git-hooks`).
 
 ## Crossing calls
 
