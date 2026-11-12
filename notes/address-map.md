@@ -1256,6 +1256,12 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21ae2c` | `set_enable_and_clear_flag` | `notes/verifications/0x8c21ae2c.json` — 11 oracle steps |
 | `0x8c21aff2` | `slot_ptr_8` | `notes/verifications/0x8c21aff2*.json` - 3 specs; `*[0x8c2ba634]+4+8*r4`; T is bit 29 of r4 from `shll` |
 | `0x8c219fb6` | `field_selector_dispatch` | `notes/verifications/0x8c219fb6*.json` - 4 specs; tail-jumps on r4 in {0..9 except the listed order} to the 0x8c21b0* field accessors, else -1 |
+| `0x8c2199ca` | `call_slot_ptr_120` | `notes/verifications/0x8c2199ca.json` - 16 oracle steps; jsr 0x8c21afe0 |
+| `0x8c2199e6` | `tail_slot_word32_eq` | `notes/verifications/0x8c2199e6*.json` - 2 specs; jmp 0x8c21b034 |
+| `0x8c219c92` | `tail_slot_byte12` | `notes/verifications/0x8c219c92.json` - 19 oracle steps; jmp 0x8c21b04e |
+| `0x8c219c98` | `tail_slot_byte13_set` | `notes/verifications/0x8c219c98.json` - 19 oracle steps; jmp 0x8c21b05e |
+| `0x8c21c3ac` | `bra_to_tagged_write` | `notes/verifications/0x8c21c3ac.json` - 33 oracle steps; double bra to 0x8c21b8de |
+| `0x8c21bb5e` | `flag_from_two_bytes` | `notes/verifications/0x8c21bb5e*.json` - 4 specs; stores 0 or 1 from bytes +7/+8, returns 0 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
