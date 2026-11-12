@@ -1701,6 +1701,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0cd048` | `FUN_8c0cd048` | `notes/verifications/0x8c0cd048.json` — 343 oracle steps; writes u32 at [r4+4], [p+4], [q], [q+24], [p+36] where p=[r4], q=[p], and conditionally [r4+16]; frees [r4+8] and [r4+12], calls 0x8c07c100 on r4+44, conditionally frees r4 |
 | `0x8c0c5f5c` | `FUN_8c0c5f5c` | `notes/verifications/0x8c0c5f5c.json` — 117 oracle steps; writes [r4+0x00], [r4+0x38..0x54]; calls 0x8c05d378 then 0x8c05d274 |
 | `0x8c0d3258` | `FUN_8c0d3258` | `notes/verifications/0x8c0d3258.json` — 1335 oracle steps; unlinks/destroys nodes matching "instancetree" via 0x8c05cb48 (which stamps depths via 0x8c05caac); recurses into non-matching nodes' children |
+| `0x8c0d43c0` | `FUN_8c0d43c0` | `notes/verifications/0x8c0d43c0.json` — 409 oracle steps; clears/tears down each 0x24-byte slot via 0x8c0d357c(-1), frees descriptor->array via 0x8c01032c |
+| `0x8c0c5714` | `FUN_8c0c5714` | `notes/verifications/0x8c0c5714.json` — 125 oracle steps; initialises the object via 0x8c05d378, stamps 0x8c1eb940 then 0x8c1e8b54 then 0x8c1eb828/0x8c1eb7dc, sets bit 1 of [obj+16] via 0x8c05d274, copies two int pairs and three floats into obj+56..obj+84 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
