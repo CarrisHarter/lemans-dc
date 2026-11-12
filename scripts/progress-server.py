@@ -50,10 +50,13 @@ PAGE = """<!doctype html>
             --go: #15803d; --go-hi: #22c55e; --warn: #b45309; --track: #e3e8ef; }
   }
   * { box-sizing: border-box; }
-  html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+  /* Everything is sized in rem, so the root size scales the whole one-screen
+     layout: 16px up to ~1280x720, growing with the viewport beyond that while
+     the page (65 x ~34 rem) stays within 85% of both dimensions. */
+  html { background: var(--bg); -webkit-text-size-adjust: 100%; font-size: clamp(16px, min(1.3vw, 2.5vh), 32px); }
   body { margin: 0; min-height: 100dvh; display: grid; place-items: center; padding: clamp(.5rem, 2.5vw, 1.5rem);
-         color: var(--fg); font: 14px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
-  .app { width: min(1040px, 100%); display: grid; gap: .6rem; }
+         color: var(--fg); font: .875rem/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+  .app { width: min(65rem, 100%); display: grid; gap: .6rem; }
   .m { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .k { font: 600 .68rem/1.2 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--faint); }
   .box { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
@@ -81,7 +84,7 @@ PAGE = """<!doctype html>
   .of b { color: var(--fg); font-weight: 600; }
   .lg { display: flex; gap: .8rem; font: .72rem var(--mono); }
   .lg i { display: inline-block; width: .6rem; height: .6rem; border-radius: 2px; margin-right: .3rem; vertical-align: -1px; }
-  .bar { position: relative; height: 14px; border-radius: 4px; background: var(--track); overflow: hidden; }
+  .bar { position: relative; height: .875rem; border-radius: 4px; background: var(--track); overflow: hidden; }
   .bar::after { content: ""; position: absolute; inset: 0; pointer-events: none;
                 background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 1px), color-mix(in srgb, var(--bg) 65%, transparent) calc(10% - 1px) 10%); }
   .seg { position: absolute; top: 0; bottom: 0; left: 0; width: 0; transition: width .8s ease, left .8s ease; }
@@ -112,7 +115,7 @@ PAGE = """<!doctype html>
   .chart { padding: .55rem .8rem .45rem; min-width: 0; }
   .ch { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .35rem; }
   .ch .m { font-size: .7rem; color: var(--muted); white-space: nowrap; }
-  .chart svg, .empty { display: block; width: 100%; height: 64px; }
+  .chart svg, .empty { display: block; width: 100%; height: 4rem; }
   .chart rect { fill: color-mix(in srgb, var(--go) 55%, transparent); transition: height .5s, y .5s; }
   .chart rect.z { fill: var(--line); }
   .chart rect.h, .chart rect:hover { fill: var(--go); }
@@ -126,7 +129,7 @@ PAGE = """<!doctype html>
 
   @media (max-height: 620px) {
     .grid .s { display: none; }
-    .chart svg, .empty { height: 48px; }
+    .chart svg, .empty { height: 3rem; }
   }
   @media (max-width: 720px) {
     .app { gap: .5rem; }
@@ -139,12 +142,12 @@ PAGE = """<!doctype html>
     .charts { grid-template-columns: 1fr 1fr; }
     .charts > .cm { display: none; }
     .chart { padding: .45rem .6rem .35rem; }
-    .chart svg, .empty { height: 44px; }
+    .chart svg, .empty { height: 2.75rem; }
     .ch .m { display: none; }
   }
   @media (max-width: 720px) and (max-height: 600px) {
     .scale { display: none; }
-    .chart svg, .empty { height: 34px; }
+    .chart svg, .empty { height: 2.125rem; }
   }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
