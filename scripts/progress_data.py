@@ -20,12 +20,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
-# Schedule: every unblocked function verified before Nov 13 (00:00 JST), as a
+# Schedule: every unblocked function verified by the end of Fri 13 Nov JST, as a
 # straight line from the first published snapshot (1,373 verified). The target
 # count is TOTAL - blocked at snapshot time, the same "finished" the ETA uses.
 PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
 PLAN_START_VERIFIED = 1373
-PLAN_END = datetime(2026, 11, 12, 15, 0, 0, tzinfo=timezone.utc)
+PLAN_END = datetime(2026, 11, 13, 15, 0, 0, tzinfo=timezone.utc)  # Sat 14 Nov 00:00 JST
 RATE_WINDOW_H = 3  # primary pace window; 1 h and 6 h bound the ETA range
 BLOCKED_TREND_H = 6  # blocked count is compared with the ledger this long ago
 HISTORY_POINTS = 48  # samples in the cumulative verified series
