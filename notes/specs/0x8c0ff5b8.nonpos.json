@@ -1,0 +1,6 @@
+{
+  "entry": "0x8c0ff5b8",
+  "regs": { "r4": "0x8c201000", "r5": "0x12348000", "r14": "0xfeedface" },
+  "steps": 24,
+  "note": "r4 != 0 but exts.w(r5) = 0x8000 = -32768 <= 0: bf skips the free call; r0 = r4 and T stays 0."
+}

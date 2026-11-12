@@ -1,0 +1,6 @@
+{
+  "entry": "0x8c0ff5b8",
+  "regs": { "r4": "0x00000000", "r5": "0x00000001", "r14": "0xcafebabe" },
+  "steps": 24,
+  "note": "r4 == 0: tst/bt skip the free call; r0 = r4 = 0 and T stays 1."
+}

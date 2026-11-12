@@ -84,6 +84,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0e0694` | `reload_published_object` | `notes/verifications/0x8c0e0694.json` - 9 oracle steps |
 | `0x8c105ff0` | `array_index_thunk` | `notes/verifications/0x8c105ff0.json` - 14 oracle steps |
 | `0x8c106008` | `array_index_thunk` | `notes/verifications/0x8c106008.json` - 14 oracle steps |
+| `0x8c106878` | `strcmp_loop` | `notes/verifications/0x8c106878*.json` - 4 specs (5-57 steps) |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
 | `0x8c09035c` | `object_teardown` | `notes/verifications/0x8c09035c*.json` - 4 specs, 12-168 steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
@@ -1570,6 +1571,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c024910` | `FUN_8c024910` | `notes/verifications/0x8c024910.json` — 316 oracle steps; NULL object: only the five frame pushes/pops, T=1 from tst, r0..r12 untouched. Otherwise stores the 0x8c1e88a0 sentinel at [r4] in the first jsr delay slot, calls 0x8c018bd8(&object->handle, -1) through literal 0x8c02494c — the release decrements the pointee refcount and at zero frees its +0xc inner and the pointee itself — then calls 0x8c05ad54(object, 0) through literal 0x8c024950, which overwrites [object] with the 0x8c1e8f88 sentinel via 0x8c056bcc and never frees because count 0 is not positive. Only exts.w's low half of r5 is then tested (cmp/pl): when positive, free(object) runs through the 0x8c01032c thunk, leaving free's register residue and T. Returns the object in r0; r13/r14/pr/r15 are restored from the 12-byte frame to their entry values; literals are read from the image. |
 | `0x8c07e94c` | `release_handle_and_maybe_free` | `notes/verifications/0x8c07e94c.json` — 49 oracle steps; decrements the object refcount through 0x8c018bd8 with count -1, then frees the handle through 0x8c01032c when sext16(r5) > 0; returns the handle in r0 |
 | `0x8c0d91e8` | `FUN_8c0d91e8` | `notes/verifications/0x8c0d91e8.json` — 247 oracle steps; stores 4B scroll at +0x58 and 4B selection at +0x48; walks +0x40 items calling 0x8c05d274 twice each (mask 2 then 1, r6 = i==sel) |
+| `0x8c0ff5b8` | `FUN_8c0ff5b8` | `notes/verifications/0x8c0ff5b8.json` — 90 oracle steps; Returns param_1 (r4) in r0. If r4 != 0 and exts.w(r5) > 0, calls the free thunk 0x8c01032c via jsr with r4 = block and r5 untouched; on that path r1, r3-r6 and T end as free leaves them and r0 is then overwritten with r4. Otherwise no call: r0 = r4, and T = 1 when r4 == 0 (tst/bt) or T = 0 when exts.w(r5) <= 0 (cmp/pl/bf). Pushes r14 then pr to an 8-byte frame and restores both (r14 and pr end at entry values, r15 entry-equal); the only stores of its own are those two stack pushes plus free's heap writes. |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
