@@ -1,0 +1,50 @@
+{
+  "entry": "0x8c10cae8",
+  "regs": {
+    "r4": "0x8c240000",
+    "r5": "0x22222222",
+    "r2": "0xdeadbeef",
+    "r7": "0xa5a5a5a5"
+  },
+  "memory": [
+    {
+      "addr": "0x8c24000c",
+      "hex": "0001248c",
+      "note": "[r13+12] = P"
+    },
+    {
+      "addr": "0x8c240100",
+      "hex": "0002248c",
+      "note": "[P] = slot0 target"
+    },
+    {
+      "addr": "0x8c240200",
+      "hex": "0003248c",
+      "note": "[[P]] = committed C0"
+    },
+    {
+      "addr": "0x8c240300",
+      "hex": "0002248c",
+      "note": "[C0] = [P]: fixpoint after one advance"
+    },
+    {
+      "addr": "0x8c240308",
+      "hex": "0004248c",
+      "note": "[C0+8] = Q0"
+    },
+    {
+      "addr": "0x8c240400",
+      "hex": "0007248c",
+      "note": "[Q0] = K0 (key is double-deref)"
+    },
+    {
+      "addr": "0x8c240700",
+      "hex": "11111111",
+      "note": "[K0] != r14: key misses on iteration 0"
+    }
+  ],
+  "steps": 500,
+  "expect": {
+    "r0": 0
+  }
+}
