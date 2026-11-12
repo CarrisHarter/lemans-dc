@@ -1790,6 +1790,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c15d148` | `double_indirect_tail_thunk` | `notes/verifications/0x8c15d148.json` - 10 oracle steps |
 | `0x8c154e94` | `free_stride12_array` | `notes/verifications/0x8c154e94*.json` - 2 specs (74/7 steps) |
 | `0x8c155e20` | `clear_global_then_free_3` | `notes/verifications/0x8c155e20*.json` - 2 specs (78/15 steps) |
+| `0x8c1508cc` | `release_stride16_then_free` | `notes/verifications/0x8c1508cc*.json` - 2 specs (171/15 steps) |
+| `0x8c151be0` | `vtable_init2_then_free` | `notes/verifications/0x8c151be0*.json` - 3 specs (117/54/12 steps) |
+| `0x8c15217c` | `compound_init_quaternion` | `notes/verifications/0x8c15217c.json` - 112 oracle steps |
+| `0x8c155fbc` | `flag_store_then_bitset_tail` | `notes/verifications/0x8c155fbc*.json` - 3 specs (27/27/27 steps) |
+| `0x8c15667c` | `release_then_free_twin` | `notes/verifications/0x8c15667c*.json` - 3 specs (112/49/12 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
