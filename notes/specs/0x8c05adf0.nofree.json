@@ -1,0 +1,31 @@
+{
+  "note": "r4 != 0 but exts.w(r5) is negative (upper half set): the sentinel stores happen and 0x8c056bcc runs, but cmp/pl fails so free is not called; T ends clear, r0=the saved r4, r13/r14 restored",
+  "entry": "0x8c05adf0",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x12345678",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0xabcd8000",
+    "r6": "0x66666666",
+    "r12": "0xcccccccc",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r13": "0x13131313"
+  },
+  "memory": [
+    {
+      "addr": "0x8c200100",
+      "hex": "aabbccdd"
+    }
+  ],
+  "steps": 60,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0x8c1e8f88",
+    "r5": 0,
+    "r13": "0x13131313",
+    "r14": "0xeeeeeeee"
+  }
+}
