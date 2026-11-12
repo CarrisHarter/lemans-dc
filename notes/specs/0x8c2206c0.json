@@ -1,0 +1,55 @@
+{
+  "entry": "0x8c2206c0",
+  "note": "Global 0x8c23d468 holds a record array base 0x8c240000 whose first word points at pool 0x8c250000; the four records' ids 0,1,2,3 target pool slots 0x8c25001c/3c/5c/7c. sr I=7,T=0 exercises the callee's interrupt-nibble save/restore and the exit cmp/hs T=1.",
+  "regs": {
+    "r0": "0x11111111",
+    "r1": "0x22222222",
+    "r2": "0x33333333",
+    "r3": "0x44444444",
+    "r4": "0x55555555",
+    "r5": "0x66666666",
+    "r6": "0x77777777",
+    "r7": "0x88888888",
+    "r8": "0x99999999",
+    "r9": "0xaaaaaaaa",
+    "r10": "0xbbbbbbbb",
+    "r11": "0xcccccccc",
+    "r12": "0xdddddddd",
+    "r13": "0xeeeeeeee",
+    "r14": "0xdeadbeef"
+  },
+  "sr": "0x70",
+  "memory": [
+    {
+      "addr": "0x8c23d468",
+      "hex": "0000248c",
+      "note": "records base -> 0x8c240000"
+    },
+    {
+      "addr": "0x8c240000",
+      "hex": "0000258c",
+      "note": "*records = pool 0x8c250000"
+    },
+    {
+      "addr": "0x8c240004",
+      "hex": "00000000",
+      "note": "record 0 id"
+    },
+    {
+      "addr": "0x8c240038",
+      "hex": "01000000",
+      "note": "record 1 id"
+    },
+    {
+      "addr": "0x8c24006c",
+      "hex": "02000000",
+      "note": "record 2 id"
+    },
+    {
+      "addr": "0x8c2400a0",
+      "hex": "03000000",
+      "note": "record 3 id"
+    }
+  ],
+  "steps": 2000
+}
