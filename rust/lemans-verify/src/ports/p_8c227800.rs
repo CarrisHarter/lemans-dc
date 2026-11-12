@@ -19,9 +19,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = cpu.r[5] & cpu.r[3];
     cpu.r[2] = 4227858431;
     cpu.r[1] = mem.read_u32(cpu.r[6]).unwrap_or(0);
-    cpu.r[5] = cpu.r[5] << 16; // shll16
-    cpu.r[5] = cpu.r[5] << 8; // shll8
-    cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 sets T from bit 30
+    cpu.r[5] = cpu.r[5] << 16; // shll16 does not touch T
+    cpu.r[5] = cpu.r[5] << 8; // shll8 does not touch T
     cpu.r[5] = cpu.r[5] << 2;
     cpu.r[1] = cpu.r[1] & cpu.r[2];
     cpu.r[5] = cpu.r[5] | cpu.r[1];

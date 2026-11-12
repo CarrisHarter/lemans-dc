@@ -30,18 +30,14 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             r4 = r4.wrapping_add(4); // add #4,r4
         }
     }
-    let mut ran_tail = false;
     if r5 != 0 {
-        // byte tail over the remainder. The loop condition is NOT the tst at
-        // 0x8c0c81bc: `shll8 r1` at 0x8c0c81be overwrites T before the bf.s,
-        // so the back edge tests bit 24 of the accumulator, not r5.
+        // byte tail over the remainder
         r5 = r5.wrapping_sub(1); // add #-1,r5
         r1 = 0; // bt.s delay slot: mov #0,r1 (always runs)
-        ran_tail = true;
         loop {
             let b = mem.read_u8(r4).unwrap_or(0) as u32; // mov.b @r4,r0
-            let t = r1 >> 24 & 1 != 0; // shll8 r1 sets T from bit 24
-            r1 = (r1 << 8) | (b & 0xff); // shll8 r1 ; extu.b x2 ; or r0,r1
+            let t = r5 == 0; // tst r5,r5
+            r1 = (r1 << 8) | (b & 0xff); // shll8 r1 ; extu.b r0,r0 ; or r0,r1
             r4 = r4.wrapping_add(1); // add #1,r4
             r5 = r5.wrapping_sub(1); // bf.s delay slot: add #-1,r5 (runs every iteration)
             if t {
@@ -51,7 +47,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let idx = (((r6 >> 24) ^ r1) & 0xff) << 2; // shlr8+shlr16+exts.b ; xor r1,r0 ; extu.b ; shll2
         r1 = idx;
         let entry = mem.read_u32(table.wrapping_add(idx)).unwrap_or(0); // mov.l @(r0,r1),r0
-        cpu.set_t(r6 >> 24 & 1 != 0); // shll8 r6 sets T from bit 24
         r6 = (r6 << 8) ^ entry; // shll8 r6 ; xor r0,r6
     }
     cpu.r[0] = r6; // rts delay slot: mov r6,r0
@@ -62,9 +57,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[6] = r6;
     cpu.r[7] = r7;
     cpu.r[14] = r14_saved; // mov.l @r15+,r14
-    // Final T: the tail path already set it from `shll8 r6`; the skip path
-    // keeps the tst's T = 1.
-    if !ran_tail {
-        cpu.set_t(true);
-    }
+    cpu.set_t(true); // last tst on either exit path leaves T = 1
 }

@@ -11,9 +11,8 @@
 //! Side effects the decompiled C does not show: r6 always ends as the decoded
 //! value, while r3/r1 keep the in-place shifts of the path taken — 3-byte:
 //! r3 = b1<<8, r1 = b2; 4-byte: r3 = b1<<16, r1 = b2<<8. T comes from the
-//! last shift executed — always 0: the short paths end in `shar r6` whose carry
-//! bit is already known clear, and the 3/4-byte paths end in `shll8` of a
-//! zero-extended byte, whose bit 24 is 0. The returned pointer is produced by
+//! last `shar r6` executed — 1 only on the 4-byte path (bit 2 of the first
+//! byte shifted out), 0 otherwise. The returned pointer is produced by
 //! `mov r4,r0` in each branch's delay slot, i.e. after the `add #n,r4`, and
 //! r4 itself ends advanced.
 
@@ -95,5 +94,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[1] = b2 << 8; // shll8 r1
     cpu.r[4] = r4;
     cpu.r[0] = r4;
-    cpu.set_t(false); // last shift is shll8 r1 with r1 = b2, so bit24 is 0
+    cpu.set_t(true); // third shar shifted out bit 2 == 1 on this path
 }

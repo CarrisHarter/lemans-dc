@@ -4,9 +4,8 @@
 //! Branch polarity: `tst`+`bf` branches when the tested bit is SET, so the
 //! single-byte path (r4+1) runs when bit0 == 0.
 //! Side effects the C hides: r6 = unpacked value, r3/r1 = shifted source
-//! bytes on the longer paths, and T from the last shift. Every path ends with a
-//! shift whose carry bit is provably zero (bit0 of a tag already known clear, or
-//! bit24 of a zero-extended byte), so T is always 0.
+//! bytes on the longer paths, and T from the last T-writing instruction
+//! (only 1-bit `shlr` sets T; shlr2/shll8/shll16 do not).
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -24,7 +23,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[3] = b1;
         val = (b0 >> 2) << 8 | b1;
         adv = 2;
-        t = false; // last shift is shll8 r6 with r6 = b0>>2, so bit24 is 0
+        t = true; // tst (b0 & 2) == 0 -> T = 1; shlr2/shll8 leave T alone
     } else if b0 & 4 == 0 {
         let b1 = u32::from(mem.read_u8(r4 + 1).unwrap_or(0));
         let b2 = u32::from(mem.read_u8(r4 + 2).unwrap_or(0)); // mov.b @(2,r4),r0
@@ -41,7 +40,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[1] = b2 << 8; // shll8 r1
         val = (b0 >> 3) << 24 | b1 << 16 | b2 << 8 | b3;
         adv = 4;
-        t = false; // last shift is shll8 r1 with r1 = b2 (a byte), so bit24 is 0
+        t = true; // shlr r6 shifted out bit2 = 1
     }
     cpu.r[6] = val;
     cpu.r[4] = r4.wrapping_add(adv);

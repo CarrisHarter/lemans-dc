@@ -10,9 +10,9 @@
 //!
 //! Leftovers the C does not show: r4 = param+12, r1 = fpul<<16,
 //! r0 = 0x8c1f6fc0 (the pool pointer, not a converted value), fpul = the
-//! last ftrc, fr0/fr1/fr2 = x3*c / x2*c / x1*c, fr3 = 255.0f, and T is the
-//! carry of the last shift, `shll8 r0` at 0x8c056c52, i.e. bit 24 of the third
-//! converted value (`or` does not touch T, so it survives to the return).
+//! last ftrc, fr0/fr1/fr2 = x3*c / x2*c / x1*c, fr3 = 255.0f, and T is never
+//! touched (the spec seeds sr.T = 1 to prove it; shll8/shll16 and `or` do
+//! not set T on this core).
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -39,7 +39,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.fr[0] = cpu.fr[0] * c; // fmul fr3,fr0
     cpu.r[0] = cpu.fpul; // sts fpul,r0
     cpu.r[3] |= cpu.r[1]; // or r1,r3
-    cpu.set_t(cpu.r[0] >> 24 & 1 != 0); // shll8 r0 sets T from bit 24
     cpu.r[0] = cpu.r[0] << 8; // shll8 r0
     cpu.r[3] |= cpu.r[0]; // or r0,r3
     cpu.fpul = cpu.fr[0] as i32 as u32; // ftrc (0xF03D): fr0 again

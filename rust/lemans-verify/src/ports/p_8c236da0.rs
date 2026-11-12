@@ -4,8 +4,7 @@
 //! miss it returns the literal `0xeeee`; on a hit it builds a 3-bit mode from
 //! `r5` (bits 0x2000000/0x1000000/0x400000, `and #7`) into the top byte of
 //! `[[r4+0x88]+8]`, preserving the low 24 bits, and returns 0. T is whatever
-//! the `shll8 r14` carry on the taken path (always 0, since r14 is masked to
-//! 0..7 first); `and`/`or` do not touch it.
+//! the last `tst` of the taken path left (`and`/`or`/`shll*` do not touch it).
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -57,10 +56,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[3] = mem.read_u32(0x8c236e38).unwrap_or(0x00ff_ffff); // mov.l
         cpu.r[14] &= cpu.r[1]; // and r1,r14 (no T)
         cpu.r[4] = mem.read_u32(cpu.r[0].wrapping_add(cpu.r[5])).unwrap_or(0); // mov.l @(r0,r5),r4
-        cpu.r[14] <<= 16; // shll16 r14
-        // shll8 r14 is the last T writer; r14 is 0..7 here, so its bit 24 is 0.
-        cpu.set_t(cpu.r[14] >> 24 & 1 != 0);
-        cpu.r[14] <<= 8; // shll8 r14
+        cpu.r[14] <<= 16; // shll16 (no T)
+        cpu.r[14] <<= 8; // shll8 (no T)
         cpu.r[2] = mem.read_u32(cpu.r[4].wrapping_add(8)).unwrap_or(0); // mov.l @(8,r4),r2
         cpu.r[0] = 0; // mov #0,r0
         cpu.r[2] &= cpu.r[3]; // and r3,r2 (no T)

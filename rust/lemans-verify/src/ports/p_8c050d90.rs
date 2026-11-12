@@ -84,17 +84,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
 
     let count = rd(mem, group + rd(mem, p + 0x20) * 8);
     let t = count.wrapping_sub(1) == cur; // cmp/eq r7,r3 at 0x8c050e3e
-    let mut t_out = t;
     let e10 = if t {
         let idx0 = rd(mem, entries); // mov.l @r0,r3: entries[0]
-        // Both arms end in three shll2 (v -> v*5 -> v*20 -> v*80), so the last
-        // one's carry is bit 30 of v*20 and it replaces the cmp/eq T.
-        t_out = idx0.wrapping_mul(20) >> 30 & 1 != 0;
         base.wrapping_add(idx0.wrapping_mul(0x50))
     } else {
         let addr = entries.wrapping_add(4).wrapping_add(cur.wrapping_mul(4));
         let idxn = rd(mem, addr); // entries[cur+1]
-        t_out = idxn.wrapping_mul(20) >> 30 & 1 != 0;
         base.wrapping_add(idxn.wrapping_mul(0x50))
     };
     wr(mem, p + 0x10, e10);
@@ -117,5 +112,5 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = e8.wrapping_add(0x14); // add #20,r5 at 0x8c050e80
     cpu.r[6] = p + 0x14; // add #20,r6 at 0x8c050e7e
     cpu.r[7] = if t { cur } else { cur.wrapping_mul(4) };
-    cpu.set_t(t_out);
+    cpu.set_t(t);
 }

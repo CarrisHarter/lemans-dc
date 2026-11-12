@@ -16,8 +16,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = 0; // mov #0,r0
     } else {
         cpu.r[1] = mem.read_u32(cpu.r[1].wrapping_add(8)).unwrap_or(0); // mov.l @(8,r1),r1
-        // The callee 0x8c0f8850 never touches T, so the shll2's carry survives.
-        cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 r5 sets T from bit 30
         cpu.r[5] = cpu.r[5].wrapping_shl(2); // shll2 r5
         cpu.r[0] = cpu.r[5]; // mov r5,r0
         cpu.r[4] = mem.read_u32(cpu.r[1].wrapping_add(cpu.r[0])).unwrap_or(0); // mov.l @(r0,r1),r4

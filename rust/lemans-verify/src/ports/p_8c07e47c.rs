@@ -16,8 +16,7 @@
 //!
 //! T ends as the only flag-setting instruction before the exit: `cmp/hs`
 //! (`limit + index >= n`, positive `n`) or `cmp/hi` (`capacity > reached`,
-//! negative `n`). `sub`, `add` and `mov` leave T alone, but the `shll2` in each
-//! arm sets it, so the final T is that carry, not the cmp/hi or cmp/hs.
+//! negative `n`). In the oracle `shll2`, `sub`, `add` and `mov` leave T alone.
 //!
 //! `n == i32::MIN` makes `neg` stay negative, and the original calls itself
 //! through the literal at 0x8c07e4f4 with the same arguments, forever: it has
@@ -45,16 +44,13 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         // cmp/hs r5,r1 — unsigned, and it decides the branch and final T.
         let fits = limit.wrapping_add(index) >= n;
         let element = mem.read_u32(elem_addr).unwrap_or(0);
-        let mut t_arm = fits;
         let new_element = if fits {
             // mov.l @(8,r4),r0 ; shll2 r0 ; sub r0,r1
-            t_arm = n >> 30 & 1 != 0; // shll2 r0 carry
             element.wrapping_sub(n << 2)
         } else {
             // mov.l @r3,r1 ; mov.l @(12,r3),r0 ; sub r5,r1 ; shll2 r1 ; add r0,r1
             let capacity = mem.read_u32(descriptor).unwrap_or(0);
             let base = mem.read_u32(descriptor.wrapping_add(12)).unwrap_or(0);
-            t_arm = capacity.wrapping_sub(n) >> 30 & 1 != 0; // shll2 r1 carry
             base.wrapping_add(capacity.wrapping_sub(n) << 2)
         };
         // Delay slot of `bra 0x8c07e4e6`: the element store lands first.
@@ -64,7 +60,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[1] = new_index;
         let _ = mem.write_u32(idx_addr, new_index);
         cpu.r[0] = cursor; // mov r4,r0
-        cpu.set_t(t_arm);
+        cpu.set_t(fits);
     } else {
         let magnitude = n.wrapping_neg();
         if magnitude == 0x8000_0000 {
@@ -81,15 +77,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         // cmp/hi r1,r3 — unsigned; this is both the branch and the final T.
         let in_window = capacity > reached;
         let element = mem.read_u32(elem_addr).unwrap_or(0);
-        let mut t_arm = in_window;
         let new_element = if in_window {
             // shll2 r7 ; add r7,r0
-            t_arm = magnitude >> 30 & 1 != 0; // shll2 r7 carry
             element.wrapping_add(magnitude << 2)
         } else {
             // mov.l @(12,r6),r0 ; sub r3,r1 ; shll2 r1 ; add r0,r1
             let base = mem.read_u32(descriptor.wrapping_add(12)).unwrap_or(0);
-            t_arm = reached.wrapping_sub(capacity) >> 30 & 1 != 0; // shll2 r1 carry
             base.wrapping_add(reached.wrapping_sub(capacity) << 2)
         };
         // Delay slot of `bra 0x8c07e4b6`: the element store lands first.
@@ -100,7 +93,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let _ = mem.write_u32(idx_addr, new_index);
         cpu.r[7] = if in_window { magnitude << 2 } else { magnitude };
         cpu.r[0] = cursor; // mov r4,r0
-        cpu.set_t(t_arm);
+        cpu.set_t(in_window);
     }
 
     // lds.l @r15+,pr

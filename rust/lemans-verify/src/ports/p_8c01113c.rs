@@ -13,7 +13,7 @@
 //! 114c add r1,r3           r3 = state*K + C (mod 2^32)
 //! 114e mov r3,r0
 //! 1150 shlr16 r0           r0 = r3 >> 16 (logical)
-//! 1152 and r2,r0           r0 &= 0x7fff  (and does not touch T)
+//! 1152 and r2,r0           r0 &= 0x7fff
 //! 1154 mov.l r3,@r4        *state = new state
 //! 1156 rts
 //! 1158 lds.l @r15+,macl    delay slot: pop MACL
@@ -42,7 +42,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = cpu.macl; // sts macl,r3
     cpu.r[3] = cpu.r[3].wrapping_add(cpu.r[1]); // add r1,r3
     cpu.r[0] = cpu.r[3]; // mov r3,r0
-    cpu.set_t(cpu.r[0] >> 16 & 1 != 0); // shlr16 r0 sets T from bit 16
     cpu.r[0] >>= 16; // shlr16 r0
     cpu.r[0] &= cpu.r[2]; // and r2,r0
     let _ = mem.write_u32(cpu.r[4], cpu.r[3]); // mov.l r3,@r4

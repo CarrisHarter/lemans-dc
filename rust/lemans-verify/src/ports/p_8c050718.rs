@@ -9,8 +9,7 @@
 //! 12 bytes are copied from `[[r4+8] + 0x14]` to `[r4+0x14]` and `[r4+0x34]`
 //! gets r5 in the `rts` delay slot.
 //!
-//! Hidden side effects: T is not the cmp/eq at all - both arms end in three
-//! `shll2` on the slot value, so T is bit 30 of slot*20; r5 ends as r4+0x14, r3 as
+//! Hidden side effects: T is the final cmp/eq, r5 ends as r4+0x14, r3 as
 //! `[r4+8]+0x14`, r6 as 4*idx1, r7 as 4*r5 only on the else path, r0/r1
 //! from the tail loads/stores.
 
@@ -55,17 +54,11 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.set_t(eq); // cmp/eq r7,r3
     let v10 = if eq {
         let inner = mem.read_u32(entry).unwrap_or(0); // extra deref: [E]
-        // Both arms end in three shll2 (v -> v*5 -> v*20 -> v*80), so the last
-        // one's carry is bit 30 of v*20 and it replaces the cmp/eq T.
-        cpu.set_t(inner.wrapping_mul(20) >> 30 & 1 != 0);
         t2.wrapping_add(inner.wrapping_mul(0x50))
     } else {
         let v = mem
             .read_u32(entry.wrapping_add(4).wrapping_add(p2.wrapping_mul(4)))
             .unwrap_or(0);
-        // The else path ends in three shll2 on r3 (r5 -> r5*5 -> r5*20 -> r5*80),
-        // so the last one's carry is bit 30 of r5*20 and it replaces the cmp/eq T.
-        cpu.set_t(v.wrapping_mul(20) >> 30 & 1 != 0);
         t2.wrapping_add(v.wrapping_mul(0x50))
     };
     let _ = mem.write_u32(s.wrapping_add(0x10), v10);

@@ -2373,28 +2373,19 @@ string itself. Names are proposals until a spec verifies the behaviour.
 | `0x8c1b52b4` | `heures_2` | Heures |
 | … | | 10 more in analysis/labels.tsv |
 
-## Oracle correction: multi-bit shifts set T
+## Oracle: multi-bit shifts do not set T
 
-`shll2`, `shll8`, `shll16`, `shlr2`, `shlr8` and `shlr16` all write the last bit
-shifted out to T on real SH-4 hardware. The interpreter only did that for the
-one-bit forms, so every port that mirrored a multi-bit shift agreed with the
-interpreter instead of the machine.
+Checked against the SH-4 Programming Manual (ADE-602-156D, Rev 5.0). The
+operation listings for `SHLL2`/`SHLL8`/`SHLL16` and `SHLR2`/`SHLR8`/`SHLR16`
+shift the register and advance PC; the T-bit column is "—". The description of
+the right-shift forms says the bits shifted out are discarded. Only the
+one-bit `SHLL`/`SHLR`/`SHAL`/`SHAR` transfer a bit into T.
 
-The fix (rust/sh4-oracle/src/lib.rs, two regression tests in
-tests/system_instructions.rs) invalidated 62 specs across 28 ports. All were
-repaired by making T the shift's carry rather than the compare that preceded
-it. Two of them were not merely a flag mismatch:
-
-- `0x8c0c817c` - the byte-tail loop's back edge tests `shll8 r1`'s carry, not
-  the `tst r5,r5` before it, so the loop runs until bit 24 of the accumulator is
-  set rather than a fixed number of times.
-- `0x8c21b418` - the fill-loop guard is `shll2 r1`'s carry, not `cmp/pl r4`.
-- `0x8c21cad4` - the `bt.s` tests `shlr2 r5`'s carry, not the `tst r4,r3`.
-- `0x8c2395c0` - the `bt.s` tests `shll2 r1`'s carry, not the `tst r14,r14`.
-
-The general lesson: when a compare and a shift are separated by other
-instructions, the shift wins. Every one of these had a compare immediately
-before the branch in the C, and the shift in between was invisible.
+A session briefly taught the interpreter the opposite (last bit out → T) and
+rewrote 28 ports to match. That was wrong: the manual is the source of truth,
+and the interpreter already matched it. Reverted. The fuzz cases that looked
+like T mismatches were the rewritten ports disagreeing with the hardware, not
+the hardware disagreeing with the ports.
 
 ## Verifier findings so far
 

@@ -227,7 +227,6 @@ fn mode1(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.fr[0] = cpu.fr[0] * cpu.fr[3];
     cpu.r[0] = cpu.fpul; // sts fpul,r0
     cpu.r[6] |= cpu.r[5];
-    cpu.set_t(cpu.r[0] >> 24 & 1 != 0); // shll8 r0 sets T from bit 24
     cpu.r[0] = cpu.r[0] << 8; // shll8 r0
     cpu.r[6] |= cpu.r[0];
     cpu.fpul = cpu.fr[0] as i32 as u32;

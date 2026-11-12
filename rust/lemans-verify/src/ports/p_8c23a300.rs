@@ -25,7 +25,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = cpu.r[3] >> 2;
     cpu.r[3] = cpu.r[3] & cpu.r[14];
     cpu.r[1] = cpu.r[1] >> 8;
-    cpu.set_t(cpu.r[4] >> 16 & 1 != 0); // shlr16 r4 sets T from bit 16
     cpu.r[4] = cpu.r[4] >> 16;
     cpu.r[4] = cpu.r[4] & cpu.r[14];
     cpu.r[1] = cpu.r[1] & cpu.r[14];

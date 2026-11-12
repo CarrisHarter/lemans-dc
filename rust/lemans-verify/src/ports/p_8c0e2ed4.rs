@@ -31,9 +31,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[6] = b2; // extu.b r3,r6
     cpu.r[3] = b1; // extu.b r1,r3
     cpu.r[1] = b0; // extu.b r5,r1 (r1 later reloaded)
-    // The last T-affecting instruction is the `shlr8 r1` at 0x8c0e2ee8, where
-    // r1 still holds r5, so T is bit 8 of the colour word.
-    cpu.set_t(color >> 8 & 1 != 0);
     cpu.fr[3] = mem.read_f32(0x8C0E2F38).unwrap(); // 255.0f
     cpu.fpul = cpu.r[7];
     cpu.fr[4] = cpu.fpul as i32 as f32; // float fpul,fr4

@@ -43,7 +43,6 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             }
         }
     };
-    cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 r5 sets T from bit 30
     cpu.r[5] = cpu.r[5] << 2; // shll2 r5
     cpu.r[0] = cpu.r[5]; // mov r5,r0
     cpu.r[4] = (cpu.r[4] as i32).wrapping_add(off) as u32; // add #off,r4
