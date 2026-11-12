@@ -120,6 +120,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0f9ab2` | `strcmp_body` | `notes/verifications/0x8c0f9ab2*.json` - 4 specs (15-67 steps) |
 | `0x8c106882` | `strcmp_body_2` | `notes/verifications/0x8c106882*.json` - 4 specs (15-67 steps) |
 | `0x8c0ed854` | `zero_and_return` | `notes/verifications/0x8c0ed854*.json` - 61 oracle steps |
+| `0x8c0fdc60` | `clear_global_then_free` | `notes/verifications/0x8c0fdc60*.json` - 3 specs (9-78 steps) |
 | `0x8c0f110c` | `free_array_field` | `notes/verifications/0x8c0f110c*.json` - 3 specs (7-72 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
@@ -1720,6 +1721,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0ccdd0` | `FUN_8c0ccdd0` | `notes/verifications/0x8c0ccdd0.json` — 293 oracle steps; writes [r4+8]=0x8c1ebe10; with p=[r4], q=[p], c=[q], d=[r4+4]: [p+4]=0x8c1ebee4, [q+4]=0x8c1ebec4, [c]=0x8c1ebe48, [d+24]=r4+12-d, [q+36]=r4+40-q, [p+16]=r4+80-p; (i16)r5!=0: teardown(r4+80,0) via 0x8c0cd048, destroy(r4+40,0) via 0x8c07c100, [r4+12]=0x8c1e9ad4; (i16)r5>0: free(r4) via 0x8c01032c; returns r4 |
 | `0x8c09f00c` | `FUN_8c09f00c` | `notes/verifications/0x8c09f00c.json` — 51 oracle steps; writes class word 0x8c1eed70 at r4+8, lit+0x38/at [r4], lit+0xd4 at [[r4+4]+4], lit+0xb4 at [[[r4+4]]+4], relative offsets at [r4]+24 / [[[r4+4]]]+36 / [[r4+4]]+16; if (i16)r5!=0 calls 0x8c0cd048(r4+0x50,0) then 0x8c07c100(r4+0x28,0) and writes 0x8c1e9ad4 at r4+0xc; if (i16)r5>0 calls 0x8c01032c(r4); r0=r4; T=1 on r4==0 or 0 elsewhere (free residue on r5>0); r13/r14/pr restored |
 | `0x8c0f3fd0` | `FUN_8c0f3fd0` | `notes/verifications/0x8c0f3fd0.json` — 17 oracle steps; frees every node from sentinel->next up to (not including) the sentinel at *r4 through 0x8c01032c -> free(0x8c159fc0), then writes sentinel->next = sentinel and sentinel->prev = sentinel; the successor is read in the jsr delay slot before free; r0 ends as the sentinel, T=1 at exit |
+| `0x8c0ed6b8` | `FUN_8c0ed6b8` | `notes/verifications/0x8c0ed6b8.json` — 210 oracle steps; calls 0x8c010d8c (may store 0x44c/0x44d at 0x8c23d8b8); fr0 = clamp(f32[r4+4]*scale, 0, fr2); final r0=r6&0xff, r1=fpul=1 shld r5, T from the last fcmp, fr2/fr3/clamp arm as transcribed; r12-r14/pr restored by the frame |
+| `0x8c0fe9fc` | `FUN_8c0fe9fc` | `notes/verifications/0x8c0fe9fc.json` — 21 oracle steps; calls 0x8c0b5e78 (stores 0x8c1eaaac to [r4], dead); then [r4]=0x8c1ed104 and zero [+4], [+28], [+36], [+48]; returns r4 in r0, r1=0; r14/pr restored, T untouched |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
