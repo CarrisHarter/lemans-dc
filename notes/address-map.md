@@ -1176,6 +1176,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19c764` | `search_fr5_store_r5` | `notes/verifications/0x8c19c764.json` - 98 steps; search gets fr5, entry r5 stored at +28, +32 cleared |
 | `0x8c19c7a4` | `search_zero_store_r5` | `notes/verifications/0x8c19c7a4.json` - 98 steps; fr4 forced 0, entry r5 stored at +28 |
 | `0x8c19c92c` | `search_fr5_clear_60` | `notes/verifications/0x8c19c92c.json` - 90 steps; search gets fr5, word at +60 cleared |
+| `0x8c1a40b8` | `search_then_vtable_1788` | `notes/verifications/0x8c1a40b8.json` - 115 steps; calls 0x8c19c4d0 then overwrites the vtable with 0x8c1f1788 |
+| `0x8c1841c4` | `release_record_array` | `notes/verifications/0x8c1841c4*.json` - null 18, empty 58, null slot 132, positive r5 frees the container 121 |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
