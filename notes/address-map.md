@@ -1366,6 +1366,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c07c180` | `construct_object` | `notes/verifications/0x8c07c180.json` — 47 oracle steps; calls 0x8c082054 on r4+36 when exts.w(r5)!=0; [r4]=r4+36; [r4+4]=0x8c1e9774; [*[r4]]=0x8c1e9794; [*[r4]+24]=(r4+36)-*[r4]; zeroes words r4+8/+12/+16/+20/+24/+28 and byte r4+32; r0=r4 |
 | `0x8c074264` | `swap_records_remap_refs` | `notes/verifications/0x8c074264.json` — 534 oracle steps; writes record array at r6: swaps 0x30-byte records r4/r5 through a stack buffer, then rewrites non-negative index slots +0x14..+0x27 of r7 records; 76-byte stack frame; T=1 only on the r4==r5 early return |
 | `0x8c081ad0` | `find_byte_backward` | `notes/verifications/0x8c081ad0.json` — 61 oracle steps; stack spills only (no non-stack stores); sets sr T; leaves r0=index/-1, r1 and r3 sign-extended low bytes, r4=last probed address |
+| `0x8c04f204` | `find_matching_entry_two_fields` | `notes/verifications/0x8c04f204.json` — 139 oracle steps; r0,r1,r3,r4,r5,r10-r14 clobbered; 24-byte r14/r13/r12/r11/r10/pr push-pop; pr saved/restored; 9 calls: 0x8c10e344, 0x8c10e364, 0x8c10e36c, 0x8c10e3b4, 0x8c10e3bc once each and 0x8c070b0c four times; T=0 from loop cmp/hi on exit-0 paths, T=1 from final tst on return-1 paths; no stores outside stack |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

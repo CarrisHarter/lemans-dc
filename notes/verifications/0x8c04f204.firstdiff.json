@@ -1,0 +1,16 @@
+{
+  "address": "0x8c04f204",
+  "spec": "notes/specs/0x8c04f204.firstdiff.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "766ae431",
+  "verified_at": "2026-11-12T01:12:07+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 136
+  },
+  "verifier_output": [
+    "ok   0x8c04f204 matches original (136 oracle steps)"
+  ]
+}
