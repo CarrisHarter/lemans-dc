@@ -1340,6 +1340,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2395c0` | `cond_packet_build` | `notes/verifications/0x8c2395c0*.json` — 4 seeds (236/232/169/236 oracle steps); word0 = ([r4+4] & 0xffc30000) \| (([r4] & 15) << 22), words copied from struct fields with bits 22/24/25 gating optional fields; [dest+4] = byte count |
 | `0x8c01097c` | `atan_checked` | `notes/verifications/0x8c01097c*.json` — 5 seeds (303/74/77/83/310 oracle steps); call-crossing port (callee 0x8c014480); NaN result writes 0x44d / Inf writes 0x44c to 0x8c23d8b8, finite writes nothing |
 | `0x8c010ae8` | `exp_checked` | `notes/verifications/0x8c010ae8*.json` — 5 seeds (241/62/75/242/245 oracle steps); call-crossing port (callee 0x8c013d1c); same wrapper shape as 0x8c01097c |
+| `0x8c0111d0` | `sin_checked` | `notes/verifications/0x8c0111d0*.json` — 5 seeds (220/65/65/228/222 oracle steps); call-crossing port (callee 0x8c01412c); same wrapper shape as 0x8c01097c (first run failed: cloned port still called the exp callee) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
