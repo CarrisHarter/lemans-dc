@@ -1875,6 +1875,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10e3e4` | `nine_handle_record_teardown` | `notes/verifications/0x8c10e3e4*.json` - 4 specs (470/407/14/83 steps) |
 | `0x8c14fe94` | `subrecord_teardown` | `notes/verifications/0x8c14fe94*.json` - 4 specs (85/22/14/252 steps) |
 | `0x8c16d690` | `table_init_20_records` | `notes/verifications/0x8c16d690.json` - 1239 oracle steps |
+| `0x8c0bdb94` | `vtable_teardown_wrapper` | `notes/verifications/0x8c0bdb94*.json` - 3 specs (175/112/12 steps) |
+| `0x8c146e8c` | `vtable_teardown_wrapper_2` | `notes/verifications/0x8c146e8c*.json` - 3 specs (175/112/12 steps) |
+| `0x8c183b6c` | `zero_five_reset_sub` | `notes/verifications/0x8c183b6c.json` - 25 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
