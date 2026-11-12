@@ -1821,6 +1821,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1732b8` | `flag_call_or_slot_load` | `notes/verifications/0x8c1732b8*.json` - 2 specs (363/10 steps) |
 | `0x8c172f96` | `null_dispatch_const64` | `notes/verifications/0x8c172f96*.json` - 3 specs (393/357/13 steps) |
 | `0x8c1745ca` | `memset_store_thunk_2` | `notes/verifications/0x8c1745ca.json` - 1295 oracle steps |
+| `0x8c172662` | `memset_store_tail_thunk` | `notes/verifications/0x8c172662.json` - 1295 oracle steps |
+| `0x8c1702fc` | `movt_test_thunk_twin` | `notes/verifications/0x8c1702fc.json` - 183 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
