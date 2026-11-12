@@ -1161,6 +1161,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19b7c8` | `FUN_8c19b7c8` | `notes/verifications/0x8c19b7c8.json` — 16 oracle steps; store fr2 at [r0] ([r15]); fr0=1.0 only on fr1>fr2 path; r0 = [r15] kept |
 | `0x8c19b7f0` | `FUN_8c19b7f0` | `notes/verifications/0x8c19b7f0.json` — ok; bare rts;nop |
 | `0x8c19ca78` | `FUN_8c19ca78` | `notes/verifications/0x8c19ca78.json` — ok; *(*r15)=*r4 in rts delay |
+| `0x8c19c9b8` | `find_node_by_string` | `notes/verifications/0x8c19c9b8*.json` - empty 70, match 108, miss 106 |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |

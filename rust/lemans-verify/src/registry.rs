@@ -3251,6 +3251,8 @@ pub mod p_8c19b7c8;
 pub mod p_8c19b7f0;
 #[path = "ports/p_8c19c95c.rs"]
 pub mod p_8c19c95c;
+#[path = "ports/p_8c19c9b8.rs"]
+pub mod p_8c19c9b8;
 #[path = "ports/p_8c19ca78.rs"]
 pub mod p_8c19ca78;
 #[path = "ports/p_8c19ca80.rs"]
@@ -5668,6 +5670,7 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C19B7C8 => Some(p_8c19b7c8::run),
         0x8C19B7F0 => Some(p_8c19b7f0::run),
         0x8C19C95C => Some(p_8c19c95c::run),
+        0x8C19C9B8 => Some(p_8c19c9b8::run),
         0x8C19CA78 => Some(p_8c19ca78::run),
         0x8C19CA80 => Some(p_8c19ca80::run),
         0x8C19CCF4 => Some(p_8c19ccf4::run),
