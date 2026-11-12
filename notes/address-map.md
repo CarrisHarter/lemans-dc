@@ -1837,6 +1837,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c161a98` | `three_element_sort_network` | `notes/verifications/0x8c161a98*.json` - 2 specs (124/80 steps) |
 | `0x8c10d5f0` | `insertion_sort_deref` | `notes/verifications/0x8c10d5f0*.json` - 2 specs (104/116 steps) |
 | `0x8c1365cc` | `vtable_init_shifted_copy` | `notes/verifications/0x8c1365cc.json` - 63 oracle steps |
+| `0x8c111868` | `insertion_sort_field68` | `notes/verifications/0x8c111868*.json` - 2 specs (116/86 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
