@@ -104,6 +104,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.fr[1] = fr1;
         // 0x8c0d8d68: fcmp/gt fr1,fr5 -> T = fr5 > fr1
         if fr5 > fr1 {
+            cpu.set_t(r3 >> 30 & 1 != 0); // shll2 r0 sets T from bit 30
             let r0 = r3.wrapping_shl(2); // mov r3,r0; shll2 r0
             cpu.r[0] = r0;
             cpu.r[4] = base.wrapping_add(88).wrapping_add(r0);
@@ -121,7 +122,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             cpu.fr[0] = fr0;
             cpu.r[3] = r3;
             cpu.r[5] = r5;
-            cpu.set_t(true);
+            // T is the shll2's carry, not 1: nothing after it touches the flag.
             return;
         }
         r5 = r5.wrapping_add(4);

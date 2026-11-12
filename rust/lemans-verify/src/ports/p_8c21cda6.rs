@@ -9,7 +9,8 @@
 //!
 //! The callee returns `*0x8c2b8dcc`. When it is positive, the port returns
 //! `*(int *)(0x8c23c520 + n*4)`; otherwise the counter itself. T is `cmp/pl`'s
-//! signed test of that counter, and neither `rts` nor the delay-slot `mov`
+//! signed test on the miss path, but on the hit path the `shll2 r3` overwrites
+//! it with bit 30 of the counter; neither `rts` nor the delay-slot `mov`
 //! disturbs it.
 
 use sh4_oracle::{Cpu, Memory};
@@ -34,7 +35,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = mem.read_u32(0x8c21ce00).unwrap_or(0); // 0x8c23c520
         // 0x8c21cdb6: mov r4,r3
         cpu.r[3] = cpu.r[4];
-        // 0x8c21cdb8: shll2 r3
+        // 0x8c21cdb8: shll2 r3 - the last T writer, so T is its carry
+        cpu.set_t(cpu.r[3] >> 30 & 1 != 0);
         cpu.r[3] <<= 2;
         // 0x8c21cdba: mov.l @(r0,r3),r4
         cpu.r[4] = mem

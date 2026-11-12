@@ -45,6 +45,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     // 0x8c14ae3a: mov #0,r1
     cpu.r[1] = 0;
     // 0x8c14ae3c: shll2 r0
+    cpu.set_t(cpu.r[0] >> 30 & 1 != 0);
     cpu.r[0] = cpu.r[0] << 2;
     // 0x8c14ae3e: add r5,r1
     cpu.r[1] = cpu.r[1].wrapping_add(cpu.r[5]);
@@ -52,7 +53,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = cpu.r[3] << 2;
     // 0x8c14ae42: add r3,r1
     cpu.r[1] = cpu.r[1].wrapping_add(cpu.r[3]);
-    // 0x8c14ae44: shll2 r0
+    // 0x8c14ae44: shll2 r0 - the last T-writing instruction
+    cpu.set_t(cpu.r[0] >> 30 & 1 != 0);
     cpu.r[0] = cpu.r[0] << 2;
     // 0x8c14ae46: rts, delay slot 0x8c14ae48: add r1,r0
     cpu.r[0] = cpu.r[0].wrapping_add(cpu.r[1]);

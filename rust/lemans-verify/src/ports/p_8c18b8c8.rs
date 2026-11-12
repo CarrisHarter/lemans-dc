@@ -8,7 +8,8 @@
 //! so the load is `@(r0,r3+16)`. On a match r0 is recomputed as 20*i and the
 //! `rts` delay slot adds the base. On exhaustion the final `rts` delay slot
 //! zeroes r0; with count <= 0 the body never runs, so r1/r3 keep their entry
-//! values. Final T is the deciding compare (1 on match, 0 on exhaustion).
+//! values. Final T is the deciding compare on exhaustion, but on a match it is
+//! the second `shll2`'s carry (bit 30 of r6*5).
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -34,8 +35,10 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.set_t(r5 == r1); // cmp/eq r5,r1
         if r5 == r1 {
             r0 = r6;
-            r0 <<= 2; // shll2 r0 (T untouched)
+            r0 <<= 2; // shll2 r0
             r0 = r0.wrapping_add(r6);
+            // The second shll2's carry (bit 30 of r6*5) is the final T.
+            cpu.set_t(r0 >> 30 & 1 != 0);
             r0 <<= 2; // shll2 r0
             r0 = r0.wrapping_add(r3); // rts delay slot: add r3,r0
             break;

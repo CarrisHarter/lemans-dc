@@ -587,3 +587,62 @@ fn movt_targets_any_register() {
     let (cpu, _) = run(cpu, mem);
     assert_eq!(cpu.r[1], 1);
 }
+
+// SHLL2/SHLR2/SHLL8/SHLR8/SHLL16/SHLR16 all write the last bit shifted out to T,
+// exactly like the one-bit forms. The interpreter used to leave T untouched,
+// which made every port that mirrors the flag disagree with the hardware.
+#[test]
+fn multi_bit_shifts_set_t_from_the_last_bit_out() {
+    // shll2 r4 (0x4408): T = bit 30
+    let (mut cpu, mem) = one(0x4408);
+    cpu.r[4] = 0x4000_0000;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0000);
+    assert!(cpu.t(), "shll2 must set T from bit 30");
+
+    // shlr2 r4 (0x4409): T = bit 1
+    let (mut cpu, mem) = one(0x4409);
+    cpu.r[4] = 0x0000_0002;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0000);
+    assert!(cpu.t(), "shlr2 must set T from bit 1");
+
+    // shll8 r4 (0x4418): T = bit 24
+    let (mut cpu, mem) = one(0x4418);
+    cpu.r[4] = 0x0100_0000;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0000);
+    assert!(cpu.t(), "shll8 must set T from bit 24");
+
+    // shlr8 r4 (0x4419): T = bit 8
+    let (mut cpu, mem) = one(0x4419);
+    cpu.r[4] = 0x0000_0100;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0001);
+    assert!(cpu.t(), "shlr8 must set T from bit 8");
+
+    // shll16 r4 (0x4428): T = bit 16
+    let (mut cpu, mem) = one(0x4428);
+    cpu.r[4] = 0x0001_0000;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0000);
+    assert!(cpu.t(), "shll16 must set T from bit 16");
+
+    // shlr16 r4 (0x4429): T = bit 16
+    let (mut cpu, mem) = one(0x4429);
+    cpu.r[4] = 0x0001_0000;
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0x0000_0001);
+    assert!(cpu.t(), "shlr16 must set T from bit 16");
+}
+
+#[test]
+fn multi_bit_shifts_clear_t_when_the_bit_is_zero() {
+    // shll8 r4 (0x4418) with bit 24 clear must clear a previously set T.
+    let (mut cpu, mem) = one(0x4418);
+    cpu.r[4] = 0x00FF_FFFF;
+    cpu.set_t(true);
+    let (cpu, _) = run(cpu, mem);
+    assert_eq!(cpu.r[4], 0xFFFF_FF00);
+    assert!(!cpu.t(), "shll8 must clear T when bit 24 is 0");
+}

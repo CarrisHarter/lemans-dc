@@ -15,12 +15,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[13] = mem.read_u16(0x8c216f4a).unwrap_or(0xda) as u32; // mov.w 0x8c216f4a,r13
     cpu.r[14] = cpu.r[4]; // bra delay: mov r4,r14
     loop {
-        cpu.r[2] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32; // mov.b @r14,r2
+        cpu.r[2] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r14,r2
         cpu.set_t(cpu.r[2] == 0); // tst r2,r2
         if cpu.t() {
             break;
         }
-        cpu.r[4] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32; // bsr delay: mov.b @r14+,r4
+        cpu.r[4] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32; // bsr delay: mov.b @r14+,r4
         cpu.r[14] = cpu.r[14].wrapping_add(1);
         cpu.pr = 0x8c216e4e;
         crate::registry::p_8c216d44::run(cpu, mem);

@@ -453,11 +453,15 @@ impl Cpu {
                     Ok(())
                 }
                 0x4008 => {                              // shll2 Rn
+                    let out = self.r[n] >> 30 & 1 != 0;
                     self.r[n] = self.r[n] << 2;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4009 => {                              // shlr2 Rn
+                    let out = self.r[n] >> 1 & 1 != 0;
                     self.r[n] = self.r[n] >> 2;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4010 => {                              // dt Rn
@@ -474,19 +478,27 @@ impl Cpu {
                     Ok(())
                 }
                 0x4018 => {                              // shll8 Rn
+                    let out = self.r[n] >> 24 & 1 != 0;
                     self.r[n] = self.r[n] << 8;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4019 => {                              // shlr8 Rn
+                    let out = self.r[n] >> 8 & 1 != 0;
                     self.r[n] = self.r[n] >> 8;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4028 => {                              // shll16 Rn
+                    let out = self.r[n] >> 16 & 1 != 0;
                     self.r[n] = self.r[n] << 16;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4029 => {                              // shlr16 Rn
+                    let out = self.r[n] >> 16 & 1 != 0;
                     self.r[n] = self.r[n] >> 16;
+                    self.set_t(out);
                     Ok(())
                 }
                 0x4011 => {                              // cmp/pz Rn

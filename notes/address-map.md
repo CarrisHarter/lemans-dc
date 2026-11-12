@@ -1953,6 +1953,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1779fe` | `selector_to_constant` | `notes/verifications/0x8c1779fe*.json` - 5 specs (14/17/32/361/284 steps); `r4` 0 and -1..-8 map to constants, null `r5` and any other `r4` report through 0x8c174564 and return 0 |
 | `0x8c172fcc` | `record_byte_match` | `notes/verifications/0x8c172fcc*.json` - 4 specs (485/311/84/74 steps); `r4` is a pointer, in `[0x8c2b5264, +0x8c2b5268)` it reports 0x1fb, otherwise 0x8c173084 decodes `r4+32` and the three bytes are compared against `r5`/`r6`/`r7`; the loads are `mov.b`, so they sign-extend - zero-extending passes every hand-written spec and fails the fuzzer |
 | `0x8c1352a8` | `record_construct` | `notes/verifications/0x8c1352a8.json` - 86 oracle steps; the vtable at `+0` is written three times and only `0x8c1eeed8` survives; `+24` points at the record itself |
+| `0x8c1ac828` | `table_seen_flags` | `notes/verifications/0x8c1ac828*.json` - 3 specs (39/45/13 steps); gated on `[0x8c2b79e0]`, two 0x8c074d58 calls (codes 6 and 7) and a walk of `[0x8c23dab0]` that flips each `+68` byte to 1 when it was 0 |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
@@ -2371,6 +2372,29 @@ string itself. Names are proposals until a spec verifies the behaviour.
 | `0x8c1b4b00` | `heures` | Heures |
 | `0x8c1b52b4` | `heures_2` | Heures |
 | … | | 10 more in analysis/labels.tsv |
+
+## Oracle correction: multi-bit shifts set T
+
+`shll2`, `shll8`, `shll16`, `shlr2`, `shlr8` and `shlr16` all write the last bit
+shifted out to T on real SH-4 hardware. The interpreter only did that for the
+one-bit forms, so every port that mirrored a multi-bit shift agreed with the
+interpreter instead of the machine.
+
+The fix (rust/sh4-oracle/src/lib.rs, two regression tests in
+tests/system_instructions.rs) invalidated 62 specs across 28 ports. All were
+repaired by making T the shift's carry rather than the compare that preceded
+it. Two of them were not merely a flag mismatch:
+
+- `0x8c0c817c` - the byte-tail loop's back edge tests `shll8 r1`'s carry, not
+  the `tst r5,r5` before it, so the loop runs until bit 24 of the accumulator is
+  set rather than a fixed number of times.
+- `0x8c21b418` - the fill-loop guard is `shll2 r1`'s carry, not `cmp/pl r4`.
+- `0x8c21cad4` - the `bt.s` tests `shlr2 r5`'s carry, not the `tst r4,r3`.
+- `0x8c2395c0` - the `bt.s` tests `shll2 r1`'s carry, not the `tst r14,r14`.
+
+The general lesson: when a compare and a shift are separated by other
+instructions, the shift wins. Every one of these had a compare immediately
+before the branch in the C, and the shift in between was invisible.
 
 ## Verifier findings so far
 

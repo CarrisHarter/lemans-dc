@@ -12,6 +12,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.set_t(cpu.r[1] == cpu.r[0]); // cmp/eq r1,r0
     if cpu.r[1] == cpu.r[0] {
         cpu.r[0] = mem.read_u32(cpu.r[3]).unwrap_or(0);
+        cpu.set_t(cpu.r[0] >> 30 & 1 != 0); // shll2 r0 sets T from bit 30
         cpu.r[0] = cpu.r[0] << 2; // shll2 r0
         cpu.r[1] = cpu.r[1].wrapping_add(cpu.r[0]);
         let _ = mem.write_u32(cpu.r[4] + 8, cpu.r[1]);

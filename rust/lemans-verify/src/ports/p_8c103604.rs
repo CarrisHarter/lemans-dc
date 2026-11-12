@@ -22,10 +22,9 @@ use sh4_oracle::{Cpu, Memory};
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let r13 = cpu.r[4]; // mov r4,r13
     // cmp/pz r5 ; bf.s: taken (with delay r14=0) iff r5 < 0 signed.
-    // Otherwise cmp/gt r5,r0 tests 4>r5 signed. Final T equals the taken
-    // branch in both exits: cmp/pz leaves 0 on the negative exit, cmp/gt
-    // leaves (4>r5) on the non-negative exit, and neither callee (adds and
-    // mov.l loads only) touches T afterwards.
+    // Otherwise cmp/gt r5,r0 tests 4>r5 signed. On the miss path both compares
+    // leave T = 0. On the take path T is the callee's `shll2 r5` carry, since
+    // the six 0x8c16eadc calls only do adds and loads.
     let take = (cpu.r[5] as i32) >= 0 && 4 > (cpu.r[5] as i32);
     let r14 = if take {
         // r0=0x8c27a238 (pool word) ; r4=[r0] ; jsr 0x8c0c0ecc ; nop ; r14=r0.
@@ -37,7 +36,11 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     } else {
         0 // mov #0,r14 (bf.s delay slot, runs either way)
     };
-    cpu.set_t(take);
+    // On the take path 0x8c0c0ecc's `shll2 r5` sets T and nothing after it
+    // touches the flag; on the miss path both compares leave T = 0.
+    if !take {
+        cpu.set_t(false);
+    }
     // Six indexed stores; r0 and r5 are reloaded before each call, and the
     // callee leaves r4 = target+92, r1 = [target+92], r0 = table base.
     for off in [76u32, 0xc0, 0x134, 0x1a8, 0x21c, 0x290] {

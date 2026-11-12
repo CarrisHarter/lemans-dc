@@ -24,6 +24,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = 22;
     cpu.r[7] = cpu.r[7] & cpu.r[1];
     cpu.r[2] = cpu.r[2] << cpu.r[3]; // shad
+    cpu.set_t(cpu.r[7] >> 16 & 1 != 0); // shll16 sets T from bit 16
     cpu.r[7] = cpu.r[7] << 16;
     cpu.r[7] = cpu.r[7] | cpu.r[2];
     cpu.r[2] = mem.read_u32(0x8c23a8e4).unwrap_or(0);

@@ -19,6 +19,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[0] = if count > index {
         let stride = mem.read_u32(base + 4).unwrap_or(0);
         cpu.r[1] = stride; // the original leaves base[1] in r1 on this path
+        // The hit path is `shll2 r0 ; add r5,r0 ; shll2 r0`, so the second
+        // shll2's carry (bit 30 of index*5) is the final T.
+        cpu.set_t((index as u32).wrapping_mul(5) >> 30 & 1 != 0);
         (index as u32).wrapping_mul(0x14).wrapping_add(stride)
     } else {
         mem.read_u32(base + 8).unwrap_or(0)

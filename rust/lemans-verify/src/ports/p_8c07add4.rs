@@ -39,11 +39,15 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         if h0 <= sum {
             // 0x8c07ae34: wrapped cursor.
             let h3 = mem.read_u32(h.wrapping_add(12)).unwrap();
+            // 0x8c07ae38: shll2 r1 is the last T writer on this arm.
+            cpu.set_t(sum.wrapping_sub(h0) >> 30 & 1 != 0);
             let value = sum.wrapping_sub(h0).wrapping_shl(2).wrapping_add(h3);
             mem.write_u32(r4.wrapping_add(8), value).unwrap();
         } else {
             // 0x8c07ae28: cursor += r5 * 4.
             let s2 = mem.read_u32(r4.wrapping_add(8)).unwrap();
+            // 0x8c07ae2c: shll2 r0 is the last T writer on this arm.
+            cpu.set_t(r5 >> 30 & 1 != 0);
             let value = s2.wrapping_add(r5.wrapping_shl(2));
             mem.write_u32(r4.wrapping_add(8), value).unwrap();
         }
@@ -69,12 +73,16 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             // 0x8c07ae00: wrapped cursor; r6 keeps n.
             let h0 = mem.read_u32(h).unwrap();
             let h3 = mem.read_u32(h.wrapping_add(12)).unwrap();
+            // 0x8c07ae06: shll2 r1 is the last T writer on this arm.
+            cpu.set_t(h0.wrapping_sub(n) >> 30 & 1 != 0);
             let value = h0.wrapping_sub(n).wrapping_shl(2).wrapping_add(h3);
             mem.write_u32(r4.wrapping_add(8), value).unwrap();
             cpu.r[6] = n;
         } else {
             // 0x8c07adf6: cursor -= n * 4; r6 becomes n * 4.
             let s2 = mem.read_u32(r4.wrapping_add(8)).unwrap();
+            // 0x8c07adf8: shll2 r6 is the last T writer on this arm.
+            cpu.set_t(n >> 30 & 1 != 0);
             let value = s2.wrapping_sub(n.wrapping_shl(2));
             mem.write_u32(r4.wrapping_add(8), value).unwrap();
             cpu.r[6] = n.wrapping_shl(2);

@@ -75,11 +75,14 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[6] = cpu.r[6].wrapping_add(1);
     cpu.r[2] = mem.read_u32(cpu.r[0].wrapping_add(20)).unwrap_or(0);
     cpu.r[0] = cpu.r[0].wrapping_add(24);
-    cpu.set_t(cpu.r[14] & cpu.r[14] == 0); // tst r14,r14
+    let _t14 = cpu.r[14] & cpu.r[14] == 0; // tst r14,r14 - overwritten below
     let _ = mem.write_u32(cpu.r[1], cpu.r[2]);
     cpu.r[2] = cpu.r[5];
     cpu.r[1] = cpu.r[6];
     cpu.r[2] = cpu.r[2].wrapping_add(8);
+    // The bt.s at 0x8c239656 tests this shll2's carry (bit 30 of r6), not the
+    // tst r14,r14 eleven instructions earlier.
+    cpu.set_t(cpu.r[1] >> 30 & 1 != 0);
     cpu.r[1] <<= 2; // shll2
     cpu.r[1] = cpu.r[1].wrapping_add(cpu.r[2]);
     cpu.r[2] = mem.read_u32(cpu.r[0]).unwrap_or(0);
@@ -307,6 +310,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let _ = mem.write_u32(cpu.r[2], cpu.r[1]);
         cpu.r[6] = cpu.r[6].wrapping_add(1);
     }
+    cpu.set_t(cpu.r[6] >> 30 & 1 != 0); // shll2 r6 at 0x8c2397f2 is the last T writer
     cpu.r[6] <<= 2; // shll2
     cpu.r[0] = 0;
     let _ = mem.write_u32(cpu.r[5].wrapping_add(4), cpu.r[6]);

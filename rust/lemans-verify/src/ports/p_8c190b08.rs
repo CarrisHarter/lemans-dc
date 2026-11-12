@@ -80,6 +80,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let outp = mem.read_u32(0x8c190b8c).unwrap_or(0); // 0x8c26c370
     let mut r1 = mem.read_u32(cntp).unwrap_or(0);
     let r3 = mem.read_u32(outp).unwrap_or(0);
+    cpu.set_t(r1 >> 30 & 1 != 0); // shll2 r1 sets T from bit 30
     r1 <<= 2; // shll2 r1
     let table = mem.read_u32(0x8c190b90).unwrap_or(0); // 0x8c2b7600
     r1 = mem.read_u32(table.wrapping_add(r1)).unwrap_or(0);

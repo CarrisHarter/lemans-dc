@@ -12,6 +12,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[5] = cpu.r[5].wrapping_sub(cpu.r[0]);
     }
     cpu.r[0] = mem.read_u32(cpu.r[4] + 12).unwrap_or(0);
+    cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 r5 sets T from bit 30
     cpu.r[5] = cpu.r[5] << 2; // shll2 r5
     cpu.r[0] = cpu.r[0].wrapping_add(cpu.r[5]); // rts delay slot
 }

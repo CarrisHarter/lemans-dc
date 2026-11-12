@@ -18,10 +18,10 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[13] = cpu.r[5]; // bra delay: mov r5,r13
     let mut result = 1u32;
     loop {
-        cpu.r[3] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32; // mov.b @r14,r3
+        cpu.r[3] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r14,r3
         cpu.set_t(cpu.r[3] == 0); // tst r3,r3
         if cpu.t() {
-            cpu.r[1] = mem.read_u8(cpu.r[13]).unwrap_or(0) as u32; // mov.b @r13,r1
+            cpu.r[1] = mem.read_u8(cpu.r[13]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r13,r1
             cpu.set_t(cpu.r[1] == 0); // tst r1,r1
             if cpu.t() {
                 result = 1; // at 0x8c216e0c
@@ -30,12 +30,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             }
             break;
         }
-        cpu.r[4] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32; // bsr delay: mov.b @r14+,r4
+        cpu.r[4] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32; // bsr delay: mov.b @r14+,r4
         cpu.r[14] = cpu.r[14].wrapping_add(1);
         cpu.pr = 0x8c216df0;
         crate::registry::p_8c216d44::run(cpu, mem);
         cpu.r[8] = cpu.r[0] as i8 as i32 as u32; // exts.b r0,r8
-        cpu.r[4] = mem.read_u8(cpu.r[13]).unwrap_or(0) as u32; // bsr delay: mov.b @r13+,r4
+        cpu.r[4] = mem.read_u8(cpu.r[13]).unwrap_or(0) as i8 as i32 as u32; // bsr delay: mov.b @r13+,r4
         cpu.r[13] = cpu.r[13].wrapping_add(1);
         cpu.pr = 0x8c216df8;
         crate::registry::p_8c216d44::run(cpu, mem);

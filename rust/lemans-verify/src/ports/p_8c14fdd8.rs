@@ -9,7 +9,8 @@
 //! shll2 r5 ; mov r5,r0 ; rts ; mov.l @(r0,r1),r0  ; rts delay: r0 = mem[r5*4+r1]
 //! 0x8c14fdec: mov #0,r0 ; rts ; nop              ; r1 stays X+12
 //! ```
-//! `shll2` leaves T alone, so T at return is the `cmp/hi` result.
+//! `shll2` sets T from bit 30 of r5, so on the taken path T is that carry,
+//! not the `cmp/hi` result; the miss path keeps the `cmp/hi` T.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -21,6 +22,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let t = r0 > cpu.r[5]; // cmp/hi r5,r0
     if t {
         r1 = mem.read_u32(r1 + 8).unwrap_or(0); // mov.l @(8,r1),r1 = mem[X+20]
+        cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 r5 sets T from bit 30
         let r5 = cpu.r[5] << 2; // shll2 r5
         cpu.r[5] = r5;
         cpu.r[0] = r5; // mov r5,r0
@@ -29,5 +31,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = 0;
     }
     cpu.r[1] = r1;
-    cpu.set_t(t);
+    if !t {
+        cpu.set_t(t); // miss path: cmp/hi T survives (mov #0,r0 does not touch it)
+    }
 }

@@ -15,17 +15,17 @@ const CONST_ADDR: u32 = 0x8c02d6b4; // mova target, holds 1.234f
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let s = cpu.r[4];
     let raw = mem.read_u32(0x3b8u32.wrapping_add(s)).unwrap_or(0);
-    let r3 = if raw == 0xFFFF_FFFF {
-        cpu.set_t(true); // cmp/eq #-1 matched; bf not taken
-        0u32
+    let r3_raw = if raw == 0xFFFF_FFFF {
+        0u32 // bra delay: mov #0,r3
+    } else if raw == 0 {
+        1u32 // mov #1,r3
     } else {
-        cpu.set_t(raw == 0); // tst r3,r3
-        if raw == 0 {
-            1u32 << 2 // mov #1,r3 then shll2
-        } else {
-            raw << 2 // shll2 only
-        }
+        raw
     };
+    // shll2 r3 at 0x8c02d5fc is the last T-writing instruction, so T is its
+    // carry (bit 30), not the cmp/eq or tst that selected r3.
+    cpu.set_t(r3_raw >> 30 & 1 != 0);
+    let r3 = r3_raw << 2;
     cpu.r[3] = r3;
 
     let w = mem.read_u32(s.wrapping_add(4)).unwrap_or(0);

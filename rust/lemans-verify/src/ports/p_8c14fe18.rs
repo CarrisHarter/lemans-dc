@@ -20,6 +20,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let t = r0 > cpu.r[5]; // cmp/hi r5,r0
     if t {
         r1 = mem.read_u32(r1 + 8).unwrap_or(0); // r1 = mem[X+32]
+        cpu.set_t(cpu.r[5] >> 30 & 1 != 0); // shll2 r5 sets T from bit 30
         let r5 = cpu.r[5] << 2; // shll2 r5
         cpu.r[5] = r5;
         let v = mem.read_u32(r5.wrapping_add(r1)).unwrap_or(0); // mov.l @(r0,r1),r0
@@ -28,5 +29,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[0] = 0;
     }
     cpu.r[1] = r1;
-    cpu.set_t(t);
+    if !t {
+        cpu.set_t(t); // miss path: cmp/hi T survives (mov #0,r0 does not touch it)
+    }
 }
