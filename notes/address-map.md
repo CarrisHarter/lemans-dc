@@ -1282,6 +1282,14 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1aeb9e` | `strcmp_diff` | `notes/verifications/0x8c1aeb9e*.json` - 2 specs (25/41); 0 on a shared terminator, else the zero-extended difference |
 | `0x8c216dc8` | `streq` | `notes/verifications/0x8c216dc8*.json` - 3 specs (9/16/23); 1 only when both strings end together |
 | `0x8c215fea` | `copy_bytes` | `notes/verifications/0x8c215fea*.json` - 2 specs (5/23); count 0 still decrements r6 |
+| `0x8c1aeb90` | `bra_strcmp_diff` | `notes/verifications/0x8c1aeb90.json` - 14 oracle steps; bra to 0x8c1aeb9e |
+| `0x8c215fe0` | `bra_copy_bytes` | `notes/verifications/0x8c215fe0.json` - 19 oracle steps; bra to 0x8c215fea |
+| `0x8c216dbc` | `bra_streq` | `notes/verifications/0x8c216dbc.json` - 11 oracle steps; bra to 0x8c216dc8 |
+| `0x8c215fb8` | `bytes_equal_counted` | `notes/verifications/0x8c215fb8*.json` - 3 specs (6/9/20); 1 if the next r6 bytes match |
+| `0x8c2259bc` | `store_1_at_record_plus_shift` | `notes/verifications/0x8c2259bc*.json` - 2 specs; byte 1 at record+72+(r5>>4) |
+| `0x8c225a04` | `memset_record_72` | `notes/verifications/0x8c225a04.json` - 371 oracle steps; memset(r4, 0, 72) |
+| `0x8c228c6e` | `flag_search_or_one` | `notes/verifications/0x8c228c6e*.json` - 3 specs (9/33/81); 0 only when the search returns -1 |
+| `0x8c22c3a0` | `tail_call_fill_struct` | `notes/verifications/0x8c22c3a0.json` - 35 oracle steps; jmp to 0x8c236e60 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |

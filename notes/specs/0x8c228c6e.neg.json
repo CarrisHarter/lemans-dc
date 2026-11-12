@@ -1,0 +1,27 @@
+{
+  "entry": "0x8c228c6e",
+  "regs": {},
+  "memory": [
+    {
+      "addr": "0x8c2c6f8c",
+      "hex": "00000000"
+    },
+    {
+      "addr": "0x8c2c6f80",
+      "hex": "00000000"
+    },
+    {
+      "addr": "0x8c2c7e24",
+      "hex": "01000000"
+    },
+    {
+      "addr": "0x8c2c7e20",
+      "hex": "f8ffffff"
+    },
+    {
+      "addr": "0x8c2c7dc0",
+      "hex": "01000000"
+    }
+  ],
+  "steps": 200
+}
