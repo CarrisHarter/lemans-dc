@@ -1,0 +1,46 @@
+{
+  "entry": "0x8c043a80",
+  "sr": 1,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250800",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c250800", "hex": "8008258c", "note": "*param_1 = head 0x8c250880" },
+    { "addr": "0x8c250880", "hex": "0010258c8008258c", "note": "head->next = node1 0x8c251000; head->prev = head" },
+    { "addr": "0x8c251000", "hex": "0020258c", "note": "node1->next = node2 0x8c252000" },
+    { "addr": "0x8c251008", "hex": "0011258c", "note": "node1 handle -> object1 0x8c251100" },
+    { "addr": "0x8c251108", "hex": "02000000", "note": "object1 refcount = 2" },
+    { "addr": "0x8c252000", "hex": "8008258c", "note": "node2->next = head" },
+    { "addr": "0x8c252008", "hex": "0012258c", "note": "node2 handle -> object2 0x8c251200" },
+    { "addr": "0x8c251208", "hex": "02000000", "note": "object2 refcount = 2" },
+
+    { "addr": "0x8c250ff8", "hex": "0030258c", "note": "node1 chunk prev = 0x8c253000" },
+    { "addr": "0x8c250ffc", "hex": "40000000", "note": "node1 chunk size = 0x40" },
+    { "addr": "0x8c250fc4", "hex": "08000000", "note": "node1 next-block size = 8" },
+    { "addr": "0x8c251ff8", "hex": "0030258c", "note": "node2 chunk prev = 0x8c253000" },
+    { "addr": "0x8c251ffc", "hex": "40000000", "note": "node2 chunk size = 0x40" },
+    { "addr": "0x8c251fc4", "hex": "08000000", "note": "node2 next-block size = 8" },
+    { "addr": "0x8c253004", "hex": "20000000", "note": "prev-of-prev chunk size = 0x20" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0040258c", "note": "dlmalloc top -> 0x8c254000" },
+    { "addr": "0x8c254000", "hex": "00100000", "note": "top chunk size = 0x1000" },
+    { "addr": "0x8c254008", "hex": "00000000", "note": "bin entry, empty" },
+    { "addr": "0x8c25400c", "hex": "00000000", "note": "bin entry, empty" }
+  ],
+  "steps": 800
+}

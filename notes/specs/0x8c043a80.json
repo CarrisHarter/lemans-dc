@@ -1,0 +1,28 @@
+{
+  "entry": "0x8c043a80",
+  "sr": 1,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250800",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c250800", "hex": "8008258c", "note": "*param_1 = head 0x8c250880" },
+    { "addr": "0x8c250880", "hex": "8008258c8008258c", "note": "head->next = head; head->prev = head" }
+  ],
+  "steps": 32,
+  "expect": { "r0": "0x8c250880", "r4": "0x8c250800" }
+}
