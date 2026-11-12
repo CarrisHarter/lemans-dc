@@ -1746,6 +1746,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c239a46` | `FUN_8c239a46` | `notes/verifications/0x8c239a46.json` — 59 oracle steps; calls 0x8c237780(r4=param_1); on a hit resolves the object at [param_1+0x88], sets bit 3 of [obj+4] when param_2!=0 and clears it when param_2==0, returns 0; on a miss returns 0x0000eeee and writes nothing; T=1 on miss, T=(param_2==0) on hit |
 | `0x8c236da0` | `FUN_8c236da0` | `notes/verifications/0x8c236da0.json` — 64 oracle steps; calls 0x8c237780(arg1); on hit stores (mode<<24 | ([p+8] & 0xffffff)) to [p+8] where p=[arg1+0x88] and mode is built from arg2 bits 0x2000000/0x1000000/0x400000 (r14 starts 1, add #1 in each bt.s delay slot / fall-through, and #7), returns 0; on miss returns 0xeeee and stores nothing; T is the last tst the path executed (miss 1, hit with 0x2000000/0x400000 set 0, else 1) |
 | `0x8c237700` | `FUN_8c237700` | `notes/verifications/0x8c237700.json` — 60 oracle steps; calls 0x8c237780(r4=param_1); on a hit with param_2 < [param_1+12] loads [param_1+0x48+param_2*8] (32-bit wrapping scale), stores it through param_3 raw and again masked with 0xefffffff, and returns 0; lookup miss or out-of-range index returns 0x0000eeee and writes nothing; T=1 on failure, bit 29 of param_2 on success |
+| `0x8c239060` | `FUN_8c239060` | `notes/verifications/0x8c239060.json` — 68 oracle steps; stores p+0x30 and p+0x2c; returns 0 or 0xeeee; r4 = p+24 on the non-early paths |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
