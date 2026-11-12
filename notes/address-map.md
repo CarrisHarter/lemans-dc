@@ -1683,6 +1683,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21f9d8` | `FUN_8c21f9d8` | `notes/verifications/0x8c21f9d8.json` — 34 oracle steps; stores the low byte of r4 to [[0x8c2bdcb4]+12] (mode 0) or [[0x8c2bdcb0]+12] (mode 1), then masks status bits at +16; no calls |
 | `0x8c0c9d90` | `FUN_8c0c9d90` | `notes/verifications/0x8c0c9d90.json` — 13 oracle steps; when [r4+4] != 0 calls 0x8c103f94 to store low byte of r5 at [r4+4]; T set on null path |
 | `0x8c0c03a4` | `FUN_8c0c03a4` | `notes/verifications/0x8c0c03a4.json` — 199 oracle steps; frees header[1] through 0x8c0c0614, zeroes header[0..1], stores &header[1] at header[3] |
+| `0x8c0bfb4c` | `FUN_8c0bfb4c` | `notes/verifications/0x8c0bfb4c.json` — 58 oracle steps; calls 0x8c0c06e4 to find the key node at [param_1+0x1c], stores param_1+0x20 through 0x8c0bef98, returns 0 when the found pointer equals param_1+0x20 else [node+0x10] |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
