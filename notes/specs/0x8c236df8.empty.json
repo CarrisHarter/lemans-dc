@@ -1,0 +1,10 @@
+{
+  "entry": "0x8c236df8",
+  "notes": "miss path with an empty table: the lookup exits before its loop, the wrapper returns 0xeeee and leaves the destination untouched.",
+  "regs": { "r4": "0x8c240000", "r5": "0x8c240100", "r6": "0xcafef00d", "r7": "0x0badf00d" },
+  "memory": [
+    { "addr": "0x8c24003c", "hex": "78563412" },
+    { "addr": "0x8c240100", "hex": "efbeadde" }
+  ],
+  "steps": 200
+}

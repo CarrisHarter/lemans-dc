@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c236df8",
+  "notes": "miss path: the table holds two entries and neither is r4, so the lookup scans to the end, the wrapper returns 0xeeee and writes nothing.",
+  "regs": { "r4": "0x8c240000", "r5": "0x8c240100" },
+  "memory": [
+    { "addr": "0x8c24003c", "hex": "78563412" },
+    { "addr": "0x8c2c9e94", "hex": "02000000" },
+    { "addr": "0x8c2c9ea0", "hex": "a09e2c8c" },
+    { "addr": "0x8c2c9f2c", "hex": "2c9f2c8c" }
+  ],
+  "steps": 300
+}

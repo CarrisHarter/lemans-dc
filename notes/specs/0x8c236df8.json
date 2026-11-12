@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c236df8",
+  "notes": "hit path: the 0x8c237780 lookup finds r4 at table index 1, so the wrapper stores the object's +0x3c field through r5 and returns 0.",
+  "regs": { "r4": "0x8c240000", "r5": "0x8c240100" },
+  "memory": [
+    { "addr": "0x8c24003c", "hex": "78563412" },
+    { "addr": "0x8c2c9e94", "hex": "02000000" },
+    { "addr": "0x8c2c9ea0", "hex": "109c2c8c" },
+    { "addr": "0x8c2c9f2c", "hex": "0000408c" }
+  ],
+  "steps": 300
+}

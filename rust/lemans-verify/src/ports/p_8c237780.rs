@@ -22,8 +22,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     if !cpu.t() {
         loop {
             // 0x8c237796
-            let product = cpu.r[6].wrapping_mul(cpu.r[13]); // mul.l r13,r6
-            cpu.macl = product;
+            let product = (cpu.r[6] as i32 as i64) * (cpu.r[13] as i32 as i64); // mul.l r13,r6
+            cpu.macl = product as u32;
+            cpu.mach = (product >> 32) as u32;
             cpu.r[3] = cpu.r[5]; // mov r5,r3
             cpu.r[3] = cpu.r[3].wrapping_add(24); // add #24,r3
             cpu.r[0] = cpu.macl; // sts macl,r0
