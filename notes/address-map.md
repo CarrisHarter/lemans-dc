@@ -1398,6 +1398,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b26a4` | `vlSceneEnvironment_ctor` | `notes/verifications/0x8c0b26a4.json` — 64 oracle steps; object at r4: [0]=vtable 0x8c1eaa00, [+4..+19]=4 words from 0x8c1d0f28, [+20..+31]=3 floats from 0x8c1d3f50 negated via 0x8c0b4db4, [+32] and [+36]=0.5f; returns r4 |
 | `0x8c01088c` | `acos_checked` | `notes/verifications/0x8c01088c.json` — 418 oracle steps; calls 0x8c014370 (acos) on fr4; NaN fr0 stores 0x44d at 0x8c23d8b8 (Inf arm 0x44c unreachable through acos); returns fr0 |
 | `0x8c0b23cc` | `resolve_state_code` | `notes/verifications/0x8c0b23cc.json` — 51 oracle steps; mem: no non-stack writes (8-byte frame copy + r14/r13/pr spills filtered); regs: r0=code (0/2/6), r1=sign-extended state byte [r4+15], r4+=8 (callee), fr1=[r5+16] and fr0=1.0 on the float arm, r13/r14/pr restored, T from the last compare |
+| `0x8c0b2ee4` | `FUN_8c0b2ee4` | `notes/verifications/0x8c0b2ee4.json` — 72 oracle steps; identity 3x3 float matrix at r4+0..+32, calls 0x8c0b4ff0 to zero r4+36..+44, r0..r7 leftovers, r14/r15/pr restored |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
