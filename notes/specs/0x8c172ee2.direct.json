@@ -1,0 +1,32 @@
+{
+  "entry": "0x8c172ee2",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200010",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c20d450",
+      "hex": "00000000"
+    }
+  ],
+  "steps": 5000,
+  "expect": {
+    "r0": "0x00000000"
+  },
+  "notes": "r4!=0, flag 0x8c20d450 clear: 0x8c1725fc(0x12f via sign-extending mov.w, str@0x8c1df39c, 53 chars) then r0=0. [r4] untouched on this path."
+}

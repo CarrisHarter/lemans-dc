@@ -1814,6 +1814,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c172ea4` | `three_way_null_dispatch` | `notes/verifications/0x8c172ea4*.json` - 3 specs (393/360/17 steps) |
 | `0x8c172f5a` | `three_way_dispatch_twin` | `notes/verifications/0x8c172f5a*.json` - 3 specs (368/360/16 steps) |
 | `0x8c172b64` | `flag_store_or_emit_twin` | `notes/verifications/0x8c172b64*.json` - 2 specs (10/78 steps) |
+| `0x8c172ee2` | `two_way_null_dispatch` | `notes/verifications/0x8c172ee2*.json` - 3 specs (382/357/14 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
