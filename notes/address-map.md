@@ -1904,6 +1904,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1beb34` | `free_stride92_array` | `notes/verifications/0x8c1beb34*.json` - 2 specs (82/7 steps) |
 | `0x8c1cbb14` | `circular_list_drain_5` | `notes/verifications/0x8c1cbb14*.json` - 2 specs (84/17 steps) |
 | `0x8c03ed5c` | `flag_then_compound_thunk` | `notes/verifications/0x8c03ed5c.json` - 39 oracle steps |
+| `0x8c026e84` | `flag_then_thunk_through_field` | `notes/verifications/0x8c026e84.json` - 46 oracle steps |
+| `0x8c184e3c` | `release_stride88_then_free` | `notes/verifications/0x8c184e3c*.json` - 2 specs (144/15 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
