@@ -1263,6 +1263,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21c3ac` | `bra_to_tagged_write` | `notes/verifications/0x8c21c3ac.json` - 33 oracle steps; double bra to 0x8c21b8de |
 | `0x8c21bb5e` | `flag_from_two_bytes` | `notes/verifications/0x8c21bb5e*.json` - 4 specs; stores 0 or 1 from bytes +7/+8, returns 0 |
 | `0x8c21bf1e` | `stamp_byte_pattern` | `notes/verifications/0x8c21bf1e.json` - 340 oracle steps; zeroes 30 words then stamps +20..+51; the fill loop reloads r3 from r14 every trip |
+| `0x8c21cc80` | `record_ptr_52` | `notes/verifications/0x8c21cc80*.json` - 2 specs; `0x8c2ba644+52*r4`, signed mul |
+| `0x8c21ccf6` | `tail_call_slot_ptr_120` | `notes/verifications/0x8c21ccf6.json` - 21 oracle steps; jmp delay restores r15 |
+| `0x8c21cf1c` | `slot_bit8` | `notes/verifications/0x8c21cf1c*.json` - 2 specs (30/31); 1 if `[slot]&0x100` |
+| `0x8c21fb1a` | `publish_string` | `notes/verifications/0x8c21fb1a*.json` - 2 specs (10/49); each nonzero byte through 0x8c21f9d8 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
