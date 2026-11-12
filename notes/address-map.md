@@ -1948,6 +1948,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c177e28` | `five_table_slot_clear` | `notes/verifications/0x8c177e28*.json` - 2 specs (72/304 steps) |
 | `0x8c1a49ec` | `padded_slot_copy` | `notes/verifications/0x8c1a49ec.json` - 136 oracle steps |
 | `0x8c1af0a0` | `record_release_chain` | `notes/verifications/0x8c1af0a0*.json` - 3 specs (218/155/12 steps): null, non-owning, owning; the owning path needs the allocator seed from `0x8c1af3b4.json` (block header at `r4-8`) |
+| `0x8c170526` | `bitmap_set_bit` | `notes/verifications/0x8c170526*.json` - 4 specs (31/34/40/44 steps); two-word mode when `[0x8c2b52dc]==2`, four-word otherwise |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
