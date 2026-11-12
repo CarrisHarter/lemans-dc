@@ -1,0 +1,14 @@
+{
+  "entry": "0x8c0cd048",
+  "note": "r4 == 0: only the push/pop prologue and epilogue run; T stays 1 from tst r13,r13, r0 = 0, and the entry values of r13/r14 are restored from the stack.",
+  "regs": {
+    "r4": 0,
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c30ff00"
+  },
+  "steps": 100
+}

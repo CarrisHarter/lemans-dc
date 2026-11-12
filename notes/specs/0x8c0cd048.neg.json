@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c0cd048",
+  "note": "r4 != 0, r5 = 0x0000ffff: exts.w makes the depth -1, so the destroy call and [r13+16] store run but the final free is skipped. T = 0 from cmp/pl.",
+  "regs": {
+    "r4": "0x8c2b0000",
+    "r5": "0x0000ffff",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c30ff00"
+  },
+  "memory": [
+    { "addr": "0x8c2b0000", "hex": "00052b8c" },
+    { "addr": "0x8c2b002c", "hex": "00032b8c" },
+    { "addr": "0x8c2b0500", "hex": "00062b8c" }
+  ],
+  "steps": 500
+}

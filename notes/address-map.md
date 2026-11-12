@@ -115,6 +115,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0f1b78` | `set_byte_flag_pair` | `notes/verifications/0x8c0f1b78*.json` - 4 specs (8-13 steps) |
 | `0x8c0f1ae0` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c0f1ae0.json` - 9 oracle steps |
 | `0x8c0e2c48` | `find_table_slot` | `notes/verifications/0x8c0e2c48*.json` - 3 specs (123-124 steps) |
+| `0x8c0fda3c` | `remap_args_forward` | `notes/verifications/0x8c0fda3c*.json` - 2 specs (7 and 35 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1696,6 +1697,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c8cfc` | `FUN_8c0c8cfc` | `notes/verifications/0x8c0c8cfc.json` — 12 oracle steps; releases one reference on the refcounted handle through 0x8c018bd8 with count -1, then, when exts.w(low 16 bits of the flag) > 0, frees the handle slot itself through the 0x8c01032c free thunk; returns the handle in r0; r13, r14 and pr are restored from the frame; T is the entry tst result (1) on the NULL path, cmp/pl result when the free is skipped, and the free callee's T otherwise |
 | `0x8c09d280` | `FUN_8c09d280` | `notes/verifications/0x8c09d280.json` — 442 oracle steps; releases handle[1] via 0x8c018bd8 with count -1 (decrements the pointee refcount; at zero frees inner then pointee through 0x8c01032c and keeps the slot, otherwise clears it), then decrements *handle's refcount the same way but destroys inner, (declined) guarded-free and the object through 0x8c018e14/0x8c01032c at zero, and finally frees the handle itself through 0x8c01032c only when sext16(r5)>0; stores refcounts, handle slots and dlmalloc chunk headers; returns the handle |
 | `0x8c0bad3c` | `FUN_8c0bad3c` | `notes/verifications/0x8c0bad3c.json` — 176 oracle steps; frees the 0x8c279efc chain then the 0x8c279ef8 chain via 0x8c159fc0 and zeroes both heads |
+| `0x8c02746c` | `FUN_8c02746c` | `notes/verifications/0x8c02746c.json` — 168 oracle steps; writes u32 at 0x178+idx and 0x174+idx, u8 at 0x170+idx, u32 at 0x168+idx; calls 0x8c0bfb4c twice |
+| `0x8c0cd048` | `FUN_8c0cd048` | `notes/verifications/0x8c0cd048.json` — 343 oracle steps; writes u32 at [r4+4], [p+4], [q], [q+24], [p+36] where p=[r4], q=[p], and conditionally [r4+16]; frees [r4+8] and [r4+12], calls 0x8c07c100 on r4+44, conditionally frees r4 |
+| `0x8c0c5f5c` | `FUN_8c0c5f5c` | `notes/verifications/0x8c0c5f5c.json` — 117 oracle steps; writes [r4+0x00], [r4+0x38..0x54]; calls 0x8c05d378 then 0x8c05d274 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
