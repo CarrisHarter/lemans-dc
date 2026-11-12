@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c09f00c",
+  "note": "r4 == 0: nothing but the prologue/epilogue; T = 1 from tst, r0 = 0.",
+  "regs": {
+    "r4": 0,
+    "r5": "0x1234",
+    "r2": "0x22222222",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "expect": { "r0": 0 },
+  "steps": 100
+}
