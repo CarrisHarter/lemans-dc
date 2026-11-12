@@ -88,6 +88,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10b7a4` | `strcpy_offset_thunk` | `notes/verifications/0x8c10b7a4.json` - 37 oracle steps |
 | `0x8c10616c` | `release_six_handles` | `notes/verifications/0x8c10616c*.json` - 2 specs (308 and 230 steps) |
 | `0x8c14b698` | `advance_cursor_by_0x570` | `notes/verifications/0x8c14b698*.json` - 5 specs, 12-60 steps |
+| `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
 | `0x8c09035c` | `object_teardown` | `notes/verifications/0x8c09035c*.json` - 4 specs, 12-168 steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
