@@ -50,3 +50,23 @@ match the original byte for byte.
 `notes/verifications/<address>.json`: result, oracle step count, binary sha256,
 and the commit that introduced the port. A name in `notes/address-map.md` marked
 verified must have one of those files.
+
+## Heap fixtures (free/malloc paths)
+
+`free` at `0x8c159fc0` reads the block header at `p-8`, negates the size word and
+walks to `p - size + 8` to inspect the next chunk, then links the block into a
+bin through the top pointer at `0x8c2b1ef8`. A spec therefore needs **numeric
+values that survive that walk**, not plausible-looking big ones:
+
+| address | value | why |
+| --- | --- | --- |
+| `p-8` | `0x8c220000` | prev_size; only read if the prev-in-use bit is clear |
+| `p-4` | `0x40` | block size; 64 bytes keeps `p - size` inside the image |
+| `p-0x38` (= next-4) | `8` | next chunk's size; large values make the bin write land outside mapped memory |
+| `0x8c2b1ef8` | `0x8c210000` | top-chunk pointer |
+| `0x8c210000` | `0x1000` | top-chunk size |
+
+Values are raw little-endian bytes: `0x40` is `"40000000"`, `8` is
+`"08000000"`, `0x8c210000` is `"0000218c"`. Writing `"00000040"` stores
+0x40000000, which makes `free` walk to an unmapped chunk and the oracle dies with
+`data access ... outside mapped memory` before the port is compared.
