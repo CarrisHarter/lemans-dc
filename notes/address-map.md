@@ -1234,6 +1234,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c216bd4` | `FUN_8c216bd4` | `notes/verifications/0x8c216bd4.json` — ok; r0=((0xf0&sext8(r4))>>a4)*10 + (15&sext8(r4)) in rts delay |
 | `0x8c216d44` | `FUN_8c216d44` | `notes/verifications/0x8c216d44.json` — ok; 'a'..'z' → r4-=32, r0=r4 in rts delay |
 | `0x8c216d58` | `copy_bytes_count` | `notes/verifications/0x8c216d58.json` — verified |
+| `0x8c216e64` | `unpack_counted_record` | `notes/verifications/0x8c216e64*.json` - success 214, short 18, bit-clear 186 |
 | `0x8c216dc0` | `streq` | `notes/verifications/0x8c216dc0.json` — 27 oracle steps |
 | `0x8c216e18` | `FUN_8c216e18` | `notes/verifications/0x8c216e18.json` — ok; strstr-style count, r0=r7, T=1 |
 | `0x8c217326` | `FUN_8c217326` | `notes/verifications/0x8c217326.json` — ok; struct init at r4, r0=r4 (or 0 early) |
