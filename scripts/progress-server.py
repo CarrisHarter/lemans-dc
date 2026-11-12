@@ -429,10 +429,9 @@ function render(d, prev) {
 
   const sc = d.schedule, sv = $("sched"), due = Date.parse((sc && sc.plan_end) || "");
   if (sc && !Number.isNaN(due)) {
-    // A deadline at local midnight reads as the end of the previous day.
-    const t = new Date(due), midnight = t.getHours() === 0 && t.getMinutes() === 0;
-    const day = new Date(midnight ? due - 1 : due).toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
-    $("sched-k").textContent = "deadline · " + (midnight ? "end of " + day : day + " " + pad(t.getHours()) + ":" + pad(t.getMinutes()));
+    const t = new Date(due), h = t.getHours(), m = t.getMinutes();
+    const day = t.toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
+    $("sched-k").textContent = "deadline · by " + day + " " + (h % 12 || 12) + (m ? ":" + pad(m) : "") + (h < 12 ? "am" : "pm");
     const e = sc.early_hours, late = isNum(e) && e < 0;
     const span = h => h >= 48 ? Math.round(h / 24) + " days" : h >= 1 ? Math.round(h) + " h" : Math.round(h * 60) + " min";
     sv.textContent = d.remaining === 0 ? "done" : !isNum(e) ? "no forecast" : late ? "~" + span(-e) + " late" : "on track";

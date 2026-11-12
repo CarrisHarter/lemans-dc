@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
-# Schedule: every unblocked function verified by the end of Thu 12 Nov JST, as a
+# Schedule: every unblocked function verified by Fri 13 Nov 12am JST, as a
 # straight line from the first published snapshot (1,373 verified). The target
 # count is TOTAL - blocked at snapshot time, the same "finished" the ETA uses.
 PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
