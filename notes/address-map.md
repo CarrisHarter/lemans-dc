@@ -94,6 +94,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b5180` | `write_element_fields` | `notes/verifications/0x8c0b5180*.json` - 5 specs (67/31 steps) |
 | `0x8c18c060` | `guard_free` | `notes/verifications/0x8c18c060*.json` - 5 specs (9-90 steps) |
 | `0x8c18d06c` | `guard_free` | `notes/verifications/0x8c18d06c*.json` - 5 specs (9-90 steps) |
+| `0x8c18e40c` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c18e40c.json` - 9 oracle steps |
+| `0x8c18e1e4` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c18e1e4.json` - 9 oracle steps |
 | `0x8c18d048` | `guard_free` | `notes/verifications/0x8c18d048*.json` - 5 specs (9-90 steps) |
 | `0x8c18c570` | `guard_free` | `notes/verifications/0x8c18c570*.json` - 5 specs (9-90 steps) |
 | `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
@@ -1628,6 +1630,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c09d204` | `FUN_8c09d204` | `notes/verifications/0x8c09d204.json` — 194 oracle steps; release refcounted handle: --refcount; at 0 keep *handle and free object->inner then object; at >0 clear *handle; free handle when sext16(r5)>0 |
 | `0x8c07e47c` | `FUN_8c07e47c` | `notes/verifications/0x8c07e47c.json` — 22 oracle steps; moves cursor p={descriptor,index,element} by signed n: stores [p+8]=element+n*4 (or base+((capacity-n)<<2) / base+((descriptor[2]+index+|n|-capacity)<<2) on window wrap) then [p+4]=index-n; returns p; T=final cmp/hs (n>=0) or cmp/hi (n<0); r3/r6/r7 differ per sign path |
 | `0x8c05cb48` | `FUN_8c05cb48` | `notes/verifications/0x8c05cb48.json` — 80 oracle steps; unlinks node p from old parent's list at [p+4] (scans [parent+0xc] via +8, rewrites the slot that held p, clears [p+8]); sets [p+4]=new parent; release (parent 0): clears [p+0x30], stamps depth 1 on children, calls 0x8c05caac(grandchild,2); attach: prepends to [parent+0xc] or appends to its tail when r6!=0, sets [p+0x30]=[parent+0x30]+1, children get +2, grandchildren get callee at +3; restores r12/r13/r14/pr, T=1 on exit |
+| `0x8c18df08` | `FUN_8c18df08` | `notes/verifications/0x8c18df08.json` — 9 oracle steps; tail-call 0x8c1c3a2c(*(r4+4)); stores fr0 at *(ptr)+8 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
