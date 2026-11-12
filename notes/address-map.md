@@ -98,6 +98,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b8400` | `guard_free` | `notes/verifications/0x8c0b8400*.json` - 4 specs |
 | `0x8c1bb45c` | `guard_free` | `notes/verifications/0x8c1bb45c*.json` - 5 specs (9-90 steps) |
 | `0x8c1be874` | `guard_free_clear_byte` | `notes/verifications/0x8c1be874*.json` - 4 specs (9-93 steps) |
+| `0x8c1bbe3c` | `clear_flag_then_boot_hook` | `notes/verifications/0x8c1bbe3c.json` - 19 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
 | `0x8c0bdddc` | `guard_free` | `notes/verifications/0x8c0bdddc*.json` - 5 specs |
