@@ -1,0 +1,53 @@
+{
+  "entry": "0x8c01a710",
+  "sr": 1,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c251000",
+    "r5": "0xffff0001",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c251000", "hex": "0020258c0040258c0060258c78563412010000000070258c", "note": "outer: h0,h1,h2, filler, span count, span block" },
+    { "addr": "0x8c250ff8", "hex": "0090258c40000000", "note": "outer header: prev, size 0x40" },
+    { "addr": "0x8c250fc4", "hex": "08000000", "note": "outer next-block size" },
+
+    { "addr": "0x8c251ff8", "hex": "0090258c40000000", "note": "object 0 header: prev, size 0x40" },
+    { "addr": "0x8c251fc4", "hex": "08000000", "note": "object 0 next-block size" },
+    { "addr": "0x8c252008", "hex": "01000000", "note": "object 0 refcount = 1" },
+    { "addr": "0x8c25200c", "hex": "00000000", "note": "object 0 inner = NULL" },
+
+    { "addr": "0x8c253ff8", "hex": "0090258c40000000", "note": "object 1 header: prev, size 0x40" },
+    { "addr": "0x8c253fc4", "hex": "08000000", "note": "object 1 next-block size" },
+    { "addr": "0x8c254008", "hex": "01000000", "note": "object 1 refcount = 1" },
+    { "addr": "0x8c25400c", "hex": "00000000", "note": "object 1 inner = NULL" },
+
+    { "addr": "0x8c255ff8", "hex": "0090258c40000000", "note": "object 2 header: prev, size 0x40" },
+    { "addr": "0x8c255fc4", "hex": "08000000", "note": "object 2 next-block size" },
+    { "addr": "0x8c256008", "hex": "01000000", "note": "object 2 refcount = 1" },
+    { "addr": "0x8c25600c", "hex": "00000000", "note": "object 2 inner = NULL" },
+
+    { "addr": "0x8c256ff8", "hex": "0090258c40000000", "note": "span block header: prev, size 0x40" },
+    { "addr": "0x8c256fc4", "hex": "08000000", "note": "span block next-block size" },
+
+    { "addr": "0x8c259004", "hex": "20000000", "note": "previous chunk size 0x20 (first free coalesces)" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0000268c", "note": "top chunk -> 0x8c260000" },
+    { "addr": "0x8c260000", "hex": "00100000", "note": "top chunk size = 0x1000" },
+    { "addr": "0x8c260008", "hex": "00000000", "note": "bin entry, empty" },
+    { "addr": "0x8c26000c", "hex": "00000000", "note": "bin entry, empty" }
+  ],
+  "steps": 5000
+}
