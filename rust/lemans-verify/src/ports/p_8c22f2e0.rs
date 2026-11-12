@@ -30,6 +30,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[1] = cpu.r[4].wrapping_add(56);
     let r1b = cpu.r[1];
     let _ = mem.write_u32(cpu.r[6] + 24, r1b);
+    cpu.r[0] = cpu.r[7]; // mov r7,r0
     cpu.r[2] = r2b; cpu.r[3] = 0xffffffe0;
     cpu.r[15] = cpu.r[15].wrapping_add(4); // rts delay
 }

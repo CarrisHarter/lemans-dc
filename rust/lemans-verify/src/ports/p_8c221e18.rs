@@ -53,12 +53,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     if !cpu.t() {
         // copy loop 1: r0 src, r4 cursor, r5 end, r14 dst
         loop {
-            cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as u32; // mov.b @r4,r3
+            cpu.r[3] = mem.read_u8(cpu.r[4]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r4,r3
             cpu.set_t(cpu.r[3] & cpu.r[3] == 0); // tst r3,r3
             if cpu.t() {
                 break;
             }
-            cpu.r[3] = mem.read_u8(cpu.r[0]).unwrap_or(0) as u32; // mov.b @r0+,r3
+            cpu.r[3] = mem.read_u8(cpu.r[0]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r0+,r3
             cpu.r[0] = cpu.r[0].wrapping_add(1);
             cpu.r[4] = cpu.r[4].wrapping_add(1);
             cpu.set_t(cpu.r[4] >= cpu.r[5]); // cmp/hs r5,r4
@@ -79,12 +79,12 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     if !cpu.t() {
         // copy loop 2: r14 src (post-increment), r4 cursor, r6 end, r5 dst
         loop {
-            cpu.r[2] = mem.read_u8(cpu.r[4]).unwrap_or(0) as u32; // mov.b @r4,r2
+            cpu.r[2] = mem.read_u8(cpu.r[4]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r4,r2
             cpu.set_t(cpu.r[2] & cpu.r[2] == 0); // tst r2,r2
             if cpu.t() {
                 break;
             }
-            cpu.r[3] = mem.read_u8(cpu.r[14]).unwrap_or(0) as u32; // mov.b @r14+,r3
+            cpu.r[3] = mem.read_u8(cpu.r[14]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r14+,r3
             cpu.r[14] = cpu.r[14].wrapping_add(1);
             cpu.r[4] = cpu.r[4].wrapping_add(1);
             cpu.set_t(cpu.r[4] >= cpu.r[6]); // cmp/hs r6,r4

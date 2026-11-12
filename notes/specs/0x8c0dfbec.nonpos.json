@@ -1,0 +1,9 @@
+{
+  "entry": "0x8c0dfbec",
+  "note": "non-null block, flag sign-extends to -1: zero the global, do not call free",
+  "regs": { "r4": "0x8c280000", "r5": "0x0000ffff", "r14": "0xdeadbeef", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c27a928", "hex": "efbeadde" }
+  ],
+  "steps": 64
+}

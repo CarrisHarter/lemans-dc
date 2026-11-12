@@ -4,6 +4,7 @@ use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[2] = mem.read_u32(cpu.r[4]).unwrap_or(0);
+    cpu.set_t(cpu.r[2] == 0); // tst r2,r2
     if cpu.r[2] == 0 {
         cpu.r[7] = 0;
         let _ = mem.write_u32(cpu.r[6] + 4, cpu.r[7]);

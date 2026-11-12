@@ -1,0 +1,46 @@
+{
+  "entry": "0x8c0e1f18",
+  "note": "callee main path; [r5+56] bit 2 set so the callee's final T (shlr) is 1, matching the same path through the port",
+  "regs": {
+    "r4": "0x8c200000",
+    "r5": "0x8c200100",
+    "r6": "0xdeadbeef",
+    "r14": "0x12345678",
+    "r15": "0x8c300000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c0e1f34",
+      "hex": "f8ae0e8c"
+    },
+    {
+      "addr": "0x8c0e1f38",
+      "hex": "8077228c"
+    },
+    {
+      "addr": "0x8c200004",
+      "hex": "00000100"
+    },
+    {
+      "addr": "0x8c200008",
+      "hex": "44332211"
+    },
+    {
+      "addr": "0x8c20000c",
+      "hex": "ffffffff"
+    },
+    {
+      "addr": "0x8c200124",
+      "hex": "21000000"
+    },
+    {
+      "addr": "0x8c200134",
+      "hex": "25000000"
+    },
+    {
+      "addr": "0x8c200138",
+      "hex": "04000000"
+    }
+  ],
+  "steps": 100
+}

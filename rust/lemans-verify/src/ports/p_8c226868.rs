@@ -25,7 +25,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         if hs {
             break;
         }
-        cpu.r[3] = mem.read_u8(cpu.r[10]).unwrap_or(0) as u32;
+        cpu.r[3] = mem.read_u8(cpu.r[10]).unwrap_or(0) as i8 as i32 as u32;
         cpu.r[10] = cpu.r[10].wrapping_add(1);
         cpu.r[7] = cpu.r[11];
         cpu.r[3] = cpu.r[3] << 8;

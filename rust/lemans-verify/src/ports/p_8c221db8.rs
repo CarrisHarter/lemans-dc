@@ -9,6 +9,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = mem.read_u32(0x8c221e14).unwrap_or(0);
     cpu.r[4] = cpu.r[4] << 2;
     cpu.r[4] = cpu.r[4] << 2;
+    cpu.set_t(cpu.r[4] >> 31 != 0); // shll r4
     cpu.r[4] = cpu.r[4] << 1;
     cpu.r[4] = cpu.r[4].wrapping_add(cpu.r[3]);
     let _ = mem.write_u32(cpu.r[4] + 8, cpu.r[5]); // delay slot of `rts`

@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c0dfbec",
+  "note": "non-null block, flag low half 0x7fff with a nonzero high half: store and free must run; 0x8c27fff8 is the block header (prev=0x8c281000, size=0) and 0x8c2b1ef8 points at the zeroed top-chunk header",
+  "regs": { "r4": "0x8c280000", "r5": "0x80007fff", "r14": "0xdeadbeef", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c27a928", "hex": "efbeadde" },
+    { "addr": "0x8c27fff8", "hex": "0010288c00000000" },
+    { "addr": "0x8c281000", "hex": "00000000000000000000000000000000" },
+    { "addr": "0x8c2b1ef8", "hex": "0010288c" }
+  ],
+  "steps": 400
+}

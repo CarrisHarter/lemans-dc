@@ -4,9 +4,11 @@ use sh4_oracle::{Cpu, Memory};
 
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[5] = 0x8c2c8a80;
-    cpu.r[6] = cpu.r[4] << 3;
+    cpu.r[6] = cpu.r[4] << 2; // shll2 r6
     cpu.r[2] = cpu.r[5].wrapping_add(8);
     cpu.r[3] = mem.read_u32(cpu.r[5] + 4).unwrap_or(0);
+    cpu.set_t(cpu.r[6] >> 31 != 0); // shll r6
+    cpu.r[6] = cpu.r[6] << 1;
     cpu.r[2] = cpu.r[2].wrapping_add(cpu.r[6]);
     let _ = mem.write_u32(cpu.r[2], cpu.r[3]);
     cpu.r[2] = cpu.r[5].wrapping_add(8);
