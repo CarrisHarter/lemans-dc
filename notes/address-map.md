@@ -1322,6 +1322,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c216fca` | `find_checksum_record` | `notes/verifications/0x8c216fca*.json` - 3 specs (42/69/77); 1-based index when byte +9 matches the checksum and the string compares, else 0 |
 | `0x8c17fca0` | `walk_until_self` | `notes/verifications/0x8c17fca0.json` - 42 oracle steps; exits when `[r5]` equals the captured `[[r5]]` |
 | `0x8c218876` | `copy_found_record` | `notes/verifications/0x8c218876*.json` - 2 specs (58/110); -8 if the scan misses, else three fields from the matching record |
+| `0x8c0ba4d4` | `store_or_clear_slot` | `notes/verifications/0x8c0ba4d4*.json` - 5 specs (18/20/25/75/80); stores a slot pointer at `0x8c27a038+24*r5+4*r6`, then clears it if the table word is nonzero |
 | `0x8c23213c` | `code_plus_table` | `notes/verifications/0x8c23213c*.json` - 2 specs (44/61); adds a table word indexed by the min-code, accumulating first when bit 31 is set |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
