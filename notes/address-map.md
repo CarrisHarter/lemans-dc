@@ -108,6 +108,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2214e4` | `index_load_bool` | `notes/verifications/0x8c2214e4.json` - 17 oracle steps |
 | `0x8c2214fe` | `index_load_value` | `notes/verifications/0x8c2214fe.json` - 19 oracle steps |
 | `0x8c222924` | `clear_table_then_init` | `notes/verifications/0x8c222924.json` - 13,141 oracle steps |
+| `0x8c0cbe30` | `guard_free` | `notes/verifications/0x8c0cbe30*.json` - 5 specs (9-90 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1762,6 +1763,7 @@ memory` before a diff can mean anything.
 | `0x8c21f4d8` | hardware register access: `0xffd00000` |
 | `0x8c2201fa` | hardware register access: `0xf6000000` |
 | `0x8c013248` | non-contiguous export (9 ranges, first ends 0x8c013327 with `bra` into the next range); the porting loop needs one linear body |
+| `0x8c0cfaa4` | circular-list drain; its `free` calls walk the allocator's bin table, which the harness does not seed, so the oracle loops to the step limit before a diff can mean anything |
 | `0x8c011470` | non-contiguous export (5 ranges spanning 0x8c011470-0x8c011869); the porting loop needs one linear body |
 | `0x8c018244` | infinite spin loop (`bra` to self); exceeds any step budget — behaviour cannot be pinned by a spec |
 | `0x8c21d89e` | hardware register access: `ff800030` |
