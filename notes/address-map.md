@@ -1682,6 +1682,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21d6bc` | `FUN_8c21d6bc` | `notes/verifications/0x8c21d6bc.json` — 135 oracle steps; writes [base+0xd78]+0x14=[base+0x204]+1, a 152-byte saved CPU context at [base+0xd78]+0x18, and 1 to 0x8c23d890, then restores the base+4 frame (all GPRs, FR0-FR15, FPUL, FPSCR, MACH, MACL, GBR; r0=1, T clear) and returns via the frame's PR; calls 0x8c011168 then 0x8c010ddc |
 | `0x8c21f9d8` | `FUN_8c21f9d8` | `notes/verifications/0x8c21f9d8.json` — 34 oracle steps; stores the low byte of r4 to [[0x8c2bdcb4]+12] (mode 0) or [[0x8c2bdcb0]+12] (mode 1), then masks status bits at +16; no calls |
 | `0x8c0c9d90` | `FUN_8c0c9d90` | `notes/verifications/0x8c0c9d90.json` — 13 oracle steps; when [r4+4] != 0 calls 0x8c103f94 to store low byte of r5 at [r4+4]; T set on null path |
+| `0x8c0c03a4` | `FUN_8c0c03a4` | `notes/verifications/0x8c0c03a4.json` — 199 oracle steps; frees header[1] through 0x8c0c0614, zeroes header[0..1], stores &header[1] at header[3] |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
