@@ -1700,6 +1700,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c02746c` | `FUN_8c02746c` | `notes/verifications/0x8c02746c.json` — 168 oracle steps; writes u32 at 0x178+idx and 0x174+idx, u8 at 0x170+idx, u32 at 0x168+idx; calls 0x8c0bfb4c twice |
 | `0x8c0cd048` | `FUN_8c0cd048` | `notes/verifications/0x8c0cd048.json` — 343 oracle steps; writes u32 at [r4+4], [p+4], [q], [q+24], [p+36] where p=[r4], q=[p], and conditionally [r4+16]; frees [r4+8] and [r4+12], calls 0x8c07c100 on r4+44, conditionally frees r4 |
 | `0x8c0c5f5c` | `FUN_8c0c5f5c` | `notes/verifications/0x8c0c5f5c.json` — 117 oracle steps; writes [r4+0x00], [r4+0x38..0x54]; calls 0x8c05d378 then 0x8c05d274 |
+| `0x8c0d3258` | `FUN_8c0d3258` | `notes/verifications/0x8c0d3258.json` — 1335 oracle steps; unlinks/destroys nodes matching "instancetree" via 0x8c05cb48 (which stamps depths via 0x8c05caac); recurses into non-matching nodes' children |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
