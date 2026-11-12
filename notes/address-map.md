@@ -112,6 +112,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c9f98` | `free_ten_slots_then_array` | `notes/verifications/0x8c0c9f98*.json` - 3 specs (16-801 steps) |
 | `0x8c0d1590` | `stamp_vtable_call_then_free` | `notes/verifications/0x8c0d1590*.json` - 4 specs (12-112 steps) |
 | `0x8c0d0020` | `clamp_abs_to_range` | `notes/verifications/0x8c0d0020*.json` - 4 specs (23-24 steps) |
+| `0x8c0f1b78` | `set_byte_flag_pair` | `notes/verifications/0x8c0f1b78*.json` - 4 specs (8-13 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
