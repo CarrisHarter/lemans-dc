@@ -1057,6 +1057,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c16ea60` | `FUN_8c16ea60` | `notes/verifications/0x8c16ea60.*.json` — both branches; if *(r4+8)&1: fr0 = *(float*)(*(r4+92)+96) in rts delay, else fr0=0 |
 | `0x8c16ea8c` | `FUN_8c16ea8c` | `notes/verifications/0x8c16ea8c.json` — 30 oracle steps; stores: optional f32 fr4 at [r4+92]+40, f32 quotient at +44, byte 1/0 at +48 (rts delay slot); r4 left at r4+92 |
 | `0x8c1031e0` | `apply_five_offsets` | `notes/verifications/0x8c1031e0*.json` - 45.0 path 81, 35.0 path 77 |
+| `0x8c0c9d78` | `tail_apply_five` | `notes/verifications/0x8c0c9d78.json` - 84 oracle steps; r4 = [r4+4] |
 | `0x8c16eadc` | `store_indexed_through_two_fields` | `notes/verifications/0x8c16eadc.json` — verified |
 | `0x8c16eaec` | `FUN_8c16eaec` | `notes/verifications/0x8c16eaec.json` — 31 oracle steps; stores: fr4/fr5/fr6 at [r4+92]+60/64/68, copies at +72/76/80, OR 0x01800000 into [r4+8] |
 | `0x8c16eb30` | `FUN_8c16eb30` | `notes/verifications/0x8c16eb30.json` — 31 oracle steps; stores: [r15]/[r15+4]/[r15+8] at [r4+92]+60/64/68, copies at +72/76/80, OR 0x01800000 into [r4+8] |
