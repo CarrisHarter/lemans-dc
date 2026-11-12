@@ -20,12 +20,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
-# Schedule: the first forecast the public page published (1,373 verified,
-# 3,751 remaining, ETA 2.7 d), as a straight line from that moment.
+# Schedule: every unblocked function verified before Nov 13 (00:00 JST), as a
+# straight line from the first published snapshot (1,373 verified). The target
+# count is TOTAL - blocked at snapshot time, the same "finished" the ETA uses.
 PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
 PLAN_START_VERIFIED = 1373
-PLAN_TARGET = 1373 + 3751
-PLAN_DAYS = 2.7
+PLAN_END = datetime(2026, 11, 12, 15, 0, 0, tzinfo=timezone.utc)
 RATE_WINDOW_H = 3  # primary pace window; 1 h and 6 h bound the ETA range
 BLOCKED_TREND_H = 6  # blocked count is compared with the ledger this long ago
 HISTORY_POINTS = 48  # samples in the cumulative verified series
@@ -223,20 +223,19 @@ def current_task(last_hour: int, last_day: int) -> str:
     return "idle — 0 proven in last 24h"
 
 
-def schedule(now, verified, finish):
+def schedule(now, verified, target, finish):
     """Position against the plan: functions ahead (+) / behind (-) of the
     straight-line plan now, and hours the projected finish is early (+) / late (-)."""
-    plan_end = PLAN_START + timedelta(days=PLAN_DAYS)
-    frac = min(max((now - PLAN_START) / (plan_end - PLAN_START), 0.0), 1.0)
-    planned = round(PLAN_START_VERIFIED + (PLAN_TARGET - PLAN_START_VERIFIED) * frac)
+    frac = min(max((now - PLAN_START) / (PLAN_END - PLAN_START), 0.0), 1.0)
+    planned = round(PLAN_START_VERIFIED + (target - PLAN_START_VERIFIED) * frac)
     return {
         "planned": planned,
         "ahead": verified - planned,
-        "early_hours": round((plan_end - finish).total_seconds() / 3600, 1) if finish else None,
+        "early_hours": round((PLAN_END - finish).total_seconds() / 3600, 1) if finish else None,
         "plan_start": PLAN_START.isoformat(timespec="seconds"),
         "plan_start_verified": PLAN_START_VERIFIED,
-        "plan_target": PLAN_TARGET,
-        "plan_end": plan_end.isoformat(timespec="seconds"),
+        "plan_target": target,
+        "plan_end": PLAN_END.isoformat(timespec="seconds"),
     }
 
 
@@ -282,7 +281,7 @@ def snapshot():
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
         "eta_range": eta_range,  # [fastest, slowest] days from the 1 h / 3 h / 6 h paces
         "current_task": current_task(last1h, last24),
-        "schedule": schedule(now, verified, finish),
+        "schedule": schedule(now, verified, TOTAL - blocked, finish),
         "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
         "hourly": _buckets(ages, 3600, 24),  # proofs per hour, last 24 h, oldest first
         "minutely": _buckets(ages, 60, 60),  # proofs per minute, last 60 min, oldest first

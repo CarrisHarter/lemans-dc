@@ -175,7 +175,7 @@ PAGE = """<!doctype html>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
-    <div class="sched"><span class="k">schedule</span><span class="v" id="sched">—</span><span class="s" id="sched-s">vs first published forecast</span></div>
+    <div class="sched"><span class="k">schedule</span><span class="v" id="sched">—</span><span class="s" id="sched-s">vs target</span></div>
     <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
     <div class="opt"><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
@@ -432,8 +432,8 @@ function render(d, prev) {
     const span = h => Math.abs(h) >= 48 ? (Math.abs(h) / 24).toFixed(1) + " d" : Math.abs(h).toFixed(1) + " h";
     $("sched-s").textContent = (!isNum(e) ? "no finish forecast" : e >= 0 ? "finish " + span(e) + " early" : "finish " + span(e) + " late")
       + (Number.isNaN(plan) ? "" : " · plan " + stamp(plan));
-    sv.title = "plan: " + fmt(sc.planned) + " verified by now (straight line from the first published forecast)";
-  } else { sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "vs first published forecast"; }
+    sv.title = "plan: " + fmt(sc.planned) + " verified by now (straight line to " + fmt(sc.plan_target) + " by the target)";
+  } else { sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "vs target"; }
 
   burnup(d);
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";
