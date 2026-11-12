@@ -51,20 +51,20 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
             cpu.pr = 0x8c173050;
             crate::registry::p_8c173084::run(cpu, mem);
             cpu.r[1] = cpu.r[15].wrapping_add(20); // mov r15,r1 / add #20,r1
-            cpu.r[3] = mem.read_u8(cpu.r[1]).unwrap_or(0) as u32; // mov.b @r1,r3
-            cpu.r[0] = mem.read_u8(cpu.r[15]).unwrap_or(0) as u32; // mov.b @r15,r0
+            cpu.r[3] = mem.read_u8(cpu.r[1]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r1,r3
+            cpu.r[0] = mem.read_u8(cpu.r[15]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r15,r0
             cpu.set_t(cpu.r[0] == cpu.r[3]); // cmp/eq r3,r0
             let mut equal = cpu.t();
             if equal {
-                cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(4)).unwrap_or(0) as u32; // mov.b @(4,r15),r0
+                cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(4)).unwrap_or(0) as i8 as i32 as u32; // mov.b @(4,r15),r0
                 cpu.r[3] = cpu.r[0]; // mov r0,r3
-                cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(12)).unwrap_or(0) as u32; // mov.b @(12,r15),r0
+                cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(12)).unwrap_or(0) as i8 as i32 as u32; // mov.b @(12,r15),r0
                 cpu.set_t(cpu.r[3] == cpu.r[0]); // cmp/eq r0,r3
                 equal = cpu.t();
                 if equal {
                     cpu.r[1] = cpu.r[15].wrapping_add(16); // mov r15,r1 / add #16,r1
-                    cpu.r[3] = mem.read_u8(cpu.r[1]).unwrap_or(0) as u32; // mov.b @r1,r3
-                    cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(8)).unwrap_or(0) as u32; // mov.b @(8,r15),r0
+                    cpu.r[3] = mem.read_u8(cpu.r[1]).unwrap_or(0) as i8 as i32 as u32; // mov.b @r1,r3
+                    cpu.r[0] = mem.read_u8(cpu.r[15].wrapping_add(8)).unwrap_or(0) as i8 as i32 as u32; // mov.b @(8,r15),r0
                     cpu.set_t(cpu.r[0] == cpu.r[3]); // cmp/eq r3,r0
                     equal = cpu.t();
                 }

@@ -1951,7 +1951,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c170526` | `bitmap_set_bit` | `notes/verifications/0x8c170526*.json` - 4 specs (31/34/40/44 steps); two-word mode when `[0x8c2b52dc]==2`, four-word otherwise |
 | `0x8c1bea5c` | `record_run_copy` | `notes/verifications/0x8c1bea5c*.json` - 3 specs (341/15/21 steps); the null-destination guard is per-step, not per-run |
 | `0x8c1779fe` | `selector_to_constant` | `notes/verifications/0x8c1779fe*.json` - 5 specs (14/17/32/361/284 steps); `r4` 0 and -1..-8 map to constants, null `r5` and any other `r4` report through 0x8c174564 and return 0 |
-| `0x8c172fcc` | `record_byte_match` | `notes/verifications/0x8c172fcc*.json` - 4 specs (485/311/84/74 steps); `r4` is a pointer, in `[0x8c2b5264, +0x8c2b5268)` it reports 0x1fb, otherwise 0x8c173084 decodes `r4+32` and the three bytes are compared against `r5`/`r6`/`r7` |
+| `0x8c172fcc` | `record_byte_match` | `notes/verifications/0x8c172fcc*.json` - 4 specs (485/311/84/74 steps); `r4` is a pointer, in `[0x8c2b5264, +0x8c2b5268)` it reports 0x1fb, otherwise 0x8c173084 decodes `r4+32` and the three bytes are compared against `r5`/`r6`/`r7`; the loads are `mov.b`, so they sign-extend - zero-extending passes every hand-written spec and fails the fuzzer |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
