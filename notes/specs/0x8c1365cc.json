@@ -1,0 +1,11 @@
+{
+  "entry": "0x8c1365cc",
+  "regs": { "r4": "0x8c201000" },
+  "memory": [
+    { "addr": "0x8c201000", "hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" },
+    { "addr": "0x8c208078", "hex": "deadb33fcafef00d12345678" },
+    { "addr": "0x8c2ab468", "hex": "0020208c" },
+    { "addr": "0x8c20203c", "hex": "03000000" }
+  ],
+  "steps": 200
+}
