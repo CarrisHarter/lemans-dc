@@ -279,7 +279,7 @@ PAGE = """<!doctype html>
     </div>
     <div class="gauge" aria-hidden="true">
       <svg viewBox="0 0 200 200">
-        <defs><linearGradient id="g-go" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--go-hi)"/><stop offset="1" stop-color="var(--go-lo)"/></linearGradient></defs>
+        <defs><linearGradient id="g-go" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--go-hi)"/><stop offset="1" style="stop-color:var(--go-lo)"/></linearGradient></defs>
         <g id="ticks"></g>
         <circle class="ring bg" cx="100" cy="100" r="78" pathLength="1000"/>
         <circle class="ring bl" id="ring-bl" cx="100" cy="100" r="78" pathLength="1000" stroke-dasharray="0 1000"/>
@@ -717,9 +717,9 @@ class Handler(BaseHTTPRequestHandler):
             body = json.dumps(self.state.get(), indent=2).encode()
             self._send(200, body, "application/json")
         elif path == "/healthz":
-            self._send(200, b"ok\\n", "text/plain; charset=utf-8")
+            self._send(200, b"ok\n", "text/plain; charset=utf-8")
         else:
-            self._send(404, b"not found\\n", "text/plain; charset=utf-8")
+            self._send(404, b"not found\n", "text/plain; charset=utf-8")
 
     do_HEAD = do_GET
 

@@ -140,6 +140,7 @@ def snapshot():
         "pace_per_day": round(rate_day, 1),
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
         "current_task": current_task(last1h, last24),
+        "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
         "hourly": _buckets(ages, 3600, 24),  # proofs per hour, last 24 h, oldest first
         "minutely": _buckets(ages, 60, 60),  # proofs per minute, last 60 min, oldest first
         # commit subjects are intentionally omitted: they contain addresses and
