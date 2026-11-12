@@ -1,0 +1,17 @@
+{
+  "entry": "0x8c1bb480",
+  "regs": {
+    "r4": "0x8c200000",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c212298", "hex": "efbeadde" },
+    { "addr": "0x8c212280", "hex": "78563412" },
+    { "addr": "0x8c307ff8", "hex": "5a" },
+    { "addr": "0x8c307ff6", "hex": "a5" },
+    { "addr": "0x8c200008", "hex": "11111111" },
+    { "addr": "0x8c200018", "hex": "22222222" },
+    { "addr": "0x8c2b82b0", "hex": "cccccccc" }
+  ],
+  "steps": 300
+}

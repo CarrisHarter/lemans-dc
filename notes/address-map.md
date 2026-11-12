@@ -1652,6 +1652,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c18b71c` | `FUN_8c18b71c` | `notes/verifications/0x8c18b71c.json` — 115 oracle steps; if r4!=0: clears u32 at 0x8c2b7578 (jsr delay slot), releases the refcounted handle r4 with count -1 via 0x8c018bd8, and when exts.w(r5) > 0 frees r4 via thunk 0x8c01032c -> 0x8c159fc0; returns r4 (0 on the null path); r13/r14/r15 and pr restored; T=1 on the null path, cmp/pl T=0 on the non-positive path, callee T on the free path |
 | `0x8c1b67fc` | `FUN_8c1b67fc` | `notes/verifications/0x8c1b67fc.json` — 216 oracle steps; calls 0x8c16ee30 with fr4=0.0 for 7 words at [r4+0x1c..0x34] then 4 at [r4+0x38..0x44]; sets [r4]=1 |
 | `0x8c1bb3f0` | `FUN_8c1bb3f0` | `notes/verifications/0x8c1bb3f0.json` — 9 oracle steps; calls 0x8c01032c with r4 unchanged when r4 != 0 and (int16)r5 > 0; returns r4 |
+| `0x8c1bb480` | `FUN_8c1bb480` | `notes/verifications/0x8c1bb480.json` — 71 oracle steps; calls 0x8c1bb6a8 to init the 16-byte node at r4 and 0x8c1bb8d0 to init the node at r4+0x10, each fed the byte copied from the uninitialised frame at sp+8 / sp+6 down to sp+5 / sp+4; stores r4 to [0x8c2b82b0] |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
