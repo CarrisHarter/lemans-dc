@@ -47,7 +47,7 @@ every address canonically after a merge.
 
 | metric | value |
 | --- | --- |
-| verified ports | 1,730 of 5,211 (33.2%) |
+| verified ports | 1,731 of 5,211 (33.2%) |
 | specs | 3,647+, all passing (`verify-all-specs.sh`) |
 | oracle mnemonic coverage | 99.70% of 969,383 static instructions |
 | blocked ledger entries | 89 |
