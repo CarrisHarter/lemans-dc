@@ -1361,6 +1361,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c06cbec` | `object_ctor_vtable_8c1e94e8` | `notes/verifications/0x8c06cbec.json` — 33 oracle steps; stores vtable 0x8c1e94e8 at +0; 0x8c0b4ff0 zeroes +12,+16,+20; f32 0.0 at +24; f32 0.5 at +4,+8; r0=this, r1=this+8, r3=this+4, r4=this+12, fr0=0.5; r14/r15/pr restored |
 | `0x8c05d378` | `init_object_with_vtbl` | `notes/verifications/0x8c05d378.json` — 31 oracle steps; mem: [r4]=0x8c1e9148, [r4+4]=0, [r4+8]=0, [r4+12]=0, [r4+16]=0xf2, [r4+20..52]=0; callee 0x8c056bf8 store [r4]=0x8c1e8f88 recorded first then overwritten; r0=r4, r1=0xf2, r3=0, r14/pr restored by stack |
 | `0x8c025038` | `fill_half_angle_quad` | `notes/verifications/0x8c025038.json` — 494 oracle steps; writes four f32 to the caller-supplied out pointer (first stack arg, sp+0); reads the global quad at 0x8c1d3ec8; calls 0x8c0111d0 (sin) and 0x8c0109e4, which may record 0x44d/0x44c in the global at 0x8c23d8b8 for non-finite x/2; preserves r13, r14, fr12-fr15 and pr |
+| `0x8c017d88` | `parse_tagged_field` | `notes/verifications/0x8c017d88.json` — 74 oracle steps; stores: [obj+0xb4]=tag&0x20, [obj+0xb0]=tag&0x10, [obj+0xa8]=tag&0x0f, [obj+0xac]=0 or sign_extend(byte1), [obj+0xa0]=unpacked word (via 0x8c017b94), [obj+0xa4]=0, [obj+0x18]=[obj+0x54] if tag&0x20 else [obj+0x14]; regs: r4=cursor, r5=obj+0xa0, r6=value, r7=tag&0x40, r3/r1 from unpacker, T=([obj+0xb4]==0) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
