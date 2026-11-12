@@ -1613,6 +1613,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c15b228` | `FUN_8c15b228` | `notes/verifications/0x8c15b228.json` — 10 oracle steps; Loads r1 = dword at entry r4; the delay slot sets r4 = dword at r1+4, then tail-jumps (jmp, pr untouched) to 0x8c1c3a2c, which stores the float at r4+12 to (*r4)+8, leaves r4 advanced by 12 and r0 = that destination (*r4+8), fr0 = the stored float; T/SR keep their entry values (only mov.l/add/fmov, none flag-setting). r1 is the only thunk register besides the callee's r0/r4/fr0 residue. |
 | `0x8c15b0c0` | `unknown` | `notes/verifications/0x8c15b0c0.json` — 20 oracle steps |
 | `0x8c0855b0` | `FUN_8c0855b0` | `notes/verifications/0x8c0855b0.json` — 57 oracle steps; reads two 4-short arrays and returns fr0 ratio; clobbers r0,r1,r3-r7,mach,macl,fpul,fr0,fr1 |
+| `0x8c07c56c` | `FUN_8c07c56c` | `notes/verifications/0x8c07c56c.json` — 159 oracle steps; writes [r4+4]=0x8c1e981c, *(*r4)=0x8c1e9850, *(*r4+24)=r4+36-*r4; releases handle slot [r4+24] with count -1 via 0x8c018bd8 (decrements [*[r4+24]+8], clears [r4+24] while refs remain); if exts.w r5!=0 stores [r4+36]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
