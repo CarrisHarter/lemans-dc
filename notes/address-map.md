@@ -1911,6 +1911,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c177c3c` | `enum_to_code_switch` | `notes/verifications/0x8c177c3c*.json` - 5 specs (336/14/17/20/336 steps) |
 | `0x8c146ca0` | `release_40_slots_then_free` | `notes/verifications/0x8c146ca0*.json` - 3 specs (629/566/18 steps) |
 | `0x8c1831b8` | `table_entry_equality` | `notes/verifications/0x8c1831b8*.json` - 3 specs (24/24/32 steps) |
+| `0x8c19ae24` | `double_stamp_subarray_free` | `notes/verifications/0x8c19ae24*.json` - 3 specs (100/37/12 steps) |
+| `0x8c184c20` | `clear_field_subarray_free` | `notes/verifications/0x8c184c20*.json` - 3 specs (107/44/12 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
