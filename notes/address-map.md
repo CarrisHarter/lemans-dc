@@ -1395,6 +1395,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0a579c` | `FUN_8c0a579c` | `notes/verifications/0x8c0a579c.json` — 34 oracle steps; stack-only 16-byte float record {1.0,0.0,0.0,0.0}; fr0=0.0; r0=0x8c0fdc5c, r2=record+12, r4=0, r5=record; r14/pr/r15 restored |
 | `0x8c0108dc` | `asin_checked` | `notes/verifications/0x8c0108dc.json` — 408 oracle steps; calls asin (0x8c01438c) on fr4; NaN result stores u32 0x44d at 0x8c23d8b8, Inf stores u32 0x44c, finite stores nothing; returns fr0 bit-exact |
 | `0x8c010fa0` | `pow_checked` | `notes/verifications/0x8c010fa0.json` — 456 oracle steps; NaN result writes 0x44d to 0x8c23d8b8, Inf result writes 0x44c; finite result writes nothing; returns fr0 |
+| `0x8c0b26a4` | `vlSceneEnvironment_ctor` | `notes/verifications/0x8c0b26a4.json` — 64 oracle steps; object at r4: [0]=vtable 0x8c1eaa00, [+4..+19]=4 words from 0x8c1d0f28, [+20..+31]=3 floats from 0x8c1d3f50 negated via 0x8c0b4db4, [+32] and [+36]=0.5f; returns r4 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
