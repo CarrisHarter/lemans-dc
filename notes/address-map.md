@@ -104,6 +104,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c814c` | `warm_lfsr_then_hash` | `notes/verifications/0x8c0c814c.json` - 23,646 oracle steps |
 | `0x8c2219fc` | `zero_0x400_at_global` | `notes/verifications/0x8c2219fc.json` - 5,136 oracle steps |
 | `0x8c221e8e` | `copy_into_global_table` | `notes/verifications/0x8c221e8e.json` - 60 oracle steps |
+| `0x8c220eda` | `tail_thunk` | `notes/verifications/0x8c220eda.json` - 52 oracle steps |
+| `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
 | `0x8c0bdddc` | `guard_free` | `notes/verifications/0x8c0bdddc*.json` - 5 specs |
