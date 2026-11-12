@@ -1426,6 +1426,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c094df8` | `validate_object_class` | `notes/verifications/0x8c094df8.json` — 225 oracle steps; reads *0x8c264da8 and [r4+0xf4]; calls 0x8c074b2c then 0x8c074ca0/0x8c074d58 gates; writes byte 1 to [r4+0x83] iff every gate passes; r0=0x83/r1=1 on store path, r14/pr restored |
 | `0x8c0bdc80` | `FUN_8c0bdc80` | `notes/verifications/0x8c0bdc80.json` — 94 oracle steps; r0=1 iff callee ret != 0; r1/r2 = stack out-slot addrs; r4..r7 advanced +4 by callee; r14 scratch then restored; r15 restored; mach/macl = 108*idx; T = (callee ret lo byte == 0); stores only stack scratch |
 | `0x8c0b49cc` | `FUN_8c0b49cc` | `notes/verifications/0x8c0b49cc.json` — 303 oracle steps; when record->flag (byte 0) is zero: 0x8c0b48e8 builds the 0x24 matrix from record+4, copies record+0x14 words to +0x48 and scales the matrix by the record+0x20 float unless 1.0, setting flag=1; then 0x8c0b38b8 writes M*(vec-(float*)(record+0x48)) as 3 floats to the caller's stack-arg pointer; r13/r14/pr restored, r15 balanced |
+| `0x8c091b34` | `FUN_8c091b34` | `notes/verifications/0x8c091b34.json` — 7760 oracle steps; writes the 0x148-byte signed per-column-max record to the stack-passed destination pointer; r0/r1/r3-r7 and T change, r2/r8/r9-r14/pr/r15 keep entry values |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
