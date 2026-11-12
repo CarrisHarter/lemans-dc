@@ -43,6 +43,21 @@ agents never share a target dir or a registry file. `scripts/collect-batch.py`
 refuses to overwrite a differing port, and `scripts/verify-ports.sh` re-runs
 every address canonically after a merge.
 
+## Snapshot 2026-11-12 (batch 44)
+
+| metric | value |
+| --- | --- |
+| verified ports | 1,693 of 5,211 (32.5%) |
+| specs | 3,647+, all passing (`verify-all-specs.sh`) |
+| oracle mnemonic coverage | 99.70% of 969,383 static instructions |
+| blocked ledger entries | 89 |
+
+Batches 41-43 landed 30 ports. The recurring failure classes remain
+caller-visible register residue and allocator fixtures: a freed pointer is the
+block start, so `[p-8]` must point at the arena head (`0x8c220000`), `[p-4]`
+holds the size (`0x40`) and `[p]` the next-chunk word (`0x1000`); with those
+seeded, four-pointer release chains verify in one shot.
+
 ## Next
 
 1. `div1` and the vector FPU set; both are the last census gaps.
