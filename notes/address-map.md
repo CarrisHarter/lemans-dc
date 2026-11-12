@@ -1883,6 +1883,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1996b4` | `indexed_field_address` | `notes/verifications/0x8c1996b4*.json` - 2 specs (6/6 steps) |
 | `0x8c199dd0` | `minimal_guarded_free_2` | `notes/verifications/0x8c199dd0*.json` - 3 specs (75/12/9 steps) |
 | `0x8c199fac` | `round_up_even_then_unit` | `notes/verifications/0x8c199fac*.json` - 4 specs (6/20/25/31 steps) |
+| `0x8c19aea0` | `free_stride12_array_2` | `notes/verifications/0x8c19aea0*.json` - 2 specs (82/7 steps) |
+| `0x8c19b624` | `float_tail_thunk_16ee30` | `notes/verifications/0x8c19b624.json` - 12 oracle steps |
+| `0x8c19781c` | `swap_subobject_60` | `notes/verifications/0x8c19781c*.json` - 2 specs (20/13 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
