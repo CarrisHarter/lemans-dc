@@ -835,6 +835,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10e364` | `load_field_plus_36` | `notes/verifications/0x8c10e364.json` — verified |
 | `0x8c10e36c` | `load_field_plus_32` | `notes/verifications/0x8c10e36c.json` — verified |
 | `0x8c10e374` | `load_double_indirect_2` | `notes/verifications/0x8c10e374.json` — verified |
+| `0x8c1118d4` | `swap_three_by_key` | `notes/verifications/0x8c1118d4*.json` - pair 97, null 53, third 104 |
 | `0x8c10e37c` | `load_word_via_field_60` | `notes/verifications/0x8c10e37c.json` — verified |
 | `0x8c10e384` | `load_word_via_field_56` | `notes/verifications/0x8c10e384.json` — verified |
 | `0x8c10e38c` | `load_byte_via_field_80` | `notes/verifications/0x8c10e38c.json` — verified |
