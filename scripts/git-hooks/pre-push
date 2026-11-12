@@ -38,5 +38,7 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   checked=$((checked + 1))
 done
 
-[ "$checked" -gt 0 ] || fail "no refs to check on stdin"
+# An empty stdin means git had nothing to send (already up to date). Nothing is
+# uploaded, so there is nothing to guard.
+[ "$checked" -gt 0 ] || exit 0
 exit 0
