@@ -10,6 +10,53 @@
 
 use sh4_oracle::{Cpu, Memory};
 
+/// Quiet a NaN the way the hardware does when it propagates the payload.
+fn quiet(v: f32) -> f32 {
+    f32::from_bits(v.to_bits() | 0x0040_0000)
+}
+
+/// NaN-preserving FP ops: first NaN operand wins, else the second. The first
+/// argument is the instruction's destination (`fmul FRm,FRn` → `fmul(fn, fm)`).
+fn fadd(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a + b
+    }
+}
+
+fn fsub(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a - b
+    }
+}
+
+fn fmul(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a * b
+    }
+}
+
+fn fdiv(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a / b
+    }
+}
+
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     // prologue: mov.l r14,r13,r12,@-r15 ; add #-8,r15
     for n in [14usize, 13, 12] {
@@ -34,30 +81,30 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let byte = mem.read_u8(mem.read_u32(0x8c1665c8).unwrap_or(0)).unwrap_or(0) as u32; // mov.b @0x8c2b2790,r0 ; extu.b
     let fr6 = mem.read_f32(r3).unwrap_or(0.0); // fmov @r3,fr6 (r12+128)
     cpu.fr[2] = cpu.fr[3];
-    cpu.fr[2] = cpu.fr[2] * fr1; // fmul fr1,fr2
+    cpu.fr[2] = fmul(cpu.fr[2], fr1); // fmul fr1,fr2
     let fr5 = cpu.fr[0];
     cpu.fr[1] = -fr1; // fneg fr1
-    cpu.fr[5] = fr5 * fr6; // fmul fr6,fr5
+    cpu.fr[5] = fmul(fr5, fr6); // fmul fr6,fr5
     let r12n = r12.wrapping_add(116);
-    cpu.fr[0] = cpu.fr[0] * cpu.fr[1]; // fmul fr1,fr0
-    cpu.fr[3] = cpu.fr[3] * fr6; // fmul fr6,fr3
+    cpu.fr[0] = fmul(cpu.fr[0], cpu.fr[1]); // fmul fr1,fr0
+    cpu.fr[3] = fmul(cpu.fr[3], fr6); // fmul fr6,fr3
     let fr4 = mem.read_f32(r7e.wrapping_add(4)).unwrap_or(0.0); // fmov @(r7+4),fr4
-    cpu.fr[5] = cpu.fr[5] + cpu.fr[2]; // fadd fr2,fr5
+    cpu.fr[5] = fadd(cpu.fr[5], cpu.fr[2]); // fadd fr2,fr5
     let fr1b = mem.read_f32(r12n).unwrap_or(0.0); // fmov @r12,fr1 (r12+116)
     let t = byte == 0; // tst r0,r0
     let fr7 = mem.read_f32(r13).unwrap_or(0.0); // fmov @r13,fr7 (r12+112)
-    let fr4b = fr4 * fr1b; // fmul fr1,fr4
+    let fr4b = fmul(fr4, fr1b); // fmul fr1,fr4
     let fr6b = mem.read_f32(r1).unwrap_or(0.0); // fmov @r1,fr6 (r12+120)
-    cpu.fr[0] = cpu.fr[0] + cpu.fr[3]; // bt.s delay: fadd fr3,fr0 (always runs)
+    cpu.fr[0] = fadd(cpu.fr[0], cpu.fr[3]); // bt.s delay: fadd fr3,fr0 (always runs)
     cpu.set_t(t);
     if !t {
         // path A (byte != 0)
         let fr1c = mem.read_f32(0x8c1665cc).unwrap_or(0.0);
-        cpu.fr[5] = cpu.fr[5] * fr7;
-        cpu.fr[5] = cpu.fr[5] + fr6b;
-        cpu.fr[0] = cpu.fr[0] * fr1c;
+        cpu.fr[5] = fmul(cpu.fr[5], fr7);
+        cpu.fr[5] = fadd(cpu.fr[5], fr6b);
+        cpu.fr[0] = fmul(cpu.fr[0], fr1c);
         cpu.fr[8] = cpu.fr[5];
-        cpu.fr[0] = cpu.fr[0] + fr1c;
+        cpu.fr[0] = fadd(cpu.fr[0], fr1c);
         cpu.fr[9] = 0.0; // bra delay: fldi0 fr9
         cpu.fr[1] = fr1c;
         cpu.fr[4] = fr4b;
@@ -67,19 +114,19 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.fr[9] = cpu.fr[5];
         cpu.fr[8] = cpu.fr[5];
         let fr1d = mem.read_f32(0x8c20b200).unwrap_or(0.0);
-        cpu.fr[9] = cpu.fr[9] * cpu.fr[5];
-        cpu.fr[8] = cpu.fr[8] * fr7;
-        cpu.fr[9] = cpu.fr[9] * cpu.fr[5];
-        let fr4c = fr4b + fr1d; // fadd fr1,fr4
+        cpu.fr[9] = fmul(cpu.fr[9], cpu.fr[5]);
+        cpu.fr[8] = fmul(cpu.fr[8], fr7);
+        cpu.fr[9] = fmul(cpu.fr[9], cpu.fr[5]);
+        let fr4c = fadd(fr4b, fr1d); // fadd fr1,fr4
         let fr2 = mem.read_f32(0x8c20b1f8).unwrap_or(0.0);
-        let fr3n = 1.0f32 / fr4c; // fldi1 fr3 ; fdiv fr4,fr3
+        let fr3n = fdiv(1.0f32, fr4c); // fldi1 fr3 ; fdiv fr4,fr3
         let fr1e = mem.read_f32(0x8c1665cc).unwrap_or(0.0);
-        let fr2b = fr2 * cpu.fr[0]; // fmul fr0,fr2
-        let fr3n = fr3n * fr2b; // fmul fr2,fr3
-        let fr3n = fr3n + fr1e; // fadd fr1,fr3
+        let fr2b = fmul(fr2, cpu.fr[0]); // fmul fr0,fr2
+        let fr3n = fmul(fr3n, fr2b); // fmul fr2,fr3
+        let fr3n = fadd(fr3n, fr1e); // fadd fr1,fr3
         cpu.fr[0] = fr3n; // fmov fr3,fr0
-        cpu.fr[8] = cpu.fr[8] + fr6b; // fadd fr6,fr8
-        cpu.fr[9] = cpu.fr[9] * cpu.fr[5];
+        cpu.fr[8] = fadd(cpu.fr[8], fr6b); // fadd fr6,fr8
+        cpu.fr[9] = fmul(cpu.fr[9], cpu.fr[5]);
         cpu.fr[1] = fr1e;
         cpu.fr[2] = fr2b;
         cpu.fr[3] = fr3n;
@@ -89,7 +136,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.fr[7] = fr7; // fmov @r13,fr7 is never overwritten
     // common tail
     let _ = mem.write_f32(sp, cpu.fr[8]); // fmov fr8,@(r0,r15), r0 = 0
-    let fr1f = 1.0f32 - cpu.fr[9]; // fldi1 fr1 ; fsub fr9,fr1
+    let fr1f = fsub(1.0f32, cpu.fr[9]); // fldi1 fr1 ; fsub fr9,fr1
     let _ = mem.write_f32(sp.wrapping_add(4), cpu.fr[0]); // r0 = 4
     let r1 = mem.read_u32(sp).unwrap_or(0);
     let r0f = mem.read_u32(sp.wrapping_add(4)).unwrap_or(0);

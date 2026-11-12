@@ -20,6 +20,42 @@
 
 use sh4_oracle::{Cpu, Memory};
 
+/// Quiet a NaN the way the hardware does when it propagates the payload.
+fn quiet(v: f32) -> f32 {
+    f32::from_bits(v.to_bits() | 0x0040_0000)
+}
+
+/// NaN-preserving FP ops: first NaN operand wins, else the second.
+fn fsub(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a - b
+    }
+}
+
+fn fmul(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a * b
+    }
+}
+
+fn fdiv(a: f32, b: f32) -> f32 {
+    if a.is_nan() {
+        quiet(a)
+    } else if b.is_nan() {
+        quiet(b)
+    } else {
+        a / b
+    }
+}
+
 pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[1] = mem.read_u32(cpu.r[15]).unwrap();
     cpu.r[0] = mem.read_u32(cpu.r[15].wrapping_add(4)).unwrap();
@@ -31,22 +67,22 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[7] = cpu.r[7].wrapping_add(4);
     cpu.fr[11] = mem.read_f32(cpu.r[5]).unwrap();
     cpu.r[4] = cpu.r[4].wrapping_add(4);
-    cpu.fr[9] = cpu.fr[9] - cpu.fr[10]; // fsub fr10,fr9
+    cpu.fr[9] = fsub(cpu.fr[9], cpu.fr[10]); // fsub fr10,fr9
     cpu.r[5] = cpu.r[5].wrapping_add(4);
-    cpu.fr[11] = cpu.fr[11] - cpu.fr[2]; // fsub fr2,fr11
+    cpu.fr[11] = fsub(cpu.fr[11], cpu.fr[2]); // fsub fr2,fr11
     cpu.fr[9] = -cpu.fr[9]; // fneg fr9
     cpu.fr[7] = mem.read_f32(cpu.r[6]).unwrap();
     cpu.fr[5] = cpu.fr[11]; // fmov fr11,fr5
     cpu.fr[6] = mem.read_f32(cpu.r[7]).unwrap();
     cpu.fr[0] = cpu.fr[9]; // fmov fr9,fr0
     cpu.fr[1] = mem.read_f32(cpu.r[4]).unwrap();
-    cpu.fr[6] = cpu.fr[6] - cpu.fr[7]; // fsub fr7,fr6
+    cpu.fr[6] = fsub(cpu.fr[6], cpu.fr[7]); // fsub fr7,fr6
     cpu.fr[8] = mem.read_f32(cpu.r[5]).unwrap();
     cpu.fr[6] = -cpu.fr[6]; // fneg fr6
-    cpu.fr[5] = cpu.fr[5] * cpu.fr[6]; // fmul fr6,fr5
-    cpu.fr[8] = cpu.fr[8] - cpu.fr[1]; // fsub fr1,fr8
-    cpu.fr[0] = cpu.fr[0] * cpu.fr[8]; // fmul fr8,fr0
-    cpu.fr[5] = cpu.fr[5] - cpu.fr[0]; // fsub fr0,fr5
+    cpu.fr[5] = fmul(cpu.fr[5], cpu.fr[6]); // fmul fr6,fr5
+    cpu.fr[8] = fsub(cpu.fr[8], cpu.fr[1]); // fsub fr1,fr8
+    cpu.fr[0] = fmul(cpu.fr[0], cpu.fr[8]); // fmul fr8,fr0
+    cpu.fr[5] = fsub(cpu.fr[5], cpu.fr[0]); // fsub fr0,fr5
     // fcmp/eq fr4,fr5 → T = fr5 == fr4 ; bf 0x8c0c0364
     if cpu.fr[5] == cpu.fr[4] {
         cpu.set_t(true);
@@ -54,22 +90,22 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         return;
     }
     cpu.set_t(false);
-    cpu.fr[7] = cpu.fr[7] - cpu.fr[1]; // fsub fr1,fr7
-    cpu.fr[10] = cpu.fr[10] - cpu.fr[2]; // fsub fr2,fr10
+    cpu.fr[7] = fsub(cpu.fr[7], cpu.fr[1]); // fsub fr1,fr7
+    cpu.fr[10] = fsub(cpu.fr[10], cpu.fr[2]); // fsub fr2,fr10
     cpu.fr[1] = cpu.fr[10]; // fmov fr10,fr1
     cpu.fr[0] = cpu.fr[7]; // fmov fr7,fr0
     cpu.fr[3] = 1.0; // fldi1 fr3
     cpu.fr[2] = cpu.fr[3]; // fmov fr3,fr2
-    cpu.fr[1] = cpu.fr[1] * cpu.fr[6]; // fmul fr6,fr1
-    cpu.fr[0] = cpu.fr[0] * cpu.fr[9]; // fmul fr9,fr0
-    cpu.fr[2] = cpu.fr[2] / cpu.fr[5]; // fdiv fr5,fr2
-    cpu.fr[1] = cpu.fr[1] - cpu.fr[0]; // fsub fr0,fr1
-    cpu.fr[1] = cpu.fr[1] * cpu.fr[2]; // fmul fr2,fr1
-    cpu.fr[11] = cpu.fr[11] * cpu.fr[7]; // fmul fr7,fr11
-    cpu.fr[8] = cpu.fr[8] * cpu.fr[10]; // fmul fr10,fr8
-    cpu.fr[11] = cpu.fr[11] - cpu.fr[8]; // fsub fr8,fr11
+    cpu.fr[1] = fmul(cpu.fr[1], cpu.fr[6]); // fmul fr6,fr1
+    cpu.fr[0] = fmul(cpu.fr[0], cpu.fr[9]); // fmul fr9,fr0
+    cpu.fr[2] = fdiv(cpu.fr[2], cpu.fr[5]); // fdiv fr5,fr2
+    cpu.fr[1] = fsub(cpu.fr[1], cpu.fr[0]); // fsub fr0,fr1
+    cpu.fr[1] = fmul(cpu.fr[1], cpu.fr[2]); // fmul fr2,fr1
+    cpu.fr[11] = fmul(cpu.fr[11], cpu.fr[7]); // fmul fr7,fr11
+    cpu.fr[8] = fmul(cpu.fr[8], cpu.fr[10]); // fmul fr10,fr8
+    cpu.fr[11] = fsub(cpu.fr[11], cpu.fr[8]); // fsub fr8,fr11
     let _ = mem.write_f32(cpu.r[1], cpu.fr[1]); // fmov fr1,@r1
-    cpu.fr[11] = cpu.fr[11] * cpu.fr[2]; // fmul fr2,fr11
+    cpu.fr[11] = fmul(cpu.fr[11], cpu.fr[2]); // fmul fr2,fr11
     let _ = mem.write_f32(cpu.r[0], cpu.fr[11]); // fmov fr11,@r0
     cpu.fr[0] = mem.read_f32(cpu.r[1]).unwrap(); // fmov @r1,fr0
     let t1 = cpu.fr[0] > cpu.fr[4]; // fcmp/gt fr4,fr0

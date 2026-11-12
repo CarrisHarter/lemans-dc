@@ -28,6 +28,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.set_t(t);
         if t {
             let r1 = (mem.read_u8(r5).unwrap_or(0) as i8 as i32) as u32;
+            cpu.r[1] = r1;
             let t2 = r1 == 0;
             cpu.set_t(t2);
             result = if t2 { 1 } else { 0 };

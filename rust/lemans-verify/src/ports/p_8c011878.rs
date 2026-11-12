@@ -72,11 +72,13 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[3] = mem.read_u8(cpu.r[0].wrapping_add(cpu.r[4])).unwrap_or(0) as u32;
         let tz5 = cpu.r[3] == 0;
         cpu.set_t(tz5);
-        if !tz5 {
-            cpu.r[2] = mem.read_u32(cpu.r[14]).unwrap_or(0);
-            cpu.r[2] = cpu.r[2].wrapping_add(1);
-            let _ = mem.write_u32(cpu.r[14], cpu.r[2]);
+        if tz5 {
+            // `bt 0x8c0118c4` at 0x8c0118b4 jumps past the loop head.
+            break;
         }
+        cpu.r[2] = mem.read_u32(cpu.r[14]).unwrap_or(0);
+        cpu.r[2] = cpu.r[2].wrapping_add(1);
+        let _ = mem.write_u32(cpu.r[14], cpu.r[2]);
     }
     cpu.r[12] = mem.read_u32(cpu.r[14]).unwrap_or(0);
     cpu.r[2] = mem.read_u8(cpu.r[12]).unwrap_or(0) as u32;
@@ -98,10 +100,10 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     if !tz7 {
         cpu.r[3] = mem.read_u32(cpu.r[14]).unwrap_or(0);
         let _ = mem.write_u8(cpu.r[3], cpu.r[13] as u8);
+        cpu.r[2] = mem.read_u32(cpu.r[14]).unwrap_or(0);
+        cpu.r[2] = cpu.r[2].wrapping_add(1);
+        let _ = mem.write_u32(cpu.r[14], cpu.r[2]);
     }
-    cpu.r[2] = mem.read_u32(cpu.r[14]).unwrap_or(0);
-    cpu.r[2] = cpu.r[2].wrapping_add(1);
-    let _ = mem.write_u32(cpu.r[14], cpu.r[2]);
     cpu.r[0] = cpu.r[12];
     epilogue(cpu, mem);
 }

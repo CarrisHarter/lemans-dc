@@ -60,14 +60,19 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         cpu.r[7] &= cpu.r[6];
         cpu.r[5] = mem.read_u32(0x8C0E8F78).unwrap(); // 0x01000000
         let _ = mem.write_u32(cpu.r[3], cpu.r[7]);
-        let r6 = mem.read_u32(cpu.r[3].wrapping_add(4)).unwrap() & r0b;
-        let _ = mem.write_u32(cpu.r[3].wrapping_add(4), r6);
-        let r6 = mem.read_u32(cpu.r[3]).unwrap();
+        // These loads target r6 itself (0x8c0e8e38/3e/46); shadowing them in
+        // locals left cpu.r[6] at its entry value and only showed on the
+        // update path when r6 is not overwritten later.
+        cpu.r[6] = mem.read_u32(cpu.r[3].wrapping_add(4)).unwrap() & r0b;
+        let _ = mem.write_u32(cpu.r[3].wrapping_add(4), cpu.r[6]);
+        cpu.r[6] = mem.read_u32(cpu.r[3]).unwrap();
         let r0c = mem.read_u32(cpu.r[1]).unwrap();
-        let _ = mem.write_u32(cpu.r[3], r6 | r0c);
-        let r6 = mem.read_u32(cpu.r[3].wrapping_add(4)).unwrap();
+        cpu.r[6] |= r0c;
+        let _ = mem.write_u32(cpu.r[3], cpu.r[6]);
+        cpu.r[6] = mem.read_u32(cpu.r[3].wrapping_add(4)).unwrap();
         let r0d = mem.read_u32(cpu.r[1].wrapping_add(4)).unwrap();
-        let _ = mem.write_u32(cpu.r[3].wrapping_add(4), r6 | r0d);
+        cpu.r[6] |= r0d;
+        let _ = mem.write_u32(cpu.r[3].wrapping_add(4), cpu.r[6]);
         let r0e = mem.read_u32(cpu.r[3]).unwrap() | 4;
         let _ = mem.write_u32(cpu.r[3], r0e);
         let r0f = mem.read_u32(cpu.r[3].wrapping_add(4)).unwrap() | cpu.r[5];

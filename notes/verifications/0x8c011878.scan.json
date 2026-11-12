@@ -1,0 +1,16 @@
+{
+  "address": "0x8c011878",
+  "spec": "notes/specs/0x8c011878.scan.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "c933636c",
+  "verified_at": "2026-11-12T04:56:33+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 236
+  },
+  "verifier_output": [
+    "ok   0x8c011878 matches original (236 oracle steps)"
+  ]
+}
