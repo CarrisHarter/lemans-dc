@@ -1827,6 +1827,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c173954` | `conditional_slot_clear_sr` | `notes/verifications/0x8c173954*.json` - 2 specs (53/60 steps) |
 | `0x8c1730fe` | `countdown_counter_loop` | `notes/verifications/0x8c1730fe*.json` - 2 specs (40/5 steps) |
 | `0x8c173580` | `store_then_memset_call` | `notes/verifications/0x8c173580.json` - 1304 oracle steps |
+| `0x8c170efa` | `bit_set_dispatch` | `notes/verifications/0x8c170efa*.json` - 4 specs (346/295/22/20 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
