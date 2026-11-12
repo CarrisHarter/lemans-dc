@@ -114,6 +114,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0d0020` | `clamp_abs_to_range` | `notes/verifications/0x8c0d0020*.json` - 4 specs (23-24 steps) |
 | `0x8c0f1b78` | `set_byte_flag_pair` | `notes/verifications/0x8c0f1b78*.json` - 4 specs (8-13 steps) |
 | `0x8c0f1ae0` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c0f1ae0.json` - 9 oracle steps |
+| `0x8c0e2c48` | `find_table_slot` | `notes/verifications/0x8c0e2c48*.json` - 3 specs (123-124 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
