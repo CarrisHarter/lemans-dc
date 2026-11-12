@@ -1345,6 +1345,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0148ec` | `dbl_log2_trunc` | `notes/verifications/0x8c0148ec*.json` — 6 seeds (240/185/236/240/240/233 oracle steps); call-crossing port (callees 0x8c014936, 0x8c014ab4); normalize → scale by 1.6505 → round → ftrc int return via rts delay slot `sts fpul,r0` |
 | `0x8c017d40` | `skip_cond_unpack` | `notes/verifications/0x8c017d40*.json` — both branches (35/36 oracle steps); call-crossing port (callee 0x8c017b94); bt.s delay slot advances r4 once on both paths, bit6 set advances twice |
 | `0x8c04a578` | `oneshot_list_init` | `notes/verifications/0x8c04a578*.json` — both branches (35/10 oracle steps); call-crossing port (callee 0x8c017844); zeroes node + pushes unless flag set; returns node ptr on both paths; spec trap: overlapping memory seeds apply in order, later wins |
+| `0x8c04ba78` | `guarded_byte_dispatch` | `notes/verifications/0x8c04ba78*.json` — both branches (17/9 oracle steps); call-crossing port (callee 0x8c104768); loads [r4+0xa0], calls when nonzero else returns 0; spec trap: short seed silently took the null path (step count is the branch witness) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
