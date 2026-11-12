@@ -1838,6 +1838,7 @@ memory` before a diff can mean anything.
 
 | address | reason |
 | --- | --- |
+| `0x8c1739c0` | reads 0x8c004020 below LOAD_BASE (unmapped; oracle faults at step 2) |
 | `0x8c17275e` | hardware register access: `a05f688c` |
 | `0x8c1aca8c` | hardware register access: `ff000000` |
 | `0x8c216b6c` | hardware register access: `ff00` |
