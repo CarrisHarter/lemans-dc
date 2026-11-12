@@ -1785,6 +1785,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c151ae8` | `scale_vector_into_frame_merge` | `notes/verifications/0x8c151ae8.json` - 61 oracle steps |
 | `0x8c152140` | `vtable_init_then_free` | `notes/verifications/0x8c152140*.json` - 2 specs (97/34 steps) |
 | `0x8c154000` | `free_first_word_then_object` | `notes/verifications/0x8c154000*.json` - 2 specs (141/78 steps) |
+| `0x8c0f87b0` | `dispatch_lookup_18_or_3c` | `notes/verifications/0x8c0f87b0*.json` - 2 specs (23/31 steps) |
+| `0x8c0f8800` | `dispatch_lookup_f4_or_3c` | `notes/verifications/0x8c0f8800*.json` - 2 specs (23/31 steps) |
+| `0x8c15d148` | `double_indirect_tail_thunk` | `notes/verifications/0x8c15d148.json` - 10 oracle steps |
+| `0x8c154e94` | `free_stride12_array` | `notes/verifications/0x8c154e94*.json` - 2 specs (74/7 steps) |
+| `0x8c155e20` | `clear_global_then_free_3` | `notes/verifications/0x8c155e20*.json` - 2 specs (78/15 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
