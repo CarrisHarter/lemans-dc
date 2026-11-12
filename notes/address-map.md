@@ -1387,6 +1387,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0579a4` | `FUN_8c0579a4` | `notes/verifications/0x8c0579a4*.json` — 11 seeds (198/208/204/75/71/80/147/429/172/187/200 oracle steps); classifies node type bits 7..9 via 0x8c05f294; four runtime vtable calls (+0xc gate, +0x14 count, +0x38 descriptor, +0x40 close) dispatched through registry::lookup — CAVEAT: equivalence holds only while each slot holds an address that has a port; an unported slot target panics instead of running. Specs seed the slots with ported addresses |
 | `0x8c042d48` | `FUN_8c042d48` | `notes/verifications/0x8c042d48.json` — 432 oracle steps; writes param+0x00..+0x17c (mixed byte/long/f32 fields); fr0=0.6 fr1=95.0 fr2=25.0; calls 0x8c01e484(param+0x174) |
 | `0x8c091a80` | `zero_record_blocks` | `notes/verifications/0x8c091a80.json` — 1672 oracle steps; mem: 0xb8 bytes zeroed at r4 then 0x90 at r4+0xb8 (two calls into 0x8c010f88 memset); regs: r0=r4, r4=r4+0xb8, r5=0, r6=0x90, r7=0x90, r3=0, r14/r15/pr restored, T=1 |
+| `0x8c014370` | `acos` | `notes/verifications/0x8c014370.json` — 400 oracle steps; stack pr save/restore; jsr 0x8c01438c (pr=0x8c014378); r3=0x8c1ccfc0; fr3=asin result; fr0=pi/2-asin(fr4); T left by callee |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
