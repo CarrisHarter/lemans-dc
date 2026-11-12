@@ -1400,6 +1400,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b23cc` | `resolve_state_code` | `notes/verifications/0x8c0b23cc.json` — 51 oracle steps; mem: no non-stack writes (8-byte frame copy + r14/r13/pr spills filtered); regs: r0=code (0/2/6), r1=sign-extended state byte [r4+15], r4+=8 (callee), fr1=[r5+16] and fr0=1.0 on the float arm, r13/r14/pr restored, T from the last compare |
 | `0x8c0b2ee4` | `FUN_8c0b2ee4` | `notes/verifications/0x8c0b2ee4.json` — 72 oracle steps; identity 3x3 float matrix at r4+0..+32, calls 0x8c0b4ff0 to zero r4+36..+44, r0..r7 leftovers, r14/r15/pr restored |
 | `0x8c0b38b8` | `mat3_apply_vec_delta` | `notes/verifications/0x8c0b38b8.json` — 100 oracle steps; writes out[0..3] f32 at *(sp) = M * (v - m[9..12]); r13/r14/r15/pr frame-restored; single code path, calls 0x8c0b4f5c |
+| `0x8c0854cc` | `FUN_8c0854cc` | `notes/verifications/0x8c0854cc.json` — 94 oracle steps; calls 0x8c085684(r4=dest, r5=src, scratch ptr @r15-16) then copies the 4 normalised halfwords to *dest; r0=dest; r1=r15entry-16; r14/pr/r15 restored; T from the callee's last cmp/ge; r3..r7 keep callee clobbers |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
