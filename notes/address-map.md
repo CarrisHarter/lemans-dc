@@ -1307,6 +1307,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21a740` | `slot_kind_14` | `notes/verifications/0x8c21a740*.json` - 2 specs (286/329); 1 only when the slot word is 14 and the unpacked record matches |
 | `0x8c22f514` | `zero_fill_aligned` | `notes/verifications/0x8c22f514*.json` - 4 specs (15/18/20/23); byte, half, word, or paired fmov after fschg |
 | `0x8c220d32` | `any_slot128_nonzero` | `notes/verifications/0x8c220d32.json` - 26 oracle steps; -1 if 0x8c221da8(0) is nonzero |
+| `0x8c23292a` | `set_first_clear_bit0` | `notes/verifications/0x8c23292a*.json` - 2 specs (12/39); stores 1 in the first clear halfword, or returns 0 |
+| `0x8c2342d8` | `flag_words_from_bits` | `notes/verifications/0x8c2342d8*.json` - 4 specs (19/20); bits 1/4/5/6 select the two flag words |
+| `0x8c232da0` | `pack_into_slot_20` | `notes/verifications/0x8c232da0*.json` - 2 specs (30/50); 0xeeee on a miss, else the packed pair at +20 |
+| `0x8c232dde` | `pack_into_slot_24` | `notes/verifications/0x8c232dde*.json` - 2 specs (30/50); same pack, stored at +24 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
