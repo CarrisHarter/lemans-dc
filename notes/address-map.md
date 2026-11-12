@@ -1635,6 +1635,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1862d8` | `FUN_8c1862d8` | `notes/verifications/0x8c1862d8.json` — 116 oracle steps; callee 0x8c1863e8 builds its template at r4+12; copies 3 words from global 0x8c1d3f68 into r4+0,+4,+8, zeroes byte r4+0x80, stores r5 at r4+0x84; returns r4 |
 | `0x8c1842f0` | `FUN_8c1842f0` | `notes/verifications/0x8c1842f0.json` — 113 oracle steps; release 0x8c018bd8 on the handle at r4+0x54 with count -1 (clears the handle when a reference remains, destroys the object at refcount zero), then frees r4 through 0x8c01032c when the sign-extended low half of r5 is positive; returns r4 |
 | `0x8c184260` | `unknown` | `notes/verifications/0x8c184260.json` — 20 oracle steps |
+| `0x8c184324` | `FUN_8c184324` | `notes/verifications/0x8c184324.json` — 17 oracle steps; bounds-checked 8-byte record copy: count at [r4+0x138], records at r4+0x13c with stride 8; copies record r6 to r5 when r6 is in range, otherwise zeroes the 8 bytes at r5 through memset 0x8c010f88; returns via rts |
+| `0x8c18db84` | `unknown` | `notes/verifications/0x8c18db84.json` — 48 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
