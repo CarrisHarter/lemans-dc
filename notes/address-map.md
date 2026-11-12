@@ -1913,6 +1913,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1831b8` | `table_entry_equality` | `notes/verifications/0x8c1831b8*.json` - 3 specs (24/24/32 steps) |
 | `0x8c19ae24` | `double_stamp_subarray_free` | `notes/verifications/0x8c19ae24*.json` - 3 specs (100/37/12 steps) |
 | `0x8c184c20` | `clear_field_subarray_free` | `notes/verifications/0x8c184c20*.json` - 3 specs (107/44/12 steps) |
+| `0x8c19c95c` | `clear_pair_then_refcount` | `notes/verifications/0x8c19c95c.json` - 55 oracle steps |
+| `0x8c1ae7d8` | `zero_three_publish_global` | `notes/verifications/0x8c1ae7d8.json` - 20 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
