@@ -38,6 +38,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c010438` | `FUN_8c010438` | `notes/verifications/0x8c010438.json` — 7 oracle steps; store at [slot]; r5/r6/r2 leftovers; T per path |
 | `0x8c01044c` | `FUN_8c01044c` | `notes/verifications/0x8c01044c.json` — 2 oracle steps; none |
 | `0x8c010b38` | `classify_float_result` | `notes/verifications/0x8c010b38.json` — 48 oracle steps |
+| `0x8c14720c` | `wrap_difference_scale` | `notes/verifications/0x8c14720c*.json` - high 109, low 125, negative 113 |
 | `0x8c010b88` | `saturate_and_classify` | `notes/verifications/0x8c010b88.json` — 105 oracle steps |
 | `0x8c010cf8` | `FUN_8c010cf8` | `notes/verifications/0x8c010cf8.json` — 16 oracle steps; zero-input branch only (fr4==0: *r4=0, r6=fr4bits&0x7f800000, fr0=fr4, T=1); non-zero branches blocked on global 0x8c23d8b8 outside image |
 | `0x8c010d6c` | `FUN_8c010d6c` | `notes/verifications/0x8c010d6c.json` — 6 oracle steps; r1 = table base; r0 = byte&7 |
