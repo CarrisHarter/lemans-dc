@@ -103,15 +103,15 @@ def _buckets(ages, width, count):
 
 
 def current_task(last_hour: int, last_day: int) -> str:
-    """One plain-language line describing what the porting loop is doing now.
+    """One line describing what the porting loop is doing now.
 
     Derived from aggregate timestamps only: no addresses, names, or code.
     """
     if last_hour:
-        return f"checking newly translated pieces — {last_hour:,} finished in the last hour"
+        return f"verifying ports against SH-4 oracle — {last_hour:,} proven in last 1h"
     if last_day:
-        return f"taking a short break — {last_day:,} pieces finished in the last 24 hours"
-    return "paused — no pieces finished in the last 24 hours"
+        return f"idle — {last_day:,} proven in last 24h"
+    return "idle — 0 proven in last 24h"
 
 
 def snapshot():

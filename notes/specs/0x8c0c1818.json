@@ -1,0 +1,36 @@
+{
+  "entry": "0x8c0c1818",
+  "note": "Deep path: object at 0x8c202000 holds block 0x8c201000 at +0x24; middle calls run, free(block), then the caller's low-16 r5 = 1 triggers free(object). The block interiors at +0x34 are zero so 0x8c043a68 only does its tst early exit. Two 64-byte dlmalloc blocks with sane neighbours exercise both free calls; 0x8c220004 = 0x80000000 makes the backward coalesce checks skip, and the image word at 0x8c210008 is below both block addresses so the bin walks stop immediately.",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c202000",
+    "r5": "0x00000001",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c202024", "hex": "0010208c" },
+    { "addr": "0x8c201034", "hex": "00000000" },
+    { "addr": "0x8c200ffc", "hex": "40000000" },
+    { "addr": "0x8c200fc4", "hex": "08000000" },
+    { "addr": "0x8c200ff8", "hex": "0000228c" },
+    { "addr": "0x8c201ffc", "hex": "40000000" },
+    { "addr": "0x8c201fc4", "hex": "08000000" },
+    { "addr": "0x8c201ff8", "hex": "0000228c" },
+    { "addr": "0x8c220004", "hex": "00000080" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" },
+    { "addr": "0x8c210000", "hex": "00100000" }
+  ],
+  "steps": 2000
+}
