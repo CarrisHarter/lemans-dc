@@ -1,0 +1,39 @@
+{
+  "entry": "0x8c06c3b8",
+  "note": "early return: index 5 == count 5, cmp/ge is signed >= so T is set; returns 0 and leaves the cursor untouched",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c290000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": 0,
+  "mach": "0x01234567",
+  "macl": "0x89abcdef",
+  "memory": [
+    { "addr": "0x8c290028", "hex": "05000000" },
+    { "addr": "0x8c29002c", "hex": "00002a8c" },
+    { "addr": "0x8c290030", "hex": "05000000" }
+  ],
+  "expect": {
+    "r0": "0x0",
+    "r1": "0x11111111",
+    "r3": "0x5",
+    "macl": "0x89abcdef",
+    "mach": "0x01234567",
+    "sr": "0x1"
+  },
+  "steps": 32
+}
