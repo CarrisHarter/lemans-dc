@@ -34,6 +34,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         return; // r0 keeps its incoming value
     }
     let r12 = shad(r13.wrapping_neg(), 0xff);
+    cpu.r[3] = r13.wrapping_neg(); // 0x8c0151a6: neg r13,r3 — survives the skip
     cpu.set_t((cpu.r[5] as i32) > 0); // cmp/pl r5
     cpu.r[7] = 0;
     if (cpu.r[5] as i32) > 0 {

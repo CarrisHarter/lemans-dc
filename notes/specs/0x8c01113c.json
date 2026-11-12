@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c01113c",
+  "regs": {
+    "r15": "0x8c308000"
+  },
+  "macl": "0xdeadbeef",
+  "mach": "0xcafebabe",
+  "memory": [
+    {
+      "addr": "0x8c1f2eb0",
+      "hex": "78563412"
+    }
+  ],
+  "steps": 100
+}

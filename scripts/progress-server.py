@@ -53,6 +53,7 @@ PAGE = """<!doctype html>
   .k { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; opacity: .6; }
   .v { font-size: 1.25rem; font-weight: 600; }
   footer { margin-top: 1.75rem; font-size: .78rem; opacity: .55; }
+  .notice { margin-top: .4rem; font-size: .68rem; opacity: .4; max-width: 72ch; }
   a { color: inherit; }
 </style>
 <h1>Test Drive Le Mans (Dreamcast) — verified Rust port progress</h1>
@@ -72,6 +73,7 @@ PAGE = """<!doctype html>
     <div class="cell"><div class="k">evidence files</div><div class="v" id="evidence">—</div></div>
   </div>
   <footer id="foot"></footer>
+  <div class="notice">This technical analysis is unofficial and is not endorsed by or affiliated with Atari SA or any of its licensors. All rights in <em>Le Mans 24 Hours</em> remain with their respective owners.</div>
 </div>
 <script>
 const el = id => document.getElementById(id);
@@ -95,8 +97,7 @@ async function tick() {
       el(k === "evidence_files" ? "evidence" : k).textContent = d[k].toLocaleString();
     el("pace").textContent = d.pace_per_day.toLocaleString();
     el("eta").textContent = eta(d.eta_days);
-    el("foot").textContent = "updated " + d.updated +
-      " · aggregate counters only · analysis notes: Atari SA grant, non-commercial";
+    el("foot").textContent = "updated " + d.updated;
   } catch (e) { el("sub").textContent = "reconnecting…"; }
 }
 tick(); setInterval(tick, 30000);
