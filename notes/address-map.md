@@ -105,6 +105,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2219fc` | `zero_0x400_at_global` | `notes/verifications/0x8c2219fc.json` - 5,136 oracle steps |
 | `0x8c221e8e` | `copy_into_global_table` | `notes/verifications/0x8c221e8e.json` - 60 oracle steps |
 | `0x8c220eda` | `tail_thunk` | `notes/verifications/0x8c220eda.json` - 52 oracle steps |
+| `0x8c2214e4` | `index_load_bool` | `notes/verifications/0x8c2214e4.json` - 17 oracle steps |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1668,6 +1669,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1af3b4` | `FUN_8c1af3b4` | `notes/verifications/0x8c1af3b4.json` — 85 oracle steps; frees the block at [r4+8] when non-zero via thunk 0x8c01032c -> free 0x8c159fc0; [r4+4] only feeds a dead 32-byte-stride walk into r3 |
 | `0x8c21cda6` | `FUN_8c21cda6` | `notes/verifications/0x8c21cda6.json` — 17 oracle steps; calls 0x8c21a036 to read *0x8c2b8dcc; returns *(int*)(0x8c23c520+n*4) when n>0 else n; T=(n>0) signed; saves/restores pr; r3=0x8c21a036 when not taken |
 | `0x8c222c3a` | `FUN_8c222c3a` | `notes/verifications/0x8c222c3a.json` — 18 oracle steps; clears record[8..12] and *(u32*)(record+4) at 0x8c2c02b8+0x148*r4 when record[2]!=0 and returns 0, else returns 0xffffff01; sets MACH:MACL from the signed 0x148*r4 product; T = (record[2]==0) |
+| `0x8c220cd8` | `FUN_8c220cd8` | `notes/verifications/0x8c220cd8.json` — 38 oracle steps; raises IMASK to 15 around set_indexed_word_if_in_range(*(0x8c23cc68), 0), then restores the saved IMASK nibble |
+| `0x8c21d398` | `FUN_8c21d398` | `notes/verifications/0x8c21d398.json` — 34543 oracle steps; memset(0x8c2bae60,0,0x1af8) via 0x8c010f88 then zero u32 at 0x8c2bc958, 0x8c2bc95c, 0x8c2bc960; r0 ends 0x8c2bc960, r1/r4/r5 0, r2 0x8c2bc958, r3 0x8c2bc95c, r6/r7 0x1af8; T set |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
