@@ -1945,6 +1945,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c219d18` | `unpack_five_halfwords` | `notes/verifications/0x8c219d18.json` - 330 oracle steps |
 | `0x8c219de6` | `unpack_two_words_two_bytes` | `notes/verifications/0x8c219de6.json` - 343 oracle steps |
 | `0x8c1839f8` | `recursive_tree_match` | `notes/verifications/0x8c1839f8.json` - 99 oracle steps |
+| `0x8c177e28` | `five_table_slot_clear` | `notes/verifications/0x8c177e28*.json` - 2 specs (72/304 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
