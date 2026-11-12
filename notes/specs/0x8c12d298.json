@@ -1,0 +1,14 @@
+{
+  "entry": "0x8c12d298",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0xab"
+  },
+  "memory": [
+    {
+      "addr": "0x8c201000",
+      "hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    }
+  ],
+  "steps": 1000
+}
