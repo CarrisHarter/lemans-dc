@@ -1,0 +1,43 @@
+{
+  "entry": "0x8c0112e0",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c200100",
+      "hex": "deadbeefcafebabe0011223344556677"
+    },
+    {
+      "addr": "0x8c200200",
+      "hex": "414243444546474849004a4b4c005566"
+    }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0x8c20020a",
+    "r2": "0x22222222",
+    "r3": "0x8c016484",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r15": "0x8c308000"
+  },
+  "notes": "Aligned word path: both pointers 4-aligned, so 0x8c016484 tail-jumps into 0x8c0163e8. Two whole words (ABCD, EFGH) are copied; the third word's second byte is the NUL, so the byte tail at 0x8c016420 rewinds r1 by four and stores 'I' then 0. The 0x8c0163e8 frame's four pops consume the callee's saved r4/r3, so r15 comes back at our saved-PR slot; r3 ends as the loaded literal 0x8c016484, r4/r5/r6 as seeded, and T=1 from the terminating cmp/eq."
+}

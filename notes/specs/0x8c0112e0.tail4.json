@@ -1,0 +1,37 @@
+{
+  "entry": "0x8c0112e0",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200100", "hex": "deadbeefcafebabe" },
+    { "addr": "0x8c200200", "hex": "41424300aabbccdd" }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0x8c200204",
+    "r2": "0x22222222",
+    "r3": "0x8c016484",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r15": "0x8c308000"
+  },
+  "notes": "Aligned word path whose first word already contains the NUL in byte 4. The byte tail at 0x8c016420 rewinds r1 by four and stores 'A','B','C',0; its cmp/eq runs only on the first three bytes, so T keeps the third byte's clear result (T=0), unlike the other tails. r1 ends one past the NUL at 0x8c200204."
+}
