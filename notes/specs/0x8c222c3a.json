@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c222c3a",
+  "note": "clearing path: r4=1 -> record at 0x8c2c0400, record[2]=0x02 so bf is taken; pre-filled fields must be zeroed",
+  "sr": "0x00000001",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x22222222",
+    "r4": "0x00000001",
+    "r5": "0x33333333",
+    "r6": "0x44444444"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2c0400",
+      "hex": "000102030405060708090a0b0c0d0e0f"
+    }
+  ],
+  "steps": 100
+}

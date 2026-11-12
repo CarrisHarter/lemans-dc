@@ -1666,6 +1666,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1af164` | `FUN_8c1af164` | `notes/verifications/0x8c1af164.json` — 97 oracle steps; free(mem[r4+8]) when non-NULL; walks ptr+mem[r4+4]*32 in 32-byte steps without using the result; the 0x8c01032c thunk tail-calls free (0x8c159fc0), which rewrites the block header, top chunk and bin pointers |
 | `0x8c1b69ec` | `FUN_8c1b69ec` | `notes/verifications/0x8c1b69ec.json` — 416 oracle steps; submits 7 handles from [r4+28..52] then 4 from [r4+56..68] to 0x8c16eaec with fr4/fr5/fr6 read from the caller's stack words 0/1/2; each flagged handle gets the three floats staged at +60/64/68, copied to +72/76/80, and 0x01800000 ORed into +8; r12/r13/r14/pr/fr14/fr15 restored, r0=4, T=0 |
 | `0x8c1af3b4` | `FUN_8c1af3b4` | `notes/verifications/0x8c1af3b4.json` — 85 oracle steps; frees the block at [r4+8] when non-zero via thunk 0x8c01032c -> free 0x8c159fc0; [r4+4] only feeds a dead 32-byte-stride walk into r3 |
+| `0x8c21cda6` | `FUN_8c21cda6` | `notes/verifications/0x8c21cda6.json` — 17 oracle steps; calls 0x8c21a036 to read *0x8c2b8dcc; returns *(int*)(0x8c23c520+n*4) when n>0 else n; T=(n>0) signed; saves/restores pr; r3=0x8c21a036 when not taken |
+| `0x8c222c3a` | `FUN_8c222c3a` | `notes/verifications/0x8c222c3a.json` — 18 oracle steps; clears record[8..12] and *(u32*)(record+4) at 0x8c2c02b8+0x148*r4 when record[2]!=0 and returns 0, else returns 0xffffff01; sets MACH:MACL from the signed 0x148*r4 product; T = (record[2]==0) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

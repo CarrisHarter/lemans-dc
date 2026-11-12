@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c222c3a",
+  "note": "early return: r4=3 -> record at 0x8c2c0690, record[2] is zero RAM so bf is not taken and r0 = 0xffffff01",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x22222222",
+    "r4": "0x00000003",
+    "r5": "0x33333333",
+    "r6": "0x44444444"
+  },
+  "steps": 100
+}
