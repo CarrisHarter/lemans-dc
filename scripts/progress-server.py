@@ -88,7 +88,8 @@ PAGE = """<!doctype html>
   .seg.b { background: repeating-linear-gradient(135deg, var(--warn) 0 4px, color-mix(in srgb, var(--warn) 55%, #000) 4px 8px); }
   .scale { display: flex; justify-content: space-between; margin-top: .25rem; color: var(--faint); font: .66rem var(--mono); }
 
-  .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); overflow: hidden; }
+  .grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: var(--line); overflow: hidden; }
+  .grid > .sched { grid-column: span 2; }
   .grid > div { background: var(--panel); padding: .55rem .8rem; min-width: 0; }
   .grid .v { display: block; margin-top: .15rem; font: 600 1.15rem/1.25 var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .grid .s { display: block; color: var(--faint); font-size: .72rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -125,7 +126,7 @@ PAGE = """<!doctype html>
     .lg { display: none; }
     .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .grid > div { padding: .4rem .6rem; }
-    .grid > .dup, .grid .s { display: none; }
+    .grid > .dup, .grid > .opt, .grid .s { display: none; }
     .grid .v { font-size: .98rem; }
     .chart { padding: .45rem .6rem .35rem; }
     .chart svg, .empty { height: 44px; }
@@ -164,8 +165,9 @@ PAGE = """<!doctype html>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s">proofs/h, 24 h mean</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at 24 h rate</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
-    <div><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
-    <div><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
+    <div class="sched"><span class="k">schedule</span><span class="v" id="sched">—</span><span class="s" id="sched-s">vs first published forecast</span></div>
+    <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
+    <div class="opt"><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
 
   <section class="charts">
@@ -368,6 +370,17 @@ function render(d, prev) {
   }
   $("eta").textContent = eta;
   $("eta-s").textContent = etaS;
+
+  const sc = d.schedule, sv = $("sched");
+  if (sc && isNum(sc.ahead)) {
+    sv.textContent = sc.ahead > 0 ? "▲ " + fmt(sc.ahead) + " ahead" : sc.ahead < 0 ? "▼ " + fmt(-sc.ahead) + " behind" : "on schedule";
+    sv.className = "v " + (sc.ahead > 0 ? "go" : sc.ahead < 0 ? "wa" : "");
+    const e = sc.early_hours, plan = Date.parse(sc.plan_end || "");
+    const span = h => Math.abs(h) >= 48 ? (Math.abs(h) / 24).toFixed(1) + " d" : Math.abs(h).toFixed(1) + " h";
+    $("sched-s").textContent = (!isNum(e) ? "no finish forecast" : e >= 0 ? "finish " + span(e) + " early" : "finish " + span(e) + " late")
+      + (Number.isNaN(plan) ? "" : " · plan " + stamp(plan));
+    sv.title = "plan: " + fmt(sc.planned) + " verified by now (straight line from the first published forecast)";
+  } else { sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "vs first published forecast"; }
 
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";
   $("ch-s").textContent = bars("chart-h", d.hourly, "h") || "";

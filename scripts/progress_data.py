@@ -13,11 +13,17 @@ Both the terminal dashboard (scripts/progress-tui.py) and the web server
 import json
 import re
 import subprocess
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
+# Schedule: the first forecast the public page published (1,373 verified,
+# 3,751 remaining, ETA 2.7 d), as a straight line from that moment.
+PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
+PLAN_START_VERIFIED = 1373
+PLAN_TARGET = 1373 + 3751
+PLAN_DAYS = 2.7
 VERIF = ROOT / "notes/verifications"
 PORTS = ROOT / "rust/lemans-verify/src/ports"
 LEDGER = ROOT / "notes/address-map.md"
@@ -114,6 +120,20 @@ def current_task(last_hour: int, last_day: int) -> str:
     return "idle — 0 proven in last 24h"
 
 
+def schedule(now, verified, finish):
+    """Position against the plan: functions ahead (+) / behind (-) of the
+    straight-line plan now, and hours the projected finish is early (+) / late (-)."""
+    plan_end = PLAN_START + timedelta(days=PLAN_DAYS)
+    frac = min(max((now - PLAN_START) / (plan_end - PLAN_START), 0.0), 1.0)
+    planned = round(PLAN_START_VERIFIED + (PLAN_TARGET - PLAN_START_VERIFIED) * frac)
+    return {
+        "planned": planned,
+        "ahead": verified - planned,
+        "early_hours": round((plan_end - finish).total_seconds() / 3600, 1) if finish else None,
+        "plan_end": plan_end.isoformat(timespec="seconds"),
+    }
+
+
 def snapshot():
     """Return the public, aggregate-only progress document."""
     now = datetime.now(timezone.utc)
@@ -126,6 +146,12 @@ def snapshot():
     remaining = max(TOTAL - verified - blocked, 0)
     rate_day = float(last24)
     eta_days = (remaining / rate_day) if rate_day > 0 else None
+    if remaining == 0 and stamps:
+        finish = max(stamps)
+    elif eta_days is not None:
+        finish = now + timedelta(days=eta_days)
+    else:
+        finish = None
     return {
         "updated": now.isoformat(timespec="seconds"),
         "total": TOTAL,
@@ -140,6 +166,7 @@ def snapshot():
         "pace_per_day": round(rate_day, 1),
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
         "current_task": current_task(last1h, last24),
+        "schedule": schedule(now, verified, finish),
         "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
         "hourly": _buckets(ages, 3600, 24),  # proofs per hour, last 24 h, oldest first
         "minutely": _buckets(ages, 60, 60),  # proofs per minute, last 60 min, oldest first
