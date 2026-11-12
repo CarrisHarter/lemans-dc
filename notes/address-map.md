@@ -88,6 +88,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10b7a4` | `strcpy_offset_thunk` | `notes/verifications/0x8c10b7a4.json` - 37 oracle steps |
 | `0x8c10616c` | `release_six_handles` | `notes/verifications/0x8c10616c*.json` - 2 specs (308 and 230 steps) |
 | `0x8c14b698` | `advance_cursor_by_0x570` | `notes/verifications/0x8c14b698*.json` - 5 specs, 12-60 steps |
+| `0x8c0ae798` | `free_payload_then_object` | `notes/verifications/0x8c0ae798*.json` - 3 specs (103/25/12 steps) |
 | `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
 | `0x8c1466b8` | `publish_mode_and_clear_slots` | `notes/verifications/0x8c1466b8*.json` - 3 specs, 388-395 steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
