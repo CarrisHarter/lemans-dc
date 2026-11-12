@@ -1403,6 +1403,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0854cc` | `FUN_8c0854cc` | `notes/verifications/0x8c0854cc.json` — 94 oracle steps; calls 0x8c085684(r4=dest, r5=src, scratch ptr @r15-16) then copies the 4 normalised halfwords to *dest; r0=dest; r1=r15entry-16; r14/pr/r15 restored; T from the callee's last cmp/ge; r3..r7 keep callee clobbers |
 | `0x8c084328` | `record_insert` | `notes/verifications/0x8c084328.json` — 71 oracle steps; copies 8 words from r5 to (*(u32*)(r4+24))+((r6&0xffff)<<5), sets that slot's byte 0 to 1 (table pointer re-read after the copy), and raises *(f32*)(r4+44) to |src.f16-src.f8| when larger; fr0=abs, fr1=old max, fr4=signed diff; T ends from shll r0 (always 0) |
 | `0x8c085bd8` | `FUN_8c085bd8` | `notes/verifications/0x8c085bd8.json` — 173 oracle steps; writes [r4+0..12] (3 lanes) and [r4+24] *= -0.8; stack frame/vector scratch (filtered); r14/pr restored; calls 0x8c0b4f94 twice, 0x8c0b4ef0 once (fr4=0.8) |
+| `0x8c08f5fc` | `array_normalize_pass` | `notes/verifications/0x8c08f5fc.json` — 202 oracle steps; 4x 3-float in-place adds via 0x8c0b4f34 per qualifying node, threshold -= [0x8c1d1cd0], [r4+64] zeroed/incremented, byte [r4+68]=1 when none processed, mach/macl=mul.l |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
