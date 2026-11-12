@@ -249,8 +249,12 @@ Three traps that cost ports:
   Both are left `Unimplemented` on purpose: `div1`'s non-restoring step could not
   be validated against a trusted division sequence, and the vector instructions
   need the matrix-register model. A wrong oracle is worse than a loud gap.
-- Specs cannot cross calls. 1,391 of 5,211 functions are leaves; the rest need a
-  spec that can stub or inline a callee.
+- Specs cannot cross calls *by themselves*, but ports can: a port calls the
+  already-ported callee through `registry::p_<addr>::run` with the right `pr`
+  and delay slot, so a function is portable once every callee is ported.
+  `scripts/next-targets.py` resolves literal-pool and immediate call targets
+  and lists the functions whose callees are all done. 1454 of
+  5,211 are ported; 89 are blocked.
 - No modelling of store queues, DMA, hardware registers, or interrupts. Nineteen
   leaves touching `0xa05f****`, `0xff00****` or BIOS vectors are recorded as
   blocked, as is `0x8c018244`, which branches to itself.
@@ -266,7 +270,9 @@ cd ~/Projects/lemans-dc
 ./scripts/verify-ports.sh <address>...        # canonical batch re-verification
 python3 scripts/gen-registry.py               # regenerate the lookup table
 python3 scripts/audit-ledger.py               # every ledger row must pass
-python3 tools/next-batch.py --count 10        # next leaves the oracle can pin
+python3 scripts/next-targets.py --limit 12    # next functions whose callees are ported
+python3 scripts/fuzz-audit.py --cases 16      # randomized differential audit, all ports
+./scripts/verify-all-specs.sh 12              # re-run every spec, parallel
 python3 tools/decode-check.py                 # decoder differential
 python3 tools/opcode-census.py analysis/export/disassembly.asm
 cd rust/sh4-oracle && cargo test
@@ -281,3 +287,10 @@ cd rust/sh4-oracle && cargo test
 - Do not touch the frozen disc in `work/raw/`.
 - Commit after each verified port, with the side effect you had to add in the
   message — that is the knowledge that would otherwise be lost.
+- A spec must fail loudly when it is wrong: system registers are top-level keys,
+  FPU registers are `fr: {{"f0": ...}}`, and `lemans-verify` rejects unknown keys
+  and enforces the spec's own `expect` map. Three silent-ignore holes (a
+  `"special"` block, `"fr4"` inside `regs`, a typo'd key) once let specs pass
+  without seeding anything.
+- Hand-written specs are necessary but not sufficient: the randomized audit
+  broke 53 of 1,400 ports that had passing specs, and all 53 were real. Run both.

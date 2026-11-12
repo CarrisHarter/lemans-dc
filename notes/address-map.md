@@ -1483,6 +1483,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c066604` | `FUN_8c066604` | `notes/verifications/0x8c066604.json` — 7 oracle steps; r0=0x8c067f08; delay-slot r4=[r4+0x38]; tail-call 0x8c067f08 leaves r0=0x9c, r1=1, byte [r4+0x9c]=1 |
 | `0x8c056bcc` | `FUN_8c056bcc` | `notes/verifications/0x8c056bcc.json` — 9 oracle steps; pushes r14 and pr; when r4 != 0 stores 0x8c1e8f88 at *r4 (the store sits in the bf.s delay slot, so it runs whether or not the branch is taken); if exts.w(r5) > 0 calls thunk 0x8c01032c -> free(0x8c159fc0) with pr=0x8c056be6; returns r0 = r4 with pr/r14/r15 restored; final T = entry tst on the null path, cmp/pl on the skip path, otherwise free's exit T |
 | `0x8c059ab0` | `FUN_8c059ab0` | `notes/verifications/0x8c059ab0.json` — 92 oracle steps; store 0x8c1e90cc at *r4 (bf.s delay slot, both outcomes); call free(r4) when r4!=0 and (i16)r5>0 |
+| `0x8c04af74` | `FUN_8c04af74 (free_square_table)` | `notes/verifications/0x8c04af74.json` — 713 oracle steps; zeroes the descriptor's +0/+4/+8 words, every element slot and every row slot, plus free()'s own heap bookkeeping; frees in the order nested-diagonal, element, row, then the row table; residue r0=0, r1=0, r3=0x8c2b1ef8, r4=free's block header (array-8; the coalesced previous block when that path is taken), r5=bin index, r6=heap state; r2/r7/r8 and the popped r9..r14 keep their entry values; T=1 on the dimension-0 early exit, otherwise free()'s last cmp/hi |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
