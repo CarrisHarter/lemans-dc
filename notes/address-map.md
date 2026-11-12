@@ -1327,6 +1327,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c224be2` | `validate_record_u16` | `notes/verifications/0x8c224be2*.json` - 3 specs (22/179/302); 0xffffff01 on a failed slot test, 0xffffff03 unless 16 0x55 bytes and the table word is zero |
 | `0x8c220f96` | `tail_call_validate_record` | `notes/verifications/0x8c220f96.json` - 25 oracle steps; jmp to 0x8c224be2 |
 | `0x8c230282` | `copy_triples_build_packet` | `notes/verifications/0x8c230282.json` - 360 oracle steps; three pointer slots, then 0x8c2395c0 |
+| `0x8c2305a6` | `copy_wide_triples_build_packet` | `notes/verifications/0x8c2305a6.json` - 396 oracle steps; also stores +16/+24/+28 |
 | `0x8c23213c` | `code_plus_table` | `notes/verifications/0x8c23213c*.json` - 2 specs (44/61); adds a table word indexed by the min-code, accumulating first when bit 31 is set |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
