@@ -1274,6 +1274,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c221eee` | `tail_call_reschedule` | `notes/verifications/0x8c221eee.json` - 138 oracle steps; jmp to 0x8c21d6bc |
 | `0x8c222430` | `table_byte_and_slot_bit1` | `notes/verifications/0x8c222430*.json` - 3 specs (49/52); 1 only when the byte is nonzero and bit 1 is set |
 | `0x8c225534` | `first_zero_stride32` | `notes/verifications/0x8c225534*.json` - 2 specs (15/28); index of the first zero byte, or -1 |
+| `0x8c222470` | `table_byte_slot_byte12_bit1` | `notes/verifications/0x8c222470*.json` - 3 specs (49/73/77); 1 only when the byte is nonzero, slot+12 is 0, and bit 1 is set |
+| `0x8c222964` | `scan_slots_0_to_7` | `notes/verifications/0x8c222964*.json` - 2 specs (476/480); bit i set when 0x8c222430(i) is nonzero |
+| `0x8c2253c0` | `strings_equal_capped` | `notes/verifications/0x8c2253c0*.json` - 3 specs (39/58/89); equal capped lengths and matching bytes |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
