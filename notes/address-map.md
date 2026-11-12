@@ -72,6 +72,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c014da4` | `FUN_8c014da4` | `notes/verifications/0x8c014da4.json` — 38 oracle steps; "r0=r6=r4+4 left; r7=-8 (delay `add #-8,r7` runs on final pass); r3=0; r2 keeps unshifted word (last shld amt 0); T left set" |
 | `0x8c014dc0` | `FUN_8c014dc0` | `notes/verifications/0x8c014dc0.json` — 24 oracle steps; "r0=r6=r4+2 left; r7=-8; r2=0; r3=zero-extended u16; T left set; mov.w @r5 sign-extends before extu.w re-truncates" |
 | `0x8c014de0` | `wrap_byte_accessor` | `notes/verifications/0x8c014de0.json` — 128 oracle steps |
+| `0x8c0851bc` | `guard_free` | `notes/verifications/0x8c0851bc*.json` - 6 specs, 9-90 steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
 | `0x8c015194` | `FUN_8c015194` | `notes/verifications/0x8c015194*.json` — both specs (74 and 12 oracle steps); r7=8-r6/carry, r12=mask, r3=-exts.w(r6), r2/r1 last byte ops, r0=(final carry != 0), T=(carry==0); r12/r13/r14 net unchanged |
 | `0x8c0152fc` | `FUN_8c0152fc (guarded slot store)` | `notes/verifications/0x8c0152fc.json` — 12 oracle steps; rts delay slot mov #1,r0 on store path; r2=slot ptr (loaded from cell 0x8c015320); r1=0x450; r3=0x200; r4=p-q; zero-byte path keeps r3=*p sign-extended and r4 untouched with T=1; short path T=0 |
