@@ -1920,6 +1920,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c193150` | `drain_subarray_then_free` | `notes/verifications/0x8c193150*.json` - 3 specs (170/107/12 steps) |
 | `0x8c19a278` | `drain_subarray24_then_free` | `notes/verifications/0x8c19a278*.json` - 3 specs (173/110/12 steps) |
 | `0x8c1b6088` | `release_stride68_then_free` | `notes/verifications/0x8c1b6088*.json` - 2 specs (87/15 steps) |
+| `0x8c1bc940` | `three_subobject_teardown` | `notes/verifications/0x8c1bc940*.json` - 3 specs (250/187/12 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
