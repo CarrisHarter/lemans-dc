@@ -27,81 +27,285 @@ from pathlib import Path
 import progress_data
 
 PAGE = """<!doctype html>
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Le Mans 24h (Dreamcast) — port progress</title>
+<meta name="color-scheme" content="dark light">
+<title>Test Drive Le Mans — Rust port progress</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 4'%3E%3Cpath fill='%23fff' d='M0 0h4v4H0z'/%3E%3Cpath fill='%23111' d='M0 0h1v1H0zM2 0h1v1H2zM1 1h1v1H1zM3 1h1v1H3zM0 2h1v1H0zM2 2h1v1H2zM1 3h1v1H1zM3 3h1v1H3z'/%3E%3C/svg%3E">
 <style>
-  :root { color-scheme: light dark; }
-  body { margin: 0; min-height: 100dvh; display: grid; place-items: center;
-         font: 16px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
-         background: #0d1117; color: #e6edf3; }
-  @media (prefers-color-scheme: light) { body { background: #f6f8fa; color: #1f2328; } }
-  .card { width: min(920px, 92vw); padding: 2rem; }
-  h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: .02em; margin: 0 0 1.5rem; }
-  .bar { height: 22px; border-radius: 11px; overflow: hidden; background: #21262d; }
-  @media (prefers-color-scheme: light) { .bar { background: #d0d7de; } }
-  .fill { height: 100%; width: 0; background: linear-gradient(90deg,#2f81f7,#39d353);
-          transition: width .6s ease; }
-  .pct { font-size: 2.4rem; font-weight: 700; margin: 1rem 0 .25rem; }
-  .sub { opacity: .75; margin-bottom: 1rem; }
-  .task { margin: 0 0 1.75rem; padding: .55rem .8rem; border-left: 3px solid #2f81f7;
-          background: #161b22; border-radius: 0 8px 8px 0; }
-  @media (prefers-color-scheme: light) { .task { background: #eef1f4; } }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .75rem; }
-  .cell { border: 1px solid #30363d; border-radius: 10px; padding: .8rem .9rem; }
-  @media (prefers-color-scheme: light) { .cell { border-color: #d0d7de; } }
-  .k { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; opacity: .6; }
-  .v { font-size: 1.25rem; font-weight: 600; }
-  footer { margin-top: 1.75rem; font-size: .78rem; opacity: .55; }
-  .notice { margin-top: .4rem; font-size: .68rem; opacity: .4; max-width: 72ch; }
-  a { color: inherit; }
+  :root {
+    --bg: #07090d; --panel: rgba(255,255,255,.035); --panel-2: rgba(255,255,255,.06);
+    --line: rgba(255,255,255,.09); --fg: #eef2f7; --muted: #8b95a5; --faint: #5b6473;
+    --go: #22c55e; --go-2: #86efac; --warn: #f5a524; --live: #ff3b3b; --track: #141922;
+    --sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "JetBrains Mono", "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f4f6f9; --panel: #ffffff; --panel-2: #f0f3f7; --line: rgba(15,23,42,.1);
+            --fg: #0f172a; --muted: #5b6577; --faint: #8a94a6; --track: #e3e8ef;
+            --go: #16a34a; --go-2: #4ade80; }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0; min-height: 100dvh; color: var(--fg); font: 15px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased; display: flex; justify-content: center;
+    padding: clamp(1.25rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
+    background:
+      radial-gradient(1100px 520px at 12% -10%, rgba(34,197,94,.13), transparent 60%),
+      radial-gradient(900px 480px at 110% 0%, rgba(255,59,59,.08), transparent 60%),
+      var(--bg);
+  }
+  .wrap { width: min(1040px, 100%); }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .eyebrow { font: 600 .72rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+             color: var(--muted); }
+
+  header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+           margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+  h1 { margin: .55rem 0 .35rem; font-size: clamp(1.6rem, 3.6vw, 2.35rem); line-height: 1.1;
+       font-weight: 750; letter-spacing: -.025em; }
+  h1 span { color: var(--muted); font-weight: 500; }
+  .lede { margin: 0; color: var(--muted); max-width: 60ch; }
+
+  .badge { flex: none; display: inline-flex; align-items: center; gap: .5rem; padding: .45rem .8rem;
+           border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+           font: 700 .72rem/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+  .dot { width: .55rem; height: .55rem; border-radius: 50%; background: var(--faint); }
+  .badge[data-s="live"] .dot { background: var(--live); box-shadow: 0 0 0 0 rgba(255,59,59,.6);
+                              animation: pulse 1.8s infinite; }
+  .badge[data-s="stale"] { color: var(--warn); }
+  .badge[data-s="stale"] .dot { background: var(--warn); }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 .55rem rgba(255,59,59,0); }
+                     100% { box-shadow: 0 0 0 0 rgba(255,59,59,0); } }
+
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; }
+  .hero { padding: clamp(1.25rem, 3.5vw, 2.25rem); }
+  .hero-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+              gap: 1.25rem 2rem; margin-bottom: 1.6rem; }
+  .pct { font-size: clamp(4rem, 13vw, 7.5rem); font-weight: 700; line-height: .85; }
+  .pct small { font-size: .38em; color: var(--muted); margin-left: .08em; font-weight: 600; }
+  .of { margin-top: .9rem; color: var(--muted); }
+  .of b { color: var(--fg); font-weight: 600; }
+  .clock { text-align: right; }
+  .clock .num { font-size: clamp(1.9rem, 4.6vw, 2.7rem); font-weight: 600; line-height: 1; }
+  .clock .num span { color: var(--faint); }
+  .clock .eyebrow { display: block; margin-bottom: .55rem; }
+  .clock p { margin: .45rem 0 0; color: var(--faint); font-size: .8rem; }
+
+  .track { position: relative; height: 30px; border-radius: 10px; overflow: hidden;
+           background: repeating-linear-gradient(90deg, transparent 0 46px, var(--line) 46px 47px),
+                       var(--track); box-shadow: inset 0 1px 2px rgba(0,0,0,.35); }
+  .seg { position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+         transition: width 1.1s cubic-bezier(.2,.8,.2,1), left 1.1s cubic-bezier(.2,.8,.2,1); }
+  .seg.go { background: linear-gradient(90deg, #15803d, var(--go) 70%, var(--go-2));
+            box-shadow: 0 0 24px rgba(34,197,94,.35); }
+  .seg.go::after { content: ""; position: absolute; inset: 0 0 50% 0;
+                   background: linear-gradient(rgba(255,255,255,.22), transparent); }
+  .seg.go::before { content: ""; position: absolute; right: 0; top: -2px; bottom: -2px; width: 3px;
+                    background: #fff; box-shadow: 0 0 12px 2px rgba(134,239,172,.9); }
+  .seg.bl { background: repeating-linear-gradient(135deg, var(--warn) 0 6px, #b8790f 6px 12px);
+            opacity: .9; }
+  .flag { position: absolute; right: 0; top: 0; bottom: 0; width: 18px; opacity: .85;
+          background: conic-gradient(#fff 25%, #111 0 50%, #fff 0 75%, #111 0) 0 0 / 10px 10px; }
+  .legend { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-top: .9rem;
+            color: var(--muted); font-size: .82rem; }
+  .legend i { display: inline-block; width: .7rem; height: .7rem; border-radius: 3px;
+              margin-right: .45rem; vertical-align: -1px; }
+
+  .now { display: flex; align-items: center; gap: .9rem; margin: 1rem 0;
+         padding: 1rem 1.25rem; }
+  .now .eyebrow { flex: none; padding-right: .9rem; border-right: 1px solid var(--line); }
+  .now p { margin: 0; font-size: 1.02rem; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .stat { padding: 1.1rem 1.2rem 1.15rem; }
+  .stat .num { display: block; margin-top: .6rem; font-size: clamp(1.5rem, 3vw, 2rem);
+               font-weight: 650; line-height: 1.05; }
+  .stat p { margin: .35rem 0 0; color: var(--faint); font-size: .8rem; }
+  .stat.go .num { color: var(--go); }
+  .stat.bl .num { color: var(--warn); }
+  .mini { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 1rem; overflow: hidden; }
+  .mini div { padding: .95rem 1.2rem; border-left: 1px solid var(--line); }
+  .mini div:first-child { border-left: 0; }
+  .mini .num { display: block; margin-top: .4rem; font-size: 1.15rem; font-weight: 600; }
+
+  footer { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--line);
+           color: var(--faint); font-size: .78rem; }
+  footer .num { color: var(--muted); }
+  .notice { margin: .6rem 0 0; max-width: 80ch; opacity: .8; }
+
+  @media (max-width: 760px) {
+    .stats, .mini { grid-template-columns: repeat(2, 1fr); }
+    .mini div:nth-child(3) { border-left: 0; }
+    .mini div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .clock { text-align: left; }
+    .now { flex-direction: column; align-items: flex-start; gap: .5rem; }
+    .now .eyebrow { border: 0; padding: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .seg { transition: none; } .badge[data-s="live"] .dot { animation: none; }
+  }
 </style>
-<h1>Test Drive Le Mans (Dreamcast) — verified Rust port progress</h1>
-<div class="card" style="padding:0">
-  <div class="pct" id="pct">—</div>
-  <div class="bar"><div class="fill" id="fill"></div></div>
-  <div class="sub" id="sub">loading…</div>
-  <div class="task"><span class="k">current task</span> <span id="task">—</span></div>
-  <div class="grid">
-    <div class="cell"><div class="k">verified</div><div class="v" id="verified">—</div></div>
-    <div class="cell"><div class="k">blocked</div><div class="v" id="blocked">—</div></div>
-    <div class="cell"><div class="k">remaining</div><div class="v" id="remaining">—</div></div>
-    <div class="cell"><div class="k">last hour</div><div class="v" id="last_hour">—</div></div>
-    <div class="cell"><div class="k">last 24h</div><div class="v" id="last_day">—</div></div>
-    <div class="cell"><div class="k">pace / day</div><div class="v" id="pace">—</div></div>
-    <div class="cell"><div class="k">ETA</div><div class="v" id="eta">—</div></div>
-    <div class="cell"><div class="k">evidence files</div><div class="v" id="evidence">—</div></div>
-  </div>
-  <footer id="foot"></footer>
-  <div class="notice">This technical analysis is unofficial and is not endorsed by or affiliated with Atari SA or any of its licensors. All rights in <em>Le Mans 24 Hours</em> remain with their respective owners.</div>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Sega Dreamcast &middot; 2001 &middot; SH-4 &rarr; Rust</div>
+      <h1>Test Drive Le Mans <span>&mdash; port progress</span></h1>
+      <p class="lede">Every function of the original game is rewritten in Rust and machine-checked
+        against the original code. This board tracks how many have crossed the line.</p>
+    </div>
+    <div class="badge" id="badge" data-s="idle"><span class="dot"></span><span id="badge-t">Loading</span></div>
+  </header>
+
+  <section class="panel hero">
+    <div class="hero-top">
+      <div>
+        <div class="pct num"><span id="pct">0.0</span><small>%</small></div>
+        <div class="of"><b class="num" id="verified-of">&mdash;</b> of <span class="num" id="total">&mdash;</span>
+          functions proven identical to the original</div>
+      </div>
+      <div class="clock">
+        <span class="eyebrow">Race clock</span>
+        <div class="num" id="clock">00:00<span> / 24:00</span></div>
+        <p>progress, told as a 24-hour race</p>
+      </div>
+    </div>
+    <div class="track" id="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Functions verified">
+      <div class="seg go" id="seg-go"></div>
+      <div class="seg bl" id="seg-bl"></div>
+      <div class="flag"></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--go)"></i>Verified</span>
+      <span><i style="background:var(--warn)"></i>Blocked</span>
+      <span><i style="background:var(--track);box-shadow:inset 0 0 0 1px var(--line)"></i>Still to go</span>
+    </div>
+  </section>
+
+  <section class="panel now">
+    <span class="eyebrow">Right now</span>
+    <p id="task">Checking in with the pit wall&hellip;</p>
+  </section>
+
+  <section class="stats">
+    <div class="panel stat go"><span class="eyebrow">Verified</span><span class="num" id="verified">&mdash;</span><p>proven equivalent</p></div>
+    <div class="panel stat"><span class="eyebrow">Still to go</span><span class="num" id="remaining">&mdash;</span><p>not yet attempted</p></div>
+    <div class="panel stat bl"><span class="eyebrow">Blocked</span><span class="num" id="blocked">&mdash;</span><p>parked for later</p></div>
+    <div class="panel stat"><span class="eyebrow">Finish in</span><span class="num" id="eta">&mdash;</span><p id="eta-date">at current pace</p></div>
+  </section>
+
+  <section class="panel mini">
+    <div><span class="eyebrow">Last hour</span><span class="num" id="last_hour">&mdash;</span></div>
+    <div><span class="eyebrow">Last 24 h</span><span class="num" id="last_day">&mdash;</span></div>
+    <div><span class="eyebrow">Pace / day</span><span class="num" id="pace">&mdash;</span></div>
+    <div><span class="eyebrow">Evidence files</span><span class="num" id="evidence">&mdash;</span></div>
+  </section>
+
+  <footer>
+    <div>Updated <span class="num" id="ago">&mdash;</span> &middot; refreshes automatically</div>
+    <p class="notice">This technical analysis is unofficial and is not endorsed by or affiliated with Atari SA or any of its licensors. All rights in <em>Le Mans 24 Hours</em> remain with their respective owners.</p>
+  </footer>
 </div>
 <script>
-const el = id => document.getElementById(id);
-function eta(d) { if (d == null) return "—";
-  return d < 1 ? Math.round(d*24) + "h" : d < 60 ? Math.round(d) + "d" : (d/30).toFixed(1) + "mo"; }
+const $ = id => document.getElementById(id);
+const STALE_MS = 2 * 3600e3;
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const shown = {};
+let updatedAt = null;
+
+const fmt = (n, dp = 0) => n.toLocaleString("en-US", {minimumFractionDigits: dp, maximumFractionDigits: dp});
+
+function count(id, to, dp = 0) {
+  const node = $(id), from = shown[id] ?? 0;
+  shown[id] = to;
+  if (still || from === to) { node.textContent = fmt(to, dp); return; }
+  const t0 = performance.now(), dur = 1100;
+  const step = t => {
+    const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+    node.textContent = fmt(from + (to - from) * e, dp);
+    if (p < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+function ago(ms) {
+  const s = Math.max(0, Math.round(ms / 1000));
+  if (s < 60) return "just now";
+  const m = Math.round(s / 60);
+  if (m < 60) return m + " min ago";
+  const h = Math.floor(m / 60);
+  return h < 48 ? h + " h " + (m % 60) + " min ago" : Math.round(h / 24) + " days ago";
+}
+
+function badge() {
+  if (!updatedAt) return;
+  const age = Date.now() - updatedAt;
+  $("ago").textContent = ago(age);
+  $("ago").title = new Date(updatedAt).toLocaleString();
+  const b = $("badge");
+  if (age > STALE_MS) { b.dataset.s = "stale"; $("badge-t").textContent = "Stale"; }
+  else if (b.dataset.live === "1") { b.dataset.s = "live"; $("badge-t").textContent = "Live"; }
+  else { b.dataset.s = "idle"; $("badge-t").textContent = "Pit stop"; }
+}
+
 async function load() {
   for (const url of ["api/progress", "progress.json"]) {
-    try { return await (await fetch(url, {cache: "no-store"})).json(); } catch (e) {}
+    try {
+      const r = await fetch(url, {cache: "no-store"});
+      if (r.ok) return await r.json();
+    } catch (e) {}
   }
   throw new Error("no data");
 }
+
 async function tick() {
-  try {
-    const d = await load();
-    el("pct").textContent = d.percent.toFixed(1) + "%";
-    el("fill").style.width = d.percent + "%";
-    el("sub").textContent = d.verified.toLocaleString() + " of " +
-      d.total.toLocaleString() + " functions proven equivalent to the original SH-4 machine code";
-    el("task").textContent = d.current_task;
-    for (const k of ["verified","blocked","remaining","last_hour","last_day","evidence_files"])
-      el(k === "evidence_files" ? "evidence" : k).textContent = d[k].toLocaleString();
-    el("pace").textContent = d.pace_per_day.toLocaleString();
-    el("eta").textContent = eta(d.eta_days);
-    el("foot").textContent = "updated " + d.updated;
-  } catch (e) { el("sub").textContent = "reconnecting…"; }
+  let d;
+  try { d = await load(); } catch (e) { $("task").textContent = "Lost contact with the pit wall \\u2014 retrying\\u2026"; return; }
+
+  count("pct", d.percent, 1);
+  count("verified", d.verified);
+  count("verified-of", d.verified);
+  count("remaining", d.remaining);
+  count("blocked", d.blocked);
+  count("last_hour", d.last_hour);
+  count("last_day", d.last_day);
+  count("evidence", d.evidence_files);
+  $("total").textContent = fmt(d.total);
+  $("pace").textContent = fmt(d.pace_per_day);
+
+  const blockedPct = 100 * d.blocked / d.total;
+  $("seg-go").style.width = d.percent + "%";
+  $("seg-bl").style.left = d.percent + "%";
+  $("seg-bl").style.width = blockedPct + "%";
+  $("track").setAttribute("aria-valuenow", d.percent);
+
+  const mins = Math.round(d.percent / 100 * 1440);
+  $("clock").firstChild.nodeValue =
+    String(Math.floor(mins / 60)).padStart(2, "0") + ":" + String(mins % 60).padStart(2, "0");
+
+  const task = d.current_task || "";
+  $("task").textContent = task.charAt(0).toUpperCase() + task.slice(1);
+
+  if (d.eta_days == null) { $("eta").textContent = "\\u2014"; $("eta-date").textContent = "waiting for pace data"; }
+  else {
+    const days = d.eta_days;
+    $("eta").textContent = days < 1 ? Math.round(days * 24) + " h" : fmt(days, 1) + " days";
+    const when = new Date(Date.now() + days * 864e5);
+    $("eta-date").textContent = "around " + when.toLocaleDateString(undefined, {weekday: "short", day: "numeric", month: "short"});
+  }
+
+  updatedAt = Date.parse(d.updated);
+  $("badge").dataset.live = d.last_hour > 0 ? "1" : "0";
+  badge();
 }
-tick(); setInterval(tick, 30000);
+
+tick();
+setInterval(tick, 30000);
+setInterval(badge, 15000);
 </script>
+</html>
 """
 
 
