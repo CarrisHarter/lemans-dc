@@ -1441,6 +1441,7 @@ memory` before a diff can mean anything.
 | `0x8c21f90c` | hardware register access: `ffc00004` (leaf-worklist HW filter misses `ffc*`/`ffe*` prefixes) |
 | `0x8c21fac4` | hardware register access: `ffc00004` (both branches converge on the tail touch) |
 | `0x8c029028` | non-contiguous export (16 ranges) and calls unported 0x8c057348; caller-worklist only resolved its first range |
+| `0x8c02c4d0` | non-contiguous export (16 ranges spanning 0x8c02c4d0-0x8c02c8d1); the porting loop needs one linear body |
 
 ## Auto-proposed names (debug strings)
 
