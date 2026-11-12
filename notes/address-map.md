@@ -1411,6 +1411,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b4a08` | `affine_transform_scaled_vector` | `notes/verifications/0x8c0b4a08.json` — 173 oracle steps; stores 3 f32 at the caller's stack-arg pointer: dst = M*(s*v)+t, with s=f32[r4+32], M=[r4+4..r4+16] (m00,m01,m02,m10), v=[r5..r5+8], t=[r4+20..r4+28]; the two stack scratches (r15-32, r15-20) are stack-filtered; leftover regs r0=dst+4, r1=t+4, r3=scratch2+4, r4=scratch2, r5=t, r6=t+8, r7=scratch2+8, r14/r15/pr restored; fr0..fr3 from the vector add, fr4..fr11 from the matrix product, fr12..fr15 preserved |
 | `0x8c0a8d48` | `FUN_8c0a8d48 (bt.s slots run even when untaken)` | `notes/verifications/0x8c0a8d48.json` — 5085 oracle steps; base+0x4c: 128-float table cleared (memset 0x8c010f88, 0x200 bytes), cubic t^3 ramp fr6->fr7 over [trunc(fr0),fr1), 1.0 tail, then 1-x inversion; latches fr0@0x38 fr1@0x3c fr6@0x40 fr7@0x44 and byte 1@0x24c; r0=0x24c r1=1 r3=base+0x3c r4=0x80 r5=r6=r7=0x200, T=0; r14/pr/r15 and fr12-fr15 preserved |
 | `0x8c0b7498` | `init_buffer_span` | `notes/verifications/0x8c0b7498.json` — 36 oracle steps; calls 0x8c0b834c; *r4=0x8c1ead34 after four earlier dword stores (0x8c1eb124, 0x8c1eb0b4, 0x8c1eafd4, 0x8c1eae14); r4[4]=1 byte; r4[8]=r4[12]=r5; r4[16]=r5+r6; r0=r4; r1=0x8c1ead34; r3=r5+r6 |
+| `0x8c0b633c` | `FUN_8c0b633c` | `notes/verifications/0x8c0b633c.json` — 23 oracle steps; [r4]=0x8c1eaaf0; [r4+4/8/12/20]=0; [r4+16] byte=0; returns r4 in r0, r1=0 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
