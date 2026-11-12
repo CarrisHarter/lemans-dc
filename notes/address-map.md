@@ -96,6 +96,9 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c18d06c` | `guard_free` | `notes/verifications/0x8c18d06c*.json` - 5 specs (9-90 steps) |
 | `0x8c18e40c` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c18e40c.json` - 9 oracle steps |
 | `0x8c0b8400` | `guard_free` | `notes/verifications/0x8c0b8400*.json` - 4 specs |
+| `0x8c1bb45c` | `guard_free` | `notes/verifications/0x8c1bb45c*.json` - 5 specs (9-90 steps) |
+| `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
+| `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
 | `0x8c0bdddc` | `guard_free` | `notes/verifications/0x8c0bdddc*.json` - 5 specs |
 | `0x8c0b9eb8` | `guard_free` | `notes/verifications/0x8c0b9eb8*.json` - 5 specs |
 | `0x8c0b9744` | `guard_free` | `notes/verifications/0x8c0b9744*.json` - 5 specs |
