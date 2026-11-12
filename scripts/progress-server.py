@@ -9,7 +9,8 @@ Usage:
       # progress.json when it is unreachable.
 
 Endpoints:
-  /                 dashboard (polls /api/progress)
+  /                 dashboard (polls /api/progress); 404 with --api-only,
+                    which is how the public tunnel's server runs
   /api/progress     aggregate metrics JSON
   /healthz          "ok"
 
@@ -100,7 +101,14 @@ PAGE = """<!doctype html>
   .flash { animation: flash 1.2s; }
   @keyframes flash { from { color: var(--go-hi); text-shadow: 0 0 10px var(--go); } }
 
-  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .charts { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .6rem; }
+  .burn .plan { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+  .burn .done { fill: color-mix(in srgb, var(--go) 22%, transparent); stroke: var(--go); stroke-width: 2; vector-effect: non-scaling-stroke; }
+  .burn .proj { fill: none; stroke: var(--go); stroke-width: 1.5; stroke-dasharray: 2 3; opacity: .8; vector-effect: non-scaling-stroke; }
+  .burn .now { stroke: var(--faint); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .burn .goal { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .key { display: inline-block; width: .9rem; margin-right: .25rem; vertical-align: middle; border-top: 2px solid var(--go); }
+  .key.p { border-top: 1.5px dashed var(--muted); }
   .chart { padding: .55rem .8rem .45rem; min-width: 0; }
   .ch { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .35rem; }
   .ch .m { font-size: .7rem; color: var(--muted); white-space: nowrap; }
@@ -128,6 +136,8 @@ PAGE = """<!doctype html>
     .grid > div { padding: .4rem .6rem; }
     .grid > .dup, .grid > .opt, .grid .s { display: none; }
     .grid .v { font-size: .98rem; }
+    .charts { grid-template-columns: 1fr 1fr; }
+    .charts > .cm { display: none; }
     .chart { padding: .45rem .6rem .35rem; }
     .chart svg, .empty { height: 44px; }
     .ch .m { display: none; }
@@ -157,10 +167,10 @@ PAGE = """<!doctype html>
   </section>
 
   <section class="box grid">
-    <div class="dup"><span class="k">verified</span><span class="v go"><span id="verified">—</span><span class="delta" id="delta"></span></span><span class="s" id="verified-s">diff-tested ≡ original</span></div>
-    <div><span class="k">blocked</span><span class="v wa" id="blocked">—</span><span class="s">parked, not in ETA</span></div>
+    <div class="dup"><span class="k">verified</span><span class="v go"><span id="verified">—</span><span class="delta" id="delta"></span></span><span class="s">diff-tested ≡ original</span></div>
+    <div><span class="k">blocked</span><span class="v wa" id="blocked">—</span><span class="s" id="blocked-s">parked, not in ETA</span></div>
     <div><span class="k">remaining</span><span class="v" id="remaining">—</span><span class="s">unported</span></div>
-    <div><span class="k">Δ 1h</span><span class="v" id="last_hour">—</span><span class="s">proofs / 60 min</span></div>
+    <div><span class="k">Δ 1h</span><span class="v" id="last_hour">—</span><span class="s" id="last_hour-s">proofs / 60 min</span></div>
     <div><span class="k">Δ 24h</span><span class="v" id="last_day">—</span><span class="s">proofs / 24 h</span></div>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
@@ -171,7 +181,9 @@ PAGE = """<!doctype html>
   </section>
 
   <section class="charts">
-    <div class="box chart"><div class="ch"><span class="k">proofs / min · 60 min</span><span class="m" id="cm-s"></span></div>
+    <div class="box chart burn"><div class="ch"><span class="k">verified vs plan</span><span class="m"><i class="key"></i>actual <i class="key p"></i>plan</span></div>
+      <div id="chart-b"><div class="empty">no data</div></div><div class="ax"><span id="b-x0">start</span><span id="b-x1">now</span><span id="b-x2">plan end</span></div></div>
+    <div class="box chart cm"><div class="ch"><span class="k">proofs / min · 60 min</span><span class="m" id="cm-s"></span></div>
       <div id="chart-m"><div class="empty">no data</div></div><div class="ax"><span>−60m</span><span>−30m</span><span>now</span></div></div>
     <div class="box chart"><div class="ch"><span class="k">proofs / h · 24 h</span><span class="m" id="ch-s"></span></div>
       <div id="chart-h"><div class="empty">no data</div></div><div class="ax"><span>−24h</span><span>−12h</span><span>now</span></div></div>
@@ -337,6 +349,38 @@ function bars(hostId, data, unit) {
   return "Σ " + fmt(sum) + " · peak " + fmt(peak);
 }
 
+function burnup(d) {
+  const host = $("chart-b"), h = d.history, sc = d.schedule || {};
+  const pts = h && Array.isArray(h.verified) ? h.verified : null;
+  const t0 = h ? Date.parse(h.start) : NaN, step = h ? h.step_s * 1000 : NaN;
+  if (!pts || pts.length < 2 || !pts.every(isNum) || Number.isNaN(t0) || !isNum(step)) {
+    host.innerHTML = '<div class="empty">no data</div>';
+    return;
+  }
+  const now = Date.parse(d.updated);
+  const ps = Date.parse(sc.plan_start || ""), pe = Date.parse(sc.plan_end || "");
+  const hasPlan = !Number.isNaN(ps) && !Number.isNaN(pe) && isNum(sc.plan_start_verified) && isNum(sc.plan_target);
+  const fin = isNum(d.eta_days) && d.remaining > 0 ? now + d.eta_days * 864e5 : NaN;
+  const t1 = Math.max(now, hasPlan ? pe : now, Number.isNaN(fin) ? now : Math.min(fin, now + 30 * 864e5));
+  const W = 1000, H = 64, span = Math.max(t1 - t0, 1);
+  const x = t => ((t - t0) / span * W).toFixed(1), y = v => (H - 1 - v / d.total * (H - 4)).toFixed(1);
+  const line = pts.map((v, i) => x(t0 + i * step) + "," + y(v)).join(" ");
+  let svg = '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img">';
+  svg += "<title>" + fmt(d.verified) + " verified" + (hasPlan ? ", plan " + fmt(sc.planned) + " by now" : "") + "</title>";
+  svg += '<line class="goal" x1="0" x2="' + W + '" y1="' + y(d.total) + '" y2="' + y(d.total) + '"/>';
+  if (hasPlan) svg += '<polyline class="plan" points="' + x(ps) + "," + y(sc.plan_start_verified) + " " + x(pe) + "," + y(sc.plan_target) + '"/>';
+  svg += '<polygon class="done" points="' + x(t0) + "," + H + " " + line + " " + x(now) + "," + H + '"/>';
+  if (!Number.isNaN(fin)) {
+    const tf = Math.min(fin, t1), vf = d.verified + d.remaining * (tf - now) / (fin - now);
+    svg += '<polyline class="proj" points="' + x(now) + "," + y(d.verified) + " " + x(tf) + "," + y(vf) + '"/>';
+  }
+  svg += '<line class="now" x1="' + x(now) + '" x2="' + x(now) + '" y1="0" y2="' + H + '"/></svg>';
+  host.innerHTML = svg;
+  $("b-x0").textContent = stamp(t0).slice(5);
+  $("b-x1").textContent = stamp(t0 + span / 2).slice(5);
+  $("b-x2").textContent = stamp(t1).slice(5);
+}
+
 /* ---------- rendering ---------- */
 let deltaTimer = 0;
 function render(d, prev) {
@@ -354,11 +398,15 @@ function render(d, prev) {
   $("blocked").textContent = fmt(d.blocked);
   $("remaining").textContent = fmt(d.remaining);
   $("last_hour").textContent = fmt(d.last_hour);
+  $("last_hour-s").textContent = !isNum(d.prev_hour) ? "proofs / 60 min"
+    : (d.last_hour > d.prev_hour ? "▲" : d.last_hour < d.prev_hour ? "▼" : "=") + " from " + fmt(d.prev_hour) + " prev hour";
+  const bc = d.blocked_change;
+  $("blocked-s").textContent = !(bc && isNum(bc.delta) && isNum(bc.hours)) ? "parked, not in ETA"
+    : (bc.delta > 0 ? "+" + fmt(bc.delta) : bc.delta < 0 ? "−" + fmt(-bc.delta) : "±0") + " in " + bc.hours + " h";
   $("last_day").textContent = fmt(d.last_day);
   const rate = d.pace_per_day / 24;
   $("rate").textContent = fmt(rate, rate < 10 ? 1 : 0) + "/h";
   $("rate-s").textContent = "proofs/h, " + (isNum(d.rate_window_h) ? "last " + d.rate_window_h + " h" : "24 h mean");
-  $("verified-s").textContent = d.bulk_loaded > 0 ? "incl. " + fmt(d.bulk_loaded) + " bulk-loaded" : "diff-tested ≡ original";
   $("evidence").textContent = isNum(d.evidence_files) ? fmt(d.evidence_files) : "—";
   $("ports").textContent = isNum(d.port_files) ? fmt(d.port_files) : "—";
 
@@ -387,6 +435,7 @@ function render(d, prev) {
     sv.title = "plan: " + fmt(sc.planned) + " verified by now (straight line from the first published forecast)";
   } else { sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "vs first published forecast"; }
 
+  burnup(d);
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";
   $("ch-s").textContent = bars("chart-h", d.hourly, "h") || "";
   $("task").textContent = pct >= 100 ? "done — all functions verified" : String(d.current_task || "—");
@@ -409,7 +458,8 @@ function status() {
   else if (!d && S.loadFailed) { mode = "offline"; label = "NO DATA"; sub = "retrying"; $("task").textContent = "progress.json unreachable or invalid — retrying"; }
   else if (!d) { mode = "loading"; label = "LOADING"; }
   else if (d.percent >= 100) mode = "done", label = "DONE";
-  else if (Date.now() - Date.parse(d.updated) > STALE_MS) mode = "stale", label = "STALE";
+  else if (Date.now() - Date.parse(d.updated) > STALE_MS)
+    mode = "stale", label = S.liveUrl && !S.liveOk ? "HOST OFFLINE" : "STALE";
   else if (S.source === "live" && S.liveOk) mode = "live", label = "LIVE · 1 Hz";
   else if (S.source === "cache") mode = "idle", label = "CACHED";
   else if (S.liveUrl !== null && !S.liveOk) mode = "idle", label = "RECONNECTING";
@@ -484,6 +534,7 @@ class State:
 
 class Handler(BaseHTTPRequestHandler):
     state: State = None  # set in main()
+    serve_page = True  # False with --api-only: the dashboard lives on Pages, not here
 
     def _send(self, code, body: bytes, ctype: str):
         self.send_response(code)
@@ -498,7 +549,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split("?", 1)[0]
-        if path == "/":
+        if path == "/" and self.serve_page:
             self._send(200, PAGE.encode(), "text/html; charset=utf-8")
         elif path == "/api/progress":
             body = json.dumps(self.state.get(), indent=2).encode()
@@ -534,6 +585,8 @@ def main():
                     help="write index.html + progress.json here and exit")
     ap.add_argument("--live-url", default=None,
                     help="with --static-out: public base URL of a running server for per-second updates")
+    ap.add_argument("--api-only", action="store_true",
+                    help="serve only /api/progress and /healthz (for a public tunnel)")
     args = ap.parse_args()
 
     state = State(args.interval)
@@ -543,6 +596,7 @@ def main():
         return
 
     Handler.state = state
+    Handler.serve_page = not args.api_only
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
     print(f"serving on http://{args.host}:{args.port}/  (aggregates only; Ctrl-C to stop)")
     try:

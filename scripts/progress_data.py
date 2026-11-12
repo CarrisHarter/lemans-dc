@@ -11,9 +11,10 @@ Both the terminal dashboard (scripts/progress-tui.py) and the web server
 (scripts/progress-server.py) read from here.
 """
 import json
+import os
 import re
 import subprocess
-from collections import Counter
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -54,7 +55,7 @@ def _parse_ts(ts):
 # path -> ((mtime_ns, size), pass timestamp or None); lets the live server
 # re-scan every second without re-parsing unchanged evidence.
 _evidence_cache = {}
-_first_added = {"head": None, "map": {}}
+_first_added = {"head": None, "map": {}, "checked": -60.0}
 
 
 def _first_committed():
@@ -62,8 +63,12 @@ def _first_committed():
 
     Re-verification rewrites `verified_at` (a full re-run once moved 1,194
     proofs into three minutes), so the first commit bounds when a function was
-    really first proven. Recomputed only when HEAD moves.
+    really first proven. HEAD is checked at most every 10 s; the log is re-read
+    only when it moves.
     """
+    if time.monotonic() - _first_added["checked"] < 10:
+        return _first_added["map"]
+    _first_added["checked"] = time.monotonic()
     head = sh("git", "rev-parse", "HEAD")
     if head and head != _first_added["head"]:
         out = sh("git", "log", "--diff-filter=A", "--format=@%cI", "--name-only", "--", "notes/verifications")
@@ -78,49 +83,105 @@ def _first_committed():
 
 
 def _verified_timestamps():
-    """Verification timestamps of canonical (non-branch-seed) passing evidence.
+    """First-proof timestamps of canonical (non-branch-seed) passing evidence.
 
     A canonical evidence file is exactly `0x` + 8 hex digits. Branch seeds use
     `<addr>.<tag>.json`, so any other suffix — dot or hyphen — must not be
     counted as its own function (a hyphenated tag once inflated the count by 3).
+    Each function is dated by the earliest of `first_verified_at` (kept across
+    re-verification by verify-function.sh), `verified_at`, and its first commit.
     """
     stamps = []
     seen = set()
-    for f in VERIF.glob("0x*.json"):
-        if not CANONICAL_RE.match(f.stem):
+    committed = _first_committed()
+    try:
+        entries = list(os.scandir(VERIF))
+    except OSError:
+        return stamps
+    for e in entries:
+        name = e.name
+        if not (name.endswith(".json") and CANONICAL_RE.match(name[:-5])):
             continue
         try:
-            st = f.stat()
+            st = e.stat()
         except OSError:
             continue
         key = (st.st_mtime_ns, st.st_size)
-        seen.add(f)
-        hit = _evidence_cache.get(f)
+        seen.add(name)
+        hit = _evidence_cache.get(name)
         if hit and hit[0] == key:
             t = hit[1]
         else:
             try:
-                doc = json.loads(f.read_text())
+                with open(e.path, encoding="utf-8") as fh:
+                    doc = json.load(fh)
             except (json.JSONDecodeError, OSError, UnicodeDecodeError):
                 continue  # possibly mid-write; retry next scan
-            t = _parse_ts(doc.get("verified_at", "")) if doc.get("result") == "pass" else None
-            _evidence_cache[f] = (key, t)
+            t = None
+            if doc.get("result") == "pass":
+                t = _parse_ts(doc.get("first_verified_at") or doc.get("verified_at", ""))
+            _evidence_cache[name] = (key, t)
         if t:
-            stamps.append(t)
+            c = committed.get(f"notes/verifications/{name}")
+            stamps.append(min(t, c) if c else t)
     for gone in _evidence_cache.keys() - seen:
         del _evidence_cache[gone]
     return stamps
 
 
-def blocked_count():
+def _count(directory, prefix, suffix):
     try:
-        text = LEDGER.read_text()
+        return sum(1 for n in os.listdir(directory) if n.startswith(prefix) and n.endswith(suffix))
     except OSError:
         return 0
+
+
+def _count_blocked(text):
     if "## Blocked" not in text:
         return 0
     section = text.split("## Blocked", 1)[1].split("## ", 1)[0]
     return len(re.findall(r"^\| `0x[0-9a-f]{8}` \|", section, re.M))
+
+
+def blocked_count():
+    try:
+        return _count_blocked(LEDGER.read_text())
+    except OSError:
+        return 0
+
+
+_blocked_at_rev = {}  # commit -> blocked count in its ledger
+_blocked_then = {"at": 0.0, "value": None}
+
+
+def blocked_then(hours):
+    """Blocked count in the last commit at least `hours` old, or None if the
+    repo has no commit that old. Re-resolved at most once a minute."""
+    if time.monotonic() - _blocked_then["at"] < 60:
+        return _blocked_then["value"]
+    rev = sh("git", "rev-list", "-1", f"--before={hours} hours ago", "HEAD")
+    if rev and rev not in _blocked_at_rev:
+        _blocked_at_rev[rev] = _count_blocked(sh("git", "show", f"{rev}:notes/address-map.md"))
+    _blocked_then.update(at=time.monotonic(), value=_blocked_at_rev.get(rev) if rev else None)
+    return _blocked_then["value"]
+
+
+def _history(stamps, now, points):
+    """Cumulative verified count sampled at `points` even steps from the first
+    proof to now: {"start", "step_s", "verified"}."""
+    if not stamps:
+        return None
+    ordered = sorted(stamps)
+    start = ordered[0]
+    step = max((now - start).total_seconds() / (points - 1), 1.0)
+    out, i = [], 0
+    for k in range(points):
+        edge = start + timedelta(seconds=step * k)
+        while i < len(ordered) and ordered[i] <= edge:
+            i += 1
+        out.append(i)
+    out[-1] = len(ordered)  # stamps a little in the future (clock skew) still count
+    return {"start": start.isoformat(timespec="seconds"), "step_s": round(step, 1), "verified": out}
 
 
 def _buckets(ages, width, count):
@@ -133,25 +194,19 @@ def _buckets(ages, width, count):
     return out
 
 
-def _split_bulk(stamps):
-    """(organic stamps, bulk count): drop minutes with >= BULK_PER_MIN proofs."""
-    per_min = Counter(t.replace(second=0, microsecond=0) for t in stamps)
-    organic = [t for t in stamps if per_min[t.replace(second=0, microsecond=0)] < BULK_PER_MIN]
-    return organic, len(stamps) - len(organic)
+def _rates(ages):
+    """Proofs/hour over the last 1, RATE_WINDOW_H, 6 and 24 h, from proof ages
+    in seconds.
 
-
-def _rates(now, organic):
-    """Proofs/hour over the last 1, RATE_WINDOW_H, 6 and 24 h of organic work.
-
-    A window reaching back before the first organic proof is shortened to it, so
-    a loop that started 2 h ago isn't diluted by idle time before it existed.
+    A window reaching back before the first proof is shortened to it, so a loop
+    that started 2 h ago isn't diluted by idle time before it existed.
     """
-    if not organic:
+    if not ages:
         return {}
-    since = max((now - min(organic)).total_seconds() / 3600, 1 / 6)
+    since = max(max(ages) / 3600, 1 / 6)
     out = {}
     for h in (1, RATE_WINDOW_H, 6, 24):
-        n = sum(1 for t in organic if (now - t).total_seconds() < h * 3600)
+        n = sum(1 for a in ages if a < h * 3600)
         out[h] = n / min(h, since)
     return out
 
@@ -178,6 +233,9 @@ def schedule(now, verified, finish):
         "planned": planned,
         "ahead": verified - planned,
         "early_hours": round((plan_end - finish).total_seconds() / 3600, 1) if finish else None,
+        "plan_start": PLAN_START.isoformat(timespec="seconds"),
+        "plan_start_verified": PLAN_START_VERIFIED,
+        "plan_target": PLAN_TARGET,
         "plan_end": plan_end.isoformat(timespec="seconds"),
     }
 
@@ -188,12 +246,13 @@ def snapshot():
     stamps = _verified_timestamps()
     verified = len(stamps)
     blocked = blocked_count()
-    organic, bulk = _split_bulk(stamps)
-    ages = [max((now - t).total_seconds(), 0.0) for t in organic]  # clock skew: future = now
+    ages = [max((now - t).total_seconds(), 0.0) for t in stamps]  # clock skew: future = now
     last24 = sum(1 for a in ages if a < 86400)
     last1h = sum(1 for a in ages if a < 3600)
+    prev1h = sum(1 for a in ages if 3600 <= a < 7200)
     remaining = max(TOTAL - verified - blocked, 0)
-    rates = _rates(now, organic)
+    rates = _rates(ages)
+    blocked_before = blocked_then(BLOCKED_TREND_H)
     rate = rates.get(RATE_WINDOW_H) or rates.get(24, 0.0)  # idle for 3 h: fall back to the day
     eta_days = remaining / (rate * 24) if rate > 0 else None
     bounds = [r for h, r in rates.items() if h != 24 and r > 0] + ([rate] if rate > 0 else [])
@@ -211,10 +270,12 @@ def snapshot():
         "blocked": blocked,
         "remaining": remaining,
         "percent": round(100.0 * verified / TOTAL, 2),
-        "evidence_files": sum(1 for _ in VERIF.glob("0x*.json")),
-        "port_files": sum(1 for _ in PORTS.glob("p_*.rs")),
-        "bulk_loaded": bulk,  # counted in verified; excluded from pace, charts and ETA
-        "last_hour": last1h,  # organic proofs only, as are last_day/hourly/minutely
+        "evidence_files": _count(VERIF, "0x", ".json"),
+        "port_files": _count(PORTS, "p_", ".rs"),
+        "blocked_change": {"hours": BLOCKED_TREND_H, "delta": blocked - blocked_before}
+        if blocked_before is not None else None,
+        "last_hour": last1h,
+        "prev_hour": prev1h,  # proofs 1-2 h ago, for the hour-on-hour trend
         "last_day": last24,
         "pace_per_day": round(rate * 24, 1),
         "rate_window_h": RATE_WINDOW_H,
@@ -225,6 +286,7 @@ def snapshot():
         "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
         "hourly": _buckets(ages, 3600, 24),  # proofs per hour, last 24 h, oldest first
         "minutely": _buckets(ages, 60, 60),  # proofs per minute, last 60 min, oldest first
+        "history": _history(stamps, now, HISTORY_POINTS),  # cumulative verified since the first proof
         # commit subjects are intentionally omitted: they contain addresses and
         # proposed names, which stay in the repo, not on a public endpoint.
     }
