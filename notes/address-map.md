@@ -1609,6 +1609,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c165b08` | `unknown` | `notes/verifications/0x8c165b08.json` — 87 oracle steps |
 | `0x8c161b50` | `unknown` | `notes/verifications/0x8c161b50.json` — 23 oracle steps |
 | `0x8c15b228` | `FUN_8c15b228` | `notes/verifications/0x8c15b228.json` — 10 oracle steps; Loads r1 = dword at entry r4; the delay slot sets r4 = dword at r1+4, then tail-jumps (jmp, pr untouched) to 0x8c1c3a2c, which stores the float at r4+12 to (*r4)+8, leaves r4 advanced by 12 and r0 = that destination (*r4+8), fr0 = the stored float; T/SR keep their entry values (only mov.l/add/fmov, none flag-setting). r1 is the only thunk register besides the callee's r0/r4/fr0 residue. |
+| `0x8c15b0c0` | `unknown` | `notes/verifications/0x8c15b0c0.json` — 20 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
