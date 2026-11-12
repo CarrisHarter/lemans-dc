@@ -92,6 +92,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b5e4c` | `stamp_vtable_then_free` | `notes/verifications/0x8c0b5e4c*.json` - 4 specs (92/14/14/9 steps) |
 | `0x8c164320` | `guard_free` | `notes/verifications/0x8c164320*.json` - 5 specs (9-90 steps) |
 | `0x8c0b5180` | `write_element_fields` | `notes/verifications/0x8c0b5180*.json` - 5 specs (67/31 steps) |
+| `0x8c18c060` | `guard_free` | `notes/verifications/0x8c18c060*.json` - 5 specs (9-90 steps) |
 | `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
 | `0x8c1466b8` | `publish_mode_and_clear_slots` | `notes/verifications/0x8c1466b8*.json` - 3 specs, 388-395 steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
