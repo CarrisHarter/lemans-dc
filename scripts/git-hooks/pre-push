@@ -17,20 +17,16 @@ fail() { echo "pre-push: $*" >&2; exit 1; }
 private="$(gh api "repos/$REPO" --jq '.private' 2>/dev/null)"
 [ "$private" = "true" ] || fail "$REPO is not confirmed private (got '${private:-no answer}'); refusing to push"
 
-# 2. No forbidden path may be added by any pushed commit. Read the refs the
-#    remote asked about on stdin (`<local ref> <local sha> <remote ref> <sha>`)
-#    and diff each new range against the objects already on the remote.
+# 2. No pushed commit may add or change a forbidden path. Every commit not yet
+#    on the remote is checked, not just the tip: a file added in one commit and
+#    deleted in the next is still uploaded in history. Stdin carries
+#    `<local ref> <local sha> <remote ref> <remote sha>` per ref.
+remote="$1"
 checked=0
 while read -r local_ref local_sha remote_ref remote_sha; do
   [ "${local_sha:-0}" = "0000000000000000000000000000000000000000" ] && continue
-  if [ "${remote_sha:-0}" = "0000000000000000000000000000000000000000" ]; then
-    range="$local_sha"
-    added="$(git ls-tree -r --name-only "$local_sha")"
-  else
-    range="$remote_sha..$local_sha"
-    added="$(git diff --name-only "$range" 2>/dev/null)"
-  fi
-  hit="$(printf '%s\n' "$added" | grep -E "$FORBIDDEN" || true)"
+  added="$(git log --no-renames --diff-filter=d --name-only --format= "$local_sha" --not --remotes="$remote")"
+  hit="$(printf '%s\n' "$added" | grep -E "$FORBIDDEN" | sort -u || true)"
   if [ -n "$hit" ]; then
     printf '%s\n' "$hit" >&2
     fail "a pushed commit adds forbidden path(s) above (ROM/disc/extracted assets)"
