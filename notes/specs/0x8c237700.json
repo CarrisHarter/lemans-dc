@@ -1,0 +1,41 @@
+{
+  "entry": "0x8c237700",
+  "notes": "hit path: r4 is registered table slot 0, index 0 is in range. The record 0xffffffff is stored through r6 raw and again masked with 0xefffffff, the function returns 0, and the last flag setter (shll) leaves T = bit 29 of index 0 = 0.",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c2c9ea0",
+    "r5": "0x00000000",
+    "r6": "0x8c2e5000",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0x10101010",
+    "r11": "0x11111111",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c2c9e94", "hex": "03000000" },
+    { "addr": "0x8c2c9ea0", "hex": "00002e8c" },
+    { "addr": "0x8c2c9f2c", "hex": "10002e8c" },
+    { "addr": "0x8c2c9fb8", "hex": "20002e8c" },
+    { "addr": "0x8c2c9eac", "hex": "04000000" },
+    { "addr": "0x8c2c9ee8", "hex": "ffffffff" }
+  ],
+  "expect": {
+    "r0": "0x00000000",
+    "r1": "0xefffffff",
+    "r2": "0xefffffff",
+    "r3": "0x8c2e5000",
+    "r4": "0x8c2c9ea0",
+    "r5": "0x8c2c9e88",
+    "r6": "0x00000000",
+    "r7": "0x00000001"
+  },
+  "steps": 300
+}
