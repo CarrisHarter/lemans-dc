@@ -1655,6 +1655,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1bb3f0` | `FUN_8c1bb3f0` | `notes/verifications/0x8c1bb3f0.json` — 9 oracle steps; calls 0x8c01032c with r4 unchanged when r4 != 0 and (int16)r5 > 0; returns r4 |
 | `0x8c1bb480` | `FUN_8c1bb480` | `notes/verifications/0x8c1bb480.json` — 71 oracle steps; calls 0x8c1bb6a8 to init the 16-byte node at r4 and 0x8c1bb8d0 to init the node at r4+0x10, each fed the byte copied from the uninitialised frame at sp+8 / sp+6 down to sp+5 / sp+4; stores r4 to [0x8c2b82b0] |
 | `0x8c1b9414` | `FUN_8c1b9414` | `notes/verifications/0x8c1b9414.json` — 67 oracle steps; +0 vtable 0x8c1f1b8c (after 0x8c1eb6a0 then 0x8c1f1ba4), +4..+12 copy of 0x8c2121e0 words 0..2, +16 u32 0, +20 u8 0, +24 = this, +28 arg2, +32 u8 1 and +36 *0x8c206c28 via 0x8c1261d4, +40/+42/+44/+46 u16 0, global 0x8c2ab5e0 = this+28; r0=this, r1=template word0, r3=this+4, r4=0x8c2121e0, r5=entry_sp-16, r6=this, r7=0, r15/pr/sr restored |
+| `0x8c1b5c7c` | `FUN_8c1b5c7c` | `notes/verifications/0x8c1b5c7c.json` — 131 oracle steps; calls 0x8c018bd8 with r5=-1 to release a reference, then 0x8c01032c free(handle) when sext16(r5) > 0; returns the handle in r0 |
+| `0x8c1bb2a8` | `FUN_8c1bb2a8` | `notes/verifications/0x8c1bb2a8.json` — 12 oracle steps; release(&p[1],-1); release(p,-1); free(p) when (int16)flag>0; r0=p, r13/r14/pr restored; T=1 iff p==NULL |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
