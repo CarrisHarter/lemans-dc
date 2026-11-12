@@ -1936,6 +1936,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21608e` | `validate_and_blank_block` | `notes/verifications/0x8c21608e*.json` - 3 specs (1449/1449/1773 steps) |
 | `0x8c2199d8` | `call_wrapper_21aff2` | `notes/verifications/0x8c2199d8.json` - 14 oracle steps |
 | `0x8c219ed6` | `lookup_split_two_bytes` | `notes/verifications/0x8c219ed6.json` - 263 oracle steps |
+| `0x8c219cce` | `lookup_pack_be_word` | `notes/verifications/0x8c219cce.json` - 328 oracle steps |
+| `0x8c219e8c` | `lookup_pack_be_word_32` | `notes/verifications/0x8c219e8c.json` - 302 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
