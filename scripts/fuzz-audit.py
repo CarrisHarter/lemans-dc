@@ -10,7 +10,8 @@ A case is *invalid* (skipped, not a failure) when the original itself faults or
 exhausts the step budget — random data is not a valid program state, and a port
 has no way to model an unmodelled hardware fault. A case where the original
 halts cleanly and the port disagrees is a real suspect: the spec that broke it
-is kept under /tmp/lm-fuzz/ for replay through verify-function.sh.
+is kept under $LEMANS_WORKSPACES/lm-fuzz/ (default ~/Work/lemans-agents/lm-fuzz)
+for replay through verify-function.sh.
 
 Usage:
   fuzz-audit.py [--cases N] [--jobs N] [--only 0x8c0b92f4,0x8c0112f4]
@@ -34,7 +35,9 @@ BIN = ROOT / "analysis" / "lemans24.bin"
 ORACLE = ROOT / "rust" / "sh4-oracle" / "target" / "release" / "sh4-oracle"
 VERIFY = ROOT / "rust" / "lemans-verify" / "target" / "release" / "lemans-verify"
 PORTS = ROOT / "rust" / "lemans-verify" / "src" / "ports"
-SCRATCH = pathlib.Path("/tmp/lm-fuzz")
+SCRATCH = pathlib.Path(
+    os.environ.get("LEMANS_WORKSPACES", pathlib.Path.home() / "Work" / "lemans-agents")
+) / "lm-fuzz"
 
 POOL = 0x8C200000
 POOL_SIZE = 0x8000

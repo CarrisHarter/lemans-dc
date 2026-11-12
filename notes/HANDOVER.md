@@ -178,7 +178,8 @@ decoder change.
 ## Parallel porting
 
 One port per file means agents never edit a shared file.
-`scripts/agent-workspace.sh <name>` creates an isolated copy at `/tmp/lm-<name>`
+`scripts/agent-workspace.sh <name>` creates an isolated copy at
+`${LEMANS_WORKSPACES:-$HOME/Work/lemans-agents}/lm-<name>` (on disk, not tmpfs)
 (analysis symlinked, own `rust/`, own specs and target dir).
 `scripts/collect-batch.py <workspace>` copies ports and specs back and refuses to
 overwrite a differing file; `scripts/verify-ports.sh` then re-runs every address
