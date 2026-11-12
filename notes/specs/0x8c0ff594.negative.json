@@ -1,0 +1,7 @@
+{
+  "entry": "0x8c0ff594",
+  "note": "non-null block, r5 low half 0x8000 sign-extends negative: `cmp/pl` takes `bf` at 0x8c0ff5a2, nothing is freed. T=0 at the exit.",
+  "regs": { "r4": "0x8c201000", "r5": "0xffff8000", "r14": "0x55556666" },
+  "steps": 20,
+  "expect": { "r0": "0x8c201000", "r14": "0x55556666" }
+}

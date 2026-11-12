@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c0ff594",
+  "note": "r4 non-null, r5 low half positive (the upper half is negative): `exts.w` sees 1, so the free thunk at 0x8c01032c runs. Heap state mirrors notes/specs/0x8c01032c.json. r14 is seeded to prove the callee epilogue restores the caller's value, not the argument.",
+  "regs": { "r4": "0x8c201000", "r5": "0xffff0001", "r14": "0x11112222" },
+  "memory": [
+    { "addr": "0x8c200ffc", "hex": "40000000" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" },
+    { "addr": "0x8c210000", "hex": "00100000" },
+    { "addr": "0x8c200fc4", "hex": "08000000" },
+    { "addr": "0x8c200ff8", "hex": "0000228c" },
+    { "addr": "0x8c220004", "hex": "00000080" }
+  ],
+  "steps": 200,
+  "expect": { "r0": "0x8c201000", "r14": "0x11112222" }
+}

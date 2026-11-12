@@ -1,0 +1,7 @@
+{
+  "entry": "0x8c0ff594",
+  "note": "non-null block, r5 = 0x00010000: nonzero as a word but the low half is zero, so `exts.w` + `cmp/pl` take `bf` at 0x8c0ff5a2 and nothing is freed. T=0 at the exit.",
+  "regs": { "r4": "0x8c201000", "r5": "0x00010000", "r14": "0x77778888" },
+  "steps": 20,
+  "expect": { "r0": "0x8c201000", "r14": "0x77778888" }
+}

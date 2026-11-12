@@ -1,0 +1,7 @@
+{
+  "entry": "0x8c0ff594",
+  "note": "null block: `tst r14,r14` takes `bt` at 0x8c0ff59c, nothing is freed even though r5 is positive. T=1 at the exit.",
+  "regs": { "r4": "0x00000000", "r5": "0x00000001", "r14": "0x33334444" },
+  "steps": 20,
+  "expect": { "r0": "0x00000000", "r14": "0x33334444" }
+}
