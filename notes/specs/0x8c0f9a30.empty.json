@@ -1,0 +1,11 @@
+{
+  "entry": "0x8c0f9a30",
+  "regs": { "r4": "0x8c240140", "r5": "0x8c240100", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c240144", "hex": "00000000", "note": "[LH+4]=null: empty list" },
+    { "addr": "0x8c308000", "hex": "0004248c", "note": "[entry r15]=OUT caller word" },
+    { "addr": "0x8c240400", "hex": "efbeadde", "note": "OUT sentinel, expect r11+4" }
+  ],
+  "expect": { "r0": "0x8c240400" },
+  "steps": 200
+}

@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c0f9a30",
+  "regs": { "r4": "0x8c240140", "r5": "0x8c240100", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c240100", "hex": "1001248c", "note": "[KH]=KD key descriptor" },
+    { "addr": "0x8c240110", "hex": "2001248c", "note": "[KD]=KS key string" },
+    { "addr": "0x8c240120", "hex": "6d00", "note": "key \"m\"" },
+    { "addr": "0x8c240144", "hex": "0002248c", "note": "[LH+4]=N1 head" },
+    { "addr": "0x8c240150", "hex": "6001248c", "note": "[D1]=S1" },
+    { "addr": "0x8c240160", "hex": "6100", "note": "S1 \"a\": strcmp>0, r14=N1, next=[N1+4]" },
+    { "addr": "0x8c240170", "hex": "8001248c", "note": "[D2]=S2" },
+    { "addr": "0x8c240180", "hex": "6200", "note": "S2 \"b\": strcmp>0, r14=N2, next=[N2+4]=null" },
+    { "addr": "0x8c240200", "hex": "000000002002248c000000005001248c", "note": "N1: +4=N2, +12=D1" },
+    { "addr": "0x8c240220", "hex": "0000000000000000000000007001248c", "note": "N2: +4=null, +12=D2" },
+    { "addr": "0x8c308000", "hex": "0004248c", "note": "[entry r15]=OUT caller word" },
+    { "addr": "0x8c240400", "hex": "efbeadde", "note": "OUT sentinel, expect r11+4 (2nd strcmp<0)" }
+  ],
+  "expect": { "r0": "0x8c240400" },
+  "steps": 500
+}
