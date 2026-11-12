@@ -1,0 +1,39 @@
+{
+  "entry": "0x8c21f9d8",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c22005a",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2bdcb8",
+      "hex": "02000000",
+      "note": "mode 2 with T set on entry: the cmp/eq #1 must clear it"
+    }
+  ],
+  "steps": 100,
+  "expect": {
+    "r0": "0x00000002",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x8c2bdcb8",
+    "r4": "0x8c22005a",
+    "r5": "0x55555555",
+    "r6": "0x8c22005a"
+  },
+  "sr": 1
+}
