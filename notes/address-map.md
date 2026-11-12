@@ -1451,6 +1451,7 @@ memory` before a diff can mean anything.
 | `0x8c21fac4` | hardware register access: `ffc00004` (both branches converge on the tail touch) |
 | `0x8c029028` | non-contiguous export (16 ranges) and calls unported 0x8c057348; caller-worklist only resolved its first range |
 | `0x8c02c4d0` | non-contiguous export (16 ranges spanning 0x8c02c4d0-0x8c02c8d1); the porting loop needs one linear body |
+| `0x8c044430` | `jsr @[(*e)+0x4c]` virtual dispatch: the call target is a runtime vtable slot into another subsystem, so the non-null-`e` arm cannot be pinned; a port covering only the `e == 0` arms would be incomplete |
 
 ## Auto-proposed names (debug strings)
 
