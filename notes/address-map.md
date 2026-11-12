@@ -1934,6 +1934,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c216d70` | `bounded_case_insensitive_cmp` | `notes/verifications/0x8c216d70*.json` - 4 specs (193/17/121/189 steps) |
 | `0x8c216e3e` | `folded_byte_checksum` | `notes/verifications/0x8c216e3e*.json` - 2 specs (96/15 steps) |
 | `0x8c21608e` | `validate_and_blank_block` | `notes/verifications/0x8c21608e*.json` - 3 specs (1449/1449/1773 steps) |
+| `0x8c2199d8` | `call_wrapper_21aff2` | `notes/verifications/0x8c2199d8.json` - 14 oracle steps |
+| `0x8c219ed6` | `lookup_split_two_bytes` | `notes/verifications/0x8c219ed6.json` - 263 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
