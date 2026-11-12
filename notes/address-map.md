@@ -1329,6 +1329,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c230282` | `copy_triples_build_packet` | `notes/verifications/0x8c230282.json` - 360 oracle steps; three pointer slots, then 0x8c2395c0 |
 | `0x8c2305a6` | `copy_wide_triples_build_packet` | `notes/verifications/0x8c2305a6.json` - 396 oracle steps; also stores +16/+24/+28 |
 | `0x8c230e5e` | `copy_wide_triples_build_packet_2` | `notes/verifications/0x8c230e5e.json` - 396 oracle steps; same body, different pool slot |
+| `0x8c236736` | `claim_free_record` | `notes/verifications/0x8c236736*.json` - hit 75 steps, full table 59 steps |
 | `0x8c23213c` | `code_plus_table` | `notes/verifications/0x8c23213c*.json` - 2 specs (44/61); adds a table word indexed by the min-code, accumulating first when bit 31 is set |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
