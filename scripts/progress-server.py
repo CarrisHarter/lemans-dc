@@ -157,13 +157,13 @@ PAGE = """<!doctype html>
   </section>
 
   <section class="box grid">
-    <div class="dup"><span class="k">verified</span><span class="v go"><span id="verified">—</span><span class="delta" id="delta"></span></span><span class="s">diff-tested ≡ original</span></div>
+    <div class="dup"><span class="k">verified</span><span class="v go"><span id="verified">—</span><span class="delta" id="delta"></span></span><span class="s" id="verified-s">diff-tested ≡ original</span></div>
     <div><span class="k">blocked</span><span class="v wa" id="blocked">—</span><span class="s">parked, not in ETA</span></div>
     <div><span class="k">remaining</span><span class="v" id="remaining">—</span><span class="s">unported</span></div>
     <div><span class="k">Δ 1h</span><span class="v" id="last_hour">—</span><span class="s">proofs / 60 min</span></div>
     <div><span class="k">Δ 24h</span><span class="v" id="last_day">—</span><span class="s">proofs / 24 h</span></div>
-    <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s">proofs/h, 24 h mean</span></div>
-    <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at 24 h rate</span></div>
+    <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
+    <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
     <div class="sched"><span class="k">schedule</span><span class="v" id="sched">—</span><span class="s" id="sched-s">vs first published forecast</span></div>
     <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
@@ -355,18 +355,23 @@ function render(d, prev) {
   $("remaining").textContent = fmt(d.remaining);
   $("last_hour").textContent = fmt(d.last_hour);
   $("last_day").textContent = fmt(d.last_day);
-  const rate = d.last_day / 24;
+  const rate = d.pace_per_day / 24;
   $("rate").textContent = fmt(rate, rate < 10 ? 1 : 0) + "/h";
+  $("rate-s").textContent = "proofs/h, " + (isNum(d.rate_window_h) ? "last " + d.rate_window_h + " h" : "24 h mean");
+  $("verified-s").textContent = d.bulk_loaded > 0 ? "incl. " + fmt(d.bulk_loaded) + " bulk-loaded" : "diff-tested ≡ original";
   $("evidence").textContent = isNum(d.evidence_files) ? fmt(d.evidence_files) : "—";
   $("ports").textContent = isNum(d.port_files) ? fmt(d.port_files) : "—";
 
-  let eta = "—", etaS = "no rate (0 in 24 h)";
+  let eta = "—", etaS = "no pace (0 in 24 h)";
   if (pct >= 100) { eta = "done"; etaS = "all verified"; }
   else if (d.remaining === 0) etaS = "only blocked left";
   else if (isNum(d.eta_days) && d.eta_days >= 0) {
-    const days = d.eta_days;
-    eta = days < 1 ? (days * 24).toFixed(1) + " h" : days < 1000 ? days.toFixed(1) + " d" : (days / 365.25).toFixed(1) + " y";
-    etaS = "≈ " + stamp(Date.parse(d.updated) + days * 864e5);
+    const span = days => days < 1 ? (days * 24).toFixed(1) + " h" : days < 1000 ? days.toFixed(1) + " d" : (days / 365.25).toFixed(1) + " y";
+    const r = d.eta_range;
+    eta = span(d.eta_days);
+    etaS = "≈ " + stamp(Date.parse(d.updated) + d.eta_days * 864e5).slice(5);
+    if (Array.isArray(r) && r.length === 2 && r.every(isNum) && span(r[0]) !== span(r[1]))
+      etaS = span(r[0]) + "–" + span(r[1]) + " · " + etaS;
   }
   $("eta").textContent = eta;
   $("eta-s").textContent = etaS;
