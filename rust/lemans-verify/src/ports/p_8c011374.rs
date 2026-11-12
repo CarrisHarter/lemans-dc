@@ -2,9 +2,10 @@
 //! dword in r5.
 //!
 //! Despite the strstr-shaped C, the inner loop compares the haystack byte
-//! at r14 = r4 + i against `mov.b @(r0,r6),r1` of the needle — which the
-//! oracle decodes as a u32 load, like all group-0 indexed byte loads. The
-//! outer head load `mov.b @(r0,r7),r3` is also a u32 load. r12/r14 are
+//! at r14 = r4 + i against `mov.b @(r0,r6),r1` of the needle. Every indexed
+//! `mov.b @(r0,Rm),Rn` is a **byte** load (sign-extended): the oracle maps the
+//! C/D/E nibbles to `read_u8`. An earlier build treated them as dword loads,
+//! which only agreed while the three trailing bytes were non-zero. r12/r14 are
 //! saved/restored through the stack (net zero on r15); the initial `bra`
 //! delay slot sets r7 = r12 = 0. Found: the `bra` delay slot at 0x8c0113a0
 //! sets r0 = r14 and T ends clear; NULL: r0 = 0, T set.
@@ -22,8 +23,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut result: u32;
     let mut t = true;
     'outer: loop {
-        // outer head 0x8c0113a4: mov.b @(r0,r7),r3 decodes as a u32 load
-        let h = mem.read_u32(hay.wrapping_add(r7)).unwrap_or(0);
+        // outer head 0x8c0113a4: mov.b @(r0,r7),r3 (byte)
+        let h = sext8(mem, hay.wrapping_add(r7));
         cpu.r[3] = h;
         t = h == 0;
         if h == 0 {
@@ -34,8 +35,8 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let r14 = hay.wrapping_add(r7);
         let mut r6 = 0u32;
         loop {
-            // inner head 0x8c011388: mov.b @(r0,r6),r1 decodes as a u32 load
-            let c = mem.read_u32(needle.wrapping_add(r6)).unwrap_or(0);
+            // inner head 0x8c011388: mov.b @(r0,r6),r1 (byte)
+            let c = sext8(mem, needle.wrapping_add(r6));
             cpu.r[1] = c;
             if c == 0 {
                 // bt 0x8c011396 -> needle dword is zero -> outer next

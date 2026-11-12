@@ -40,10 +40,15 @@ def _parse_ts(ts):
 
 
 def _verified_timestamps():
-    """Verification timestamps of canonical (non-branch-seed) passing evidence."""
+    """Verification timestamps of canonical (non-branch-seed) passing evidence.
+
+    A canonical evidence file is exactly `0x` + 8 hex digits. Branch seeds use
+    `<addr>.<tag>.json`, so any other suffix — dot or hyphen — must not be
+    counted as its own function (a hyphenated tag once inflated the count by 3).
+    """
     stamps = []
     for f in VERIF.glob("0x*.json"):
-        if "." in f.stem[2:]:  # branch seed (0xADDR.name.json)
+        if not CANONICAL_RE.match(f.stem):
             continue
         try:
             doc = json.loads(f.read_text())

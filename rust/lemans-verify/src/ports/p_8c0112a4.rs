@@ -4,9 +4,9 @@
 //! in r6; copy loop then stores through r6 with the `bf.s` delay slot
 //! advancing r6 even on the final NUL. Final: r0 = r4 (rts delay slot),
 //! r2 = 0 (extu.b of the NUL), r6/r7 one past the copied NUL, T set.
-//! NOTE: the oracle decodes `mov.b @r7+,r2` as a u32 load with a 1-byte
-//! step; the low byte is what gets stored and tested, so only r2's
-//! pre-extu value differs, which is never observable.
+//! `mov.b @r7+,r2` is a byte load (sign-extended); `mov.b r2,@r6` a byte
+//! store. Reading a dword here only matched while the trailing bytes happened
+//! to be mapped — at the end of a region the read fails and yields a bogus NUL.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -27,7 +27,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     }
     // copy loop
     loop {
-        let c = mem.read_u32(r7).unwrap_or(0); // mov.b @r7+,r2 as decoded (u32, step 1)
+        let c = mem.read_u8(r7).unwrap_or(0) as i8 as i32 as u32; // mov.b @r7+,r2
         r7 = r7.wrapping_add(1);
         cpu.r[2] = c;
         let _ = mem.write_u8(r6, c as u8);

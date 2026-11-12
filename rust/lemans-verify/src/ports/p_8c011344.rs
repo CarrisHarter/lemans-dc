@@ -5,9 +5,8 @@
 //! loop 2 pads with r1 while the `bf.s` delay slot advances r7 even on the
 //! last store. Final: r0 = r4 (rts delay slot), r5 = n on copy paths,
 //! r7 = dst + stores, r3 = last byte loaded, T always set.
-//! NOTE: the oracle decodes `mov.b @r0+,r3` (loop 1) as a u32 load with a
-//! 1-byte step, while the head load `mov.b @r0,r3` is a true byte load;
-//! only the low byte is stored, but r3's final value is the u32.
+//! Both loads are byte loads: the head `mov.b @r0,r3` and the loop body
+//! `mov.b @r0+,r3` (sign-extended). r3's final value is that byte.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -32,10 +31,11 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         let c = sext8(mem, r0); // mov.b @r0,r3 (0x8c01135a), true byte load
         if c != 0 {
             // loop 1, 0x8c01134e
-            cpu.r[3] = mem.read_u32(r0).unwrap_or(0); // mov.b @r0+,r3 as decoded (u32, step 1)
+            let body = sext8(mem, r0); // mov.b @r0+,r3
+            cpu.r[3] = body;
             r0 = r0.wrapping_add(1);
             r5 = r5.wrapping_add(1);
-            let _ = mem.write_u8(r7, c as u8); // mov.b r3,@r7 stores low byte
+            let _ = mem.write_u8(r7, body as u8); // mov.b r3,@r7 stores low byte
             r7 = r7.wrapping_add(1);
             continue;
         }

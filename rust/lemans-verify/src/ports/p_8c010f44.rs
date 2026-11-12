@@ -4,9 +4,9 @@
 //! `cmp/hs r5,r4` picks direction: dst < src copies forward, dst >= src
 //! copies backward. The `rts` delay slot always reloads r0 = r4; T ends set
 //! on every path. The `bt.s` delay slots set r7/r0 even when n == 0.
-//! NOTE: the oracle decodes `mov.b @r0+,r3` (forward load) as a u32 load
-//! with a 1-byte step, and `mov.b r3,@-r7` (backward store) as a u32 store
-//! with a 1-byte step — so the backward path writes 4 bytes per iteration.
+//! Every access is a **byte** access: the oracle maps size nibble 4 (`mov.b`)
+//! to sign-extended `read_u8`/`write_u8`; an earlier build decoded 4/5/6 as
+//! 32-bit, which is what the removed NOTE described.
 
 use sh4_oracle::{Cpu, Memory};
 
@@ -33,7 +33,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
         if n > 0 {
             let mut r5 = 0u32;
             loop {
-                let c = mem.read_u32(r0).unwrap_or(0); // mov.b @r0+,r3 as decoded (u32, step 1)
+                let c = sext8(mem, r0); // mov.b @r0+,r3 (byte, sign-extended)
                 r0 = r0.wrapping_add(1);
                 r5 = r5.wrapping_add(1);
                 cpu.set_t(r5 >= n); // cmp/hs r6,r5
@@ -63,7 +63,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
                 let c = sext8(mem, r0); // mov.b @r0,r3 (true byte load)
                 cpu.set_t(r5 >= n);     // cmp/hs r6,r5
                 r7 = r7.wrapping_sub(1); // delay slot: mov.b r3,@-r7
-                let _ = mem.write_u32(r7, c); // ...decoded as a u32 store
+                let _ = mem.write_u8(r7, c as u8); // mov.b r3,@-r7 stores one byte
                 cpu.r[3] = c;
                 cpu.r[5] = r5;
                 if r5 >= n {
