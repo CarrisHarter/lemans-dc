@@ -1513,6 +1513,7 @@ memory` before a diff can mean anything.
 | `0x8c02cd34` | runtime vtable dispatch at `0x8c02cd64` (`[(*r4)+0x24]`, base `[r4]` loaded at `0x8c02cd5c`); the other jsr (`0x8c02cd42`) is static (0x8c151b1c) |
 | `0x8c08239c` | runtime call at `0x8c08248e` via `[r12+0x10]` (`mov.l @(16,r12),r0` at `0x8c08247a`); the two other jsr sites (`0x8c0823d4`→0x8c0b4e80, `0x8c08241c`→0x8c0b4e98) are static and ported. Slot targets (0x8c0822fc / 0x8c1c346c / 0x8c1a31cc) have no ports, so no spec can exercise the arm |
 | `0x8c0b5734` | runtime vtable dispatch at `0x8c0b5754` (`[(*r4)+0x20]`, base `[r4]` loaded at `0x8c0b5750`); the other jsr (`0x8c0b574a`→0x8c165abc) is static and ported |
+| `0x8c0b9e04` | two-level runtime call at `0x8c0b9e52`: `mov.l @(68,r4),r0` (0x8c0b9e4e) then `mov.l @(8,r0),r0` (0x8c0b9e50) then `jsr @r0`; target reachable only through heap data, unpinnable |
 
 ## Auto-proposed names (debug strings)
 
