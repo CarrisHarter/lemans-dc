@@ -1,0 +1,38 @@
+{
+  "entry": "0x8c172f5a",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c2b5200",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2b5200",
+      "hex": "01000000"
+    },
+    {
+      "addr": "0x8c20d450",
+      "hex": "01000000"
+    }
+  ],
+  "steps": 2000,
+  "expect": {
+    "r0": "0x00000001",
+    "r3": "0x8c2b5288",
+    "r15": "0x8c308000"
+  },
+  "notes": "Live r4 (pointee 1) with flag nonzero: reaches L72, bf taken to L8a slot exit, which stores the TABLE ADDRESS 0x8c2b5288 (r3, not a loaded word) at [r4] and returns 1. The [r4] store is compared as a non-stack write, so a pass proves it."
+}
