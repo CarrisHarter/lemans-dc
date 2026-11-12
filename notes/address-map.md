@@ -1360,6 +1360,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c060d48` | `vl_vertex_set_ctor` | `notes/verifications/0x8c060d48.json` — 28 oracle steps; stores 0x8c1e8f88 then 0x8c1e9198 then 0x8c1e91fc at [r4]; [r4+4]=0; [r4+8]=r7; [r4+12]=r6; returns r4 in r0 |
 | `0x8c06cbec` | `object_ctor_vtable_8c1e94e8` | `notes/verifications/0x8c06cbec.json` — 33 oracle steps; stores vtable 0x8c1e94e8 at +0; 0x8c0b4ff0 zeroes +12,+16,+20; f32 0.0 at +24; f32 0.5 at +4,+8; r0=this, r1=this+8, r3=this+4, r4=this+12, fr0=0.5; r14/r15/pr restored |
 | `0x8c05d378` | `init_object_with_vtbl` | `notes/verifications/0x8c05d378.json` — 31 oracle steps; mem: [r4]=0x8c1e9148, [r4+4]=0, [r4+8]=0, [r4+12]=0, [r4+16]=0xf2, [r4+20..52]=0; callee 0x8c056bf8 store [r4]=0x8c1e8f88 recorded first then overwritten; r0=r4, r1=0xf2, r3=0, r14/pr restored by stack |
+| `0x8c025038` | `fill_half_angle_quad` | `notes/verifications/0x8c025038.json` — 494 oracle steps; writes four f32 to the caller-supplied out pointer (first stack arg, sp+0); reads the global quad at 0x8c1d3ec8; calls 0x8c0111d0 (sin) and 0x8c0109e4, which may record 0x44d/0x44c in the global at 0x8c23d8b8 for non-finite x/2; preserves r13, r14, fr12-fr15 and pr |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
