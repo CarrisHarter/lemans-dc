@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c07de4c",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r4": "0x8c240010",
+    "r15": "0x8c30f800"
+  },
+  "memory": [
+    { "addr": "0x8c240010", "hex": "5555555566666666" },
+    { "addr": "0x8c23de98", "hex": "a5a5a5a5" }
+  ],
+  "steps": 32,
+  "expect": {
+    "r0": "0xa5a5a5a5",
+    "r4": "0x66666666"
+  },
+  "note": "r4+4 selects 0x66666666 in the delay slot; the tail chain 0x8c079064 -> 0x8c05fa50 returns mem32[0x8c23de98] = 0xa5a5a5a5 in r0, overwriting the 0xdeadbeef seed and the loaded code pointer."
+}
