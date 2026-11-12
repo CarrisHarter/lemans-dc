@@ -1319,6 +1319,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c231e32` | `min_to_code` | `notes/verifications/0x8c231e32*.json` - 4 specs (7/11/25/34); min(r4,r5) maps 1/2/4/16/32/64/0x80/0x100/0x200/0x400 to 0..2,4..10; 8 and anything else return 3 |
 | `0x8c232096` | `scaled_product_28000000` | `notes/verifications/0x8c232096*.json` - 3 specs (17/21/35); bit 31 clear returns the product, the 0x28000000 constant halves it or adds 43 |
 | `0x8c237932` | `clear_descriptor` | `notes/verifications/0x8c237932*.json` - 2 specs (26/63); zeros the 24-stride and 76-stride lists plus the fixed words |
+| `0x8c216fca` | `find_checksum_record` | `notes/verifications/0x8c216fca*.json` - 3 specs (42/69/77); 1-based index when byte +9 matches the checksum and the string compares, else 0 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
