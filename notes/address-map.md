@@ -1422,6 +1422,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0b4b04` | `compose_transform` | `notes/verifications/0x8c0b4b04.json` — 308 oracle steps; writes the 36-byte transform at r4 in place: byte 0 at +0, 4-float quat product at +4..+19, 3-float transformed offset at +20..+31, scale product at +32; r15/r13/r14/pr return to entry values |
 | `0x8c0b9e7c` | `FUN_8c0b9e7c` | `notes/verifications/0x8c0b9e7c.json` — 109 oracle steps; zeroes 36-byte block at r4 (word +4,+8,+12,+16,+20,+24,+28,+32; byte +0); calls 0x8c0ba554 (clears 4x u32 at [0x8c27a028]/[0x8c27a098] and 4x24B structs at [0x8c27a038]); writes byte 1 to 0x8c27a0b8; returns r0=1, r1=0x8c27a0b8, r4=[0x8c27a038], T=0 |
 | `0x8c0bdbd0` | `FUN_8c0bdbd0` | `notes/verifications/0x8c0bdbd0.json` — 71 oracle steps; object ctor: calls 0x8c14b1f4, stores 0x8c1eb328 at [r4] and 0 at [r4+104], returns r4 |
+| `0x8c0248f4` | `init_record_if_unset` | `notes/verifications/0x8c0248f4.json` — 190 oracle steps; skip: only the entry pr push and epilogue pop (stack), r0=zero-extended flag byte, T=(flag==0); call: same stack traffic plus 0x8c0b48e8(record) sets record->flag=1 and initialises the 3x3 matrix at +0x24/+0x30/+0x3c, copying the three words at +0x14 to +0x48; callee-clobbered regs; pr/r15 restored |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
