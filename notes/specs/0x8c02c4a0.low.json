@@ -1,0 +1,26 @@
+{
+  "entry": "0x8c02c4a0",
+  "note": "Low clamp path: fr4 = -1.5 makes the first fcmp/gt true, so the routine branches over the second comparison with fr0 = 0.0 and leaves T = 1. r5 = 1 puts the store at 0x8c240000 + 0xec + 0xac = 0x8c240198.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r4": "0x8c240000",
+    "r5": "0x1",
+    "r7": "0x77777777",
+    "r15": "0x8c30ff00"
+  },
+  "fr": {
+    "f1": 1.25,
+    "f4": -1.5,
+    "f15": 100.0
+  },
+  "sr": "0x0",
+  "mach": "0x22222222",
+  "macl": "0x11111111",
+  "memory": [
+    {
+      "addr": "0x8c240198",
+      "hex": "deadbeef"
+    }
+  ],
+  "steps": 64
+}
