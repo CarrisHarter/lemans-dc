@@ -1,0 +1,10 @@
+{
+  "entry": "0x8c05b1ec",
+  "note": "Null name field: the routine substitutes the literal string pointer 0x8c1f7328, whose first byte is NUL, so an empty requested name matches the node itself. Covers the b1f8 bt path and the literal load at b200.",
+  "regs": { "r4": "0x8c250100", "r5": "0x8c250000", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "00", "note": "empty name '\\0'" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0x8c250100" }
+}

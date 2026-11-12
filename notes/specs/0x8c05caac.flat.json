@@ -1,0 +1,29 @@
+{
+  "entry": "0x8c05caac",
+  "note": "Level-1-only path: two sibling children with empty child lists. Exercises the outer loop and the `bt` at 0x8c05caca; r0 ends at depth+1 because the last write to it is `add #1,r0`, and r4/r5 are untouched.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": "0x30",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c25000c", "hex": "0001258c" },
+    { "addr": "0x8c250030", "hex": "0000adde" },
+    { "addr": "0x8c250108", "hex": "0002258c" },
+    { "addr": "0x8c250130", "hex": "0100adde" },
+    { "addr": "0x8c250230", "hex": "0200adde" }
+  ],
+  "steps": 400
+}

@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c05caac",
+  "note": "Arithmetic wraps: depth 0xfffffffe stamps 0xfffffffe at the root, 0xffffffff at the level-1 node, 0x00000000 at the level-2 node (add #2) and 0x00000001 at the level-3 node (delay slot add #3, passed as the callee's depth). The callee exits immediately, leaving r4 at the level-3 node, r5 = 1 and r0 at the SELF literal.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": "0xfffffffe",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c25000c", "hex": "0001258c" },
+    { "addr": "0x8c250030", "hex": "0000adde" },
+    { "addr": "0x8c25010c", "hex": "0002258c" },
+    { "addr": "0x8c250130", "hex": "0100adde" },
+    { "addr": "0x8c25020c", "hex": "0003258c" },
+    { "addr": "0x8c250230", "hex": "0200adde" },
+    { "addr": "0x8c250330", "hex": "0300adde" }
+  ],
+  "steps": 400
+}

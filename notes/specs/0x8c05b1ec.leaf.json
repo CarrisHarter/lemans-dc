@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c05b1ec",
+  "note": "Prefix mismatch: node name 'abz' against 'abc'. The compare loop matches 'a','b' then differs at the third byte, and the node has no child, so the routine returns 0 with T set by the final tst of r1 and then the r13 test.",
+  "regs": { "r4": "0x8c250100", "r5": "0x8c250000", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "61626300", "note": "'abc\\0'" },
+    { "addr": "0x8c250020", "hex": "61627a00", "note": "'abz\\0'" },
+    { "addr": "0x8c250124", "hex": "2001258c", "note": "node.name = 'abz'" }
+  ],
+  "steps": 200,
+  "expect": { "r0": "0x0" }
+}

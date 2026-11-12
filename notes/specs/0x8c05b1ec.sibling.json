@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c05b1ec",
+  "note": "Outer sibling continuation: A -> B where B's subtree (C, childless) yields 0, then B's next sibling B2 has child E named 'target'. Exercises the b296 branch back to b234 after an inner list is exhausted.",
+  "regs": { "r4": "0x8c250100", "r5": "0x8c250000", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "74617267657400", "note": "'target\\0'" },
+    { "addr": "0x8c250020", "hex": "410042004300423200", "note": "names A,B,C,B2 at 0x20,0x22,0x24,0x26" },
+    { "addr": "0x8c25010c", "hex": "4001258c", "note": "A.first_child = B" },
+    { "addr": "0x8c250124", "hex": "2001258c", "note": "A.name = 'A'" },
+    { "addr": "0x8c250148", "hex": "8001258c", "note": "B.next_sibling = B2" },
+    { "addr": "0x8c25014c", "hex": "c001258c", "note": "B.first_child = C" },
+    { "addr": "0x8c250164", "hex": "2201258c", "note": "B.name = 'B'" },
+    { "addr": "0x8c2501e4", "hex": "2401258c", "note": "C.name = 'C'" },
+    { "addr": "0x8c25018c", "hex": "0002258c", "note": "B2.first_child = E" },
+    { "addr": "0x8c2501a4", "hex": "2601258c", "note": "B2.name = 'B2'" },
+    { "addr": "0x8c250224", "hex": "0000258c", "note": "E.name = 'target'" }
+  ],
+  "steps": 500,
+  "expect": { "r0": "0x8c250200" }
+}

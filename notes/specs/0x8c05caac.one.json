@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c05caac",
+  "note": "Single self-call: one level-3 node with an empty child list. The callee's immediate exit never executes its `mov r14,r0`, so the caller's r0 remains the loaded SELF literal 0x8c05caac; r4 is the level-3 node and r5 is the delay slot's depth+3.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": "0x40",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c25000c", "hex": "0001258c" },
+    { "addr": "0x8c250030", "hex": "0000adde" },
+    { "addr": "0x8c25010c", "hex": "0002258c" },
+    { "addr": "0x8c250130", "hex": "0100adde" },
+    { "addr": "0x8c25020c", "hex": "0003258c" },
+    { "addr": "0x8c250230", "hex": "0200adde" },
+    { "addr": "0x8c250330", "hex": "0300adde" }
+  ],
+  "steps": 400
+}

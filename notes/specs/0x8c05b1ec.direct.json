@@ -1,0 +1,11 @@
+{
+  "entry": "0x8c05b1ec",
+  "note": "Immediate match: node name equals the requested name, returning param_1 on the first compare's tst r1 exit (T=1) without touching the child list.",
+  "regs": { "r4": "0x8c250100", "r5": "0x8c250000", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "61626300", "note": "'abc\\0'" },
+    { "addr": "0x8c250124", "hex": "0000258c", "note": "node.name = 'abc' (same bytes)" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0x8c250100" }
+}

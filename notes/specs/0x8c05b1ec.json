@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c05b1ec",
+  "note": "Tree walk that must recurse twice: root A -> child B -> B's children C1 (its subtree has no match, so f(C1) returns 0) and C2 (its child E is named 'target'). Covers the recursive jsr, the inner sibling loop after a zero result, and the equal-name return from the recursive frame.",
+  "regs": {
+    "r4": "0x8c250100",
+    "r5": "0x8c250000",
+    "r7": "0x77777777",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "sr": 1,
+  "memory": [
+    { "addr": "0x8c250000", "hex": "74617267657400", "note": "'target\\0'" },
+    { "addr": "0x8c250020", "hex": "41004200433100443100433200", "note": "names A,B,C1,D1,C2 at 0x20,0x22,0x24,0x27,0x2a" },
+    { "addr": "0x8c25010c", "hex": "4001258c", "note": "A.first_child = B" },
+    { "addr": "0x8c250124", "hex": "2001258c", "note": "A.name = 'A'" },
+    { "addr": "0x8c25014c", "hex": "8001258c", "note": "B.first_child = C1" },
+    { "addr": "0x8c250164", "hex": "2201258c", "note": "B.name = 'B'" },
+    { "addr": "0x8c250188", "hex": "c001258c", "note": "C1.next_sibling = C2" },
+    { "addr": "0x8c25018c", "hex": "0002258c", "note": "C1.first_child = D1" },
+    { "addr": "0x8c2501a4", "hex": "2401258c", "note": "C1.name = 'C1'" },
+    { "addr": "0x8c250224", "hex": "2701258c", "note": "D1.name = 'D1'" },
+    { "addr": "0x8c2501cc", "hex": "4002258c", "note": "C2.first_child = E" },
+    { "addr": "0x8c2501e4", "hex": "2a01258c", "note": "C2.name = 'C2'" },
+    { "addr": "0x8c250264", "hex": "0000258c", "note": "E.name = 'target'" }
+  ],
+  "steps": 500,
+  "expect": { "r0": "0x8c250240" }
+}
