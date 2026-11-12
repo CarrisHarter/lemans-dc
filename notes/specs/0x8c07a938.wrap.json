@@ -1,0 +1,23 @@
+{
+  "entry": "0x8c07a938",
+  "regs": { "r4": "0x8c250000", "r5": "0x000000fa" },
+  "sr": "0x00000001",
+  "memory": [
+    { "addr": "0x8c250000", "hex": "1000258c" },
+    { "addr": "0x8c250004", "hex": "0a000000" },
+    { "addr": "0x8c250008", "hex": "0001258c" },
+    { "addr": "0x8c25000c", "hex": "00000000" },
+    { "addr": "0x8c250010", "hex": "00010000" },
+    { "addr": "0x8c250014", "hex": "00000000" },
+    { "addr": "0x8c250018", "hex": "00000000" },
+    { "addr": "0x8c25001c", "hex": "0002258c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c250000",
+    "r1": "0x00000104",
+    "r3": "0x00000100",
+    "r6": "0x8c250010"
+  },
+  "notes": "Positive wrap path (r5=250): sum = 10+250 = 260 >= H[0] = 256, so cursor = (260-256)*4 + H[3] = 0x8c250210 and index = 260. sr starts with T set; the final cmp/hi must clear it."
+}

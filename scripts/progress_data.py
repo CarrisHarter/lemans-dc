@@ -108,10 +108,10 @@ def current_task(last_hour: int, last_day: int) -> str:
     Derived from aggregate timestamps only: no addresses, names, or code.
     """
     if last_hour:
-        return f"verifying rewritten functions — {last_hour} proven in the last hour"
+        return f"checking newly translated pieces — {last_hour:,} finished in the last hour"
     if last_day:
-        return f"between verification runs — {last_day} proven in the last 24 hours"
-    return "idle — no functions proven in the last 24 hours"
+        return f"taking a short break — {last_day:,} pieces finished in the last 24 hours"
+    return "paused — no pieces finished in the last 24 hours"
 
 
 def snapshot():

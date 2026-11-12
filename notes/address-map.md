@@ -75,6 +75,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0851bc` | `guard_free` | `notes/verifications/0x8c0851bc*.json` - 6 specs, 9-90 steps |
 | `0x8c085238` | `guard_free_clear_global` | `notes/verifications/0x8c085238*.json` - 5 specs, 12-90 steps |
 | `0x8c085700` | `free_payload_clear_global_free_container` | `notes/verifications/0x8c085700*.json` - 4 specs, 9-90 steps |
+| `0x8c090cf0` | `memmove_window` | `notes/verifications/0x8c090cf0.json` - 275 oracle steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
 | `0x8c015194` | `FUN_8c015194` | `notes/verifications/0x8c015194*.json` — both specs (74 and 12 oracle steps); r7=8-r6/carry, r12=mask, r3=-exts.w(r6), r2/r1 last byte ops, r0=(final carry != 0), T=(carry==0); r12/r13/r14 net unchanged |
 | `0x8c0152fc` | `FUN_8c0152fc (guarded slot store)` | `notes/verifications/0x8c0152fc.json` — 12 oracle steps; rts delay slot mov #1,r0 on store path; r2=slot ptr (loaded from cell 0x8c015320); r1=0x450; r3=0x200; r4=p-q; zero-byte path keeps r3=*p sign-extended and r4 untouched with T=1; short path T=0 |
@@ -1528,6 +1529,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c06e5cc` | `FUN_8c06e5cc` | `notes/verifications/0x8c06e5cc.json` — 57 oracle steps; no stores; clobbers r0,r1,r3,r5,r6,r7,mach,macl,T |
 | `0x8c07fe68` | `FUN_8c07fe68` | `notes/verifications/0x8c07fe68.json` — 127 oracle steps; push r14/r13/pr; non-NULL handle: release 0x8c018bd8(handle,-1) via the -1 delay slot; then exts.w/cmp/pl on the low 16 bits of the original r5: positive -> free thunk 0x8c01032c(handle); return r13 in r0 with r13/r14/pr reloaded from the frame; T=1 from the entry tst on the NULL path, T=0 from cmp/pl on the skip path, callee residue (r1-r7, T) on the release/free paths |
 | `0x8c082fe4` | `FUN_8c082fe4` | `notes/verifications/0x8c082fe4.json` — 275 oracle steps; pushes r14/r13/pr; if r4 != 0 calls release 0x8c018bd8(handle, -1) (delay slot), which decrements the object refcount and may clear the handle slot and destroy/free the object; then exts.w/cmp/pl on the low 16 bits of the original r5: positive -> free thunk 0x8c01032c(handle); r0 = handle in every arm, pr/r13/r14 restored and r15 back to its entry value; T = entry tst (set) on the NULL path, cmp/pl (clear) when only the release ran, otherwise the free callee's residue |
+| `0x8c07a938` | `FUN_8c07a938 (ring index advance)` | `notes/verifications/0x8c07a938.json` — 24 oracle steps; stores [r4+8]=cursor then [r4+4]=index, no other stores; r0=r4, r1=index+r5, r3=H (rewind path) or H[0] (append path), r6=H (append) / (-r5)<<2 (rewind non-wrap) / -r5 (rewind wrap); T = cmp/hi H[0] > H[2]+index+r5 (append) or cmp/hs H[2]+index >= -r5 (rewind); all other registers unchanged |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

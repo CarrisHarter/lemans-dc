@@ -1,0 +1,22 @@
+{
+  "entry": "0x8c07a938",
+  "regs": { "r4": "0x8c250000", "r5": "0xfffffffd" },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "1000258c" },
+    { "addr": "0x8c250004", "hex": "0a000000" },
+    { "addr": "0x8c250008", "hex": "0001258c" },
+    { "addr": "0x8c25000c", "hex": "00000000" },
+    { "addr": "0x8c250010", "hex": "00010000" },
+    { "addr": "0x8c250014", "hex": "00000000" },
+    { "addr": "0x8c250018", "hex": "00000000" },
+    { "addr": "0x8c25001c", "hex": "0002258c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c250000",
+    "r1": "0x00000007",
+    "r3": "0x8c250010",
+    "r6": "0x0000000c"
+  },
+  "notes": "Rewind path without wrap (r5=-3, n=3): H[2]+index = 10 >= n, so cursor 0x8c250100 -= 12 = 0x8c2500f4 and index = 7. T=1 from cmp/hs, r3 keeps H and r6 holds n<<2 = 12."
+}

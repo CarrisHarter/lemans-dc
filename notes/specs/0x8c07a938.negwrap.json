@@ -1,0 +1,23 @@
+{
+  "entry": "0x8c07a938",
+  "regs": { "r4": "0x8c250000", "r5": "0xffffffec" },
+  "sr": "0x00000001",
+  "memory": [
+    { "addr": "0x8c250000", "hex": "1000258c" },
+    { "addr": "0x8c250004", "hex": "0a000000" },
+    { "addr": "0x8c250008", "hex": "0001258c" },
+    { "addr": "0x8c25000c", "hex": "00000000" },
+    { "addr": "0x8c250010", "hex": "00010000" },
+    { "addr": "0x8c250014", "hex": "00000000" },
+    { "addr": "0x8c250018", "hex": "05000000" },
+    { "addr": "0x8c25001c", "hex": "0002258c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c250000",
+    "r1": "0xfffffff6",
+    "r3": "0x8c250010",
+    "r6": "0x00000014"
+  },
+  "notes": "Rewind wrap path (r5=-20, n=20): H[2]+index = 5+10 = 15 < n, so cursor = (H[0]-20)*4 + H[3] = 236*4 + 0x8c250200 = 0x8c2505b0 and index = -10. T must clear from the seeded 1; r6 keeps n = 20 (no shll2 on this path)."
+}
