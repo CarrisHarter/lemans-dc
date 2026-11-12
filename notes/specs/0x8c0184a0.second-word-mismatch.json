@@ -1,0 +1,48 @@
+{
+  "entry": "0x8c0184a0",
+  "regs": {
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x44444444",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x40000000",
+  "steps": 100,
+  "memory": [
+    {
+      "addr": "0x8c01850c",
+      "hex": "0000248c"
+    },
+    {
+      "addr": "0x8c018510",
+      "hex": "0001248c"
+    },
+    {
+      "addr": "0x8c240000",
+      "hex": "efbeadde00000000"
+    },
+    {
+      "addr": "0x8c240100",
+      "hex": "3b000b0000800000"
+    }
+  ],
+  "expect": {
+    "r0": "0x00000000",
+    "r1": "0x00000009",
+    "r2": "0x8c018518",
+    "r3": "0x8c240100",
+    "sr": "0x40000000"
+  },
+  "notes": "Second candidate matches the dword but its trailing word is 0x8000 vs 0x0009: the bf at 0x8c0184e4 is taken to 0x8c0184f4 and r0 is zeroed in the rts delay slot. r1 keeps the sign-extended reference word 9; T stays clear."
+}

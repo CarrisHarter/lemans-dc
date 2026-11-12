@@ -1438,6 +1438,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c011168` | `context_save` | `notes/verifications/0x8c011168.json` — 51 oracle steps; writes the 152-byte context block at r4: +0x00 r15, +0x04 r14, +0x08 pr, +0x0c..+0x40 r13..r0, +0x44 mach, +0x48 macl, +0x4c gbr, +0x50..+0x8c fr0..fr15, +0x90 fpul, +0x94 fpscr; reloads the caller's r4 from +0x30 and returns r0=0 (rts delay slot); r1-r13/r14/r15, pr, sr/T, mach/macl/gbr/fpul/fpscr and all fr are unchanged |
 | `0x8c010ddc` | `FUN_8c010ddc` | `notes/verifications/0x8c010ddc.json` — 55 oracle steps; stores incoming r5 (4 bytes) to 0x8c23d890; restores FR0-FR15, FPUL, FPSCR, GBR, MACH, MACL, r1-r15 and PR from the r4 save block; r0 = recorded r5 or 1 if it was zero; T = 1 iff recorded r5 == 0 |
 | `0x8c014ee4` | `copy_pow5_entry` | `notes/verifications/0x8c014ee4.json` — 57 oracle steps; stores: [r15-4]=r4 index, [r15-8]=r5 dst into the 8-byte scratch frame; tail-calls memmove 0x8c010e84 with dst=r5, src=0x8c1cd290+(index<<3) (shll2/shll, 32-bit wrap), n=8 (forward dword copy when dst<src, backward dword when dst>=src, no copy when dst==src); regs: r0=dst, r1=3, r2=0 fwd / 1 bwd / 0x8c010e84 eq, r3=last dword, r4=dst, r5=dst (bwd) or src+8 (fwd), r6=0, r7=src (bwd) or dst+8 (fwd), r11=4, r12=2, r13 restored, r15 entry-equal, pr untouched, T=1 |
+| `0x8c0184a0` | `FUN_8c0184a0` | `notes/verifications/0x8c0184a0.json` — 8 oracle steps; r0,r1,r2,r3 written; T = last cmp/eq; no memory stores |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
@@ -1867,5 +1868,14 @@ decompiled C did not show:
 | `0x8c1552e4` | inner pointer left in `r0` |
 | `0x8c014de0` | `wrap_byte_accessor` | `notes/verifications/0x8c014de0.json` — verified |
 
+The randomized differential audit (`scripts/fuzz-audit.py`, five pool fill modes,
+random registers) added two more classes that hand-written specs had missed:
+
+| address | missed by the port / the C |
+| --- | --- |
+| `0x8c0112f4` `0x8c010f44` `0x8c0112a4` `0x8c011344` `0x8c011374` | written against the *pre-fix* oracle: `mov.b` post-increment and `@(r0,Rm)` decoded as 32-bit, so stores wrote four bytes and the NUL test read a dword. Witness specs `.alias`, `.backbyte`, `.high1`, `.nul` fail on the old code. |
+| `0x8c015194` | `neg r13,r3` executes before `cmp/pl r5`; the port only wrote `r3` inside the loop, so the skip branch kept the entry value. |
+
 That is the argument for the oracle: register residue is invisible in pseudocode
-and load-bearing for the caller.
+and load-bearing for the caller. The audit is the argument for randomizing the
+seed: every one of those ports had passing hand-written specs.
