@@ -116,6 +116,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0f1ae0` | `tail_thunk_0x8c1c3a2c` | `notes/verifications/0x8c0f1ae0.json` - 9 oracle steps |
 | `0x8c0e2c48` | `find_table_slot` | `notes/verifications/0x8c0e2c48*.json` - 3 specs (123-124 steps) |
 | `0x8c0fda3c` | `remap_args_forward` | `notes/verifications/0x8c0fda3c*.json` - 2 specs (7 and 35 steps) |
+| `0x8c0f8f10` | `release_then_free` | `notes/verifications/0x8c0f8f10*.json` - 4 specs (12-127 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1703,6 +1704,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0d3258` | `FUN_8c0d3258` | `notes/verifications/0x8c0d3258.json` — 1335 oracle steps; unlinks/destroys nodes matching "instancetree" via 0x8c05cb48 (which stamps depths via 0x8c05caac); recurses into non-matching nodes' children |
 | `0x8c0d43c0` | `FUN_8c0d43c0` | `notes/verifications/0x8c0d43c0.json` — 409 oracle steps; clears/tears down each 0x24-byte slot via 0x8c0d357c(-1), frees descriptor->array via 0x8c01032c |
 | `0x8c0c5714` | `FUN_8c0c5714` | `notes/verifications/0x8c0c5714.json` — 125 oracle steps; initialises the object via 0x8c05d378, stamps 0x8c1eb940 then 0x8c1e8b54 then 0x8c1eb828/0x8c1eb7dc, sets bit 1 of [obj+16] via 0x8c05d274, copies two int pairs and three floats into obj+56..obj+84 |
+| `0x8c0c5e84` | `FUN_8c0c5e84` | `notes/verifications/0x8c0c5e84.json` — 215 oracle steps; steps f32[r4+0x50] by ((fr14*(f32[+0x4c]-f32[+0x48]))/3.0)*fr15, weighted by gates 0x8c074ca0(*[0x8c264da8],8/2/3) and 0x8c074c54(,0,0); clamps to [f32[+0x48], f32[+0x4c]]; stores 3x f32 at r4+0x50 |
+| `0x8c0d0274` | `reset_six_indexed_fields` | `notes/verifications/0x8c0d0274.json` — 91 oracle steps; if 0<=r5<4: r14 = fn_8c0c0ecc([0x8c27a238]); then six fn_8c16eadc stores of r14 through *(*r4+{0x4c,0xc0,0x134,0x1a8,0x21c,0x290}) + 0x5c; T at exit = (0<=r5<4) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
