@@ -1335,6 +1335,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c220f96` | `tail_call_validate_record` | `notes/verifications/0x8c220f96.json` - 25 oracle steps; jmp to 0x8c224be2 |
 | `0x8c230282` | `copy_triples_build_packet` | `notes/verifications/0x8c230282.json` - 360 oracle steps; three pointer slots, then 0x8c2395c0 |
 | `0x8c230320` | `pack_scaled_channels` | `notes/verifications/0x8c230320*.json` - small 438, wrap 446 |
+| `0x8c230502` | `copy_five_floats_build_packet` | `notes/verifications/0x8c230502.json` - 359 oracle steps |
 | `0x8c2305a6` | `copy_wide_triples_build_packet` | `notes/verifications/0x8c2305a6.json` - 396 oracle steps; also stores +16/+24/+28 |
 | `0x8c230e5e` | `copy_wide_triples_build_packet_2` | `notes/verifications/0x8c230e5e.json` - 396 oracle steps; same body, different pool slot |
 | `0x8c236736` | `claim_free_record` | `notes/verifications/0x8c236736*.json` - hit 75 steps, full table 59 steps |
