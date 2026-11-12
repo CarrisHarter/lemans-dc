@@ -1944,6 +1944,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1c97a8` | `vtable_init_table_copy` | `notes/verifications/0x8c1c97a8.json` - 58 oracle steps |
 | `0x8c219d18` | `unpack_five_halfwords` | `notes/verifications/0x8c219d18.json` - 330 oracle steps |
 | `0x8c219de6` | `unpack_two_words_two_bytes` | `notes/verifications/0x8c219de6.json` - 343 oracle steps |
+| `0x8c1839f8` | `recursive_tree_match` | `notes/verifications/0x8c1839f8.json` - 99 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
