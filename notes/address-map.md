@@ -1388,6 +1388,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c042d48` | `FUN_8c042d48` | `notes/verifications/0x8c042d48.json` — 432 oracle steps; writes param+0x00..+0x17c (mixed byte/long/f32 fields); fr0=0.6 fr1=95.0 fr2=25.0; calls 0x8c01e484(param+0x174) |
 | `0x8c091a80` | `zero_record_blocks` | `notes/verifications/0x8c091a80.json` — 1672 oracle steps; mem: 0xb8 bytes zeroed at r4 then 0x90 at r4+0xb8 (two calls into 0x8c010f88 memset); regs: r0=r4, r4=r4+0xb8, r5=0, r6=0x90, r7=0x90, r3=0, r14/r15/pr restored, T=1 |
 | `0x8c014370` | `acos` | `notes/verifications/0x8c014370.json` — 400 oracle steps; stack pr save/restore; jsr 0x8c01438c (pr=0x8c014378); r3=0x8c1ccfc0; fr3=asin result; fr0=pi/2-asin(fr4); T left by callee |
+| `0x8c0a7028` | `FUN_8c0a7028` | `notes/verifications/0x8c0a7028.json` — 37 oracle steps; clears bit1 then sets bit0 of *(u32*)(*(u32*)(param_1+0x18c)+16) via 0x8c05d274, forwarding param_2 (r6) and reloading the pointer between calls; stores happen in the callee; returns callee r0/r1/T, r4 = last reloaded pointer; saves/restores r13, r14, pr |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
