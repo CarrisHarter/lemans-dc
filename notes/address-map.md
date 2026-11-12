@@ -1685,6 +1685,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c9d90` | `FUN_8c0c9d90` | `notes/verifications/0x8c0c9d90.json` — 13 oracle steps; when [r4+4] != 0 calls 0x8c103f94 to store low byte of r5 at [r4+4]; T set on null path |
 | `0x8c0c03a4` | `FUN_8c0c03a4` | `notes/verifications/0x8c0c03a4.json` — 199 oracle steps; frees header[1] through 0x8c0c0614, zeroes header[0..1], stores &header[1] at header[3] |
 | `0x8c0bfb4c` | `FUN_8c0bfb4c` | `notes/verifications/0x8c0bfb4c.json` — 58 oracle steps; calls 0x8c0c06e4 to find the key node at [param_1+0x1c], stores param_1+0x20 through 0x8c0bef98, returns 0 when the found pointer equals param_1+0x20 else [node+0x10] |
+| `0x8c0c5580` | `FUN_8c0c5580` | `notes/verifications/0x8c0c5580.json` — 504 oracle steps; calls 0x8c05d378 (vtable/fields init), 0x8c05d274(param_1,1,1) and 0x8c011344 (strncpy 64 bytes to param_1+72); stores 0x8c1eb940, 0x8c1e8b54 then 0x8c1eb798 at [param_1], copies param_4[0..1] to +56/+64 and param_3[0..3] to +88, returns param_1 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
