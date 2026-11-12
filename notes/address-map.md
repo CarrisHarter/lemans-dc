@@ -1931,6 +1931,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c18c608` | `walk_cursor_clear_flag` | `notes/verifications/0x8c18c608.json` - 21 oracle steps (empty walk only) |
 | `0x8c216bee` | `fold_three_bytes` | `notes/verifications/0x8c216bee*.json` - 2 specs (66/66 steps) |
 | `0x8c216dde` | `case_insensitive_strcmp` | `notes/verifications/0x8c216dde*.json` - 2 specs (170/165 steps) |
+| `0x8c216d70` | `bounded_case_insensitive_cmp` | `notes/verifications/0x8c216d70*.json` - 4 specs (193/17/121/189 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 

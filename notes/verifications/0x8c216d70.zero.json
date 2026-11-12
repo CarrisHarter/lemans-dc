@@ -1,0 +1,17 @@
+{
+  "address": "0x8c216d70",
+  "spec": "notes/specs/0x8c216d70.zero.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "b14e54f3",
+  "verified_at": "2026-11-12T17:12:37+00:00",
+  "first_verified_at": "2026-11-12T17:12:37+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 17
+  },
+  "verifier_output": [
+    "ok   0x8c216d70 matches original (17 oracle steps)"
+  ]
+}
