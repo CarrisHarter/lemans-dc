@@ -1,0 +1,13 @@
+{
+  "entry": "0x8c05f530",
+  "sr": 1,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r4": 0,
+    "r5": 1,
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 100
+}

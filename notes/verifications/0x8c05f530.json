@@ -1,0 +1,16 @@
+{
+  "address": "0x8c05f530",
+  "spec": "notes/specs/0x8c05f530.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "ce82fa5d",
+  "verified_at": "2026-11-12T04:13:37+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 110
+  },
+  "verifier_output": [
+    "ok   0x8c05f530 matches original (110 oracle steps)"
+  ]
+}
