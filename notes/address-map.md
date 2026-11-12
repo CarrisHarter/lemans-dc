@@ -1751,6 +1751,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10eaea` | `strcmp_body_3` | `notes/verifications/0x8c10eaea*.json` - 3 specs (15-54 steps) |
 | `0x8c06de78` | `zero_then_clear_pair` | `notes/verifications/0x8c06de78.json` - 76 oracle steps |
 | `0x8c10b6fc` | `indexed_tail_call` | `notes/verifications/0x8c10b6fc.json` - 18 oracle steps |
+| `0x8c06ee08` | `zero_clear_and_fldi0` | `notes/verifications/0x8c06ee08.json` - 83 oracle steps |
+| `0x8c10cf0c` | `circular_list_clear` | `notes/verifications/0x8c10cf0c*.json` - 3 specs (17-166 steps) |
+| `0x8c10cf3c` | `circular_list_clear_2` | `notes/verifications/0x8c10cf3c*.json` - 3 specs (17-166 steps) |
+| `0x8c10cf6c` | `circular_list_clear_3` | `notes/verifications/0x8c10cf6c*.json` - 3 specs (17-166 steps) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
