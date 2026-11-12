@@ -1168,6 +1168,14 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19c228` | `search_keep_fr4_r5` | `notes/verifications/0x8c19c228.json` - 97 steps; search sees r6/r7 and fr4=0, saved fr4 at +28, entry r5 at +48 |
 | `0x8c19c5e4` | `search_store_fr4_twice` | `notes/verifications/0x8c19c5e4.json` - 94 steps; fr4 forced 0, saved fr4 at +24 and +28, byte +32 cleared |
 | `0x8c19c664` | `search_store_fr4_fr5` | `notes/verifications/0x8c19c664.json` - 97 steps; search fr4=entry fr6, saved fr4 at +24, saved fr5 at +28 |
+| `0x8c19c1e0` | `search_fr5_set_flag` | `notes/verifications/0x8c19c1e0.json` - 101 steps; search gets fr5, byte +24 is 1, fr4 at +32, r5 at +48 |
+| `0x8c19c430` | `search_store_three_floats` | `notes/verifications/0x8c19c430.json` - 103 steps; fr4 forced 0, fr4/fr5/fr6 at +24/+28/+32, byte +48 cleared |
+| `0x8c19c47c` | `search_fr7_flag_byte` | `notes/verifications/0x8c19c47c.json` - 107 steps; search gets fr7 via r6/r7, byte +48 is entry r5 |
+| `0x8c19c4d0` | `search_fr7_three_floats` | `notes/verifications/0x8c19c4d0.json` - 103 steps; search gets fr7, same three-float stores as 0x8c19c430 |
+| `0x8c19c61c` | `search_fr6_flag_byte` | `notes/verifications/0x8c19c61c.json` - 101 steps; search gets fr6, byte +32 is entry r5 |
+| `0x8c19c764` | `search_fr5_store_r5` | `notes/verifications/0x8c19c764.json` - 98 steps; search gets fr5, entry r5 stored at +28, +32 cleared |
+| `0x8c19c7a4` | `search_zero_store_r5` | `notes/verifications/0x8c19c7a4.json` - 98 steps; fr4 forced 0, entry r5 stored at +28 |
+| `0x8c19c92c` | `search_fr5_clear_60` | `notes/verifications/0x8c19c92c.json` - 90 steps; search gets fr5, word at +60 cleared |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
