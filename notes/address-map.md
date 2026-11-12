@@ -1290,6 +1290,14 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c225a04` | `memset_record_72` | `notes/verifications/0x8c225a04.json` - 371 oracle steps; memset(r4, 0, 72) |
 | `0x8c228c6e` | `flag_search_or_one` | `notes/verifications/0x8c228c6e*.json` - 3 specs (9/33/81); 0 only when the search returns -1 |
 | `0x8c22c3a0` | `tail_call_fill_struct` | `notes/verifications/0x8c22c3a0.json` - 35 oracle steps; jmp to 0x8c236e60 |
+| `0x8c215fa8` | `bra_bytes_equal_counted` | `notes/verifications/0x8c215fa8.json` - 15 oracle steps; bra to 0x8c215fb8 |
+| `0x8c2313a0` | `clamp_and_set_bit2` | `notes/verifications/0x8c2313a0*.json` - 3 specs (22/23); clamp r4 to 0..255, bit 2 set at +4 and cleared at +0 |
+| `0x8c231420` | `set_bit1_store_fr4` | `notes/verifications/0x8c231420.json` - 17 oracle steps; bit 1 at +4, cleared at +0, fr4 stored at +32 |
+| `0x8c231820` | `set_bit6_store_r4` | `notes/verifications/0x8c231820.json` - 16 oracle steps; bit 6 at +4, cleared at +0, r4 stored at +44 |
+| `0x8c2315e0` | `tail_slot_pair_5` | `notes/verifications/0x8c2315e0.json` - 21 oracle steps; 0x8c239820(5, r4, r5) |
+| `0x8c231620` | `tail_slot_pair_0` | `notes/verifications/0x8c231620.json` - 21 oracle steps; 0x8c239820(0, r4, r5) |
+| `0x8c231660` | `tail_slot_pair_8` | `notes/verifications/0x8c231660.json` - 20 oracle steps; 0x8c239820(8, r4, 0x8c2c6f5c) |
+| `0x8c2317a0` | `tail_slot_pair_2` | `notes/verifications/0x8c2317a0.json` - 21 oracle steps; 0x8c239820(2, r4, r5) |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
