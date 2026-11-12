@@ -1277,6 +1277,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c222470` | `table_byte_slot_byte12_bit1` | `notes/verifications/0x8c222470*.json` - 3 specs (49/73/77); 1 only when the byte is nonzero, slot+12 is 0, and bit 1 is set |
 | `0x8c222964` | `scan_slots_0_to_7` | `notes/verifications/0x8c222964*.json` - 2 specs (476/480); bit i set when 0x8c222430(i) is nonzero |
 | `0x8c2253c0` | `strings_equal_capped` | `notes/verifications/0x8c2253c0*.json` - 3 specs (39/58/89); equal capped lengths and matching bytes |
+| `0x8c22299e` | `record_slot_and_byte8` | `notes/verifications/0x8c22299e*.json` - 3 specs (66/97/98); 1 when 0x8c222470 hits and byte +8 is nonzero |
+| `0x8c2259a4` | `record_cursor_plus_32` | `notes/verifications/0x8c2259a4*.json` - 2 specs; `[record+40]+32*r5`, T from shll of r5*16 |
+| `0x8c1aeb9e` | `strcmp_diff` | `notes/verifications/0x8c1aeb9e*.json` - 2 specs (25/41); 0 on a shared terminator, else the zero-extended difference |
+| `0x8c216dc8` | `streq` | `notes/verifications/0x8c216dc8*.json` - 3 specs (9/16/23); 1 only when both strings end together |
+| `0x8c215fea` | `copy_bytes` | `notes/verifications/0x8c215fea*.json` - 2 specs (5/23); count 0 still decrements r6 |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
