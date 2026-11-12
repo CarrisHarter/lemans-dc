@@ -1954,6 +1954,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c172fcc` | `record_byte_match` | `notes/verifications/0x8c172fcc*.json` - 4 specs (485/311/84/74 steps); `r4` is a pointer, in `[0x8c2b5264, +0x8c2b5268)` it reports 0x1fb, otherwise 0x8c173084 decodes `r4+32` and the three bytes are compared against `r5`/`r6`/`r7`; the loads are `mov.b`, so they sign-extend - zero-extending passes every hand-written spec and fails the fuzzer |
 | `0x8c1352a8` | `record_construct` | `notes/verifications/0x8c1352a8.json` - 86 oracle steps; the vtable at `+0` is written three times and only `0x8c1eeed8` survives; `+24` points at the record itself |
 | `0x8c1ac828` | `table_seen_flags` | `notes/verifications/0x8c1ac828*.json` - 3 specs (39/45/13 steps); gated on `[0x8c2b79e0]`, two 0x8c074d58 calls (codes 6 and 7) and a walk of `[0x8c23dab0]` that flips each `+68` byte to 1 when it was 0 |
+| `0x8c21afd0` | `slot_ptr_44` | `notes/verifications/0x8c21afd0*.json` - 2 specs (8/8 steps); `*[0x8c2ba634]+40+44*r4`, signed mul |
+| `0x8c21afe0` | `slot_ptr_120` | `notes/verifications/0x8c21afe0*.json` - 2 specs (9/9 steps); `*[0x8c2ba634]+0x44c+120*r4`, signed mul |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
