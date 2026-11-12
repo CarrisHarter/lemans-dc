@@ -1,0 +1,84 @@
+{
+  "entry": "0x8c21d6bc",
+  "steps": 1200,
+  "regs": {
+    "r0": "0xdead0000",
+    "r1": "0xdead0001",
+    "r2": "0xdead0002",
+    "r3": "0xdead0003",
+    "r4": "0xdead0004",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c30f000"
+  },
+  "fr": {
+    "f0": "0x3f800000",
+    "f1": "0xc0200000",
+    "f2": "0x40500000",
+    "f3": "0x00000000",
+    "f4": "0x80000000",
+    "f5": "0x7f7fffff",
+    "f6": "0x00800000",
+    "f7": "0x00000001",
+    "f8": "0x7fc00001",
+    "f9": "0xbf000000",
+    "f10": "0x42f60000",
+    "f11": "0x4b000000",
+    "f12": "0x3eaaaaab",
+    "f13": "0xc0490fdb",
+    "f14": "0x7f800000",
+    "f15": "0xff800000"
+  },
+  "sr": "0x00000001",
+  "mach": "0x12345678",
+  "macl": "0x9abcdef0",
+  "gbr": "0x8c1f0000",
+  "vbr": "0x60000000",
+  "ssr": "0x000000f0",
+  "spc": "0x8c011168",
+  "sgr": "0xdeadbeef",
+  "dbr": "0x0000000a",
+  "fpul": "0x40490fdb",
+  "fpscr": "0x0004003c",
+  "memory": [
+    {
+      "addr": "0x8c2bc958",
+      "hex": "fc7f308c",
+      "note": "global pointer: base"
+    },
+    {
+      "addr": "0x8c308000",
+      "hex": "c0ab308c14141414f0ffffff1313131312121212111111111010101009090909080808080707070706060606050505050404040403030303020202020101010140404040bbbbaaaaddddccccffffeeee0000803f000000c00100803f0000807f000080ff0000c07f0100000000000080db0f494078563412efbeadde00000000000000bf0000004fabaaaa3effff7f7f4433221100000000",
+      "note": "restore frame at base+4 (copied from 0x8c010ddc spec)"
+    },
+    {
+      "addr": "0x8c308200",
+      "hex": "41000000",
+      "note": "base+0x204: status id"
+    },
+    {
+      "addr": "0x8c308d74",
+      "hex": "e8ff2e8c",
+      "note": "base+0xd78: list/frame pointer"
+    },
+    {
+      "addr": "0x8c2f0000",
+      "hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "note": "context_save target (r4)P+0x18 frame (copied from 0x8c011168.ram spec)"
+    }
+  ],
+  "expect": {
+    "r0": "0x00000001",
+    "r4": "0x04040404",
+    "r14": "0x14141414",
+    "r15": "0x8c30abc0"
+  }
+}

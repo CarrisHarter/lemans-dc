@@ -1677,6 +1677,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2205d0` | `FUN_8c2205d0` | `notes/verifications/0x8c2205d0.json` — 99 oracle steps; calls 0x8c2205b0 for each of the 4 records at *0x8c23d468 + 4 + 0x34*n (clears base[id]+28 with base = **0x8c23d468), then clears *(0x8c2bde5c); returns 0, restores r11-r14/pr, T ends set |
 | `0x8c2206c0` | `FUN_8c2206c0` | `notes/verifications/0x8c2206c0.json` — 175 oracle steps; four calls to 0x8c220678 arm the records at [0x8c23d468]+4+{0,52,104,156} (each stores 1 at pool+id*32+28), then 1 -> 0x8c2bde5c and return 0; r1 ends 0xffffff0f, r2 1, r3 0x8c2bde5c, r4 = last pool target 0x8c250060, r5 = (sr>>4)&15; r11-r14/pr restored; T ends 1 from the exit cmp/hs |
 | `0x8c221392` | `FUN_8c221392` | `notes/verifications/0x8c221392.json` — 471 oracle steps; rejects with -1 when 0x8c221da8 finds slot r4 occupied; else writes key 7 into the 128-byte slot at [0x8c2bde98], fills +20..+40 from r4/r5 and zero stack args via 0x8c221dc8, then copies up to 12 bytes from r5 into slot+44 and slot+60 via 0x8c221e18 |
+| `0x8c21d6bc` | `FUN_8c21d6bc` | `notes/verifications/0x8c21d6bc.json` — 135 oracle steps; writes [base+0xd78]+0x14=[base+0x204]+1, a 152-byte saved CPU context at [base+0xd78]+0x18, and 1 to 0x8c23d890, then restores the base+4 frame (all GPRs, FR0-FR15, FPUL, FPSCR, MACH, MACL, GBR; r0=1, T clear) and returns via the frame's PR; calls 0x8c011168 then 0x8c010ddc |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
