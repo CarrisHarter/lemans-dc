@@ -1165,6 +1165,50 @@ impl Cpu {
         }
     }
 
+
+    fn fpscr_sz(&self) -> bool {
+        self.fpscr & (1 << 20) != 0
+    }
+
+    /// SZ=1 and an even register moves the FR pair: FRn is the low 32 bits,
+    /// FR(n+1) the high 32 bits, little-endian. An odd register selects the
+    /// XF bank, which is not modelled; that case stays a single FR move so
+    /// specs that seed a dirty FPSCR keep the behaviour they were verified
+    /// against.
+    fn sz_pair(&self, reg: usize) -> bool {
+        self.fpscr_sz() && reg % 2 == 0
+    }
+
+    fn fmov_load(&mut self, _pc: u32, _op: u16, mem: &Memory, addr: u32, n: usize) -> Result<(), Error> {
+        if self.sz_pair(n) {
+            self.fr[n] = mem.read_f32(addr)?;
+            self.fr[n + 1] = mem.read_f32(addr.wrapping_add(4))?;
+        } else {
+            self.fr[n] = mem.read_f32(addr)?;
+        }
+        Ok(())
+    }
+
+    fn fmov_store(&mut self, _pc: u32, _op: u16, mem: &mut Memory, addr: u32, m: usize) -> Result<(), Error> {
+        if self.sz_pair(m) {
+            mem.write_f32(addr, self.fr[m])?;
+            mem.write_f32(addr.wrapping_add(4), self.fr[m + 1])?;
+        } else {
+            mem.write_f32(addr, self.fr[m])?;
+        }
+        Ok(())
+    }
+
+    fn fmov_reg(&mut self, _pc: u32, _op: u16, n: usize, m: usize) -> Result<(), Error> {
+        if self.sz_pair(n) && self.sz_pair(m) {
+            self.fr[n] = self.fr[m];
+            self.fr[n + 1] = self.fr[m + 1];
+        } else {
+            self.fr[n] = self.fr[m];
+        }
+        Ok(())
+    }
+
     fn execute_fpu(
         &mut self,
         op: u16,
@@ -1187,28 +1231,25 @@ impl Cpu {
                 self.fr[n] = self.fr[0].mul_add(self.fr[m], self.fr[n]);
                 Ok(())
             }
-            0xC => { self.fr[n] = self.fr[m]; Ok(()) }                // fmov
-            0x8 => { self.fr[n] = mem.read_f32(self.r[m])?; Ok(()) }  // fmov.s @Rm,FRn
+            0xC => self.fmov_reg(pc, op, n, m),                       // fmov
+            0x8 => self.fmov_load(pc, op, mem, self.r[m], n),        // fmov.s @Rm,FRn
             0x9 => {                                                  // fmov.s @Rm+,FRn
-                self.fr[n] = mem.read_f32(self.r[m])?;
-                self.r[m] = self.r[m].wrapping_add(4);
+                self.fmov_load(pc, op, mem, self.r[m], n)?;
+                self.r[m] = self.r[m].wrapping_add(if self.fpscr_sz() { 8 } else { 4 });
                 Ok(())
             }
-            0xA => { mem.write_f32(self.r[n], self.fr[m])?; Ok(()) }  // fmov.s FRm,@Rn
+            0xA => self.fmov_store(pc, op, mem, self.r[n], m),       // fmov.s FRm,@Rn
             0xB => {                                                  // fmov.s FRm,@-Rn
-                self.r[n] = self.r[n].wrapping_sub(4);
-                mem.write_f32(self.r[n], self.fr[m])?;
-                Ok(())
+                self.r[n] = self.r[n].wrapping_sub(if self.fpscr_sz() { 8 } else { 4 });
+                self.fmov_store(pc, op, mem, self.r[n], m)
             }
             0x6 => {                                                  // fmov.s @(R0,Rm),FRn
                 let addr = self.r[0].wrapping_add(self.r[m]);
-                self.fr[n] = mem.read_f32(addr)?;
-                Ok(())
+                self.fmov_load(pc, op, mem, addr, n)
             }
             0x7 => {                                                  // fmov.s FRm,@(R0,Rn)
                 let addr = self.r[0].wrapping_add(self.r[n]);
-                mem.write_f32(addr, self.fr[m])?;
-                Ok(())
+                self.fmov_store(pc, op, mem, addr, m)
             }
             0xD => match op & 0x00FF {
                 0x0D => { self.fr[n] = f32::from_bits(self.fpul); Ok(()) }  // fsts FPUL,FRn
@@ -1217,6 +1258,7 @@ impl Cpu {
                 0x3D => { self.fpul = self.fr[n] as i32 as u32; Ok(()) }    // ftrc FRn,FPUL
                 0x8D => { self.fr[n] = 0.0; Ok(()) }                        // fldi0
                 0x9D => { self.fr[n] = 1.0; Ok(()) }                        // fldi1
+                0xFD => { self.fpscr ^= 1 << 20; Ok(()) }                  // fschg
                 _ => Err(Error::Unimplemented(pc, op, "0xF.1101 family")),
             },
             _ => Err(Error::Unimplemented(pc, op, "0xF family")),

@@ -231,3 +231,27 @@ fn mova_computes_a_pc_relative_address() {
     cpu.run(&mut mem, 100).unwrap();
     assert_eq!(cpu.r[0], LOAD_BASE + 4 + 8);
 }
+
+#[test]
+fn fschg_toggles_sz_and_widens_fmov() {
+    // fmov fr0,@r4 ; fschg ; fmov fr0,@r4 ; fschg ; rts ; nop
+    // First store is single (SZ=0). After fschg, SZ=1 and the store is the
+    // even pair: FRn low at addr, FR(n+1) high at addr+4. The second fschg
+    // restores SZ.
+    let mut code = Vec::new();
+    for op in [0xF40Au16, 0xF3FD, 0xF40A, 0xF3FD, 0x000B, 0x0009] {
+        code.extend_from_slice(&op.to_le_bytes());
+    }
+    code.resize(64, 0xFF);
+    let mut mem = image(LOAD_BASE, &code);
+    let mut cpu = Cpu::new();
+    cpu.pc = LOAD_BASE;
+    cpu.pr = HALT_PC;
+    cpu.r[4] = LOAD_BASE + 32;
+    cpu.fr[0] = f32::from_bits(0x1122_3344);
+    cpu.fr[1] = f32::from_bits(0x5566_7788);
+    assert_eq!(cpu.run(&mut mem, 20).unwrap(), Stop::Halt);
+    assert_eq!(mem.read_u32(LOAD_BASE + 32).unwrap(), 0x1122_3344);
+    assert_eq!(mem.read_u32(LOAD_BASE + 36).unwrap(), 0x5566_7788, "SZ=1 stores FR1 at +4");
+    assert_eq!(cpu.fpscr & (1 << 20), 0, "the second fschg clears SZ");
+}

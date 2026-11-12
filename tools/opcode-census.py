@@ -42,7 +42,7 @@ IMPLEMENTED = {
     "movca.l",
     # fpu
     "fadd", "fsub", "fmul", "fdiv", "fmac", "fmov", "fmov.s", "fldi0", "fldi1",
-    "fcmp/eq", "fcmp/gt", "fneg", "fabs", "fsqrt",
+    "fcmp/eq", "fcmp/gt", "fneg", "fabs", "fsqrt", "fschg",
 }
 
 
