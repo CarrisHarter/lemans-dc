@@ -1389,6 +1389,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c091a80` | `zero_record_blocks` | `notes/verifications/0x8c091a80.json` — 1672 oracle steps; mem: 0xb8 bytes zeroed at r4 then 0x90 at r4+0xb8 (two calls into 0x8c010f88 memset); regs: r0=r4, r4=r4+0xb8, r5=0, r6=0x90, r7=0x90, r3=0, r14/r15/pr restored, T=1 |
 | `0x8c014370` | `acos` | `notes/verifications/0x8c014370.json` — 400 oracle steps; stack pr save/restore; jsr 0x8c01438c (pr=0x8c014378); r3=0x8c1ccfc0; fr3=asin result; fr0=pi/2-asin(fr4); T left by callee |
 | `0x8c0a7028` | `FUN_8c0a7028` | `notes/verifications/0x8c0a7028.json` — 37 oracle steps; clears bit1 then sets bit0 of *(u32*)(*(u32*)(param_1+0x18c)+16) via 0x8c05d274, forwarding param_2 (r6) and reloading the pointer between calls; stores happen in the callee; returns callee r0/r1/T, r4 = last reloaded pointer; saves/restores r13, r14, pr |
+| `0x8c090d5c` | `copy_block_then_delay` | `notes/verifications/0x8c090d5c.json` — 246 oracle steps; mem: 0x90 bytes copied r4+0x178 -> r4+0x2c0 via memmove 0x8c010e84 (backward arm; dword/word/byte by r4&3); regs: r0=10, r1=10, r2=1, r3=first source unit (0x83828180 dword / 0xffff8180 word / 0xffffff80 byte), r4=r4+0x2c0, r6=0, r5=dst & r7=src on dword+byte but r5=src & r7=dst on word; r11-r13 keep entry values, r15/pr restored, T=0 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
