@@ -90,6 +90,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c14b698` | `advance_cursor_by_0x570` | `notes/verifications/0x8c14b698*.json` - 5 specs, 12-60 steps |
 | `0x8c0ae798` | `free_payload_then_object` | `notes/verifications/0x8c0ae798*.json` - 3 specs (103/25/12 steps) |
 | `0x8c0b5e4c` | `stamp_vtable_then_free` | `notes/verifications/0x8c0b5e4c*.json` - 4 specs (92/14/14/9 steps) |
+| `0x8c164320` | `guard_free` | `notes/verifications/0x8c164320*.json` - 5 specs (9-90 steps) |
 | `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
 | `0x8c1466b8` | `publish_mode_and_clear_slots` | `notes/verifications/0x8c1466b8*.json` - 3 specs, 388-395 steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
@@ -1615,6 +1616,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0855b0` | `FUN_8c0855b0` | `notes/verifications/0x8c0855b0.json` — 57 oracle steps; reads two 4-short arrays and returns fr0 ratio; clobbers r0,r1,r3-r7,mach,macl,fpul,fr0,fr1 |
 | `0x8c07c56c` | `FUN_8c07c56c` | `notes/verifications/0x8c07c56c.json` — 159 oracle steps; writes [r4+4]=0x8c1e981c, *(*r4)=0x8c1e9850, *(*r4+24)=r4+36-*r4; releases handle slot [r4+24] with count -1 via 0x8c018bd8 (decrements [*[r4+24]+8], clears [r4+24] while refs remain); if exts.w r5!=0 stores [r4+36]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
 | `0x8c07cdd4` | `FUN_8c07cdd4` | `notes/verifications/0x8c07cdd4.json` — 137 oracle steps; writes [r4+4]=0x8c1e98cc, *(*r4)=0x8c1e990c, *(*r4+24)=r4+48-*r4; frees [r4+32],[r4+36],[r4+40],[r4+44] via 0x8c0102cc; if exts.w r5!=0 stores [r4+48]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
+| `0x8c07add4` | `FUN_8c07add4` | `notes/verifications/0x8c07add4.json` — 24 oracle steps; stores cursor at [r4+8] and index at [r4+4]; leaves r4 in r0, final index in r1, descriptor-or-count in r3, r6 = descriptor (append) or n / n*4 (rewind); sets T from the wrap compare |
+| `0x8c05dfc0` | `FUN_8c05dfc0` | `notes/verifications/0x8c05dfc0.json` — 178 oracle steps; BST insertion-point walk: n=[r4+4]; while n: t=strcmp([[r5]],[[n+12]]); t<0 -> n=[n] else {r14=n; n=[n+4]}; if r14: t2=strcmp([[r14+12]],[[r5]]); t2>=0 -> *[entry r15]=r14 else *[entry r15]=r4+4; if r14==0 -> *[entry r15]=r4+4; writes the single out-slot store; restores r11-r14/pr; r0=out slot, r1=0 after any call, final r3-r5 callee residue; T=1 except t2<0 arm T=0 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

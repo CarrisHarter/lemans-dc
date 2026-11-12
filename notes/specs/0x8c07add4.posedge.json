@@ -1,0 +1,25 @@
+{
+  "entry": "0x8c07add4",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c260000",
+    "r5": "0x00000000",
+    "r6": "0x66666666"
+  },
+  "sr": "0x00000001",
+  "memory": [
+    { "addr": "0x8c260000", "hex": "4000268cfa0000000010268c00000000" },
+    { "addr": "0x8c260040", "hex": "0001000000000000060000000020268c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c260000",
+    "r1": "0x000000fa",
+    "r3": "0x00000100",
+    "r6": "0x8c260040"
+  },
+  "notes": "Strict append boundary: sum = H[2]+index+r5 = 6+250+0 = 256 exactly equals H[0]. cmp/hi is strict, so this is the wrap path: cursor = 0*4 + H[3] = 0x8c262000, index stays 250. T must be cleared from the seeded 1."
+}

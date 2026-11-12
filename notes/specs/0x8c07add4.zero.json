@@ -1,0 +1,24 @@
+{
+  "entry": "0x8c07add4",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c260000",
+    "r5": "0x00000000",
+    "r6": "0x66666666"
+  },
+  "memory": [
+    { "addr": "0x8c260000", "hex": "4000268c050000000010268c00000000" },
+    { "addr": "0x8c260040", "hex": "0001000000000000000000000020268c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c260000",
+    "r1": "0x00000005",
+    "r3": "0x00000100",
+    "r6": "0x8c260040"
+  },
+  "notes": "r5=0 takes the cmp/pz positive path (not the rewind path) and leaves cursor 0x8c261000 and index 5 unchanged; T=1 because H[0] > H[2]+index."
+}

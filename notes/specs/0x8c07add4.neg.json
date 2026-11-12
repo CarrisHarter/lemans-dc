@@ -1,0 +1,24 @@
+{
+  "entry": "0x8c07add4",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c260000",
+    "r5": "0xfffffffd",
+    "r6": "0x66666666"
+  },
+  "memory": [
+    { "addr": "0x8c260000", "hex": "4000268c0a0000000010268c00000000" },
+    { "addr": "0x8c260040", "hex": "0001000000000000000000000020268c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c260000",
+    "r1": "0x00000007",
+    "r3": "0x8c260040",
+    "r6": "0x0000000c"
+  },
+  "notes": "Rewind path without wrap (r5=-3, n=3): H[2]+index = 0+10 = 10 >= n, so cursor 0x8c261000 -= 12 = 0x8c260ff4 and index = 7. cmp/hs is non-strict, T=1; r3 keeps the descriptor H and r6 holds n<<2 = 12."
+}

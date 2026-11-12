@@ -1,0 +1,24 @@
+{
+  "entry": "0x8c07add4",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c260000",
+    "r5": "0xfffffff6",
+    "r6": "0x66666666"
+  },
+  "memory": [
+    { "addr": "0x8c260000", "hex": "4000268c0a0000000010268c00000000" },
+    { "addr": "0x8c260040", "hex": "0001000000000000000000000020268c" }
+  ],
+  "steps": 64,
+  "expect": {
+    "r0": "0x8c260000",
+    "r1": "0x00000000",
+    "r3": "0x8c260040",
+    "r6": "0x00000028"
+  },
+  "notes": "Rewind boundary (r5=-10, n=10): H[2]+index = 10 exactly equals n. cmp/hs is non-strict, so the non-wrap path runs: cursor -= 40 = 0x8c260fd8, index = 0, T=1, r6 = n<<2 = 40."
+}
