@@ -1,0 +1,51 @@
+{
+  "entry": "0x8c1725fc",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0xdeadbeef",
+    "r5": "0x8c200100",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c200100",
+      "hex": "41414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414100"
+    },
+    {
+      "addr": "0x8c2b5418",
+      "hex": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "addr": "0x8c2b5518",
+      "hex": "cccccccc"
+    }
+  ],
+  "steps": 6000,
+  "expect": {
+    "r0": "0x8c2b5418",
+    "r1": "0x00000000",
+    "r2": "0x00000000",
+    "r3": "0x8c2b5418",
+    "r4": "0x8c2b5418",
+    "r5": "0x000000ff",
+    "r6": "0x000000ff",
+    "r7": "0x8c2b5517",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "notes": "cmp/hs-true path: strlen = 300 >= 0xff so plain bt takes L630: strncpy(dst=0x8c2b5418, src=r13, n=0xff) copies 255 'A's, then [dst+0xff]=0. r5/r6 end 0xff, r7=dst+255, r1=0 (strncpy entry mov #0,r1), r3=last byte 'A', T=1."
+}
