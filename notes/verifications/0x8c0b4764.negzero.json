@@ -1,0 +1,16 @@
+{
+  "address": "0x8c0b4764",
+  "spec": "notes/specs/0x8c0b4764.negzero.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "31d1efc5",
+  "verified_at": "2026-11-12T02:37:17+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 250
+  },
+  "verifier_output": [
+    "ok   0x8c0b4764 matches original (250 oracle steps)"
+  ]
+}
