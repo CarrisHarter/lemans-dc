@@ -381,11 +381,12 @@ async function trySnapshot() {
   S.lastSnap = Date.now();
   try {
     const d = await getJSON("progress.json?t=" + Date.now());
-    if (!valid(d)) return false;
+    if (!valid(d)) throw new Error("invalid");
+    S.loadFailed = false;
     adoptLiveUrl(d.live_url);
     accept(d, "snapshot");
     return true;
-  } catch (e) { return false; }
+  } catch (e) { S.loadFailed = true; return false; }
 }
 
 async function tryLive() {
@@ -484,7 +485,8 @@ function ago(ms) {
 }
 
 function eta(d) {
-  if (d.percent >= 100 || d.remaining === 0) return ["Done", "every function proven"];
+  if (d.percent >= 100) return ["Done", "every function proven"];
+  if (d.remaining === 0) return ["\u2014", "only blocked functions left"];
   const days = d.eta_days;
   if (!isNum(days) || days < 0) return ["\u2014", "waiting for pace data"];
   const h = days * 24;
@@ -617,6 +619,10 @@ function status() {
   const d = S.doc, pill = $("pill");
   let mode, label, sub;
   if (!navigator.onLine) { mode = "offline"; label = "Offline"; sub = d ? "showing last known numbers" : "waiting for a connection"; }
+  else if (!d && S.loadFailed) {
+    mode = "offline"; label = "No data"; sub = "couldn\u2019t load the numbers \u00b7 retrying";
+    $("task").textContent = "Lost contact with the pit wall \u2014 retrying every few seconds";
+  }
   else if (!d) { mode = "loading"; label = "Connecting"; sub = "\u00a0"; }
   else {
     const age = Math.max(0, Date.now() - Date.parse(d.updated));
