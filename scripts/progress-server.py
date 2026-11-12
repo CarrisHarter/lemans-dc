@@ -178,7 +178,7 @@ PAGE = """<!doctype html>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
-    <div class="sched"><span class="k">schedule</span><span class="v" id="sched">—</span><span class="s" id="sched-s">vs target</span></div>
+    <div class="sched"><span class="k" id="sched-k">deadline</span><span class="v" id="sched">—</span><span class="s" id="sched-s">pace needed vs pace now</span></div>
     <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
     <div class="opt"><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
@@ -427,16 +427,24 @@ function render(d, prev) {
   $("eta").textContent = eta;
   $("eta-s").textContent = etaS;
 
-  const sc = d.schedule, sv = $("sched");
-  if (sc && isNum(sc.ahead)) {
-    sv.textContent = sc.ahead > 0 ? "▲ " + fmt(sc.ahead) + " ahead" : sc.ahead < 0 ? "▼ " + fmt(-sc.ahead) + " behind" : "on schedule";
-    sv.className = "v " + (sc.ahead > 0 ? "go" : sc.ahead < 0 ? "wa" : "");
-    const e = sc.early_hours, plan = Date.parse(sc.plan_end || "");
-    const span = h => Math.abs(h) >= 48 ? (Math.abs(h) / 24).toFixed(1) + " d" : Math.abs(h).toFixed(1) + " h";
-    $("sched-s").textContent = (!isNum(e) ? "no finish forecast" : e >= 0 ? "finish " + span(e) + " early" : "finish " + span(e) + " late")
-      + (Number.isNaN(plan) ? "" : " · plan " + stamp(plan));
-    sv.title = "plan: " + fmt(sc.planned) + " verified by now (straight line to " + fmt(sc.plan_target) + " by the target)";
-  } else { sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "vs target"; }
+  const sc = d.schedule, sv = $("sched"), due = Date.parse((sc && sc.plan_end) || "");
+  if (sc && !Number.isNaN(due)) {
+    // A deadline at local midnight reads as the end of the previous day.
+    const t = new Date(due), midnight = t.getHours() === 0 && t.getMinutes() === 0;
+    const day = new Date(midnight ? due - 1 : due).toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
+    $("sched-k").textContent = "deadline · " + (midnight ? "end of " + day : day + " " + pad(t.getHours()) + ":" + pad(t.getMinutes()));
+    const e = sc.early_hours, late = isNum(e) && e < 0;
+    const span = h => h >= 48 ? Math.round(h / 24) + " days" : h >= 1 ? Math.round(h) + " h" : Math.round(h * 60) + " min";
+    sv.textContent = d.remaining === 0 ? "done" : !isNum(e) ? "no forecast" : late ? "~" + span(-e) + " late" : "on track";
+    sv.className = "v " + (d.remaining === 0 || (isNum(e) && !late) ? "go" : late ? "wa" : "");
+    const left = (due - Date.parse(d.updated)) / 3.6e6, now = Math.round(d.pace_per_day / 24);
+    $("sched-s").textContent = d.remaining === 0 ? "all unblocked functions verified"
+      : left <= 0 ? "deadline passed · " + fmt(d.remaining) + " left"
+      : "needs " + fmt(Math.ceil(d.remaining / left)) + "/h · doing " + fmt(now) + "/h";
+    sv.title = "Plan line: " + fmt(sc.planned) + " verified by now, actual " + fmt(d.verified)
+      + " (" + (sc.ahead >= 0 ? fmt(sc.ahead) + " ahead" : fmt(-sc.ahead) + " behind") + ")."
+      + (isNum(e) ? " At the current pace the last function lands " + span(Math.abs(e)) + (late ? " after" : " before") + " the deadline." : "");
+  } else { $("sched-k").textContent = "deadline"; sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "pace needed vs pace now"; }
 
   burnup(d);
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";
