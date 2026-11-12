@@ -1424,6 +1424,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0bdbd0` | `FUN_8c0bdbd0` | `notes/verifications/0x8c0bdbd0.json` — 71 oracle steps; object ctor: calls 0x8c14b1f4, stores 0x8c1eb328 at [r4] and 0 at [r4+104], returns r4 |
 | `0x8c0248f4` | `init_record_if_unset` | `notes/verifications/0x8c0248f4.json` — 190 oracle steps; skip: only the entry pr push and epilogue pop (stack), r0=zero-extended flag byte, T=(flag==0); call: same stack traffic plus 0x8c0b48e8(record) sets record->flag=1 and initialises the 3x3 matrix at +0x24/+0x30/+0x3c, copying the three words at +0x14 to +0x48; callee-clobbered regs; pr/r15 restored |
 | `0x8c094df8` | `validate_object_class` | `notes/verifications/0x8c094df8.json` — 225 oracle steps; reads *0x8c264da8 and [r4+0xf4]; calls 0x8c074b2c then 0x8c074ca0/0x8c074d58 gates; writes byte 1 to [r4+0x83] iff every gate passes; r0=0x83/r1=1 on store path, r14/pr restored |
+| `0x8c0bdc80` | `FUN_8c0bdc80` | `notes/verifications/0x8c0bdc80.json` — 94 oracle steps; r0=1 iff callee ret != 0; r1/r2 = stack out-slot addrs; r4..r7 advanced +4 by callee; r14 scratch then restored; r15 restored; mach/macl = 108*idx; T = (callee ret lo byte == 0); stores only stack scratch |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
