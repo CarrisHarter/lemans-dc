@@ -1,0 +1,40 @@
+{
+  "entry": "0x8c021d70",
+  "note": "Full positive path: a live container at 0x8c250000 with three handle words (+8, +4, +0) whose objects all have refcount 2 (so release only clears each handle), and the count arg's low half = 1, which frees the container itself through the 0x8c01032c thunk. The fake container chunk has a 0x40 size at 0x8c24fffc, a next-block size of 8 at 0x8c24ffc4 and a previous block at 0x8c2a0000 whose +4 size has bit 31 set, so free does not coalesce; the top chunk sits at 0x8c270000.",
+  "sr": 0,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "0010258c", "note": "handle +0 -> object A 0x8c251000" },
+    { "addr": "0x8c250004", "hex": "0020258c", "note": "handle +4 -> object B 0x8c252000" },
+    { "addr": "0x8c250008", "hex": "0060258c", "note": "handle +8 -> object C 0x8c256000" },
+    { "addr": "0x8c251008", "hex": "02000000", "note": "A refcount 2: cleared, no destruction" },
+    { "addr": "0x8c252008", "hex": "02000000", "note": "B refcount 2: cleared, no destruction" },
+    { "addr": "0x8c256008", "hex": "02000000", "note": "C refcount 2: cleared, no destruction" },
+
+    { "addr": "0x8c24fff8", "hex": "00002a8c", "note": "container chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c24fffc", "hex": "40000000", "note": "container chunk size = 0x40" },
+    { "addr": "0x8c24ffc4", "hex": "08000000", "note": "next block size = 8" },
+    { "addr": "0x8c2a0004", "hex": "00000080", "note": "prev chunk size bit31 set: skip coalescing" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0000278c", "note": "heap top -> 0x8c270000" },
+    { "addr": "0x8c270000", "hex": "00100000", "note": "top chunk size = 0x1000" }
+  ],
+  "steps": 4000
+}

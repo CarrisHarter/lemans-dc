@@ -1,0 +1,47 @@
+{
+  "entry": "0x8c021d70",
+  "note": "Destruction path through the first release: handle +8 points at an object with refcount 1, so 0x8c018bd8 drops it to zero, frees object->inner (0x8c252000) and the object (0x8c251000) through the free thunk, and keeps the handle pointing at the (dangling) object. The other two handles have refcount 2 and are only cleared. Count is 0, so the container itself is not freed. Chunk layout copied from the verified 0x8c018bd8 spec: 0x40 blocks with a next-block size of 8 and a nonzero previous-block size at 0x8c253004, so both frees coalesce; top chunk at 0x8c254000.",
+  "sr": 0,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": 0,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "0060258c", "note": "handle +0 -> object A 0x8c256000" },
+    { "addr": "0x8c250004", "hex": "0070258c", "note": "handle +4 -> object B 0x8c257000" },
+    { "addr": "0x8c250008", "hex": "0010258c", "note": "handle +8 -> object C 0x8c251000" },
+
+    { "addr": "0x8c256008", "hex": "02000000", "note": "A refcount 2" },
+    { "addr": "0x8c257008", "hex": "02000000", "note": "B refcount 2" },
+    { "addr": "0x8c251008", "hex": "01000000", "note": "C refcount 1: destroyed" },
+    { "addr": "0x8c25100c", "hex": "0020258c", "note": "C inner -> 0x8c252000" },
+
+    { "addr": "0x8c251ff8", "hex": "0030258c", "note": "inner chunk prev = 0x8c253000" },
+    { "addr": "0x8c251ffc", "hex": "40000000", "note": "inner chunk size = 0x40" },
+    { "addr": "0x8c251fc4", "hex": "08000000", "note": "inner next block size = 8" },
+
+    { "addr": "0x8c250ff8", "hex": "0030258c", "note": "object chunk prev = 0x8c253000" },
+    { "addr": "0x8c250ffc", "hex": "40000000", "note": "object chunk size = 0x40" },
+    { "addr": "0x8c250fc4", "hex": "08000000", "note": "object next block size = 8" },
+
+    { "addr": "0x8c253004", "hex": "20000000", "note": "prev-of-prev chunk size = 0x20" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0040258c", "note": "heap top -> 0x8c254000" },
+    { "addr": "0x8c254000", "hex": "00100000", "note": "top chunk size = 0x1000" }
+  ],
+  "steps": 4000
+}

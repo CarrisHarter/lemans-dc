@@ -1,0 +1,65 @@
+{
+  "entry": "0x8c021d70",
+  "note": "All three handles have refcount 1, and the count's low half is 1. Every release destroys its object (object->inner then the object, via the free thunk) and leaves the handle word pointing at the destroyed object, then the container itself is freed. Each of the seven fake chunks (three objects, three inners, the container) has a 0x40 size, a next-block size of 8, and a previous block at 0x8c2a0000 whose +4 word has bit 31 set, so no free coalesces; the top chunk is at 0x8c270000.",
+  "sr": 0,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "0070258c", "note": "handle +0 -> object A 0x8c257000" },
+    { "addr": "0x8c250004", "hex": "0040258c", "note": "handle +4 -> object B 0x8c254000" },
+    { "addr": "0x8c250008", "hex": "0010258c", "note": "handle +8 -> object C 0x8c251000" },
+
+    { "addr": "0x8c257008", "hex": "01000000", "note": "A refcount 1" },
+    { "addr": "0x8c25700c", "hex": "0080258c", "note": "A inner -> 0x8c258000" },
+    { "addr": "0x8c254008", "hex": "01000000", "note": "B refcount 1" },
+    { "addr": "0x8c25400c", "hex": "0050258c", "note": "B inner -> 0x8c255000" },
+    { "addr": "0x8c251008", "hex": "01000000", "note": "C refcount 1" },
+    { "addr": "0x8c25100c", "hex": "0020258c", "note": "C inner -> 0x8c252000" },
+
+    { "addr": "0x8c257ff8", "hex": "00002a8c", "note": "A inner chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c257ffc", "hex": "40000000", "note": "A inner chunk size = 0x40" },
+    { "addr": "0x8c257fc4", "hex": "08000000", "note": "A inner next block size = 8" },
+    { "addr": "0x8c256ff8", "hex": "00002a8c", "note": "A chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c256ffc", "hex": "40000000", "note": "A chunk size = 0x40" },
+    { "addr": "0x8c256fc4", "hex": "08000000", "note": "A next block size = 8" },
+
+    { "addr": "0x8c254ff8", "hex": "00002a8c", "note": "B inner chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c254ffc", "hex": "40000000", "note": "B inner chunk size = 0x40" },
+    { "addr": "0x8c254fc4", "hex": "08000000", "note": "B inner next block size = 8" },
+    { "addr": "0x8c253ff8", "hex": "00002a8c", "note": "B chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c253ffc", "hex": "40000000", "note": "B chunk size = 0x40" },
+    { "addr": "0x8c253fc4", "hex": "08000000", "note": "B next block size = 8" },
+
+    { "addr": "0x8c251ff8", "hex": "00002a8c", "note": "C inner chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c251ffc", "hex": "40000000", "note": "C inner chunk size = 0x40" },
+    { "addr": "0x8c251fc4", "hex": "08000000", "note": "C inner next block size = 8" },
+    { "addr": "0x8c250ff8", "hex": "00002a8c", "note": "C chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c250ffc", "hex": "40000000", "note": "C chunk size = 0x40" },
+    { "addr": "0x8c250fc4", "hex": "08000000", "note": "C next block size = 8" },
+
+    { "addr": "0x8c24fff8", "hex": "00002a8c", "note": "container chunk prev = 0x8c2a0000" },
+    { "addr": "0x8c24fffc", "hex": "40000000", "note": "container chunk size = 0x40" },
+    { "addr": "0x8c24ffc4", "hex": "08000000", "note": "container next block size = 8" },
+    { "addr": "0x8c2a0004", "hex": "00000080", "note": "prev chunk size bit31 set: skip coalescing" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0000278c", "note": "heap top -> 0x8c270000" },
+    { "addr": "0x8c270000", "hex": "00100000", "note": "top chunk size = 0x1000" }
+  ],
+  "steps": 8000
+}

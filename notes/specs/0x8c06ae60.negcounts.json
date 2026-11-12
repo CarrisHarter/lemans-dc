@@ -1,0 +1,24 @@
+{
+  "entry": "0x8c06ae60",
+  "regs": {
+    "r1": "0x12345678",
+    "r3": "0x33333333",
+    "r4": "0x8c2b7000",
+    "r5": "0x0000ffff",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "sr": 0,
+  "memory": [
+    { "addr": "0x8c2b7024", "hex": "00000080", "note": "+0x24 = 0x80000000: negative row count" },
+    { "addr": "0x8c2b702c", "hex": "ffffffff", "note": "+0x2c = -1: negative entry count" }
+  ],
+  "steps": 256
+}

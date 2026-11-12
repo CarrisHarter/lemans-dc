@@ -1,0 +1,41 @@
+{
+  "entry": "0x8c06ae60",
+  "regs": {
+    "r4": "0x8c2b7000",
+    "r5": "1",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "sr": 0,
+  "memory": [
+    { "addr": "0x8c2b1ef8", "hex": "00502b8c", "note": "allocator top-chunk pointer -> 0x8c2b5000" },
+    { "addr": "0x8c2b6ff8", "hex": "00702b8c", "note": "free(p) block: previous-link field = p" },
+    { "addr": "0x8c2b6ffc", "hex": "00000000" },
+    { "addr": "0x8c2b7014", "hex": "00712b8c", "note": "+0x14 = 0x8c2b7100 (table A)" },
+    { "addr": "0x8c2b7018", "hex": "00000000" },
+    { "addr": "0x8c2b701c", "hex": "00000000" },
+    { "addr": "0x8c2b7020", "hex": "00722b8c", "note": "+0x20 = 0x8c2b7200 (row table B)" },
+    { "addr": "0x8c2b7024", "hex": "01000000", "note": "+0x24 = 1 row" },
+    { "addr": "0x8c2b702c", "hex": "02000000", "note": "+0x2c = 2 entries" },
+    { "addr": "0x8c2b70f8", "hex": "00712b8c", "note": "free(A) block: link = A" },
+    { "addr": "0x8c2b70fc", "hex": "00000000" },
+    { "addr": "0x8c2b7100", "hex": "00732b8c", "note": "A[0] = 0x8c2b7300 (block C)" },
+    { "addr": "0x8c2b7104", "hex": "00000000", "note": "A[1] = null" },
+    { "addr": "0x8c2b71f8", "hex": "00722b8c", "note": "free(B) block: link = B" },
+    { "addr": "0x8c2b71fc", "hex": "00000000" },
+    { "addr": "0x8c2b7200", "hex": "00732b8c", "note": "B row 0 entry 0 = block C" },
+    { "addr": "0x8c2b7204", "hex": "00000000" },
+    { "addr": "0x8c2b7208", "hex": "00000000" },
+    { "addr": "0x8c2b720c", "hex": "00000000" },
+    { "addr": "0x8c2b72f8", "hex": "00732b8c", "note": "free(C) block: link = C" },
+    { "addr": "0x8c2b72fc", "hex": "00000000" }
+  ],
+  "steps": 4000
+}
