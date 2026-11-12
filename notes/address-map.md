@@ -1632,6 +1632,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c05cb48` | `FUN_8c05cb48` | `notes/verifications/0x8c05cb48.json` — 80 oracle steps; unlinks node p from old parent's list at [p+4] (scans [parent+0xc] via +8, rewrites the slot that held p, clears [p+8]); sets [p+4]=new parent; release (parent 0): clears [p+0x30], stamps depth 1 on children, calls 0x8c05caac(grandchild,2); attach: prepends to [parent+0xc] or appends to its tail when r6!=0, sets [p+0x30]=[parent+0x30]+1, children get +2, grandchildren get callee at +3; restores r12/r13/r14/pr, T=1 on exit |
 | `0x8c18df08` | `FUN_8c18df08` | `notes/verifications/0x8c18df08.json` — 9 oracle steps; tail-call 0x8c1c3a2c(*(r4+4)); stores fr0 at *(ptr)+8 |
 | `0x8c1862b4` | `unknown` | `notes/verifications/0x8c1862b4.json` — 75 oracle steps |
+| `0x8c1862d8` | `FUN_8c1862d8` | `notes/verifications/0x8c1862d8.json` — 116 oracle steps; callee 0x8c1863e8 builds its template at r4+12; copies 3 words from global 0x8c1d3f68 into r4+0,+4,+8, zeroes byte r4+0x80, stores r5 at r4+0x84; returns r4 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

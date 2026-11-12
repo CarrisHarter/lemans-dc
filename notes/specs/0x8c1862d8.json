@@ -1,0 +1,28 @@
+{
+  "entry": "0x8c1862d8",
+  "regs": {
+    "r0": "0xdead0000",
+    "r1": "0xdead0001",
+    "r2": "0xdead0002",
+    "r3": "0xdead0003",
+    "r4": "0x8c200100",
+    "r5": "0xcafebabe",
+    "r6": "0xdead0006",
+    "r7": "0xdead0007",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c30fff0"
+  },
+  "memory": [
+    { "addr": "0x8c18630c", "hex": "e863188c683f1d8c8000000084000000" },
+    { "addr": "0x8c1864a0", "hex": "180f1d8c683f1d8c" },
+    { "addr": "0x8c1d0f18", "hex": "112233445566778899aabbccddeeff00" },
+    { "addr": "0x8c1d3f68", "hex": "0102030405060708090a0b0c" }
+  ],
+  "steps": 400
+}
