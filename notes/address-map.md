@@ -1706,6 +1706,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c5714` | `FUN_8c0c5714` | `notes/verifications/0x8c0c5714.json` — 125 oracle steps; initialises the object via 0x8c05d378, stamps 0x8c1eb940 then 0x8c1e8b54 then 0x8c1eb828/0x8c1eb7dc, sets bit 1 of [obj+16] via 0x8c05d274, copies two int pairs and three floats into obj+56..obj+84 |
 | `0x8c0c5e84` | `FUN_8c0c5e84` | `notes/verifications/0x8c0c5e84.json` — 215 oracle steps; steps f32[r4+0x50] by ((fr14*(f32[+0x4c]-f32[+0x48]))/3.0)*fr15, weighted by gates 0x8c074ca0(*[0x8c264da8],8/2/3) and 0x8c074c54(,0,0); clamps to [f32[+0x48], f32[+0x4c]]; stores 3x f32 at r4+0x50 |
 | `0x8c0d0274` | `reset_six_indexed_fields` | `notes/verifications/0x8c0d0274.json` — 91 oracle steps; if 0<=r5<4: r14 = fn_8c0c0ecc([0x8c27a238]); then six fn_8c16eadc stores of r14 through *(*r4+{0x4c,0xc0,0x134,0x1a8,0x21c,0x290}) + 0x5c; T at exit = (0<=r5<4) |
+| `0x8c04d3dc` | `FUN_8c04d3dc` | `notes/verifications/0x8c04d3dc.json` — 243 oracle steps; calls 0x8c0bfb4c twice (key 1), 0x8c0c010c, 0x8c0c0100, then 0x8c0b4f94 (dst = frame) and 0x8c0b4ef0 (scale 0.5); writes 3 floats through the 5th-argument pointer |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
