@@ -25,10 +25,9 @@ PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
 PLAN_START_VERIFIED = 1373
 PLAN_TARGET = 1373 + 3751
 PLAN_DAYS = 2.7
-# A minute with this many proofs is a bulk load of existing evidence, not work
-# done then (the initial seed landed ~400-640/min; organic peaks are ~20/min).
-BULK_PER_MIN = 100
 RATE_WINDOW_H = 3  # primary pace window; 1 h and 6 h bound the ETA range
+BLOCKED_TREND_H = 6  # blocked count is compared with the ledger this long ago
+HISTORY_POINTS = 48  # samples in the cumulative verified series
 VERIF = ROOT / "notes/verifications"
 PORTS = ROOT / "rust/lemans-verify/src/ports"
 LEDGER = ROOT / "notes/address-map.md"
@@ -55,6 +54,27 @@ def _parse_ts(ts):
 # path -> ((mtime_ns, size), pass timestamp or None); lets the live server
 # re-scan every second without re-parsing unchanged evidence.
 _evidence_cache = {}
+_first_added = {"head": None, "map": {}}
+
+
+def _first_committed():
+    """Evidence path (relative to ROOT) -> time it was first committed.
+
+    Re-verification rewrites `verified_at` (a full re-run once moved 1,194
+    proofs into three minutes), so the first commit bounds when a function was
+    really first proven. Recomputed only when HEAD moves.
+    """
+    head = sh("git", "rev-parse", "HEAD")
+    if head and head != _first_added["head"]:
+        out = sh("git", "log", "--diff-filter=A", "--format=@%cI", "--name-only", "--", "notes/verifications")
+        first, when = {}, None
+        for line in out.splitlines():  # newest first: later lines overwrite with older commits
+            if line.startswith("@"):
+                when = _parse_ts(line[1:])
+            elif line and when:
+                first[line] = when
+        _first_added.update(head=head, map=first)
+    return _first_added["map"]
 
 
 def _verified_timestamps():
