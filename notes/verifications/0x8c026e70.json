@@ -1,0 +1,16 @@
+{
+  "address": "0x8c026e70",
+  "spec": "notes/specs/0x8c026e70.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "a273f6c3",
+  "verified_at": "2026-11-12T03:46:36+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 6
+  },
+  "verifier_output": [
+    "ok   0x8c026e70 matches original (6 oracle steps)"
+  ]
+}

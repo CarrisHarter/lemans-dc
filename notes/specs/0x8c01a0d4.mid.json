@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c01a0d4",
+  "note": "n = 8: two recursion levels (8 -> 4 -> 0); checks the post-call residue after the inner frame.",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x00000008",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": 1,
+  "expect": {
+    "r0": 36,
+    "r1": 15,
+    "r3": 21,
+    "r4": 0
+  },
+  "steps": 256
+}

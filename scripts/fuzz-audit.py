@@ -95,7 +95,7 @@ def spec_for(addr: int, case: int) -> dict:
     }
     spec["regs"]["r15"] = f"0x{STACK_TOP:08x}"
     if rng.random() < 0.5:
-        spec["special"] = {"sr": 1}  # exercise the T-flag entry state
+        spec["sr"] = 1  # exercise the T-flag entry state (top level, as the readers expect)
     return spec
 
 
@@ -115,6 +115,9 @@ def run_case(addr: int, case: int) -> tuple[str, dict | None]:
     if "oracle did not halt cleanly" in out or "oracle exited" in out:
         path.unlink(missing_ok=True)
         return "invalid", None
+    if "bad spec" in out:
+        # A malformed generated spec is a bug in this script, never a finding.
+        raise SystemExit(f"fuzz-audit generated an invalid spec: {out.splitlines()[-1]}")
     if "no port registered" in out:
         path.unlink(missing_ok=True)
         return "invalid", None

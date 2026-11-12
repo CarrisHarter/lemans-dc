@@ -1,0 +1,20 @@
+{
+  "entry": "0x8c01a0d4",
+  "note": "n = 3: fourth exit via bra to 0x8c01a11c; r1 = 0 (delay slot), r3 = n-2 = 1, r0 = 6.",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x00000003",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": 1,
+  "expect": {
+    "r0": 6,
+    "r1": 0,
+    "r3": 1
+  },
+  "steps": 64
+}
