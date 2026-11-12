@@ -104,10 +104,16 @@ def run_case(addr: int, case: int) -> tuple[str, dict | None]:
     SCRATCH.mkdir(exist_ok=True)
     path = SCRATCH / f"0x{addr:08x}.{case}.json"
     path.write_text(json.dumps(spec, indent=2) + "\n")
-    proc = subprocess.run(
-        [str(VERIFY), str(BIN), f"0x{addr:08x}", str(path), "--oracle", str(ORACLE)],
-        capture_output=True, text=True, timeout=600,
-    )
+    try:
+        proc = subprocess.run(
+            [str(VERIFY), str(BIN), f"0x{addr:08x}", str(path), "--oracle", str(ORACLE)],
+            capture_output=True, text=True, timeout=60,
+        )
+    except subprocess.TimeoutExpired:
+        # The oracle halted (otherwise the verifier would have said so), so a
+        # port that still runs after a minute is looping: a real bug, not an
+        # invalid input.
+        return "hang", {"spec": str(path), "output": "port did not return within 60s"}
     out = (proc.stdout + proc.stderr).strip()
     if proc.returncode == 0:
         path.unlink(missing_ok=True)
@@ -139,7 +145,7 @@ def main() -> int:
         addresses = sorted(int(p.stem[2:], 16) for p in args.port_root.glob("p_*.rs"))
 
     todo = [(a, c) for a in addresses for c in range(args.cases)]
-    tally = {"pass": 0, "invalid": 0, "suspect": 0}
+    tally = {"pass": 0, "invalid": 0, "suspect": 0, "hang": 0}
     suspects: list[tuple[int, dict]] = []
     with futures.ThreadPoolExecutor(max_workers=args.jobs) as pool:
         pending = {pool.submit(run_case, a, c): (a, c) for a, c in todo}
@@ -148,9 +154,9 @@ def main() -> int:
             try:
                 kind, detail = fut.result()
             except subprocess.TimeoutExpired:
-                kind, detail = "invalid", None
+                kind, detail = "hang", {"spec": "unknown", "output": "outer timeout"}
             tally[kind] += 1
-            if kind == "suspect":
+            if kind in ("suspect", "hang"):
                 suspects.append((addr, detail))
                 print(f"SUSPECT 0x{addr:08x} case {case}: {detail['output'].splitlines()[0][:120]}",
                       flush=True)
@@ -161,7 +167,7 @@ def main() -> int:
                     break
 
     print(f"\ncases {len(todo)}  pass {tally['pass']}  invalid {tally['invalid']}  "
-          f"suspect {tally['suspect']}  ports {len(addresses)}")
+          f"suspect {tally['suspect']}  hang {tally['hang']}  ports {len(addresses)}")
     if suspects:
         print("\nsuspects (replay with scripts/verify-function.sh <addr> analysis/lemans24.bin <spec>):")
         seen = set()
@@ -170,7 +176,7 @@ def main() -> int:
                 continue
             seen.add(addr)
             print(f"  0x{addr:08x}  {detail['spec']}")
-    return 1 if suspects else 0
+    return 1 if suspects or tally["hang"] else 0
 
 
 if __name__ == "__main__":
