@@ -1346,6 +1346,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c017d40` | `skip_cond_unpack` | `notes/verifications/0x8c017d40*.json` — both branches (35/36 oracle steps); call-crossing port (callee 0x8c017b94); bt.s delay slot advances r4 once on both paths, bit6 set advances twice |
 | `0x8c04a578` | `oneshot_list_init` | `notes/verifications/0x8c04a578*.json` — both branches (35/10 oracle steps); call-crossing port (callee 0x8c017844); zeroes node + pushes unless flag set; returns node ptr on both paths; spec trap: overlapping memory seeds apply in order, later wins |
 | `0x8c04ba78` | `guarded_byte_dispatch` | `notes/verifications/0x8c04ba78*.json` — both branches (17/9 oracle steps); call-crossing port (callee 0x8c104768); loads [r4+0xa0], calls when nonzero else returns 0; spec trap: short seed silently took the null path (step count is the branch witness) |
+| `0x8c059954` | `set_inner_byte4` | `notes/verifications/0x8c059954.json` — 14 oracle steps; byte [*(r4+4)+4]=1; r0=1; r1=*(r4+4) kept; r14/pr restored |
+| `0x8c01092c` | `atan2_checked` | `notes/verifications/0x8c01092c.json` — 112 oracle steps; writes 0x44c/0x44d to 0x8c23d8b8 on Inf/NaN result |
+| `0x8c0205e4` | `find_table_entry_by_masked_key` | `notes/verifications/0x8c0205e4.json` — 62 oracle steps; writes [entry+12] via callee 0x8c0eaef8 when empty; stack spills (filtered) |
+| `0x8c051a0c` | `reassign_slot_and_relink_owner` | `notes/verifications/0x8c051a0c.json` — 46 oracle steps; mem: A[r4]=A[r5] B[r4]=B[r5] A[r5]=-1 B[r5]=0 *(chain)=r4 *(flag)=1 node zero+push on first touch; regs: r4=-1 r5/r6/r7/r13/r0/r1 clobbered r14/r15/pr restored T=last tst |
+| `0x8c018e64` | `publish_block_and_clear_fields` | `notes/verifications/0x8c018e64.json` — 2009 oracle steps; mem: [0x8c23da90]=r4 (delay slot of 1st jsr); 6x memset 64B zero at r4+0x40,r4,r4+0xc0,r4+0x80,r4+0x140,r4+0x100; regs: r0=r4, r4=r4+0x100, r5=0, r6=64, r7=64, r3=0, r14/pr restored, T=1 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
