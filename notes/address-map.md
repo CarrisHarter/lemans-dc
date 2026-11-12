@@ -1941,6 +1941,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2188c0` | `lazy_descriptor_init` | `notes/verifications/0x8c2188c0*.json` - 2 specs (44/6 steps) |
 | `0x8c1cc088` | `nine_free_clear_global` | `notes/verifications/0x8c1cc088*.json` - 3 specs (171/108/12 steps) |
 | `0x8c176618` | `validate_three_fields_stamp` | `notes/verifications/0x8c176618*.json` - 3 specs (31/427/253 steps) |
+| `0x8c1c97a8` | `vtable_init_table_copy` | `notes/verifications/0x8c1c97a8.json` - 58 oracle steps |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
