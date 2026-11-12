@@ -1909,6 +1909,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c175c28` | `three_exit_slot_fill` | `notes/verifications/0x8c175c28*.json` - 2 specs (278/401 steps) |
 | `0x8c176d7e` | `stride52_pair_store` | `notes/verifications/0x8c176d7e*.json` - 4 specs (348/397/24/26 steps) |
 | `0x8c177c3c` | `enum_to_code_switch` | `notes/verifications/0x8c177c3c*.json` - 5 specs (336/14/17/20/336 steps) |
+| `0x8c146ca0` | `release_40_slots_then_free` | `notes/verifications/0x8c146ca0*.json` - 3 specs (629/566/18 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
