@@ -1351,6 +1351,11 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0205e4` | `find_table_entry_by_masked_key` | `notes/verifications/0x8c0205e4.json` — 62 oracle steps; writes [entry+12] via callee 0x8c0eaef8 when empty; stack spills (filtered) |
 | `0x8c051a0c` | `reassign_slot_and_relink_owner` | `notes/verifications/0x8c051a0c.json` — 46 oracle steps; mem: A[r4]=A[r5] B[r4]=B[r5] A[r5]=-1 B[r5]=0 *(chain)=r4 *(flag)=1 node zero+push on first touch; regs: r4=-1 r5/r6/r7/r13/r0/r1 clobbered r14/r15/pr restored T=last tst |
 | `0x8c018e64` | `publish_block_and_clear_fields` | `notes/verifications/0x8c018e64.json` — 2009 oracle steps; mem: [0x8c23da90]=r4 (delay slot of 1st jsr); 6x memset 64B zero at r4+0x40,r4,r4+0xc0,r4+0x80,r4+0x140,r4+0x100; regs: r0=r4, r4=r4+0x100, r5=0, r6=64, r7=64, r3=0, r14/pr restored, T=1 |
+| `0x8c050c5c` | `point_row_distance` | `notes/verifications/0x8c050c5c.json` — 51 oracle steps; r15/pr save-restore; stack-only writes; calls hypot 0x8c0b2c00 on mismatch paths |
+| `0x8c02fbf4` | `scaled_table_interpolate` | `notes/verifications/0x8c02fbf4.json` — 149 oracle steps; fr0 result; fr1/fr2/fr5/fpul/r0/r1/r3/T clobbered; calls 0x8c010b88 |
+| `0x8c05ad90` | `init_record_link_owner` | `notes/verifications/0x8c05ad90.json` — 21 oracle steps; mem: [r4]=0x8c1e9120, [r4+4]=r5, [r5+44]=r4 (+ callee 0x8c056bf8 store [r4]=0x8c1e8f88 overwritten); regs: r0=r4, r13/r14/pr restored |
+| `0x8c03c8bc` | `store_param_and_fanout` | `notes/verifications/0x8c03c8bc.json` — 58 oracle steps; mem: *(r4+0xC8)=r5; gates @r4+{0xE0,0xE4,0xE8,0xF0,0xF4,0x108,0xFC}: nonzero -> stores/calls (jsr 0x8c143e88, 0x8c197840); regs r0/r1/r4/r5 clobbered, r13/r14/pr restored, T=gate7==0 |
+| `0x8c051a60` | `fetch_indexed_float` | `notes/verifications/0x8c051a60.json` — 69 oracle steps; mem: 4B float to *r6 (main path only); regs: r0=ret, r1=entry-ptr, r3=idx*4, r6=r5*4 (callee), fr0=copied float; stack spills (excluded) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

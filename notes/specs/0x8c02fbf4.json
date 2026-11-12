@@ -1,0 +1,26 @@
+{
+  "entry": "0x8c02fbf4",
+  "regs": {
+    "r4": "0x8c200000",
+    "r14": "0xdeadbeef",
+    "r15": "0x8c308000"
+  },
+  "fr": {
+    "f15": 123.456
+  },
+  "memory": [
+    {
+      "addr": "0x8c200004",
+      "hex": "0000208c"
+    },
+    {
+      "addr": "0x8c200040",
+      "hex": "00004842"
+    },
+    {
+      "addr": "0x8c200050",
+      "hex": "cdcc4c3dcdcccc3d9a99193ecdcc4c3e0000803e9a99993e3333b33ecdcccc3e"
+    }
+  ],
+  "steps": 500
+}
