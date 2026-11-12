@@ -1364,6 +1364,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c017d88` | `parse_tagged_field` | `notes/verifications/0x8c017d88.json` — 74 oracle steps; stores: [obj+0xb4]=tag&0x20, [obj+0xb0]=tag&0x10, [obj+0xa8]=tag&0x0f, [obj+0xac]=0 or sign_extend(byte1), [obj+0xa0]=unpacked word (via 0x8c017b94), [obj+0xa4]=0, [obj+0x18]=[obj+0x54] if tag&0x20 else [obj+0x14]; regs: r4=cursor, r5=obj+0xa0, r6=value, r7=tag&0x40, r3/r1 from unpacker, T=([obj+0xb4]==0) |
 | `0x8c031e0c` | `stick_friction_decay` | `notes/verifications/0x8c031e0c.json` — 123 oracle steps; clears byte[obj+0x411]; subtracts 0.13 (plus 0.125 when slot flag byte at obj+0xc0+i*0xac is set) from float[obj+0x10] for each of 4 slots (obj+0xb0+i*0xac) whose float is >1.0; clamps float[obj+0x10] to [0,1]; sets byte[obj+0x411]=1; calls 0x8c151b1c([obj+0x24]); saves/restores r13/r14/pr, clobbers r0-r7 |
 | `0x8c07c180` | `construct_object` | `notes/verifications/0x8c07c180.json` — 47 oracle steps; calls 0x8c082054 on r4+36 when exts.w(r5)!=0; [r4]=r4+36; [r4+4]=0x8c1e9774; [*[r4]]=0x8c1e9794; [*[r4]+24]=(r4+36)-*[r4]; zeroes words r4+8/+12/+16/+20/+24/+28 and byte r4+32; r0=r4 |
+| `0x8c074264` | `swap_records_remap_refs` | `notes/verifications/0x8c074264.json` — 534 oracle steps; writes record array at r6: swaps 0x30-byte records r4/r5 through a stack buffer, then rewrites non-negative index slots +0x14..+0x27 of r7 records; 76-byte stack frame; T=1 only on the r4==r5 early return |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
