@@ -118,6 +118,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0fda3c` | `remap_args_forward` | `notes/verifications/0x8c0fda3c*.json` - 2 specs (7 and 35 steps) |
 | `0x8c0f8f10` | `release_then_free` | `notes/verifications/0x8c0f8f10*.json` - 4 specs (12-127 steps) |
 | `0x8c0f9ab2` | `strcmp_body` | `notes/verifications/0x8c0f9ab2*.json` - 4 specs (15-67 steps) |
+| `0x8c0f110c` | `free_array_field` | `notes/verifications/0x8c0f110c*.json` - 3 specs (7-72 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1712,6 +1713,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0ed80c` | `FUN_8c0ed80c` | `notes/verifications/0x8c0ed80c.json` — 51 oracle steps; zeros r4+0/4/8/12/16 and r4+44..+76; 0x8c0b4ff0 zeroes r4+20/24/28 and r4+32/36/40, fr0=0; r0=76, r1=0, r14/r15/pr restored |
 | `0x8c0f87d8` | `FUN_8c0f87d8` | `notes/verifications/0x8c0f87d8.json` — 16 oracle steps; calls 0x8c14fe34 when (r5&0xff)!=0 else 0x8c14fe68, argument r4+0x2c; r0 = [[r4+0x30]+0x1c] or [[r4+0x30]+0x10]; r4 += 0x2c; T=(r5&0xff)==0; pr/r15 restored |
 | `0x8c0f8828` | `FUN_8c0f8828` | `notes/verifications/0x8c0f8828.json` — 16 oracle steps; calls 0x8c14fe10 when (r5&0xff)!=0 else 0x8c14fe68 with argument r4+0x2c; r0 = [[arg+4]+0x1c] or [[arg+4]+0x10]; r4 += 0x2c; T=(r5&0xff)==0; pr/r15 restored |
+| `0x8c0ed79c` | `FUN_8c0ed79c` | `notes/verifications/0x8c0ed79c.json` — 192 oracle steps; writes vtable 0x8c1ec934 then 0x8c1ec920 at *p; calls 0x8c010d8c with fr4=0.5 and stores 16.0/log10(0.5) = 0xc2549a78 at p+4 |
+| `0x8c0ed764` | `FUN_8c0ed764` | `notes/verifications/0x8c0ed764.json` — 96 oracle steps; writes vtable word 0x8c1ec920 then 0x8c1ec934 at *p (literal pool read in order); if sign-extended low 16 bits of r5 > 0, calls 0x8c01032c -> free(p); returns p (or 0) |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
