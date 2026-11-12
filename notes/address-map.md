@@ -91,6 +91,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0ae798` | `free_payload_then_object` | `notes/verifications/0x8c0ae798*.json` - 3 specs (103/25/12 steps) |
 | `0x8c0b5e4c` | `stamp_vtable_then_free` | `notes/verifications/0x8c0b5e4c*.json` - 4 specs (92/14/14/9 steps) |
 | `0x8c164320` | `guard_free` | `notes/verifications/0x8c164320*.json` - 5 specs (9-90 steps) |
+| `0x8c0b5180` | `write_element_fields` | `notes/verifications/0x8c0b5180*.json` - 5 specs (67/31 steps) |
 | `0x8c14cdcc` | `walk_48_byte_array_and_free` | `notes/verifications/0x8c14cdcc*.json` - 4 specs, 15-141 steps |
 | `0x8c1466b8` | `publish_mode_and_clear_slots` | `notes/verifications/0x8c1466b8*.json` - 3 specs, 388-395 steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
@@ -1618,6 +1619,10 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c07cdd4` | `FUN_8c07cdd4` | `notes/verifications/0x8c07cdd4.json` — 137 oracle steps; writes [r4+4]=0x8c1e98cc, *(*r4)=0x8c1e990c, *(*r4+24)=r4+48-*r4; frees [r4+32],[r4+36],[r4+40],[r4+44] via 0x8c0102cc; if exts.w r5!=0 stores [r4+48]=0x8c1e9ad4; if exts.w r5>0 frees r4 via 0x8c01032c |
 | `0x8c07add4` | `FUN_8c07add4` | `notes/verifications/0x8c07add4.json` — 24 oracle steps; stores cursor at [r4+8] and index at [r4+4]; leaves r4 in r0, final index in r1, descriptor-or-count in r3, r6 = descriptor (append) or n / n*4 (rewind); sets T from the wrap compare |
 | `0x8c05dfc0` | `FUN_8c05dfc0` | `notes/verifications/0x8c05dfc0.json` — 178 oracle steps; BST insertion-point walk: n=[r4+4]; while n: t=strcmp([[r5]],[[n+12]]); t<0 -> n=[n] else {r14=n; n=[n+4]}; if r14: t2=strcmp([[r14+12]],[[r5]]); t2>=0 -> *[entry r15]=r14 else *[entry r15]=r4+4; if r14==0 -> *[entry r15]=r4+4; writes the single out-slot store; restores r11-r14/pr; r0=out slot, r1=0 after any call, final r3-r5 callee residue; T=1 except t2<0 arm T=0 |
+| `0x8c0802f0` | `FUN_8c0802f0` | `notes/verifications/0x8c0802f0.json` — 145 oracle steps; builds end/begin ring iterators via 0x8c079cac/0x8c079c9c, decrements end with 0x8c079c78, then frees (0x8c01032c->0x8c159fc0) count-1 items from start with pointer wrap at items+4*capacity; stores only in its frame |
+| `0x8c04396c` | `FUN_8c04396c` | `notes/verifications/0x8c04396c.json` — 583 oracle steps; clears global 0x8c23dbf8 when it equals p; frees [p+0x1a0]; releases handle at p+0x190; destroys then frees list at p+0x184; releases handle at p+0x180; frees elements of array [p+0x17c] with count [p+0x178] (unsigned bound, reloaded per pass); releases block at p+0x174 then guarded-free; frees p when (i16)count > 0 |
+| `0x8c09d204` | `FUN_8c09d204` | `notes/verifications/0x8c09d204.json` — 194 oracle steps; release refcounted handle: --refcount; at 0 keep *handle and free object->inner then object; at >0 clear *handle; free handle when sext16(r5)>0 |
+| `0x8c07e47c` | `FUN_8c07e47c` | `notes/verifications/0x8c07e47c.json` — 22 oracle steps; moves cursor p={descriptor,index,element} by signed n: stores [p+8]=element+n*4 (or base+((capacity-n)<<2) / base+((descriptor[2]+index+|n|-capacity)<<2) on window wrap) then [p+4]=index-n; returns p; T=final cmp/hs (n>=0) or cmp/hi (n<0); r3/r6/r7 differ per sign path |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
