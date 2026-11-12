@@ -1,0 +1,43 @@
+{
+  "entry": "0x8c0a8d48",
+  "regs": {
+    "r4": "0x8c200000",
+    "r2": "0x22222222",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0x8c200800"
+  },
+  "fr": {
+    "f8": 1.5,
+    "f9": -2.5,
+    "f10": 3.25,
+    "f11": 4.75,
+    "f12": 5.125,
+    "f13": -6.5,
+    "f14": 7.0625,
+    "f15": -8.25,
+    "f4": -1.0,
+    "f5": -2.0,
+    "f6": 0.5,
+    "f7": 0.875
+  },
+  "memory": [
+    {
+      "addr": "0x8c200038",
+      "hex": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a"
+    },
+    {
+      "addr": "0x8c20004c",
+      "hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5"
+    },
+    {
+      "addr": "0x8c20024c",
+      "hex": "00"
+    }
+  ],
+  "steps": 8000
+}
