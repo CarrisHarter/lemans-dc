@@ -1,0 +1,33 @@
+{
+  "entry": "0x8c06cbec",
+  "regs": {
+    "r0": "0x01010101",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c250000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xdeadbeef"
+  },
+  "fr": { "f0": 7.0, "f1": 1.5 },
+  "memory": [
+    { "addr": "0x8c250000", "hex": "ffffffff" },
+    { "addr": "0x8c250004", "hex": "eeeeeeee" },
+    { "addr": "0x8c250008", "hex": "dddddddd" },
+    { "addr": "0x8c25000c", "hex": "cccccccc" },
+    { "addr": "0x8c250010", "hex": "bbbbbbbb" },
+    { "addr": "0x8c250014", "hex": "aaaaaaaa" },
+    { "addr": "0x8c250018", "hex": "99999999" },
+    { "addr": "0x8c25001c", "hex": "88888888" },
+    { "addr": "0x8c250020", "hex": "77777777" }
+  ],
+  "steps": 64
+}
