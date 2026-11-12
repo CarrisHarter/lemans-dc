@@ -48,6 +48,12 @@ proven; run it unattended and report results, not questions.
   Archive in `notes/permission/`; approved notice in `NOTICE.md` and generated
   into every export by `scripts/08-export.sh`.
 - Never publish the port. No repo, demo, video or WASM build of the Rust game.
+  `CarrisHarter/lemans-dc` is a **private backup** of this repository and must
+  stay private: no collaborators, no fork, no Pages. `scripts/git-hooks/pre-push`
+  checks `gh api repos/CarrisHarter/lemans-dc --jq .private` before every push
+  and refuses any commit that adds `analysis/*.bin`, `analysis/data/`,
+  `analysis/export/`, `work/` or a ROM fixture. A user timer
+  (`lemans-backup.timer`, every 30 min) pushes committed work only.
 - Never redistribute the ROM, disc image, or any extracted asset (art, audio,
   models, textures). A padded copy of the game image was once committed as a test
   fixture; it has been purged from all history and `.gitignore` now refuses

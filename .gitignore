@@ -1,5 +1,7 @@
-# Game data never enters version control: the port is local-only under the
+# Game data never enters version control: the port is never published under the
 # Atari grant, and every binary here belongs to the rights holders.
+# CarrisHarter/lemans-dc is a private backup of this repository and must stay
+# private; scripts/git-hooks/pre-push refuses any push to a non-private repo.
 analysis/*.bin
 analysis/data/
 analysis/export/
