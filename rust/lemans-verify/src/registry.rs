@@ -3153,6 +3153,8 @@ pub mod p_8c1996b4;
 pub mod p_8c199dd0;
 #[path = "ports/p_8c199fac.rs"]
 pub mod p_8c199fac;
+#[path = "ports/p_8c19a4b0.rs"]
+pub mod p_8c19a4b0;
 #[path = "ports/p_8c19a648.rs"]
 pub mod p_8c19a648;
 #[path = "ports/p_8c19ae00.rs"]
@@ -3167,6 +3169,8 @@ pub mod p_8c19b01c;
 pub mod p_8c19b530;
 #[path = "ports/p_8c19b624.rs"]
 pub mod p_8c19b624;
+#[path = "ports/p_8c19b634.rs"]
+pub mod p_8c19b634;
 #[path = "ports/p_8c19b7c8.rs"]
 pub mod p_8c19b7c8;
 #[path = "ports/p_8c19b7f0.rs"]
@@ -3181,8 +3185,12 @@ pub mod p_8c19ccf4;
 pub mod p_8c19ccfc;
 #[path = "ports/p_8c19cefc.rs"]
 pub mod p_8c19cefc;
+#[path = "ports/p_8c19d258.rs"]
+pub mod p_8c19d258;
 #[path = "ports/p_8c19d33c.rs"]
 pub mod p_8c19d33c;
+#[path = "ports/p_8c19d370.rs"]
+pub mod p_8c19d370;
 #[path = "ports/p_8c19d39c.rs"]
 pub mod p_8c19d39c;
 #[path = "ports/p_8c19d550.rs"]
@@ -5295,6 +5303,7 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C1996B4 => Some(p_8c1996b4::run),
         0x8C199DD0 => Some(p_8c199dd0::run),
         0x8C199FAC => Some(p_8c199fac::run),
+        0x8C19A4B0 => Some(p_8c19a4b0::run),
         0x8C19A648 => Some(p_8c19a648::run),
         0x8C19AE00 => Some(p_8c19ae00::run),
         0x8C19AE78 => Some(p_8c19ae78::run),
@@ -5302,6 +5311,7 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C19B01C => Some(p_8c19b01c::run),
         0x8C19B530 => Some(p_8c19b530::run),
         0x8C19B624 => Some(p_8c19b624::run),
+        0x8C19B634 => Some(p_8c19b634::run),
         0x8C19B7C8 => Some(p_8c19b7c8::run),
         0x8C19B7F0 => Some(p_8c19b7f0::run),
         0x8C19CA78 => Some(p_8c19ca78::run),
@@ -5309,7 +5319,9 @@ pub fn lookup(address: u32) -> Option<Port> {
         0x8C19CCF4 => Some(p_8c19ccf4::run),
         0x8C19CCFC => Some(p_8c19ccfc::run),
         0x8C19CEFC => Some(p_8c19cefc::run),
+        0x8C19D258 => Some(p_8c19d258::run),
         0x8C19D33C => Some(p_8c19d33c::run),
+        0x8C19D370 => Some(p_8c19d370::run),
         0x8C19D39C => Some(p_8c19d39c::run),
         0x8C19D550 => Some(p_8c19d550::run),
         0x8C19F538 => Some(p_8c19f538::run),
