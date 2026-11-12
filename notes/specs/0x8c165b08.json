@@ -1,0 +1,74 @@
+{
+  "note": "r4 != 0 and exts.w(r5) > 0 (r5=0x80000001: only the low half decides): the 0x8c1efe74 and 0x8c1e9198 header stores happen, the second wins, then 0x8c056bcc (called with r5=0) overwrites the header with 0x8c1e8f88; exts.w(orig r5) > 0 so free(0x8c200100) runs. Chunk size 16 with previous/next fields forcing free down the no-coalesce, no-insert, immediate-bin-exit path. r0 ends as the saved r4, r13/r14/pr restored, T=0 from free's final cmp/hi.",
+  "entry": "0x8c165b08",
+  "sr": 1,
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x12345678",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0x13131313",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r4": "0x8c200100",
+    "r5": "0x80000001"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2000f4",
+      "hex": "ffffff7f",
+      "note": "next-block size probe"
+    },
+    {
+      "addr": "0x8c2000f8",
+      "hex": "0001218c",
+      "note": "chunk prev pointer"
+    },
+    {
+      "addr": "0x8c2000fc",
+      "hex": "10000000",
+      "note": "chunk size = 16"
+    },
+    {
+      "addr": "0x8c200100",
+      "hex": "44332211",
+      "note": "object header, overwritten"
+    },
+    {
+      "addr": "0x8c210000",
+      "hex": "00000000",
+      "note": "top chunk size"
+    },
+    {
+      "addr": "0x8c210008",
+      "hex": "00000000",
+      "note": "bin entry, empty"
+    },
+    {
+      "addr": "0x8c210104",
+      "hex": "ffffff7f",
+      "note": "prev-chunk size probe"
+    },
+    {
+      "addr": "0x8c2b1ef8",
+      "hex": "0000218c",
+      "note": "top-chunk pointer"
+    }
+  ],
+  "steps": 500,
+  "expect": {
+    "r0": "0x8c200100",
+    "r5": 1,
+    "r6": "0x8c210000",
+    "r13": "0x13131313",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  }
+}
