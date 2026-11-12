@@ -1917,6 +1917,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1ae7d8` | `zero_three_publish_global` | `notes/verifications/0x8c1ae7d8.json` - 20 oracle steps |
 | `0x8c193618` | `release_stride28_then_free` | `notes/verifications/0x8c193618*.json` - 2 specs (87/15 steps) |
 | `0x8c19a45c` | `release_stride_e4_then_free` | `notes/verifications/0x8c19a45c*.json` - 2 specs (107/86 steps) |
+| `0x8c193150` | `drain_subarray_then_free` | `notes/verifications/0x8c193150*.json` - 3 specs (170/107/12 steps) |
+| `0x8c19a278` | `drain_subarray24_then_free` | `notes/verifications/0x8c19a278*.json` - 3 specs (173/110/12 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
