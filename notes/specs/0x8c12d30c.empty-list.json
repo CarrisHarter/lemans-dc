@@ -1,0 +1,39 @@
+{
+  "entry": "0x8c12d30c",
+  "note": "Empty block list: the second callee's bt.s early exit is taken (r3 == 0), so r4 is never overwritten with 0x7fffffff, r5 stays untouched at its zero seed, and r0 ends 0 from the delay slot. Also covers the first callee's full three-dereference chain.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x44444444",
+    "r5": "0x00000000",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c12d320", "hex": "7ca2158c", "note": "literal: 0x8c15a27c" },
+    { "addr": "0x8c12d324", "hex": "3ca2158c", "note": "literal: 0x8c15a23c" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c", "note": "global -> 0x8c210000" },
+    { "addr": "0x8c210000", "hex": "78563412", "note": "value read by 0x8c15a27c's delay slot" },
+    { "addr": "0x8c210008", "hex": "00000000", "note": "first block is null -> bt.s exit" }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0x00000000",
+    "r1": "0x8c210000",
+    "r3": "0x00000000",
+    "r4": "0x44444444",
+    "r5": "0x00000000",
+    "r15": "0x8c308000"
+  }
+}

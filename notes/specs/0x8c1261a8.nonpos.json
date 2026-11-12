@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c1261a8",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0x12340000",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c2ab5e0", "hex": "11223344" }
+  ],
+  "steps": 32,
+  "note": "non-null with a zero r5 low half (upper bits set): the bf.s delay slot still clears 0x8c2ab5e0, no free call, r0 = r4 and T=0"
+}

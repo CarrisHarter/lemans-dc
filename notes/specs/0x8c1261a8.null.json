@@ -1,0 +1,16 @@
+{
+  "entry": "0x8c1261a8",
+  "regs": {
+    "r4": "0x00000000",
+    "r5": "0x00007fff",
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c2ab5e0", "hex": "11223344" }
+  ],
+  "steps": 32,
+  "note": "null r4: early return 0 without touching the global despite the positive r5; r14/pr restored, T=1"
+}

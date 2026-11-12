@@ -61,6 +61,12 @@ fn validate(spec: &Json) -> Result<(), String> {
             if !ok {
                 return Err(format!("bad register name {key:?}; expected r0..r15"));
             }
+            let v = &regs[key];
+            if v.as_u32().is_none() && v.as_f32().is_none() {
+                return Err(format!(
+                    "register {key:?} value {v} does not parse as a 32-bit value (use 8 hex digits)"
+                ));
+            }
         }
     } else if spec.get("regs").is_some() {
         return Err("\"regs\" must be an object".into());
@@ -73,6 +79,12 @@ fn validate(spec: &Json) -> Result<(), String> {
                 .is_some_and(|n| n < 16);
             if !ok {
                 return Err(format!("bad FPU register name {key:?}; expected f0..f15"));
+            }
+            let v = &fr[key];
+            if v.as_u32().is_none() && v.as_f32().is_none() {
+                return Err(format!(
+                    "FPU register {key:?} value {v} does not parse (use a float or 8 hex digits)"
+                ));
             }
         }
     } else if spec.get("fr").is_some() {

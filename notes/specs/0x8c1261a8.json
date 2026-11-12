@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c1261a8",
+  "regs": {
+    "r4": "0x8c201000",
+    "r5": "0x12340001",
+    "r1": "0x11111111",
+    "r3": "0x33333333",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": [
+    { "addr": "0x8c2ab5e0", "hex": "11223344" },
+    { "addr": "0x8c200ffc", "hex": "40000000" },
+    { "addr": "0x8c200ff8", "hex": "0000228c" },
+    { "addr": "0x8c200fc4", "hex": "08000000" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c" },
+    { "addr": "0x8c210000", "hex": "00100000" },
+    { "addr": "0x8c220004", "hex": "00000080" }
+  ],
+  "steps": 200,
+  "note": "non-null with a positive r5 low half: clears 0x8c2ab5e0, calls the free thunk on the r4 heap block, returns r4"
+}

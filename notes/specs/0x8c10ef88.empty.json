@@ -1,0 +1,18 @@
+{
+  "entry": "0x8c10ef88",
+  "regs": {
+    "r4": "0x8c200080",
+    "r5": "0x8c2000a0",
+    "r6": "0xffffffff",
+    "r14": "0x0badf00d",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200080", "hex": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" },
+    { "addr": "0x8c2000a0", "hex": "0001208c" },
+    { "addr": "0x8c20010c", "hex": "0002208c" },
+    { "addr": "0x8c200200", "hex": "004142434445464748494a4b4c4d4e4f" }
+  ],
+  "steps": 200,
+  "expect": { "r0": "0x8c200080", "r5": 15, "r6": 15, "r1": 0 }
+}

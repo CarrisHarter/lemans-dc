@@ -87,6 +87,9 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     cpu.r[3] = e8.wrapping_add(0x14); // add #20,r3 at 0x8c05105a
     cpu.r[5] = p + 0x14; // add #20,r5 at 0x8c050fbe
     // r6 was p+0x38 for the fmov but is reused as scratch afterwards.
+    // `shll r0` at 0x8c05103a is the last flag setter: r0 = *(p+0x20)<<2 and
+    // *(p+0x20) was zeroed at entry, so T ends 0 whatever the entry T was.
+    cpu.set_t(false);
     cpu.r[7] = sel.wrapping_mul(4); // shll2 r7 at 0x8c051030
     cpu.r[6] = idx10; // final r6: `mov.l @(r0,r3),r6` = entries[1] at 0x8c051044
 }

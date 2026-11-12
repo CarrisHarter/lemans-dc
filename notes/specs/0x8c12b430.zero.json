@@ -1,0 +1,36 @@
+{
+  "entry": "0x8c12b430",
+  "note": "count 0: the initial cmp/eq matches immediately, so no callee runs and the function returns 0 with r4 still the parameter and r1 the array base",
+  "regs": {
+    "r0": "0x11111111",
+    "r1": "0x22222222",
+    "r2": "0x33333333",
+    "r3": "0x44444444",
+    "r4": "0x8c240000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0x13572468",
+    "r14": "0x24681357",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c240000", "hex": "0001248c" },
+    { "addr": "0x8c24013c", "hex": "00000000" },
+    { "addr": "0x8c240140", "hex": "0002248c" }
+  ],
+  "steps": 100,
+  "expect": {
+    "r0": "0x00000000",
+    "r1": "0x8c240200",
+    "r4": "0x8c240000",
+    "r13": "0x13572468",
+    "r14": "0x24681357",
+    "r15": "0x8c308000"
+  }
+}

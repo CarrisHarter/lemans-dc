@@ -1,0 +1,44 @@
+{
+  "entry": "0x8c12d30c",
+  "note": "Both callees run in sequence. The first (0x8c15a27c) dereferences the global chain [0x8c15a284] -> [0x8c2b1ef8] -> [0x8c210000]; the second (0x8c15a23c) walks a five-node block list from [[0x8c2b1ef8]+8]: two accepted sizes that raise r0 (0x10 then 0x40), a smaller positive size (0x20) on the bf path, a negative size (-16) through cmp/pz+neg, and the 0x7fffffff sentinel that zeroes r3 and ends the walk.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c210000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c12d320", "hex": "7ca2158c", "note": "literal: 0x8c15a27c" },
+    { "addr": "0x8c12d324", "hex": "3ca2158c", "note": "literal: 0x8c15a23c" },
+    { "addr": "0x8c2b1ef8", "hex": "0000218c", "note": "global -> 0x8c210000" },
+    { "addr": "0x8c210000", "hex": "78563412", "note": "head data read by 0x8c15a27c's delay slot" },
+    { "addr": "0x8c210008", "hex": "1000218c", "note": "first block -> 0x8c210010" },
+    { "addr": "0x8c210014", "hex": "10000000", "note": "size 0x10 (accepted, r0=0x10)" },
+    { "addr": "0x8c21002c", "hex": "40000000", "note": "size 0x40 (accepted, r0=0x40)" },
+    { "addr": "0x8c210074", "hex": "20000000", "note": "size 0x20 <= r0 (bf path, positive)" },
+    { "addr": "0x8c21009c", "hex": "f0ffffff", "note": "size -16 (cmp/pz fails, neg)" },
+    { "addr": "0x8c2100b4", "hex": "ffffff7f", "note": "sentinel 0x7fffffff: r3=0, exit" }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0x00000040",
+    "r1": "0x00000000",
+    "r3": "0x00000000",
+    "r4": "0x7fffffff",
+    "r5": "0x7fffffff",
+    "r15": "0x8c308000"
+  }
+}

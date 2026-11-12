@@ -13,7 +13,7 @@ pub fn run(cpu: &mut Cpu, mem: &mut Memory) {
     let mut r0: u32 = 0;
     let mut r1 = cpu.r[1];
     let mut r3 = cpu.r[3];
-    let mut r5: u32 = 0;
+    let mut r5: u32 = cpu.r[5]; // the early bt.s path never loads r5
     let t = r3 == 0;
     cpu.set_t(t);
     if t {

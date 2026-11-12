@@ -1,0 +1,47 @@
+{
+  "entry": "0x8c10efa8",
+  "regs": {
+    "r0": "0x0000dead",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200100",
+    "r5": "0x8c200200",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "sr": "0x00000000",
+  "memory": [
+    { "addr": "0x8c200100", "hex": "cccccccccccccccccccccccccccccccc" },
+    { "addr": "0x8c200200", "hex": "6869000000000000" }
+  ],
+  "steps": 200,
+  "expect": {
+    "r0": "0x8c200100",
+    "r1": "0x00000000",
+    "r2": "0x22222222",
+    "r3": "0x00000000",
+    "r4": "0x8c200100",
+    "r5": "0x0000000f",
+    "r6": "0x0000000f",
+    "r7": "0x8c20010f",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "sr": "0x00000001"
+  },
+  "notes": "strncpy(0x8c011344)(dst,src,15) copies 'h','i' and NUL-pads to 15 bytes, then the wrapper zeroes dst+15. T ends 1 from the callee's terminating cmp/hs; the call leaves r0=dst, r1=0, r3=0, r5=15, r7=dst+15; r6=15 comes from the jsr delay slot. r14/pr are restored from the stack pushes."
+}

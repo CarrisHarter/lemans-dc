@@ -1,0 +1,40 @@
+{
+  "entry": "0x8c12b430",
+  "note": "count 3, elements [0x8c241000, 0x8c241010, 0x8c241020]; byte 4 is 0x11, 0x00, 0x22, so the scan returns the second element and must not test the third",
+  "regs": {
+    "r0": "0x11111111",
+    "r1": "0x22222222",
+    "r2": "0x33333333",
+    "r3": "0x44444444",
+    "r4": "0x8c240000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdeadbeef",
+    "r14": "0xcafebabe",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c240000", "hex": "0001248c" },
+    { "addr": "0x8c24013c", "hex": "03000000" },
+    { "addr": "0x8c240140", "hex": "0002248c" },
+    { "addr": "0x8c240200", "hex": "0010248c1010248c2010248c" },
+    { "addr": "0x8c241004", "hex": "11" },
+    { "addr": "0x8c241014", "hex": "00" },
+    { "addr": "0x8c241024", "hex": "22" }
+  ],
+  "steps": 400,
+  "expect": {
+    "r0": "0x8c241010",
+    "r1": "0x8c24020c",
+    "r4": "0x8c241010",
+    "r13": "0xdeadbeef",
+    "r14": "0xcafebabe",
+    "r15": "0x8c308000"
+  }
+}

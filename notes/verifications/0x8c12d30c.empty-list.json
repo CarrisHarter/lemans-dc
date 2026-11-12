@@ -1,0 +1,17 @@
+{
+  "address": "0x8c12d30c",
+  "spec": "notes/specs/0x8c12d30c.empty-list.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "37e57148",
+  "verified_at": "2026-11-12T05:00:23+00:00",
+  "first_verified_at": "2026-11-12T05:00:23+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 22
+  },
+  "verifier_output": [
+    "ok   0x8c12d30c matches original (22 oracle steps)"
+  ]
+}
