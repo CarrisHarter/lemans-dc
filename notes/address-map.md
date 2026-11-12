@@ -1927,6 +1927,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c17fc44` | `substring_search` | `notes/verifications/0x8c17fc44*.json` - 2 specs (452/224 steps) |
 | `0x8c14409c` | `scan_records_by_name` | `notes/verifications/0x8c14409c*.json` - 2 specs (484/480 steps) |
 | `0x8c18428c` | `scan_stride88_by_name` | `notes/verifications/0x8c18428c*.json` - 2 specs (160/152 steps) |
+| `0x8c18c5c4` | `walk_cursor_set_flag` | `notes/verifications/0x8c18c5c4.json` - 21 oracle steps (empty walk only) |
+| `0x8c18c608` | `walk_cursor_clear_flag` | `notes/verifications/0x8c18c608.json` - 21 oracle steps (empty walk only) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
