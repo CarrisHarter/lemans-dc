@@ -20,12 +20,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TOTAL = 5211  # functions exported (analysis/export/pseudocode/functions/)
-# Schedule: every unblocked function verified by Fri 13 Nov 12am JST, as a
-# straight line from the first published snapshot (1,373 verified). The target
-# count is TOTAL - blocked at snapshot time, the same "finished" the ETA uses.
-PLAN_START = datetime(2026, 11, 12, 2, 11, 4, tzinfo=timezone.utc)
-PLAN_START_VERIFIED = 1373
-PLAN_END = datetime(2026, 11, 12, 15, 0, 0, tzinfo=timezone.utc)  # Fri 13 Nov 00:00 JST
 RATE_WINDOW_H = 3  # primary pace window; 1 h and 6 h bound the ETA range
 BLOCKED_TREND_H = 6  # blocked count is compared with the ledger this long ago
 HISTORY_POINTS = 48  # samples in the cumulative verified series
@@ -223,21 +217,9 @@ def current_task(last_hour: int, last_day: int) -> str:
     return "idle — 0 proven in last 24h"
 
 
-def schedule(now, verified, target, finish):
-    """Position against the plan: functions ahead (+) / behind (-) of the
-    straight-line plan now, and hours the projected finish is early (+) / late (-)."""
-    frac = min(max((now - PLAN_START) / (PLAN_END - PLAN_START), 0.0), 1.0)
-    planned = round(PLAN_START_VERIFIED + (target - PLAN_START_VERIFIED) * frac)
-    return {
-        "planned": planned,
-        "ahead": verified - planned,
-        "early_hours": round((PLAN_END - finish).total_seconds() / 3600, 1) if finish else None,
-        "finish": finish.isoformat(timespec="seconds") if finish else None,
-        "plan_start": PLAN_START.isoformat(timespec="seconds"),
-        "plan_start_verified": PLAN_START_VERIFIED,
-        "plan_target": target,
-        "plan_end": PLAN_END.isoformat(timespec="seconds"),
-    }
+def schedule(finish):
+    """Expected finish of the remaining unblocked functions at the current pace."""
+    return {"finish": finish.isoformat(timespec="seconds") if finish else None}
 
 
 def snapshot():
@@ -282,7 +264,7 @@ def snapshot():
         "eta_days": round(eta_days, 1) if eta_days is not None else None,
         "eta_range": eta_range,  # [fastest, slowest] days from the 1 h / 3 h / 6 h paces
         "current_task": current_task(last1h, last24),
-        "schedule": schedule(now, verified, TOTAL - blocked, finish),
+        "schedule": schedule(finish),
         "latest": max(stamps).isoformat(timespec="seconds") if stamps else None,
         "hourly": _buckets(ages, 3600, 24),  # proofs per hour, last 24 h, oldest first
         "minutely": _buckets(ages, 60, 60),  # proofs per minute, last 60 min, oldest first

@@ -105,13 +105,12 @@ PAGE = """<!doctype html>
   @keyframes flash { from { color: var(--go-hi); text-shadow: 0 0 10px var(--go); } }
 
   .charts { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: .6rem; }
-  .burn .plan { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
   .burn .done { fill: color-mix(in srgb, var(--go) 22%, transparent); stroke: var(--go); stroke-width: 2; vector-effect: non-scaling-stroke; }
   .burn .proj { fill: none; stroke: var(--go); stroke-width: 1.5; stroke-dasharray: 2 3; opacity: .8; vector-effect: non-scaling-stroke; }
   .burn .now { stroke: var(--faint); stroke-width: 1; vector-effect: non-scaling-stroke; }
   .burn .goal { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
   .key { display: inline-block; width: .9rem; margin-right: .25rem; vertical-align: middle; border-top: 2px solid var(--go); }
-  .key.p { border-top: 1.5px dashed var(--muted); }
+  .key.p { border-top: 1.5px dashed var(--go); }
   .chart { padding: .55rem .8rem .45rem; min-width: 0; }
   .ch { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .35rem; }
   .ch .m { font-size: .7rem; color: var(--muted); white-space: nowrap; }
@@ -180,14 +179,14 @@ PAGE = """<!doctype html>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
-    <div class="sched"><span class="k" id="sched-k">deadline</span><span class="v" id="sched">—</span><span class="s" id="sched-s">expected finish: —</span><span class="s" id="sched-l" style="display: none"></span></div>
+    <div class="sched"><span class="k" id="sched-k">expected finish</span><span class="v" id="sched">—</span><span class="s" id="sched-s">at current pace</span></div>
     <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
     <div class="opt"><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
 
   <section class="charts">
-    <div class="box chart burn"><div class="ch"><span class="k">verified vs plan</span><span class="m"><i class="key"></i>actual <i class="key p"></i>plan</span></div>
-      <div id="chart-b"><div class="empty">no data</div></div><div class="ax"><span id="b-x0">start</span><span id="b-x1">now</span><span id="b-x2">plan end</span></div></div>
+    <div class="box chart burn"><div class="ch"><span class="k">verified</span><span class="m"><i class="key"></i>actual <i class="key p"></i>forecast</span></div>
+      <div id="chart-b"><div class="empty">no data</div></div><div class="ax"><span id="b-x0">start</span><span id="b-x1">now</span><span id="b-x2">finish</span></div></div>
     <div class="box chart cm"><div class="ch"><span class="k">proofs / min · 60 min</span><span class="m" id="cm-s"></span></div>
       <div id="chart-m"><div class="empty">no data</div></div><div class="ax"><span>−60m</span><span>−30m</span><span>now</span></div></div>
     <div class="box chart"><div class="ch"><span class="k">proofs / h · 24 h</span><span class="m" id="ch-s"></span></div>
@@ -320,21 +319,6 @@ function stamp(ms) {
   return t.getFullYear() + "-" + pad(t.getMonth() + 1) + "-" + pad(t.getDate()) + " " + pad(t.getHours()) + ":" + pad(t.getMinutes());
 }
 
-/* Wall-clock parts of `ms` in `timeZone` (default: the viewer's), 12-hour. */
-function clock(ms, timeZone) {
-  const p = {};
-  for (const x of new Intl.DateTimeFormat("en-GB", {timeZone, weekday: "short", day: "numeric", month: "short",
-      hour: "numeric", minute: "2-digit", hourCycle: "h23"}).formatToParts(ms)) p[x.type] = x.value;
-  const h = +p.hour % 24;
-  return { wd: p.weekday, day: p.weekday + " " + p.day + " " + p.month,
-           time: (h % 12 || 12) + (p.minute !== "00" ? ":" + p.minute : "") + (h < 12 ? "am" : "pm") };
-}
-/* The deadline was set in Japan time, so times are shown in JST for everyone. */
-const jst = ms => { const c = clock(ms, "Asia/Tokyo"); return c.day + " " + c.time + " JST"; };
-const local = ms => { const c = clock(ms); return c.wd + " " + c.time; };
-const localZone = ms => new Intl.DateTimeFormat(undefined, {timeZoneName: "short"}).formatToParts(ms)
-  .find(x => x.type === "timeZoneName").value;
-
 function bars(hostId, data, unit) {
   const host = $(hostId);
   if (!Array.isArray(data) || !data.length || !data.every(v => isNum(v) && v >= 0)) {
@@ -370,7 +354,7 @@ function bars(hostId, data, unit) {
 }
 
 function burnup(d) {
-  const host = $("chart-b"), h = d.history, sc = d.schedule || {};
+  const host = $("chart-b"), h = d.history;
   const pts = h && Array.isArray(h.verified) ? h.verified : null;
   const t0 = h ? Date.parse(h.start) : NaN, step = h ? h.step_s * 1000 : NaN;
   if (!pts || pts.length < 2 || !pts.every(isNum) || Number.isNaN(t0) || !isNum(step)) {
@@ -378,17 +362,14 @@ function burnup(d) {
     return;
   }
   const now = Date.parse(d.updated);
-  const ps = Date.parse(sc.plan_start || ""), pe = Date.parse(sc.plan_end || "");
-  const hasPlan = !Number.isNaN(ps) && !Number.isNaN(pe) && isNum(sc.plan_start_verified) && isNum(sc.plan_target);
   const fin = isNum(d.eta_days) && d.remaining > 0 ? now + d.eta_days * 864e5 : NaN;
-  const t1 = Math.max(now, hasPlan ? pe : now, Number.isNaN(fin) ? now : Math.min(fin, now + 30 * 864e5));
+  const t1 = Math.max(now, Number.isNaN(fin) ? now : Math.min(fin, now + 30 * 864e5));
   const W = 1000, H = 64, span = Math.max(t1 - t0, 1);
   const x = t => ((t - t0) / span * W).toFixed(1), y = v => (H - 1 - v / d.total * (H - 4)).toFixed(1);
   const line = pts.map((v, i) => x(t0 + i * step) + "," + y(v)).join(" ");
   let svg = '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img">';
-  svg += "<title>" + fmt(d.verified) + " verified" + (hasPlan ? ", plan " + fmt(sc.planned) + " by now" : "") + "</title>";
+  svg += "<title>" + fmt(d.verified) + " verified</title>";
   svg += '<line class="goal" x1="0" x2="' + W + '" y1="' + y(d.total) + '" y2="' + y(d.total) + '"/>';
-  if (hasPlan) svg += '<polyline class="plan" points="' + x(ps) + "," + y(sc.plan_start_verified) + " " + x(pe) + "," + y(sc.plan_target) + '"/>';
   svg += '<polygon class="done" points="' + x(t0) + "," + H + " " + line + " " + x(now) + "," + H + '"/>';
   if (!Number.isNaN(fin)) {
     const tf = Math.min(fin, t1), vf = d.verified + d.remaining * (tf - now) / (fin - now);
@@ -444,25 +425,20 @@ function render(d, prev) {
   $("eta").textContent = eta;
   $("eta-s").textContent = etaS;
 
-  const sc = d.schedule, sv = $("sched"), due = Date.parse((sc && sc.plan_end) || "");
-  if (sc && !Number.isNaN(due)) {
-    $("sched-k").textContent = "deadline · by " + jst(due);
-    const e = sc.early_hours, late = isNum(e) && e < 0, fin = Date.parse(sc.finish || "");
-    const away = new Date(due).getTimezoneOffset() !== -540, ll = $("sched-l");
-    ll.style.display = away ? "" : "none";
-    ll.textContent = away ? "your time (" + localZone(due) + "): by " + local(due)
-      + (Number.isNaN(fin) || d.remaining === 0 ? "" : " · finish " + local(fin)) : "";
-    const span = h => h >= 48 ? Math.round(h / 24) + " days" : h >= 1 ? Math.round(h) + " h" : Math.round(h * 60) + " min";
-    sv.className = "v " + (d.remaining === 0 || (isNum(e) && !late) ? "go" : late ? "wa" : "");
-    const left = (due - Date.parse(d.updated)) / 3.6e6, now = Math.round(d.pace_per_day / 24);
-    $("sched-s").textContent = d.remaining === 0 ? "all unblocked functions verified"
-      : "expected finish: " + (Number.isNaN(fin) ? "no forecast (idle)" : jst(fin));
+  const sc = d.schedule, sv = $("sched"), fin = Date.parse((sc && sc.finish) || "");
+  $("sched-k").textContent = "expected finish";
+  sv.title = "";
+  if (d.remaining === 0) {
+    sv.textContent = "done"; sv.className = "v go";
+    $("sched-s").textContent = "all unblocked functions verified";
+  } else if (Number.isNaN(fin)) {
+    sv.textContent = "—"; sv.className = "v";
+    $("sched-s").textContent = "no forecast";
+  } else {
+    sv.className = "v";
+    $("sched-s").textContent = "at current pace";
     countdown();
-    sv.title = (isNum(e) ? "At the current pace the last function lands " + span(Math.abs(e)) + (late ? " after" : " before") + " the deadline. " : "")
-      + (left > 0 && d.remaining ? "Needs " + fmt(Math.ceil(d.remaining / left)) + "/h, doing " + fmt(now) + "/h. " : "")
-      + "Plan line: " + fmt(sc.planned) + " verified by now, actual " + fmt(d.verified)
-      + " (" + (sc.ahead >= 0 ? fmt(sc.ahead) + " ahead" : fmt(-sc.ahead) + " behind") + ").";
-  } else { $("sched-k").textContent = "deadline"; $("sched-l").style.display = "none"; sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "expected finish: —"; }
+  }
 
   burnup(d);
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";
@@ -507,12 +483,13 @@ function status() {
 }
 
 function countdown() {
-  const d = S.doc, due = Date.parse((d && d.schedule && d.schedule.plan_end) || "");
-  if (Number.isNaN(due)) return;
-  const s = Math.floor((due - Date.now()) / 1000), days = Math.floor(s / 86400);
-  $("sched").textContent = d.remaining === 0 ? "done" : s <= 0 ? "passed"
-    : (days ? days + "d " + pad(Math.floor(s / 3600) % 24) : Math.floor(s / 3600)) + "h "
-      + pad(Math.floor(s / 60) % 60) + "m " + pad(s % 60) + "s";
+  const d = S.doc, fin = Date.parse((d && d.schedule && d.schedule.finish) || "");
+  if (!d || d.remaining === 0 || Number.isNaN(fin)) return;
+  const s = Math.floor((fin - Date.now()) / 1000);
+  if (s <= 0) { $("sched").textContent = "now"; return; }
+  const days = Math.floor(s / 86400);
+  $("sched").textContent = (days ? days + "d " + pad(Math.floor(s / 3600) % 24) : Math.floor(s / 3600)) + "h "
+    + pad(Math.floor(s / 60) % 60) + "m " + pad(s % 60) + "s";
 }
 
 /* ---------- lifecycle ---------- */
