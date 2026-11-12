@@ -1298,6 +1298,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c231620` | `tail_slot_pair_0` | `notes/verifications/0x8c231620.json` - 21 oracle steps; 0x8c239820(0, r4, r5) |
 | `0x8c231660` | `tail_slot_pair_8` | `notes/verifications/0x8c231660.json` - 20 oracle steps; 0x8c239820(8, r4, 0x8c2c6f5c) |
 | `0x8c2317a0` | `tail_slot_pair_2` | `notes/verifications/0x8c2317a0.json` - 21 oracle steps; 0x8c239820(2, r4, r5) |
+| `0x8c22c420` | `scan_kind_code` | `notes/verifications/0x8c22c420*.json` - 5 specs (15/19/20/27/70); 0x100/0x101/102/105 from the kind word, or 105 after 8 misses |
+| `0x8c231b00` | `tail_slot_pair_1` | `notes/verifications/0x8c231b00.json` - 21 oracle steps; 0x8c239820(1, r4, r5) |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
 | `0x8c21b05e` | `slot_byte13_set` | `notes/verifications/0x8c21b05e.json` - 16 oracle steps; stores 1 at byte 13 in the rts delay slot |
