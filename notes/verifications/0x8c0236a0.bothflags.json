@@ -1,0 +1,16 @@
+{
+  "address": "0x8c0236a0",
+  "spec": "notes/specs/0x8c0236a0.bothflags.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "3e3f6643",
+  "verified_at": "2026-11-12T01:40:15+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 895
+  },
+  "verifier_output": [
+    "ok   0x8c0236a0 matches original (895 oracle steps)"
+  ]
+}
