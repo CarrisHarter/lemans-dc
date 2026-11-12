@@ -1916,6 +1916,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19c95c` | `clear_pair_then_refcount` | `notes/verifications/0x8c19c95c.json` - 55 oracle steps |
 | `0x8c1ae7d8` | `zero_three_publish_global` | `notes/verifications/0x8c1ae7d8.json` - 20 oracle steps |
 | `0x8c193618` | `release_stride28_then_free` | `notes/verifications/0x8c193618*.json` - 2 specs (87/15 steps) |
+| `0x8c19a45c` | `release_stride_e4_then_free` | `notes/verifications/0x8c19a45c*.json` - 2 specs (107/86 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
