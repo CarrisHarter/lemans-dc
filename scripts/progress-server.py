@@ -434,12 +434,13 @@ function render(d, prev) {
     $("sched-k").textContent = "deadline · by " + day + " " + (h % 12 || 12) + (m ? ":" + pad(m) : "") + (h < 12 ? "am" : "pm");
     const e = sc.early_hours, late = isNum(e) && e < 0;
     const span = h => h >= 48 ? Math.round(h / 24) + " days" : h >= 1 ? Math.round(h) + " h" : Math.round(h * 60) + " min";
-    sv.textContent = d.remaining === 0 ? "done" : !isNum(e) ? "no forecast" : late ? "~" + span(-e) + " late" : "on track";
     sv.className = "v " + (d.remaining === 0 || (isNum(e) && !late) ? "go" : late ? "wa" : "");
     const left = (due - Date.parse(d.updated)) / 3.6e6, now = Math.round(d.pace_per_day / 24);
+    const verdict = !isNum(e) ? "no forecast" : late ? "finish ~" + span(-e) + " late" : "on track";
     $("sched-s").textContent = d.remaining === 0 ? "all unblocked functions verified"
       : left <= 0 ? "deadline passed · " + fmt(d.remaining) + " left"
-      : "needs " + fmt(Math.ceil(d.remaining / left)) + "/h · doing " + fmt(now) + "/h";
+      : verdict + " · needs " + fmt(Math.ceil(d.remaining / left)) + "/h · doing " + fmt(now) + "/h";
+    countdown();
     sv.title = "Plan line: " + fmt(sc.planned) + " verified by now, actual " + fmt(d.verified)
       + " (" + (sc.ahead >= 0 ? fmt(sc.ahead) + " ahead" : fmt(-sc.ahead) + " behind") + ")."
       + (isNum(e) ? " At the current pace the last function lands " + span(Math.abs(e)) + (late ? " after" : " before") + " the deadline." : "");
@@ -484,6 +485,16 @@ function status() {
   if (pill.dataset.mode !== mode) pill.dataset.mode = mode;
   $("pill-t").textContent = label;
   $("pill-sub").textContent = sub;
+  countdown();
+}
+
+function countdown() {
+  const d = S.doc, due = Date.parse((d && d.schedule && d.schedule.plan_end) || "");
+  if (Number.isNaN(due)) return;
+  const s = Math.floor((due - Date.now()) / 1000), days = Math.floor(s / 86400);
+  $("sched").textContent = d.remaining === 0 ? "done" : s <= 0 ? "passed"
+    : (days ? days + "d " + pad(Math.floor(s / 3600) % 24) : Math.floor(s / 3600)) + "h "
+      + pad(Math.floor(s / 60) % 60) + "m " + pad(s % 60) + "s";
 }
 
 /* ---------- lifecycle ---------- */
