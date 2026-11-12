@@ -23,7 +23,18 @@ ln -s "$SRC/work" "$DST/work"
 
 cp -r "$SRC/scripts" "$DST/scripts"
 cp -r "$SRC/tools" "$DST/tools"
-cp -r "$SRC/rust" "$DST/rust"
+# Copy sources without build artifacts: 40 MB of target/ per workspace filled
+# /tmp once 100 workspaces had accumulated.
+mkdir -p "$DST/rust"
+for crate in "$SRC"/rust/*/; do
+  name="$(basename "$crate")"
+  mkdir -p "$DST/rust/$name"
+  cp -r "$crate/src" "$DST/rust/$name/" 2>/dev/null || true
+  for f in Cargo.toml Cargo.lock build.rs; do
+    [ -f "$crate/$f" ] && cp "$crate/$f" "$DST/rust/$name/"
+  done
+  cp -r "$crate/tests" "$DST/rust/$name/" 2>/dev/null || true
+done
 rm -rf "$DST/rust/lemans-verify/target" "$DST/rust/sh4-oracle/target"
 
 cp "$SRC"/notes/specs/*.json "$DST/notes/specs/"
