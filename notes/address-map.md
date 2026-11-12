@@ -1276,6 +1276,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21fb50` | `publish_hex_pointer` | `notes/verifications/0x8c21fb50.json` - 219 oracle steps; eight nibbles of r4, mode >= 2 so the device poll is skipped |
 | `0x8c221eee` | `tail_call_reschedule` | `notes/verifications/0x8c221eee.json` - 138 oracle steps; jmp to 0x8c21d6bc |
 | `0x8c222430` | `table_byte_and_slot_bit1` | `notes/verifications/0x8c222430*.json` - 3 specs (49/52); 1 only when the byte is nonzero and bit 1 is set |
+| `0x8c223812` | `admit_record` | `notes/verifications/0x8c223812*.json` - null 14, zero-byte 22, slot-miss 98 |
 | `0x8c225534` | `first_zero_stride32` | `notes/verifications/0x8c225534*.json` - 2 specs (15/28); index of the first zero byte, or -1 |
 | `0x8c222470` | `table_byte_slot_byte12_bit1` | `notes/verifications/0x8c222470*.json` - 3 specs (49/73/77); 1 only when the byte is nonzero, slot+12 is 0, and bit 1 is set |
 | `0x8c222964` | `scan_slots_0_to_7` | `notes/verifications/0x8c222964*.json` - 2 specs (476/480); bit i set when 0x8c222430(i) is nonzero |
