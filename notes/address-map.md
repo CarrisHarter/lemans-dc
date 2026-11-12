@@ -109,6 +109,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c2214fe` | `index_load_value` | `notes/verifications/0x8c2214fe.json` - 19 oracle steps |
 | `0x8c222924` | `clear_table_then_init` | `notes/verifications/0x8c222924.json` - 13,141 oracle steps |
 | `0x8c0cbe30` | `guard_free` | `notes/verifications/0x8c0cbe30*.json` - 5 specs (9-90 steps) |
+| `0x8c0c9f98` | `free_ten_slots_then_array` | `notes/verifications/0x8c0c9f98*.json` - 3 specs (16-801 steps) |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
@@ -1680,6 +1681,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c221392` | `FUN_8c221392` | `notes/verifications/0x8c221392.json` — 471 oracle steps; rejects with -1 when 0x8c221da8 finds slot r4 occupied; else writes key 7 into the 128-byte slot at [0x8c2bde98], fills +20..+40 from r4/r5 and zero stack args via 0x8c221dc8, then copies up to 12 bytes from r5 into slot+44 and slot+60 via 0x8c221e18 |
 | `0x8c21d6bc` | `FUN_8c21d6bc` | `notes/verifications/0x8c21d6bc.json` — 135 oracle steps; writes [base+0xd78]+0x14=[base+0x204]+1, a 152-byte saved CPU context at [base+0xd78]+0x18, and 1 to 0x8c23d890, then restores the base+4 frame (all GPRs, FR0-FR15, FPUL, FPSCR, MACH, MACL, GBR; r0=1, T clear) and returns via the frame's PR; calls 0x8c011168 then 0x8c010ddc |
 | `0x8c21f9d8` | `FUN_8c21f9d8` | `notes/verifications/0x8c21f9d8.json` — 34 oracle steps; stores the low byte of r4 to [[0x8c2bdcb4]+12] (mode 0) or [[0x8c2bdcb0]+12] (mode 1), then masks status bits at +16; no calls |
+| `0x8c0c9d90` | `FUN_8c0c9d90` | `notes/verifications/0x8c0c9d90.json` — 13 oracle steps; when [r4+4] != 0 calls 0x8c103f94 to store low byte of r5 at [r4+4]; T set on null path |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
