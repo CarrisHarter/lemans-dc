@@ -1715,6 +1715,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0f8828` | `FUN_8c0f8828` | `notes/verifications/0x8c0f8828.json` — 16 oracle steps; calls 0x8c14fe10 when (r5&0xff)!=0 else 0x8c14fe68 with argument r4+0x2c; r0 = [[arg+4]+0x1c] or [[arg+4]+0x10]; r4 += 0x2c; T=(r5&0xff)==0; pr/r15 restored |
 | `0x8c0ed79c` | `FUN_8c0ed79c` | `notes/verifications/0x8c0ed79c.json` — 192 oracle steps; writes vtable 0x8c1ec934 then 0x8c1ec920 at *p; calls 0x8c010d8c with fr4=0.5 and stores 16.0/log10(0.5) = 0xc2549a78 at p+4 |
 | `0x8c0ed764` | `FUN_8c0ed764` | `notes/verifications/0x8c0ed764.json` — 96 oracle steps; writes vtable word 0x8c1ec920 then 0x8c1ec934 at *p (literal pool read in order); if sign-extended low 16 bits of r5 > 0, calls 0x8c01032c -> free(p); returns p (or 0) |
+| `0x8c0ccdd0` | `FUN_8c0ccdd0` | `notes/verifications/0x8c0ccdd0.json` — 293 oracle steps; writes [r4+8]=0x8c1ebe10; with p=[r4], q=[p], c=[q], d=[r4+4]: [p+4]=0x8c1ebee4, [q+4]=0x8c1ebec4, [c]=0x8c1ebe48, [d+24]=r4+12-d, [q+36]=r4+40-q, [p+16]=r4+80-p; (i16)r5!=0: teardown(r4+80,0) via 0x8c0cd048, destroy(r4+40,0) via 0x8c07c100, [r4+12]=0x8c1e9ad4; (i16)r5>0: free(r4) via 0x8c01032c; returns r4 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

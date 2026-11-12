@@ -1,0 +1,41 @@
+{
+  "entry": "0x8c0ccdd0",
+  "note": "r4 != 0, (i16)r5 = 1: the init stores, teardown(r4+80,0), destroy(r4+40,0), the [r4+12] class store and the final free(r4) all run. Full path.",
+  "regs": {
+    "r0": "0x10000000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c201000",
+    "r5": 1,
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200ff8", "hex": "0000228c", "note": "free block prev = 0x8c220000" },
+    { "addr": "0x8c200ffc", "hex": "40000000", "note": "block size = 0x40" },
+    { "addr": "0x8c200fc4", "hex": "08000000", "note": "next block size = 8" },
+    { "addr": "0x8c220004", "hex": "20000000", "note": "prev-of-prev size = 0x20" },
+    { "addr": "0x8c2b1ef8", "hex": "00002b8c", "note": "dlmalloc top -> 0x8c2b0000" },
+    { "addr": "0x8c2b0000", "hex": "00100000", "note": "top chunk size = 0x1000" },
+    { "addr": "0x8c201000", "hex": "0020208c", "note": "[r4] = 0x8c202000" },
+    { "addr": "0x8c201004", "hex": "0030208c", "note": "[r4+4] = 0x8c203000" },
+    { "addr": "0x8c201028", "hex": "0080208c", "note": "destroy sub-object [0] = 0x8c208000" },
+    { "addr": "0x8c201030", "hex": "000000000000000000000000000000000000000000000000", "note": "six destroy free slots = NULL" },
+    { "addr": "0x8c201050", "hex": "0060208c", "note": "teardown sub-object [0] = 0x8c206000" },
+    { "addr": "0x8c201058", "hex": "0000000000000000", "note": "teardown free slots = NULL" },
+    { "addr": "0x8c202000", "hex": "0040208c", "note": "[A] = B = 0x8c204000" },
+    { "addr": "0x8c204000", "hex": "0050208c", "note": "[B] = C = 0x8c205000" },
+    { "addr": "0x8c206000", "hex": "0070208c", "note": "[p] = q = 0x8c207000" }
+  ],
+  "expect": { "r0": "0x8c201000" },
+  "steps": 5000
+}
