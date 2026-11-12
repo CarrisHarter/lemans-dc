@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c02ba34",
+  "regs": { "r4": "0x8c2b7000", "r5": "0x0", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c2b7578", "hex": "00722b8c" },
+    { "addr": "0x8c2b706c", "hex": "00020000" },
+    { "addr": "0x8c2b7260", "hex": "0000b040" }
+  ],
+  "steps": 200,
+  "expect": { "f0": "0x40b00000", "r0": "0x200", "r1": "0x100", "r3": "0x200", "r4": "0x8c2b706c", "r5": "0x0", "r6": "0x8c2b7260" },
+  "note": "only flag bit 9 set: final arm adds 96 to r6, fr0 = 5.5 > 0 so T = 1; r3 ends masked to 0x200"
+}

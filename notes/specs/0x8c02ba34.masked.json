@@ -1,0 +1,11 @@
+{
+  "entry": "0x8c02ba34",
+  "regs": { "r4": "0x8c2b7000", "r5": "0x0", "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c2b7578", "hex": "00722b8c" },
+    { "addr": "0x8c2b706c", "hex": "00800000" }
+  ],
+  "steps": 200,
+  "expect": { "f0": "0x0", "r0": "0x200", "r1": "0x100", "r3": "0x0", "r4": "0x8c2b706c", "r5": "0x0", "r6": "0x8c2b7200" },
+  "note": "only unhandled flag bit 0x8000: every test clears, final and #0x200 zeroes r3, T = 1, fr0 stays +0.0"
+}

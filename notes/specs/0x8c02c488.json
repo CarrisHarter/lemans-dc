@@ -1,0 +1,29 @@
+{
+  "entry": "0x8c02c488",
+  "note": "r5 = 0x80000003 makes the signed mul.l high word negative (mach = 0x56) while macl = 0x204, so the load address is 0x8c300000 + 0xec + 0x204 = 0x8c3002f0.",
+  "regs": {
+    "r0": "0x0badf00d",
+    "r4": "0x8c300000",
+    "r5": "0x80000003",
+    "r6": "0xdeadbeef",
+    "r15": "0x8c30ff00"
+  },
+  "fr": {
+    "f1": 1.25,
+    "f2": -2.5,
+    "f15": 100.0
+  },
+  "mach": "0x22222222",
+  "macl": "0x11111111",
+  "memory": [
+    {
+      "addr": "0x8c3002f0",
+      "hex": "000048c1"
+    },
+    {
+      "addr": "0x8c30ff00",
+      "hex": "00000000"
+    }
+  ],
+  "steps": 64
+}
