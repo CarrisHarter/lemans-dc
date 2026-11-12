@@ -1864,6 +1864,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c175a4a` | `flag_gate_field44` | `notes/verifications/0x8c175a4a*.json` - 3 specs (311/294/13 steps) |
 | `0x8c175a7e` | `flag_gate_deref_field60` | `notes/verifications/0x8c175a7e*.json` - 3 specs (293/275/14 steps) |
 | `0x8c176512` | `flag_reporter_field3dc` | `notes/verifications/0x8c176512*.json` - 5 specs (258/243/16/18/19 steps) |
+| `0x8c177fa0` | `bounded_table_store` | `notes/verifications/0x8c177fa0*.json` - 2 specs (12/374 steps) |
+| `0x8c177fc6` | `clear_stamp_tail_thunk` | `notes/verifications/0x8c177fc6.json` - 6453 oracle steps |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
