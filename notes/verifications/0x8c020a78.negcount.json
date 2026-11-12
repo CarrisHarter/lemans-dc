@@ -1,0 +1,16 @@
+{
+  "address": "0x8c020a78",
+  "spec": "notes/specs/0x8c020a78.negcount.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "8ad1a877",
+  "verified_at": "2026-11-12T04:03:07+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 121
+  },
+  "verifier_output": [
+    "ok   0x8c020a78 matches original (121 oracle steps)"
+  ]
+}
