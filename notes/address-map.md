@@ -1325,6 +1325,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0ba4d4` | `store_or_clear_slot` | `notes/verifications/0x8c0ba4d4*.json` - 5 specs (18/20/25/75/80); stores a slot pointer at `0x8c27a038+24*r5+4*r6`, then clears it if the table word is nonzero |
 | `0x8c231f4c` | `dispatch_scaled_product` | `notes/verifications/0x8c231f4c*.json` - 4 specs (36/36/41/87); halfword 3, bit 30, bit 15, or the plain path, result stored at +20 |
 | `0x8c224be2` | `validate_record_u16` | `notes/verifications/0x8c224be2*.json` - 3 specs (22/179/302); 0xffffff01 on a failed slot test, 0xffffff03 unless 16 0x55 bytes and the table word is zero |
+| `0x8c220f96` | `tail_call_validate_record` | `notes/verifications/0x8c220f96.json` - 25 oracle steps; jmp to 0x8c224be2 |
+| `0x8c230282` | `copy_triples_build_packet` | `notes/verifications/0x8c230282.json` - 360 oracle steps; three pointer slots, then 0x8c2395c0 |
 | `0x8c23213c` | `code_plus_table` | `notes/verifications/0x8c23213c*.json` - 2 specs (44/61); adds a table word indexed by the min-code, accumulating first when bit 31 is set |
 | `0x8c21b034` | `slot_word32_eq` | `notes/verifications/0x8c21b034*.json` - 2 specs (21/21); 1 iff `[slot+32]==r5` |
 | `0x8c21b04e` | `slot_byte12` | `notes/verifications/0x8c21b04e.json` - 16 oracle steps; zero-extended byte 12 |
