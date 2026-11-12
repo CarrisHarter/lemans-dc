@@ -138,6 +138,7 @@ PAGE = """<!doctype html>
     .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .grid > div { padding: .4rem .6rem; }
     .grid > .dup, .grid > .opt, .grid .s { display: none; }
+    .grid > .sched .s { display: block; }
     .grid .v { font-size: .98rem; }
     .charts { grid-template-columns: 1fr 1fr; }
     .charts > .cm { display: none; }
@@ -147,6 +148,7 @@ PAGE = """<!doctype html>
   }
   @media (max-width: 720px) and (max-height: 600px) {
     .scale { display: none; }
+    .grid > .sched .s { display: none; }
     .chart svg, .empty { height: 2.125rem; }
   }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
@@ -178,7 +180,7 @@ PAGE = """<!doctype html>
     <div><span class="k">rate</span><span class="v" id="rate">—</span><span class="s" id="rate-s">proofs/h</span></div>
     <div><span class="k">eta</span><span class="v" id="eta">—</span><span class="s" id="eta-s">at current pace</span></div>
     <div><span class="k">last proof</span><span class="v" id="last-proof">—</span><span class="s" id="last-proof-s">since last proof</span></div>
-    <div class="sched"><span class="k" id="sched-k">deadline</span><span class="v" id="sched">—</span><span class="s" id="sched-s">pace needed vs pace now</span></div>
+    <div class="sched"><span class="k" id="sched-k">deadline</span><span class="v" id="sched">—</span><span class="s" id="sched-s">expected finish: —</span><span class="s" id="sched-l" style="display: none"></span></div>
     <div class="opt"><span class="k">evidence</span><span class="v" id="evidence">—</span><span class="s">oracle result files</span></div>
     <div class="opt"><span class="k">port files</span><span class="v" id="ports">—</span><span class="s">Rust modules</span></div>
   </section>
@@ -318,6 +320,21 @@ function stamp(ms) {
   return t.getFullYear() + "-" + pad(t.getMonth() + 1) + "-" + pad(t.getDate()) + " " + pad(t.getHours()) + ":" + pad(t.getMinutes());
 }
 
+/* Wall-clock parts of `ms` in `timeZone` (default: the viewer's), 12-hour. */
+function clock(ms, timeZone) {
+  const p = {};
+  for (const x of new Intl.DateTimeFormat("en-GB", {timeZone, weekday: "short", day: "numeric", month: "short",
+      hour: "numeric", minute: "2-digit", hourCycle: "h23"}).formatToParts(ms)) p[x.type] = x.value;
+  const h = +p.hour % 24;
+  return { wd: p.weekday, day: p.weekday + " " + p.day + " " + p.month,
+           time: (h % 12 || 12) + (p.minute !== "00" ? ":" + p.minute : "") + (h < 12 ? "am" : "pm") };
+}
+/* The deadline was set in Japan time, so times are shown in JST for everyone. */
+const jst = ms => { const c = clock(ms, "Asia/Tokyo"); return c.day + " " + c.time + " JST"; };
+const local = ms => { const c = clock(ms); return c.wd + " " + c.time; };
+const localZone = ms => new Intl.DateTimeFormat(undefined, {timeZoneName: "short"}).formatToParts(ms)
+  .find(x => x.type === "timeZoneName").value;
+
 function bars(hostId, data, unit) {
   const host = $(hostId);
   if (!Array.isArray(data) || !data.length || !data.every(v => isNum(v) && v >= 0)) {
@@ -429,22 +446,23 @@ function render(d, prev) {
 
   const sc = d.schedule, sv = $("sched"), due = Date.parse((sc && sc.plan_end) || "");
   if (sc && !Number.isNaN(due)) {
-    const t = new Date(due), h = t.getHours(), m = t.getMinutes();
-    const day = t.toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
-    $("sched-k").textContent = "deadline · by " + day + " " + (h % 12 || 12) + (m ? ":" + pad(m) : "") + (h < 12 ? "am" : "pm");
-    const e = sc.early_hours, late = isNum(e) && e < 0;
+    $("sched-k").textContent = "deadline · by " + jst(due);
+    const e = sc.early_hours, late = isNum(e) && e < 0, fin = Date.parse(sc.finish || "");
+    const away = new Date(due).getTimezoneOffset() !== -540, ll = $("sched-l");
+    ll.style.display = away ? "" : "none";
+    ll.textContent = away ? "your time (" + localZone(due) + "): by " + local(due)
+      + (Number.isNaN(fin) || d.remaining === 0 ? "" : " · finish " + local(fin)) : "";
     const span = h => h >= 48 ? Math.round(h / 24) + " days" : h >= 1 ? Math.round(h) + " h" : Math.round(h * 60) + " min";
     sv.className = "v " + (d.remaining === 0 || (isNum(e) && !late) ? "go" : late ? "wa" : "");
     const left = (due - Date.parse(d.updated)) / 3.6e6, now = Math.round(d.pace_per_day / 24);
-    const verdict = !isNum(e) ? "no forecast" : late ? "finish ~" + span(-e) + " late" : "on track";
     $("sched-s").textContent = d.remaining === 0 ? "all unblocked functions verified"
-      : left <= 0 ? "deadline passed · " + fmt(d.remaining) + " left"
-      : verdict + " · needs " + fmt(Math.ceil(d.remaining / left)) + "/h · doing " + fmt(now) + "/h";
+      : "expected finish: " + (Number.isNaN(fin) ? "no forecast (idle)" : jst(fin));
     countdown();
-    sv.title = "Plan line: " + fmt(sc.planned) + " verified by now, actual " + fmt(d.verified)
-      + " (" + (sc.ahead >= 0 ? fmt(sc.ahead) + " ahead" : fmt(-sc.ahead) + " behind") + ")."
-      + (isNum(e) ? " At the current pace the last function lands " + span(Math.abs(e)) + (late ? " after" : " before") + " the deadline." : "");
-  } else { $("sched-k").textContent = "deadline"; sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "pace needed vs pace now"; }
+    sv.title = (isNum(e) ? "At the current pace the last function lands " + span(Math.abs(e)) + (late ? " after" : " before") + " the deadline. " : "")
+      + (left > 0 && d.remaining ? "Needs " + fmt(Math.ceil(d.remaining / left)) + "/h, doing " + fmt(now) + "/h. " : "")
+      + "Plan line: " + fmt(sc.planned) + " verified by now, actual " + fmt(d.verified)
+      + " (" + (sc.ahead >= 0 ? fmt(sc.ahead) + " ahead" : fmt(-sc.ahead) + " behind") + ").";
+  } else { $("sched-k").textContent = "deadline"; $("sched-l").style.display = "none"; sv.textContent = "—"; sv.className = "v"; $("sched-s").textContent = "expected finish: —"; }
 
   burnup(d);
   $("cm-s").textContent = bars("chart-m", d.minutely, "m") || "";

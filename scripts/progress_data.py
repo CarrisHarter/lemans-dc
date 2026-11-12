@@ -232,6 +232,7 @@ def schedule(now, verified, target, finish):
         "planned": planned,
         "ahead": verified - planned,
         "early_hours": round((PLAN_END - finish).total_seconds() / 3600, 1) if finish else None,
+        "finish": finish.isoformat(timespec="seconds") if finish else None,
         "plan_start": PLAN_START.isoformat(timespec="seconds"),
         "plan_start_verified": PLAN_START_VERIFIED,
         "plan_target": target,
