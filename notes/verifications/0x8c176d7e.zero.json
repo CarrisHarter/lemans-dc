@@ -1,0 +1,17 @@
+{
+  "address": "0x8c176d7e",
+  "spec": "notes/specs/0x8c176d7e.zero.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "7b6bfdfc",
+  "verified_at": "2026-11-12T16:44:41+00:00",
+  "first_verified_at": "2026-11-12T16:44:41+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 26
+  },
+  "verifier_output": [
+    "ok   0x8c176d7e matches original (26 oracle steps)"
+  ]
+}

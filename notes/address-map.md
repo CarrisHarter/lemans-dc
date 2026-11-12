@@ -1906,6 +1906,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c03ed5c` | `flag_then_compound_thunk` | `notes/verifications/0x8c03ed5c.json` - 39 oracle steps |
 | `0x8c026e84` | `flag_then_thunk_through_field` | `notes/verifications/0x8c026e84.json` - 46 oracle steps |
 | `0x8c184e3c` | `release_stride88_then_free` | `notes/verifications/0x8c184e3c*.json` - 2 specs (144/15 steps) |
+| `0x8c175c28` | `three_exit_slot_fill` | `notes/verifications/0x8c175c28*.json` - 2 specs (278/401 steps) |
+| `0x8c176d7e` | `stride52_pair_store` | `notes/verifications/0x8c176d7e*.json` - 4 specs (348/397/24/26 steps) |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 ## Blocked
 
