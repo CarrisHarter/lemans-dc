@@ -81,6 +81,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c095afc` | `guard_free` | `notes/verifications/0x8c095afc*.json` - 4 specs |
 | `0x8c095b20` | `guard_free` | `notes/verifications/0x8c095b20*.json` - 4 specs, 9-90 steps |
 | `0x8c0dfc18` | `zero_block_and_publish` | `notes/verifications/0x8c0dfc18.json` - 2026 oracle steps (0x190-byte memset) |
+| `0x8c0e0694` | `reload_published_object` | `notes/verifications/0x8c0e0694.json` - 9 oracle steps |
 | `0x8c092a50` | `release_global_object` | `notes/verifications/0x8c092a50*.json` - 2 specs (158 and 9 steps) |
 | `0x8c09035c` | `object_teardown` | `notes/verifications/0x8c09035c*.json` - 4 specs, 12-168 steps |
 | `0x8c015148` | `FUN_8c015148 (bignum ror, carry bit)` | `notes/verifications/0x8c015148.json` — 85 oracle steps; r4=r6=base+n; r0=r7=final carry; r3=last>>1; r12/r13/r14 pushed+popped (r13=1 set in entry delay slot); T=final cmp/ge (1 if loop ran, cmp/pl if skipped) |
@@ -1559,6 +1560,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c07de58` | `FUN_8c07de58` | `notes/verifications/0x8c07de58.json` — 6 oracle steps; none |
 | `0x8c07de4c` | `FUN_8c07de4c` | `notes/verifications/0x8c07de4c.json` — 9 oracle steps; Pure tail jump: loads literal 0x8c07de54 (=0x8c079064) into r0, then the jmp delay slot reloads r4 = mem32[r4+4]; jmp leaves pr untouched, so 0x8c079064 -> 0x8c05fa50 returns mem32[mem32[0x8c05fa58]] = mem32[0x8c23de98] in r0 (overwriting the loaded pointer). Final r0 comes from the callee chain; no stores, T unchanged, r1-r3 and r5-r15 untouched. |
 | `0x8c07fd24` | `FUN_8c07fd24` | `notes/verifications/0x8c07fd24.json` — 9 oracle steps; Saves r14/pr, sets r14=r4; returns r0=r4. If r4 != 0 and the sign-extended low 16 of r5 is positive, loads 0x8c01032c and calls it (jsr @r0, pr=0x8c07fd3a, nop delay slot) with r4 unchanged; the thunk tail-jumps to free(0x8c159fc0), whole callee register/store residue passes through. epilogue restores pr/r14, r15 entry-equal; only stack stores. T=1 on the null-block exit (tst), T=0 on the non-positive-flag exit (cmp/pl), and free's final cmp/hi leaves T=0 on the call exit. |
+| `0x8c06bde8` | `FUN_8c06bde8` | `notes/verifications/0x8c06bde8.json` — 34 oracle steps; writes [r14+0x54] (new head) and [new+0x28] (old head); callee 0x8c06c3b8 bumps the 0x8c23f438 array index |
+| `0x8c09d338` | `FUN_8c09d338` | `notes/verifications/0x8c09d338.json` — 90 oracle steps; calls free (0x8c159fc0 via thunk 0x8c01032c) when r4 != 0 and (int16)r5 > 0; always returns r4 in r0; saves/restores r14 and pr |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
