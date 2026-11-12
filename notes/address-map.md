@@ -107,6 +107,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c220eda` | `tail_thunk` | `notes/verifications/0x8c220eda.json` - 52 oracle steps |
 | `0x8c2214e4` | `index_load_bool` | `notes/verifications/0x8c2214e4.json` - 17 oracle steps |
 | `0x8c2214fe` | `index_load_value` | `notes/verifications/0x8c2214fe.json` - 19 oracle steps |
+| `0x8c222924` | `clear_table_then_init` | `notes/verifications/0x8c222924.json` - 13,141 oracle steps |
 | `0x8c220ed4` | `tail_thunk` | `notes/verifications/0x8c220ed4.json` - 52 oracle steps |
 | `0x8c1bb438` | `guard_free` | `notes/verifications/0x8c1bb438*.json` - 5 specs (9-90 steps) |
 | `0x8c1bb414` | `guard_free` | `notes/verifications/0x8c1bb414*.json` - 5 specs (9-90 steps) |
