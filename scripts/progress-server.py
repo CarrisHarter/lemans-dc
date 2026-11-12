@@ -446,15 +446,17 @@ function count(id, to, dp = 0) {
   const my = token[id] = (token[id] || 0) + 1;
   if (still || from === to) { shown[id] = to; node.textContent = fmt(to, dp); return; }
   const dur = S.firstPaintDone ? 650 : 1300, t0 = performance.now();
+  let done = false;
   const step = t => {
-    if (token[id] !== my) return;
+    if (done || token[id] !== my) return;
     const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
     shown[id] = from + (to - from) * e;
     node.textContent = fmt(shown[id], dp);
     if (p < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
-  setTimeout(() => { if (token[id] === my) { shown[id] = to; node.textContent = fmt(to, dp); } }, dur + 60);
+  // rAF stalls in background tabs; the timer guarantees the exact final value.
+  setTimeout(() => { done = true; if (token[id] === my) { shown[id] = to; node.textContent = fmt(to, dp); } }, dur + 60);
 }
 
 function bump(el) {
@@ -630,7 +632,8 @@ function status() {
     else if (age > STALE_MS) { mode = "stale"; label = "Stale"; sub = "no fresh data for " + ago(age).replace(" ago", ""); }
     else if (S.source === "live" && S.liveOk) { mode = "live"; label = "Live"; sub = "updating every second"; }
     else if (S.source === "cache") { mode = "idle"; label = "Cached"; sub = "reconnecting\u2026"; }
-    else { mode = "idle"; label = "Snapshot"; sub = S.liveUrl ? "live feed unreachable \u00b7 retrying" : "refreshed every 10 min"; }
+    else if (S.liveUrl !== null && !S.liveOk) { mode = "idle"; label = "Reconnecting"; sub = "live feed unreachable \u00b7 retrying"; }
+    else { mode = "idle"; label = "Snapshot"; sub = "refreshed every 10 min"; }
     $("ago").textContent = ago(age);
     $("ago").title = new Date(Date.parse(d.updated)).toLocaleString();
     $("src").textContent = S.source === "live" ? "the live feed" : S.source === "cache" ? "this browser\u2019s cache" : "the published snapshot";
