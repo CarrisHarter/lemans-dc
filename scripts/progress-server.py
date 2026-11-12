@@ -222,12 +222,16 @@ function count(id, to, dp = 0) {
   shown[id] = to;
   if (still || from === to) { node.textContent = fmt(to, dp); return; }
   const t0 = performance.now(), dur = 1100;
+  let done = false;
   const step = t => {
+    if (done) return;
     const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
     node.textContent = fmt(from + (to - from) * e, dp);
     if (p < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
+  // rAF is paused in background tabs; always land on the exact value.
+  setTimeout(() => { done = true; node.textContent = fmt(to, dp); }, dur + 50);
 }
 
 function ago(ms) {
