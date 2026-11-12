@@ -1659,6 +1659,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1bb2a8` | `FUN_8c1bb2a8` | `notes/verifications/0x8c1bb2a8.json` — 12 oracle steps; release(&p[1],-1); release(p,-1); free(p) when (int16)flag>0; r0=p, r13/r14/pr restored; T=1 iff p==NULL |
 | `0x8c1bb264` | `FUN_8c1bb264` | `notes/verifications/0x8c1bb264.json` — 12 oracle steps; releases *handle through 0x8c018bd8(handle,-1); when sext16(r5) > 0 frees the handle through 0x8c01032c; writes the refcount, the handle slot and the dlmalloc block |
 | `0x8c1af164` | `FUN_8c1af164` | `notes/verifications/0x8c1af164.json` — 97 oracle steps; free(mem[r4+8]) when non-NULL; walks ptr+mem[r4+4]*32 in 32-byte steps without using the result; the 0x8c01032c thunk tail-calls free (0x8c159fc0), which rewrites the block header, top chunk and bin pointers |
+| `0x8c1b69ec` | `FUN_8c1b69ec` | `notes/verifications/0x8c1b69ec.json` — 416 oracle steps; submits 7 handles from [r4+28..52] then 4 from [r4+56..68] to 0x8c16eaec with fr4/fr5/fr6 read from the caller's stack words 0/1/2; each flagged handle gets the three floats staged at +60/64/68, copied to +72/76/80, and 0x01800000 ORed into +8; r12/r13/r14/pr/fr14/fr15 restored, r0=4, T=0 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
