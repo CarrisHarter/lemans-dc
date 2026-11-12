@@ -785,8 +785,8 @@ function render(d, prev, prevSource) {
   document.querySelectorAll("[data-m]").forEach(el => el.classList.toggle("passed", pct >= Number(el.dataset.m)));
 
   const next = MILESTONES.find(m => m > pct);
-  if (next && !finished) {
-    const need = Math.max(1, Math.ceil(next / 100 * total) - d.verified);
+  const need = next ? Math.max(1, Math.ceil(next / 100 * total) - d.verified) : 0;
+  if (next && !finished && need <= d.remaining) {
     const away = perHour > 0 ? ", " + duration(need / perHour) + " away" : "";
     $("next").innerHTML = "Next milestone: <b>" + next + "%</b> \u2014 " + plural(need, "more piece", "more pieces") + away + ".";
     $("next").hidden = false;
@@ -803,6 +803,7 @@ function render(d, prev, prevSource) {
   const cm = clockMins(pct), ch = Math.floor(cm / 60), cmin = cm % 60;
   $("clock-cap").textContent = finished
     ? "If this project were the 24-hour Le Mans race, we\u2019d have just crossed the finish line."
+    : cm === 0 ? "If this project were the 24-hour Le Mans race, we\u2019d still be on the starting grid."
     : "If this project were the 24-hour Le Mans race, we\u2019d be " +
       (ch ? ch + (ch === 1 ? " hour" : " hours") + (cmin ? " " + cmin + " min" : "") : cmin + " minutes") + " in.";
 
