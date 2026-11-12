@@ -1,0 +1,31 @@
+{
+  "entry": "0x8c144784",
+  "note": "hit: descriptor count 16 at +0, base 0x8c200200 at +12; start = min(4, 15) = 4; the scan checks base[4]='Y' then base[4] against pattern[1]='Y' and returns index 4",
+  "regs": {
+    "r0": "0x00000000",
+    "r1": "0x01010101",
+    "r2": "0x22222222",
+    "r3": "0x03030303",
+    "r4": "0x8c200000",
+    "r5": "0x8c200300",
+    "r6": "0x00000004",
+    "r7": "0x00000002",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0x10101010",
+    "r11": "0x11111111",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200000", "hex": "0001208c", "note": "[r4] = descriptor 0x8c200100" },
+    { "addr": "0x8c200100", "hex": "10000000", "note": "count = 16" },
+    { "addr": "0x8c20010c", "hex": "0002208c", "note": "base = 0x8c200200" },
+    { "addr": "0x8c200200", "hex": "4142434459454647", "note": "A B C D Y E F G" },
+    { "addr": "0x8c200300", "hex": "5859", "note": "pattern = \"XY\"" }
+  ],
+  "steps": 500,
+  "expect": { "r0": "0x00000004" }
+}

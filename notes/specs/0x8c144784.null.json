@@ -1,0 +1,23 @@
+{
+  "entry": "0x8c144784",
+  "note": "empty descriptor: count at +0 is zero, so tst r1,r1 takes the early return before any callee call",
+  "regs": {
+    "r2": "0x22222222",
+    "r4": "0x8c200000",
+    "r5": "0x8c200300",
+    "r6": "0x00000004",
+    "r7": "0x00000002",
+    "r10": "0x10101010",
+    "r11": "0x11111111",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200000", "hex": "0001208c" },
+    { "addr": "0x8c200100", "hex": "00000000", "note": "count = 0" }
+  ],
+  "steps": 100,
+  "expect": { "r0": "0xffffffff" }
+}

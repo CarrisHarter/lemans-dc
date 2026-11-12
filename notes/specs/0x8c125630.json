@@ -1,0 +1,37 @@
+{
+  "entry": "0x8c125630",
+  "regs": {
+    "r0": "0xdeadbeef",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c200e00",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c200e00", "hex": "000f208c", "note": "list handle -> sentinel 0x8c200f00" },
+    { "addr": "0x8c200f00", "hex": "0010208c", "note": "sentinel->next = node 0x8c201000" },
+    { "addr": "0x8c200f04", "hex": "00000000", "note": "sentinel->prev, rewritten by the exit" },
+    { "addr": "0x8c201000", "hex": "000f208c", "note": "node->next = sentinel, so the loop frees exactly one node" },
+
+    { "addr": "0x8c200ff8", "hex": "0000228c", "note": "node chunk prev = 0x8c220000" },
+    { "addr": "0x8c200ffc", "hex": "40000000", "note": "node chunk size = 0x40" },
+    { "addr": "0x8c200fc4", "hex": "08000000", "note": "node next-block size = 8" },
+    { "addr": "0x8c220004", "hex": "00000080", "note": "prev chunk size has the high bit set, so free skips coalescing" },
+
+    { "addr": "0x8c2b1ef8", "hex": "0000218c", "note": "dlmalloc top pointer -> 0x8c210000" },
+    { "addr": "0x8c210000", "hex": "00100000", "note": "top chunk size = 0x1000" }
+  ],
+  "steps": 1000,
+  "notes": "One-node circular list: the handle at 0x8c200e00 holds the sentinel 0x8c200f00, whose next word points at node 0x8c201000; the node's next word points back at the sentinel. The loop therefore runs one iteration, frees the node through the 0x8c01032c thunk, and exits with sentinel->next = sentinel->prev = sentinel. free(0x8c201000) takes the shortcut described in 0x8c159fc0.json: size 0x40 negated at 0x8c200ffc, top chunk shrunk, free-list insert at 0x8c200fd0, coalescing skipped because mem[0x8c220004] = 0x80000000 reads negative, bin walk at 0x8c210004 stops immediately. T ends 1 from the exit cmp/eq."
+}
