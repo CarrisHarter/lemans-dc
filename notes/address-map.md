@@ -1227,6 +1227,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0797b8` | `free_child_and_clear_word_12` | `notes/verifications/0x8c0797b8*.json` - same shape as `0x8c16d904`, but the third store is `[object+12]=object+4` and the child is released through `0x8c079814`. Child clear 9 (`r0` stays 0, T set); child present 160. `r1` is 0 and `r0` is `object+4` on that path. `r14` restored |
 | `0x8c083580` | `free_child_and_clear_word_12_2` | `notes/verifications/0x8c083580*.json` - same wrapper as `0x8c0797b8`, child released through `0x8c0836e0`. Child clear 9, child present 160. `r14` restored |
 | `0x8c09cfbc` | `free_child_and_clear_word_12_3` | `notes/verifications/0x8c09cfbc*.json` - same wrapper as `0x8c0797b8`, child released through `0x8c09d35c`. Child clear 9, child present 160. `r14` restored |
+| `0x8c0f98f0` | `free_child_and_clear_word_12_4` | `notes/verifications/0x8c0f98f0*.json` - same wrapper as `0x8c0797b8`, child released through `0x8c0f9d80`. Child clear 9, child present 160. `r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
