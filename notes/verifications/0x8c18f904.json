@@ -1,0 +1,17 @@
+{
+  "address": "0x8c18f904",
+  "spec": "~/Projects/lemans-dc/notes/specs/0x8c18f904.json",
+  "binary": "~/Projects/lemans-dc/analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "8883d0e8",
+  "verified_at": "2026-11-13T06:40:30+00:00",
+  "first_verified_at": "2026-11-13T06:40:30+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 13
+  },
+  "verifier_output": [
+    "ok   0x8c18f904 matches original (13 oracle steps)"
+  ]
+}

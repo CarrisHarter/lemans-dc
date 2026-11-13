@@ -1,0 +1,21 @@
+{
+  "entry": "0x8c18f904",
+  "notes": "[r4+4] is null, so the three slots stay untouched and r0 is unchanged",
+  "regs": {
+    "r0": "0xabcdef01",
+    "r4": "0x8c262000",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "expect": {
+    "r0": "0xabcdef01",
+    "r4": "0x8c262000",
+    "r12": "0x12121212",
+    "r13": "0x13131313",
+    "r14": "0x14141414",
+    "r15": "0x8c308000"
+  },
+  "steps": 8000
+}

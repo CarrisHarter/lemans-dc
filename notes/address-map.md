@@ -2167,6 +2167,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c237440` | `sum_three_lists` | `notes/verifications/0x8c237440*.json` - 4 specs (47/80/227/154 steps); `[r4]` is the sum of the two value-lists plus tag-weighted null slots, `[r5]` is the larger list max (tie keeps the first). Tag `0x1000` adds `0x90` sixteen times; `0x5000` adds `0x200` per null slot of eight |
 | `0x8c22c3e0` | `sum_three_lists_thunk` | `notes/verifications/0x8c22c3e0*.json` - 2 specs (54/87 steps); saves `pr`, calls `0x8c237440`, restores `pr`. `r4` and `r5` pass through |
 | `0x8c226b70` | `lookup_hit_or_120` | `notes/verifications/0x8c226b70*.json` - 2 specs (32/74 steps); key word at `0x8c2c9db8`. Lookup result `0x101` returns 0, anything else returns 120. `r3` is left holding `0x101` |
+| `0x8c18f904` | `drop_node_and_clear` | `notes/verifications/0x8c18f904*.json` - 2 specs (13/471 steps); a null `[r4+4]` writes nothing. A live node frees `[child+0]` and `[child+4]` via `0x8c18f784`, then releases and frees the child and the node. Exit: `[r4]=0`, `[r4+4]=0`, `[r4+8]=r4+4`, `r0=r4+4`. Only the first `0x8c18f784` call leaves `r4` alone |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
