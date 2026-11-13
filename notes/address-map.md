@@ -1193,6 +1193,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c12b50c` | `release_inner_then_container` | `notes/verifications/0x8c12b50c*.json` - null 14, empty 20, high word is not positive (20), sext16 frees the container (83), live inner frees the block and holds the handles (290) |
 | `0x8c23aa60` | `merge_indexed_mode` | `notes/verifications/0x8c23aa60*.json` - empty miss 29, scanned miss 40, index 1 stores 0x401 (62), delay-slot 0x800 (61), direct 0x400 leaves T clear (60), index 35 and a high index store 0x400 with T set (56) |
 | `0x8c1cba54` | `release_list_and_container` | `notes/verifications/0x8c1cba54*.json` - null 16, empty list keeps the container (204), 0x00010000 and 0xffff also keep it (204), r5=1 and 0x80000001 free it (267), one node 292, null-pointer record 375, two nodes 380 |
+| `0x8c1116cc` | `insertion_sort_pointers` | `notes/verifications/0x8c1116cc*.json` - empty and one pointer 23, word keep 59, word swap 65, only-neighbour flag 55, only-key flag 61, +32 orders 116/122, equal +32 then +40 orders 117/123, three words 138 |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
