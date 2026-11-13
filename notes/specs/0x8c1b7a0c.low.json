@@ -1,0 +1,59 @@
+{
+  "entry": "0x8c1b7a0c",
+  "notes": "count 2, base key below the node: clear two slots, insert through 0x8c1b7998",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x8c262000",
+    "r5": "0x55555555",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c23dab0",
+      "hex": "0050268c"
+    },
+    {
+      "addr": "0x8c265048",
+      "hex": "0060268c"
+    },
+    {
+      "addr": "0x8c2660a4",
+      "hex": "01000100"
+    },
+    {
+      "addr": "0x8c262004",
+      "hex": "0070268c"
+    },
+    {
+      "addr": "0x8c267000",
+      "hex": "0000803f"
+    },
+    {
+      "addr": "0x8c267014",
+      "hex": "00000040"
+    }
+  ],
+  "expect": {
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 20000
+}
