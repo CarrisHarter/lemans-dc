@@ -2162,6 +2162,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
 | `0x8c125be0` | `lerp_565_vec4` | `notes/verifications/0x8c125be0*.json` - 4 specs (44/146/146/248 steps); `r5` and `r6` are doubled, entry `fr5` is stored at `[r4+92]`, a skipped loop leaves `fr0` = 1 |
 | `0x8c18f784` | `free_node_pairs` | `notes/verifications/0x8c18f784*.json` - 4 specs (118/223/449/223 steps); null pairs still release `[node+12]` and free the node; a leaf's node pointers recurse with the same `r4` |
+| `0x8c239440` | `imask_table_lookup` | `notes/verifications/0x8c239440*.json` - 5 specs (14/58/57/65/71 steps); negative key returns 0x101 without touching imask; a hit returns 0x100 and a miss 0x101, both after raising imask to 15 and restoring the saved nibble. The `0xff0f` mask is sign-extended |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
