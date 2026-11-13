@@ -1,0 +1,17 @@
+{
+  "address": "0x8c19f578",
+  "spec": "notes/specs/0x8c19f578.m3-off.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "4ecd15c0",
+  "verified_at": "2026-11-13T02:08:03+00:00",
+  "first_verified_at": "2026-11-13T02:07:21+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 155
+  },
+  "verifier_output": [
+    "ok   0x8c19f578 matches original (155 oracle steps)"
+  ]
+}
