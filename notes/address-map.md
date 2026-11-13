@@ -2165,6 +2165,8 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c239440` | `imask_table_lookup` | `notes/verifications/0x8c239440*.json` - 5 specs (14/58/57/65/71 steps); negative key returns 0x101 without touching imask; a hit returns 0x100 and a miss 0x101, both after raising imask to 15 and restoring the saved nibble. The `0xff0f` mask is sign-extended |
 | `0x8c21c940` | `pack_sample_flags` | `notes/verifications/0x8c21c940*.json` - 4 specs (91/109/100/100 steps); bits 16 and 17 track two source bytes against the thresholds at `0x8c2bab88/89`, and bits 16..21 of `[r4+4]` gate the halfwords at `[r4+24]`. A zero control word at `0x8c2bab84` inverts `r7` |
 | `0x8c237440` | `sum_three_lists` | `notes/verifications/0x8c237440*.json` - 4 specs (47/80/227/154 steps); `[r4]` is the sum of the two value-lists plus tag-weighted null slots, `[r5]` is the larger list max (tie keeps the first). Tag `0x1000` adds `0x90` sixteen times; `0x5000` adds `0x200` per null slot of eight |
+| `0x8c22c3e0` | `sum_three_lists_thunk` | `notes/verifications/0x8c22c3e0*.json` - 2 specs (54/87 steps); saves `pr`, calls `0x8c237440`, restores `pr`. `r4` and `r5` pass through |
+| `0x8c226b70` | `lookup_hit_or_120` | `notes/verifications/0x8c226b70*.json` - 2 specs (32/74 steps); key word at `0x8c2c9db8`. Lookup result `0x101` returns 0, anything else returns 120. `r3` is left holding `0x101` |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be

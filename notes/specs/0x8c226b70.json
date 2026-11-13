@@ -1,0 +1,15 @@
+{
+  "entry": "0x8c226b70",
+  "notes": "negative key: the lookup returns 0x101 and this function returns 0",
+  "regs": { "r15": "0x8c308000" },
+  "memory": [
+    { "addr": "0x8c2c9db8", "hex": "ffffffff" }
+  ],
+  "expect": {
+    "r0": "0x00000000",
+    "r3": "0x00000101",
+    "r4": "0x00000000",
+    "r15": "0x8c308000"
+  },
+  "steps": 8000
+}
