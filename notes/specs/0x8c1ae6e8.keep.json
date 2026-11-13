@@ -1,0 +1,29 @@
+{
+  "entry": "0x8c1ae6e8",
+  "notes": "count 0 and a null array: nothing is freed. r5 0x00010000 is not a positive halfword",
+  "regs": {
+    "r4": "0x8c262000",
+    "r5": "0x00010000",
+    "r8": "0x88888888",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c262004", "hex": "00000000" }
+  ],
+  "expect": {
+    "r0": "0x8c262000",
+    "r8": "0x88888888",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 200000
+}

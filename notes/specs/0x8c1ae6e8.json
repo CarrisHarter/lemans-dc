@@ -1,0 +1,30 @@
+{
+  "entry": "0x8c1ae6e8",
+  "notes": "null object returns 0 and does not clear the global",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r4": "0x00000000",
+    "r5": "0x00000001",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [],
+  "expect": {
+    "r0": "0x00000000",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 200000
+}
