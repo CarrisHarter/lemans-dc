@@ -1,0 +1,42 @@
+{
+  "entry": "0x8c0fbe44",
+  "notes": "null object, count 1: frees the child through 0x8c0fd3ec is not called; r0 is 0 and T is set",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r4": "0x00000000",
+    "r5": "0x00000001"
+  },
+  "memory": [],
+  "expect": {
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r15": "0x8c308000",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r6": "0x66666666",
+    "r0": "0x00000000",
+    "r4": "0x00000000",
+    "r5": "0x00000001"
+  },
+  "steps": 8000
+}

@@ -1239,6 +1239,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c05de90` | `release_and_free_tree_at_16` | `notes/verifications/0x8c05de90*.json` - same walk as `0x8c05dc28`, plus `add #4, r4` before each `0x8c018bd8` so the handle is at `node+16`. Slot release `0x8c05d900` adds 4 as well. Null 140, child 267, grandchild 410, nested leaf 553. `r11`-`r14` restored |
 | `0x8c0fd3ec` | `release_and_free_tree_at_16_2` | `notes/verifications/0x8c0fd3ec*.json` - same walk as `0x8c05de90`. Slot release `0x8c0fc5ec` decrements a refcount of 2 and clears the slot. Null 140, child 267, grandchild 398, nested leaf 541. `r11`-`r14` restored |
 | `0x8c05d9c0` | `release_child_then_free_object_6` | `notes/verifications/0x8c05d9c0*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c05de90` (handle at `node+16`). Null 12, skip 21, child 167, both 231. `r13`/`r14` restored |
+| `0x8c0fbe44` | `release_child_then_free_object_7` | `notes/verifications/0x8c0fbe44*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c0fd3ec`. Null 12, skip 21, child 167, both 231. `r13`/`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
