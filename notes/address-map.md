@@ -1254,6 +1254,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0c03d4` | `drain_records_then_free_base` | `notes/verifications/0x8c0c03d4*.json` - null base 15, T set. Count 0 frees the base and skips the drain 105; count `-1` does the same 105. One record drained then freed 282; two records 458. `r11`–`r14` restored |
 | `0x8c0c0420` | `drain_records_then_clear_count` | `notes/verifications/0x8c0c0420*.json` - count 0, a wrapping end, and count `-1` skip the drain and clear the count 23. A null base with count 1 drains once 43. One record 200; two records 376. `r0` is 0. `r11`–`r14` restored |
 | `0x8c0bdd5c` | `release_three_slots_then_maybe_free` | `notes/verifications/0x8c0bdd5c*.json` - null 12. Count 0 and count `0x00010000` release `object+20`, `object+8` and `object+4` and leave the object 126. Count `0xffff0001` also frees it 208. `r0` is the object. `r13`/`r14` restored |
+| `0x8c16ec64` | `scale_pair_and_store_unless_same` | `notes/verifications/0x8c16ec64*.json` - flag bit 0 clear skips the stores 583. Both inputs 0 already match and are left 508. Inputs 1 and 2 clamp to 15 and are stored with `r5`, and bit 31 is set 620; a saved first slot of 15 still rewrites 625. `r12`–`r14`, `fr14`/`fr15` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
