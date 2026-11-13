@@ -2160,6 +2160,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c21afd0` | `slot_ptr_44` | `notes/verifications/0x8c21afd0*.json` - 2 specs (8/8 steps); `*[0x8c2ba634]+40+44*r4`, signed mul |
 | `0x8c21afe0` | `slot_ptr_120` | `notes/verifications/0x8c21afe0*.json` - 2 specs (9/9 steps); `*[0x8c2ba634]+0x44c+120*r4`, signed mul |
 | `0x8c19aacc` | `copy_records_e4` | `notes/verifications/0x8c19aacc*.json` - 2 specs (419/15 steps) |
+| `0x8c125be0` | `lerp_565_vec4` | `notes/verifications/0x8c125be0*.json` - 4 specs (44/146/146/248 steps); `r5` and `r6` are doubled, entry `fr5` is stored at `[r4+92]`, a skipped loop leaves `fr0` = 1 |
 ## Blocked
 
 A leaf whose behaviour depends on state the harness does not model cannot be
