@@ -1221,6 +1221,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c09d7a0` | `release_and_free_binary_tree_9` | `notes/verifications/0x8c09d7a0*.json` - same instruction stream as `0x8c05dc28`; slot release through `0x8c07c2a0`. Null 139, child 265, grandchild 407, nested leaf 549. `r11`-`r14` restored |
 | `0x8c0c9224` | `release_and_free_binary_tree_10` | `notes/verifications/0x8c0c9224*.json` - same instruction stream as `0x8c05dc28`; slot release through `0x8c0c8cfc`. Null 139, child 265, grandchild 407, nested leaf 549. `r11`-`r14` restored |
 | `0x8c0f9d80` | `release_and_free_binary_tree_11` | `notes/verifications/0x8c0f9d80*.json` - same instruction stream as `0x8c05dc28`; slot release through `0x8c0f8f10`. Null 139, child 265, grandchild 407, nested leaf 549. `r11`-`r14` restored |
+| `0x8c0fd194` | `release_and_free_binary_tree_12` | `notes/verifications/0x8c0fd194*.json` - same instruction stream as `0x8c05dc28`; slot release `0x8c0fc940` is shorter. Null 139, child 265, grandchild 391, nested leaf 533. `r11`-`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
