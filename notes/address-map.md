@@ -1240,6 +1240,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0fd3ec` | `release_and_free_tree_at_16_2` | `notes/verifications/0x8c0fd3ec*.json` - same walk as `0x8c05de90`. Slot release `0x8c0fc5ec` decrements a refcount of 2 and clears the slot. Null 140, child 267, grandchild 398, nested leaf 541. `r11`-`r14` restored |
 | `0x8c05d9c0` | `release_child_then_free_object_6` | `notes/verifications/0x8c05d9c0*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c05de90` (handle at `node+16`). Null 12, skip 21, child 167, both 231. `r13`/`r14` restored |
 | `0x8c0fbe44` | `release_child_then_free_object_7` | `notes/verifications/0x8c0fbe44*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c0fd3ec`. Null 12, skip 21, child 167, both 231. `r13`/`r14` restored |
+| `0x8c0f8960` | `drain_list_then_release_object` | `notes/verifications/0x8c0f8960*.json` - null 16. Counter not exhausted: stamp and two releases 126, plus the object freed 208. Counter hits zero with the cursor already at the sentinel 154; one list node freed on the way 255. `[object]` becomes `0x8c1ed000`. `r12`-`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
