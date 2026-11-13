@@ -3,8 +3,8 @@
   "spec": "notes/specs/0x8c23a740.miss.json",
   "binary": "analysis/lemans24.bin",
   "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
-  "commit": "a9c22849",
-  "verified_at": "2026-11-12T07:06:50+00:00",
+  "commit": "c52f07c3",
+  "verified_at": "2026-11-13T00:16:38+00:00",
   "first_verified_at": "2026-11-12T07:06:50+00:00",
   "result": "pass",
   "oracle": {
