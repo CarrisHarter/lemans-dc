@@ -1210,6 +1210,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c16d904` | `free_child_and_clear_header` | `notes/verifications/0x8c16d904*.json` - child clear 9 (`r0` stays 0, T set); child freed through `0x8c16d934`, then `[object]=0`, `[object+4]=0`, `[object+8]=object+4` (122). `r1` is 0 and `r0` is `object+4` on that path. `r14` restored |
 | `0x8c10e2dc` | `free_child_tree_then_object_3` | `notes/verifications/0x8c10e2dc*.json` - same wrapper as `0x8c105f2c`, child freed through `0x8c10e968`. Null 12, skip 21, child 128, both 192. `r13`/`r14` restored |
 | `0x8c10e298` | `free_child_tree_then_object_2` | `notes/verifications/0x8c10e298*.json` - same wrapper as `0x8c105f2c`, child freed through `0x8c10eb30`. Null 12, skip 21, child 128, both 192. `r13`/`r14` restored |
+| `0x8c05dc28` | `release_and_free_binary_tree` | `notes/verifications/0x8c05dc28*.json` - null children 139, one child 265, grandchild through `0x8c05d7bc` 407, nested leaf 549. Each visited node is released (`0x8c018bd8(node+12, -1)` on a container, `0x8c05d7bc(slot+12, -1)` on a grandchild) then freed through `0x8c01032c`. `r11`-`r14` restored; `r0`-`r6` are the last free |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
