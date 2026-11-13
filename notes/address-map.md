@@ -1251,6 +1251,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c0e9d00` | `scale_bounds_and_shift_records` | `notes/verifications/0x8c0e9d00*.json` - `0x8c0e9f6c` reduces the source, then two flag bytes at `0x8c27ad58` and `0x8c27ad60` can clear the offsets. Count 0, flags clear 100; flags set 98. Count 2 copies the records and adds the offsets at `+16` and `+20`: flags clear 223, flags set 221. `r9`–`r14` restored |
 | `0x8c0e9df8` | `scale_bounds_and_shift_records_2` | `notes/verifications/0x8c0e9df8*.json` - same stream as `0x8c0e9d00`, reduction through `0x8c0e9ef0`. Count 0 flags clear 100, flags set 98. Count 2 flags clear 223, flags set 221. `r9`–`r14` restored |
 | `0x8c0be110` | `drain_at_32_then_maybe_free` | `notes/verifications/0x8c0be110*.json` - null 12. `0x8c0f72fc(object+32, -1)` drains and does not free that slot. Count `0x00010000` leaves the object 169; count `0xffff0001` frees the original object 251. `r13`/`r14` restored |
+| `0x8c0c03d4` | `drain_records_then_free_base` | `notes/verifications/0x8c0c03d4*.json` - null base 15, T set. Count 0 frees the base and skips the drain 105; count `-1` does the same 105. One record drained then freed 282; two records 458. `r11`–`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
