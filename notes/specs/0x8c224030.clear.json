@@ -1,0 +1,55 @@
+{
+  "entry": "0x8c224030",
+  "notes": "byte +2 set but the slot gate is 0: 0x8c222c3a clears the record and the result is still 0xffffff01",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x00000000",
+    "r5": "0x8c2e4000",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2c02ba",
+      "hex": "01"
+    },
+    {
+      "addr": "0x8c23cc70",
+      "hex": "00000000"
+    },
+    {
+      "addr": "0x8c2ba634",
+      "hex": "00000000"
+    },
+    {
+      "addr": "0x8c2b88f8",
+      "hex": "00"
+    }
+  ],
+  "expect": {
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r5": "0x8c2e4000",
+    "r0": "0xffffff01"
+  },
+  "steps": 8000
+}

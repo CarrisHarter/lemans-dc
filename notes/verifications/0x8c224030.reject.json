@@ -1,0 +1,17 @@
+{
+  "address": "0x8c224030",
+  "spec": "notes/specs/0x8c224030.reject.json",
+  "binary": "analysis/lemans24.bin",
+  "binary_sha256": "08016236b760df0ddeb3d39ef0b41eacceaf2e2f607ff8ff15dbbfa11cdf38c8",
+  "commit": "8478bd6f",
+  "verified_at": "2026-11-13T02:14:42+00:00",
+  "first_verified_at": "2026-11-13T02:14:42+00:00",
+  "result": "pass",
+  "oracle": {
+    "stop": "halt",
+    "steps": 355
+  },
+  "verifier_output": [
+    "ok   0x8c224030 matches original (355 oracle steps)"
+  ]
+}
