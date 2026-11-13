@@ -1190,6 +1190,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c183a7c` | `file_node_by_keyword` | `notes/verifications/0x8c183a7c*.json` - no match 903, five keywords, first hit 230, busy slot 228, null string falls back to the pool (1218), child and sibling 1651, parent plus child 637 |
 | `0x8c21cd5a` | `clear_mode_and_index` | `notes/verifications/0x8c21cd5a*.json` - index 5 stores (101), index 32 skips and leaves T set (98) |
 | `0x8c052cb0` | `forward_mode_to_live_blocks` | `notes/verifications/0x8c052cb0*.json` - none 21, six-slot 106, deref-six 115, twelve in range 181, twelve out of range leaves T clear (169), all three 372 |
+| `0x8c12b50c` | `release_inner_then_container` | `notes/verifications/0x8c12b50c*.json` - null 14, empty 20, high word is not positive (20), sext16 frees the container (83), live inner frees the block and holds the handles (290) |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |

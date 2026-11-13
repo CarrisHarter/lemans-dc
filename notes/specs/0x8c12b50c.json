@@ -1,0 +1,12 @@
+{
+  "entry": "0x8c12b50c",
+  "steps": 4000,
+  "regs": {
+    "r4": "0x0",
+    "r5": "0x00000001",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee"
+  },
+  "memory": []
+}
