@@ -1180,6 +1180,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c1841c4` | `release_record_array` | `notes/verifications/0x8c1841c4*.json` - null 18, empty 58, null slot 132, positive r5 frees the container 121 |
 | `0x8c08c874` | `copy_record_into_ring` | `notes/verifications/0x8c08c874*.json` - refuse 25, forced 208, forward 239, skip 50, base scan 247 |
 | `0x8c23a640` | `fill_entry_after_search` | `notes/verifications/0x8c23a640*.json` - miss 31 returns 0xeeee, hit 98, bit7 subtracts 24 (101) |
+| `0x8c2196ce` | `scan_flag_bits` | `notes/verifications/0x8c2196ce*.json` - none 71, bit set but slot quiet 114, hit returns 1 (114) |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
