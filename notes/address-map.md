@@ -1204,6 +1204,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c10eb30` | `free_binary_tree_3` | `notes/verifications/0x8c10eb30*.json` - same instruction stream as `0x8c106700` (empty 101, full tree 1065). Final free's residue in `r0`-`r6` and T |
 | `0x8c10e968` | `free_binary_tree_2` | `notes/verifications/0x8c10e968*.json` - same instruction stream as `0x8c106700` (empty 101, full tree 1065). Final free's residue in `r0`-`r6` and T |
 | `0x8c106700` | `free_binary_tree` | `notes/verifications/0x8c106700*.json` - same routine as `0x8c026900`: empty 101, one leaf 305, both leaves 453, grandchild on the nop-delay site 453, both grandchildren 605, depth 3 773, full tree 1065. `r4` is the context (the first recursive site leaves it, the rest reload `r12`); `r11`-`r14` restored; `r0`-`r6` and T are the last free |
+| `0x8c231272` | `pack_record_and_build_packet` | `notes/verifications/0x8c231272*.json` - cleared inputs 269, patterned record plus the two repeated globals 307. Frame slots at +44/+72/+100 stay untouched; `0x8c2395c0` sees `sp+12`. `r8`-`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
