@@ -1,0 +1,51 @@
+{
+  "entry": "0x8c084700",
+  "notes": "null children: release root+12 (refcount 2 clears the slot) and free the root",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x11223344",
+    "r5": "0x8c261000",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2b1ef8",
+      "hex": "00202b8c"
+    },
+    {
+      "addr": "0x8c260ff8",
+      "hex": "00502b8c"
+    },
+    {
+      "addr": "0x8c26100c",
+      "hex": "0030268c"
+    },
+    {
+      "addr": "0x8c263008",
+      "hex": "02000000"
+    }
+  ],
+  "expect": {
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 20000
+}
