@@ -1,0 +1,28 @@
+{
+  "entry": "0x8c2210b8",
+  "notes": "index 2 slot word is nonzero: r4 is base+256 and r0 is -1",
+  "regs": {
+    "r4": "0x00000002",
+    "r5": "0x55555555",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c2bdf9c", "hex": "01000000" }
+  ],
+  "expect": {
+    "r0": "0xffffffff",
+    "r3": "0x8c2bde98",
+    "r4": "0x8c2bdf98",
+    "r5": "0x55555555",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 200000
+}

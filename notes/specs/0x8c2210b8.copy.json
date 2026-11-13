@@ -1,0 +1,37 @@
+{
+  "entry": "0x8c2210b8",
+  "notes": "clear slot tail-calls the copy: marker 0x33 copies 12 bytes and returns 0",
+  "regs": {
+    "r4": "0x00000000",
+    "r5": "0x8c26a000",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    { "addr": "0x8c2c02ba", "hex": "01" },
+    { "addr": "0x8c2c02c0", "hex": "01" },
+    { "addr": "0x8c2c02d4", "hex": "0090268c" },
+    { "addr": "0x8c2c02d8", "hex": "0010278c" },
+    { "addr": "0x8c2c02e0", "hex": "0080268c" },
+    { "addr": "0x8c271000", "hex": "55555555555555555555555555555555" },
+    { "addr": "0x8c268000", "hex": "33" },
+    { "addr": "0x8c268004", "hex": "0102030405060708090a0b0c" },
+    { "addr": "0x8c269030", "hex": "01000000" },
+    { "addr": "0x8c23cc70", "hex": "01000000" },
+    { "addr": "0x8c2b8910", "hex": "01" },
+    { "addr": "0x8c2ba634", "hex": "0000268c" },
+    { "addr": "0x8c2604c4", "hex": "02000000" }
+  ],
+  "expect": {
+    "r0": "0x00000000",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "steps": 200000
+}
