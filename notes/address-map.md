@@ -1231,6 +1231,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c05d97c` | `release_child_then_free_object` | `notes/verifications/0x8c05d97c*.json` - same wrapper as `0x8c105f2c`, child released through `0x8c05dc28`. Null 12, low half 0 skips 21, child only 166, child plus object 230 (`0xffff0001` frees). `r0` is the object. `r13`/`r14` restored. The `tst` of `object+4` is dead |
 | `0x8c05f998` | `release_child_then_free_object_2` | `notes/verifications/0x8c05f998*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c05fa94`. Null 12, skip 21, child 166, both 230. `r13`/`r14` restored |
 | `0x8c0c8dc8` | `release_child_then_free_object_3` | `notes/verifications/0x8c0c8dc8*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c0c9224`. Null 12, skip 21, child 166, both 230. `r13`/`r14` restored |
+| `0x8c0fbe88` | `release_child_then_free_object_4` | `notes/verifications/0x8c0fbe88*.json` - same wrapper as `0x8c05d97c`, child released through `0x8c0fd194`. Null 12, skip 21, child 166, both 230. `r13`/`r14` restored |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
