@@ -1,0 +1,25 @@
+{
+  "entry": "0x8c223f38",
+  "notes": "r4 -1: the signed product lands on the previous record, whose byte +2 is clear",
+  "regs": {
+    "r4": "0xffffffff",
+    "r5": "0x11111111",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [],
+  "expect": {
+    "r0": "0xffffff01",
+    "r8": "0x88888888",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "mach": "0xffffffff",
+    "macl": "0xfffffeb8"
+  },
+  "steps": 200000
+}
