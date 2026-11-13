@@ -1,0 +1,60 @@
+{
+  "entry": "0x8c0b91ac",
+  "notes": "empty list: allocate one node, copy the name, link it at [object+4], store the payload",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r6": "0x55555555",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r4": "0x8c262000",
+    "r5": "0x8c264000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c264000",
+      "hex": "7a7a0000"
+    },
+    {
+      "addr": "0x8c2b1ef8",
+      "hex": "0000218c"
+    },
+    {
+      "addr": "0x8c210000",
+      "hex": "00300000"
+    },
+    {
+      "addr": "0x8c21000c",
+      "hex": "2000218c"
+    },
+    {
+      "addr": "0x8c210024",
+      "hex": "00010000"
+    },
+    {
+      "addr": "0x8c210034",
+      "hex": "ffffffff"
+    }
+  ],
+  "expect": {
+    "r15": "0x8c308000",
+    "r14": "0xeeeeeeee",
+    "r13": "0xdddddddd",
+    "r12": "0xcccccccc",
+    "r11": "0xbbbbbbbb",
+    "r10": "0xaaaaaaaa",
+    "r9": "0x99999999",
+    "r8": "0x88888888",
+    "r2": "0x00000200"
+  },
+  "steps": 20000
+}

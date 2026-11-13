@@ -1,0 +1,57 @@
+{
+  "entry": "0x8c0b91ac",
+  "notes": "first sibling name differs, the next matches, payload is stored on the match",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r6": "0x55555555",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r4": "0x8c262000",
+    "r5": "0x8c264000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c264000",
+      "hex": "61620000"
+    },
+    {
+      "addr": "0x8c262004",
+      "hex": "0010268c"
+    },
+    {
+      "addr": "0x8c261000",
+      "hex": "0011268c"
+    },
+    {
+      "addr": "0x8c26100c",
+      "hex": "7a7a0000"
+    },
+    {
+      "addr": "0x8c26110c",
+      "hex": "61620000"
+    }
+  ],
+  "expect": {
+    "r2": "0x00000200",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r0": "0x00000000"
+  },
+  "steps": 20000
+}
