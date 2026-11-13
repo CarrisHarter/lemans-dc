@@ -1,0 +1,49 @@
+{
+  "entry": "0x8c2210e6",
+  "mach": "0x11111111",
+  "macl": "0x22222222",
+  "steps": 400,
+  "notes": "index 0x02000002: shll sets T, tst clears it, return -1, r4 = base+0x100",
+  "regs": {
+    "r0": "0xa0a0a0a0",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r3": "0x33333333",
+    "r4": "0x02000002",
+    "r5": "0x8c2e4000",
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000"
+  },
+  "memory": [
+    {
+      "addr": "0x8c2bdf9c",
+      "hex": "01000000"
+    }
+  ],
+  "expect": {
+    "r6": "0x66666666",
+    "r7": "0x77777777",
+    "r8": "0x88888888",
+    "r9": "0x99999999",
+    "r10": "0xaaaaaaaa",
+    "r11": "0xbbbbbbbb",
+    "r12": "0xcccccccc",
+    "r13": "0xdddddddd",
+    "r14": "0xeeeeeeee",
+    "r15": "0x8c308000",
+    "r1": "0x11111111",
+    "r2": "0x22222222",
+    "r5": "0x8c2e4000",
+    "r0": "0xffffffff",
+    "r3": "0x8c2bde98",
+    "r4": "0x8c2bdf98"
+  }
+}
