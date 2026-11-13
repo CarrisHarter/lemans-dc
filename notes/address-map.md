@@ -1186,6 +1186,7 @@ Nothing recovered yet: no binary. Add rows as evidence lands.
 | `0x8c158dc0` | `zero_groups_with_sentinel` | `notes/verifications/0x8c158dc0*.json` - empty 30, zero count 62, no sentinel 134, hit 189, carried index 236 |
 | `0x8c1767b2` | `clear_and_stamp_slots` | `notes/verifications/0x8c1767b2*.json` - null 310, null string 312, length 81 reports 609, length 80 fills 5862, short string 5468 |
 | `0x8c219f0e` | `dispatch_field_store` | `notes/verifications/0x8c219f0e*.json` - modes 0-9 store and return 0 (20-38 steps), mode 10 returns -1 (30) |
+| `0x8c16f7ec` | `stamp_twelve_slots` | `notes/verifications/0x8c16f7ec*.json` - modes 0-3 store the indexed word (157), mode 4 stores zero (145), negative stores zero (142) |
 | `0x8c19ca80` | `FUN_8c19ca80` | `notes/verifications/0x8c19ca80.json` — ok; *(*r15)=**r4 in rts delay |
 | `0x8c19ccf4` | `FUN_8c19ccf4` | `notes/verifications/0x8c19ccf4.json` — ok; *(*r15)=*r4 in rts delay |
 | `0x8c19ccfc` | `FUN_8c19ccfc` | `notes/verifications/0x8c19ccfc.json` — ok; *(*r15)=**r4 in rts delay |
